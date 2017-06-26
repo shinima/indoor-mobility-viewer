@@ -1,0 +1,77 @@
+* {
+  box-sizing border-box
+}
+
+body, button, input, optgroup, select, textarea {
+  font-family 'microsoft yahei'
+}
+
+$flat-button {
+  height 24px
+  line-height @height
+  border none
+  padding-top 0
+  padding-bottom 0
+  font-size 12px
+  cursor pointer
+}
+
+.mac-list
+  width 250px
+  height 100%
+  border 1px solid #4682B4
+  .mac-title
+    display flex
+    background #4682B4
+    align-items center
+    width 249px
+    height 40px
+    .mac-title-text
+      display flex
+      margin-left 60px
+      color white
+      font-weight bold
+      align-items center
+      text-align center
+    .add-button
+      @extends $flat-button
+      margin-left auto
+      margin-right 4px
+  .mac-list-body
+    display position
+    tr
+      display flex
+      justify-content center
+      width 250px
+      height 32px
+      align-items center
+      border-top 1px solid #4682B4
+      &:first-child {
+        border-top none
+      }
+      transition background 0.3s ease-in
+      &:hover {
+        background rgba(51, 51, 51, 0.25)
+      }
+      .color
+        width 16px
+        height 16px
+        margin 8px
+        border-radius 50%
+      .mac-name
+        display flex
+        justify-content center
+        width 160px
+        margin 0
+        margin-left 5px
+        font-size 14px
+        font-family monospace, 'microsoft yahei'
+      .del-button
+        @extends $flat-button
+        margin-left auto
+      .checkbox
+        display block
+        height @height
+        width 16px
+        margin-left 8px
+        margin-right 4px
