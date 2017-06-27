@@ -1,47 +1,70 @@
 import React, { Component } from 'react'
+import { getColor, isValidMac } from '../utils/utils.js'
 import '../styles/MacList.styl'
-import Test from '../components/test'
 
 export default class MacList extends Component {
-
-  deleteMac(macAddr) {
-    this.props.deleteMac(macAddr)
+  state = {
+    macName: '',
   }
 
-  addMac() {
-    this.props.addMac()
+  handleDelete(mac) {
+    this.props.deleteItem(mac)
+  }
+
+  handleAdd = () => {
+    const { macName } = this.state
+    const { maclist, validNameSet, existedMacSet } = this.props
+    const object = {
+      name: macName,
+      active: false,
+    }
+    if (maclist.indexOf(macName) !== -1) {
+      alert('该用户已存在列表中')
+    } else if (validNameSet.has(macName)) {
+      this.props.addItem(object)
+      this.setState({ macName: '' })
+    } else if (!isValidMac(macName)) {
+      alert('请输入正确的mac地址')
+    } else if (existedMacSet.has(macName)) {
+      alert('mac地址重复')
+    } else {
+      this.props.addItem(object)
+      this.setState({ macName: '' })
+    }
   }
 
   render() {
     const { maclist } = this.props
-    const colorList = ['#1F77B4', '#FF7F0E', '#2CA02C', '#d62728']
+    const { macName } = this.state
     return (
-      <div className="mac-list">
-        <div className="mac-title">
-          <div className="mac-title-text">
-            MAC地址管理
+      <div className="widgets">
+        <div className="mac-list-widget">
+          <div className="title">MAC地址管理</div>
+          <div className="mac-list">
+            {maclist.map((mac, index) =>
+              <div className="mac-item" key={index}>
+                <div className="mac-color">
+                  <div className="color" style={{ background: `${getColor(mac.name)}` }}>
+                  </div>
+                </div>
+                <div className="mac-text">{mac.name}</div>
+                <button className="mac-delete" onClick={() => this.handleDelete(mac.name)}>Del
+                </button>
+                <input type="checkbox"
+                       checked={mac.active}
+                       onChange={() => this.props.onToggleItem(mac)}
+                />
+              </div>
+            )}
           </div>
-          <div className="add-button">
-            <button onClick={() => this.addMac()}>Add
-            </button>
+          <div className="new-mac-item">
+            <input
+              type="text"
+              value={macName}
+              onChange={(e) => this.setState({ macName: e.target.value })}
+            />
+            <button className="button" onClick={this.handleAdd}>Add</button>
           </div>
-        </div>
-        <div className="mac-list-body">
-          <table>
-            <tbody>
-              {maclist.map((mac, index) =>
-                <tr key={index}>
-                  <td className="color" style={{ background: `${colorList[0]}` }} />
-                  <td className="mac-name">{mac.macName}</td>
-                  <td className="del-button">
-                    <button onClick={() => this.deleteMac(mac.macAddr)}>Del</button>
-                  </td>
-                  <td><input type="checkbox" className="checkbox" />
-                  </td>
-                </tr>
-              ).toArray()}
-            </tbody>
-          </table>
         </div>
       </div>
     )
