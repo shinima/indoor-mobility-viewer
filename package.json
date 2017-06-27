@@ -8,6 +8,7 @@
     "storybook": "start-storybook -p 9001 -c .storybook"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.1.6",
     "@storybook/react": "^3.1.5",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.0",
@@ -31,6 +32,7 @@
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^4.0.8",
     "redux": "^3.7.0",
-    "redux-saga": "^0.15.4"
+    "redux-saga": "^0.15.4",
+    "prop-types": "latest"
   }
 }

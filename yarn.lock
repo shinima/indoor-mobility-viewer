@@ -2,15 +2,16 @@
 # yarn lockfile v1
 
 
-"@storybook/addon-actions@^3.1.5":
-  version "3.1.5"
-  resolved "http://registry.npm.taobao.org/@storybook/addon-actions/download/@storybook/addon-actions-3.1.5.tgz#0a92e23a781a1fcedf6f0e1ef3f609f03098ebaf"
+"@storybook/addon-actions@^3.1.5", "@storybook/addon-actions@^3.1.6":
+  version "3.1.6"
+  resolved "http://registry.npm.taobao.org/@storybook/addon-actions/download/@storybook/addon-actions-3.1.6.tgz#0cbf00ede57ff00d1dfe02e554043d6963940064"
   dependencies:
-    "@storybook/addons" "^3.1.5"
+    "@storybook/addons" "^3.1.6"
     deep-equal "^1.0.1"
     json-stringify-safe "^5.0.1"
     prop-types "^15.5.8"
     react-inspector "^2.0.0"
+    uuid "^3.1.0"
 
 "@storybook/addon-links@^3.1.5":
   version "3.1.5"
@@ -18,9 +19,9 @@
   dependencies:
     "@storybook/addons" "^3.1.5"
 
-"@storybook/addons@^3.1.5":
-  version "3.1.5"
-  resolved "http://registry.npm.taobao.org/@storybook/addons/download/@storybook/addons-3.1.5.tgz#3527f896dc130b9acefe6d5bad8c1b55201379b4"
+"@storybook/addons@^3.1.5", "@storybook/addons@^3.1.6":
+  version "3.1.6"
+  resolved "http://registry.npm.taobao.org/@storybook/addons/download/@storybook/addons-3.1.6.tgz#29ef2348550f5a74d5e83dd75d04714cac751c39"
 
 "@storybook/channel-postmessage@^3.1.5":
   version "3.1.5"
@@ -4288,7 +4289,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9:
+prop-types@^15.5.10, prop-types@^15.5.4, prop-types@^15.5.7, prop-types@^15.5.8, prop-types@^15.5.9, prop-types@latest:
   version "15.5.10"
   resolved "http://registry.npm.taobao.org/prop-types/download/prop-types-15.5.10.tgz#2797dfc3126182e3a95e3dfbb2e893ddd7456154"
   dependencies:
@@ -5374,7 +5375,7 @@ uuid@^2.0.2:
   version "2.0.3"
   resolved "http://registry.npm.taobao.org/uuid/download/uuid-2.0.3.tgz#67e2e863797215530dff318e5bf9dcebfd47b21a"
 
-uuid@^3.0.0, uuid@^3.0.1:
+uuid@^3.0.0, uuid@^3.0.1, uuid@^3.1.0:
   version "3.1.0"
   resolved "http://registry.npm.taobao.org/uuid/download/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
 
