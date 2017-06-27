@@ -1,26 +1,15 @@
 import React, { Component } from 'react'
 import MacList from './MacList'
 
+const validNameSet = new Set(['sfc-samsung', 'cx-meizu', 'lxy-meizu', 'a', 'b', 'c', 'bob'])
+const existedMacSet = new Set(['a0:b1:c2:d3:e4:f5','00-11-22-33-44-55','88:88:88:88:88:88'])
+
 export default class MacListManager extends Component {
   state = {
-    maclist: [
-      {
-        macAddr: '101.12.21',
-        macName: 'bob',
-      },
-      {
-        macAddr: '10.214.22',
-        macName: 'a',
-      },
-      {
-        macAddr: '10.214.45',
-        macName: 'b',
-      },
-      {
-        macAddr: '10.214.222',
-        macName: 'c',
-      }],
-    checkedMacList: ['10.214.45', '10.214.22'],
+    validNameSet,
+    existedMacSet,
+    maclist: ['bob', 'a', 'b', 'c'],
+    checkedMacList: ['a', 'b'],
   }
 
   deleteItem = (mac) => {
@@ -38,9 +27,9 @@ export default class MacListManager extends Component {
 
   toggleItem = (mac) => {
     const { checkedMacList } = this.state
-    const index = checkedMacList.indexOf(mac.macAddr)
+    const index = checkedMacList.indexOf(mac)
     if (index === -1) {
-      this.setState({ checkedMacList: checkedMacList.concat([mac.macAddr]) })
+      this.setState({ checkedMacList: checkedMacList.concat([mac]) })
     } else {
       checkedMacList.splice(index, 1)
       this.setState({ checkedMacList })
@@ -48,7 +37,7 @@ export default class MacListManager extends Component {
   }
 
   render() {
-    const { maclist, checkedMacList } = this.state
+    const { maclist, checkedMacList, validNameSet, existedMacSet } = this.state
     return (
       <MacList
         maclist={maclist}
@@ -56,6 +45,8 @@ export default class MacListManager extends Component {
         deleteItem={this.deleteItem}
         addItem={this.addItem}
         onToggleItem={this.toggleItem}
+        validNameSet={validNameSet}
+        existedMacSet={existedMacSet}
       />
     )
   }
