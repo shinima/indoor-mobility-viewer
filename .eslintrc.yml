@@ -1,0 +1,37 @@
+root: true
+parser: babel-eslint
+settings:
+  import/resolver: webpack
+
+parserOptions:
+  ecmaVersion: 7
+  sourceType: module
+  ecmaFeatures:
+    jsx: true
+    destructuring: true
+    spread: true
+
+env:
+  browser: true
+
+plugins:
+  - react
+
+extends: airbnb
+
+rules:
+  no-console: warn
+  no-alert: off
+  no-unused-vars: warn
+  semi: [warn, never]
+  new-cap: off
+  quotes: [warn, single]
+  react/prop-types: off
+  react/prefer-stateless-function: off
+  no-else-return: off
+  no-use-before-define: off
+  no-mixed-operators: off
+  no-shadow: warn
+  jsx-a11y/href-no-hash: off
+  prefer-template: warn
+  react/no-array-index-key: off
