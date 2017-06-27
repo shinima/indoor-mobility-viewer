@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
-import { fromJS } from 'immutable'
-import MacList from '../components/MacList'
-import MacItem from '../types/MacItem'
+import MacList from './MacList'
 
 export default class MacListManager extends Component {
   state = {
@@ -12,38 +10,52 @@ export default class MacListManager extends Component {
       },
       {
         macAddr: '10.214.22',
-        macName: 'alice',
+        macName: 'a',
       },
       {
         macAddr: '10.214.45',
-        macName: 'alice',
+        macName: 'b',
       },
       {
         macAddr: '10.214.222',
-        macName: 'alice',
+        macName: 'c',
       }],
+    checkedMacList: ['10.214.45', '10.214.22'],
   }
 
-  deleteMac = (macAddr) => {
+  deleteItem = (mac) => {
     const { maclist } = this.state
-    alert(`you will delete the record whose macAddress is ${macAddr}`)
-    // this.setState({maclist: maclist.del})
+    const index = maclist.indexOf(mac)
+    maclist.splice(index, 1)
+    this.setState({ maclist })
   }
 
-  addMac = () => {
-    console.log('add')
+  addItem = (object) => {
+    const { maclist } = this.state
+    const newMacList = maclist.concat(object)
+    this.setState({ maclist: newMacList })
+  }
+
+  toggleItem = (mac) => {
+    const { checkedMacList } = this.state
+    const index = checkedMacList.indexOf(mac.macAddr)
+    if (index === -1) {
+      this.setState({ checkedMacList: checkedMacList.concat([mac.macAddr]) })
+    } else {
+      checkedMacList.splice(index, 1)
+      this.setState({ checkedMacList })
+    }
   }
 
   render() {
-    const { maclist } = this.state
-    const mac = fromJS(maclist).toMap()
-      .map(MacItem)
-      .mapKeys((_, mac) => mac.macAddr)
+    const { maclist, checkedMacList } = this.state
     return (
       <MacList
-        maclist={mac}
-        deleteMac={this.deleteMac}
-        addMac={this.addMac}
+        maclist={maclist}
+        checkedMacList={checkedMacList}
+        deleteItem={this.deleteItem}
+        addItem={this.addItem}
+        onToggleItem={this.toggleItem}
       />
     )
   }

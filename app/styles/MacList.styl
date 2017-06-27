@@ -16,36 +16,40 @@ $flat-button {
   cursor pointer
 }
 
-.mac-list
+$widget-title {
+  font-size 14px
+  line-height 24px
+  margin 0
+  background steelblue
+  color white
+  font-weight bold
+  text-align center
+}
+
+.widgets {
   width 250px
-  height 100%
-  border 1px solid #4682B4
-  .mac-title
+  position absolute
+  left 8px
+  top @left
+  background rgba(255, 255, 255, 0.9)
+}
+
+.mac-list-widget {
+  border 1px solid steelblue
+
+  .title {
+    @extends $widget-title
+  }
+
+  .mac-list {
     display flex
-    background #4682B4
-    align-items center
-    width 249px
-    height 40px
-    .mac-title-text
+    flex-flow column
+
+    .mac-item {
       display flex
-      margin-left 60px
-      color white
-      font-weight bold
       align-items center
-      text-align center
-    .add-button
-      @extends $flat-button
-      margin-left auto
-      margin-right 4px
-  .mac-list-body
-    display position
-    tr
-      display flex
-      justify-content center
-      width 250px
       height 32px
-      align-items center
-      border-top 1px solid #4682B4
+      border-top 1px solid steelblue
       &:first-child {
         border-top none
       }
@@ -53,25 +57,61 @@ $flat-button {
       &:hover {
         background rgba(51, 51, 51, 0.25)
       }
-      .color
+
+      .mac-color > .color {
         width 16px
         height 16px
         margin 8px
         border-radius 50%
-      .mac-name
-        display flex
-        justify-content center
+      }
+
+      .mac-text {
         width 160px
         margin 0
         margin-left 5px
+        line-height @height
         font-size 14px
         font-family monospace, 'microsoft yahei'
-      .del-button
+      }
+
+      .mac-delete {
         @extends $flat-button
         margin-left auto
-      .checkbox
+      }
+
+      .mac-check {
         display block
         height @height
         width 16px
         margin-left 8px
         margin-right 4px
+      }
+    }
+  }
+
+  .new-mac-item {
+    padding-left 10px
+    height 32px
+    display flex
+    justify-content space-around
+    align-items center
+    border-top 1px solid steelblue
+
+    .mac-name {
+      width 50px
+    }
+    .mac-addr {
+      margin-left 15px
+      width 125px
+    }
+  //input {
+  //  height 24px
+  //}
+
+    button {
+      @extends $flat-button
+      margin-left auto
+      margin-right 4px
+    }
+  }
+}
