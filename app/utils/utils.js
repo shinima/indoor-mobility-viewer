@@ -2,7 +2,7 @@ import * as d3 from 'd3'
 
 const colors = d3.schemeCategory10
 
-let map = new Map()
+const map = new Map()
 export function getColor(key) {
   if (!map.has(key)) {
     map.set(key, map.size)

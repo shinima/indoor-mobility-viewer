@@ -35,3 +35,4 @@ rules:
   jsx-a11y/href-no-hash: off
   prefer-template: warn
   react/no-array-index-key: off
+  react/forbid-prop-types: off

@@ -31,7 +31,9 @@ class StaticMacMappingContainer extends Component {
       <StaticMacMapping
         staticMacItems={this.state.staticMacItems}
         onEditMacItem={this.onEditMacItem}
-        onDeleteMacItem={macItemId => this.setState({ staticMacItems: this.state.staticMacItems.delete(macItemId) })}
+        onDeleteMacItem={macItemId => this.setState({
+          staticMacItems: this.state.staticMacItems.delete(macItemId),
+        })}
       />
     )
   }
@@ -39,12 +41,12 @@ class StaticMacMappingContainer extends Component {
 
 
 storiesOf('StaticMacMapping', module)
-  .add('static', () =>
+  .add('static', () => (
     <StaticMacMapping
       staticMacItems={staticMacItems}
       onEditMacItem={action('edit-mac-item')}
       onDeleteMacItem={action('delete-mac-item')}
     />
-  )
+  ))
   .add('empty', () => <StaticMacMapping staticMacItems={List()} />)
   .add('interactive', () => <StaticMacMappingContainer />)

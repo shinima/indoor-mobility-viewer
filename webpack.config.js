@@ -2,11 +2,11 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: "./app/main.jsx",
+  entry: './app/main.jsx',
 
   output: {
-    path: path.resolve(__dirname, "build"),
-    filename: "bundle.js"
+    path: path.resolve(__dirname, 'build'),
+    filename: 'bundle.js',
   },
 
   module: {
@@ -26,12 +26,12 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              plugins: ["transform-react-jsx", "transform-class-properties"]
-            }
-          }
+              plugins: ['transform-react-jsx', 'transform-class-properties'],
+            },
+          },
         ],
       },
-    ]
+    ],
   },
 
   resolve: {
@@ -39,16 +39,16 @@ module.exports = {
     // （不适用于对 loader 解析）
 
     modules: [
-      "node_modules",
-      path.resolve(__dirname, "app")
+      'node_modules',
+      path.resolve(__dirname, 'app'),
     ],
     // 用于查找模块的目录
 
-    extensions: [".js", ".json", ".jsx", ".css"],
+    extensions: ['.js', '.json', '.jsx', '.css'],
     // 使用的扩展名
   },
 
-  devtool: "source-map",
+  devtool: 'source-map',
 
   context: __dirname,
 
@@ -61,8 +61,8 @@ module.exports = {
 
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'app/template.html'
-    })
+      template: 'app/template.html',
+    }),
   ],
   // 附加插件列表
 

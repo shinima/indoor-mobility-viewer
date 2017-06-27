@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import moment from 'moment'
 import _ from 'lodash'
-import getColor from './getColor'
+import { getColor } from '../../utils/utils'
 
 function distance2(p1, p2) {
   return (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2
@@ -16,8 +16,8 @@ function drawFloor(floor, svgElement, zoom) {
     .on('zoom', () => {
       board.attr('transform', String(d3.event.transform))
       const tooltipWrapper = d3.select('.tooltip-wrapper')
-      tooltipWrapper.style('left', d3.event.transform.x + 'px')
-        .style('top', d3.event.transform.y + 'px')
+      tooltipWrapper.style('left', `${d3.event.transform.x}px`)
+        .style('top', `${d3.event.transform.y}px`)
     })
   svg.call(zoom)
 
@@ -235,8 +235,8 @@ export default class DrawingManager {
       const x = currentTransform.applyX(item.x) - currentTransform.x
       const y = currentTransform.applyY(item.y) - currentTransform.y
       d3.select('.tooltip-wrapper > div')
-        .style('left', x + 'px')
-        .style('top', y + 'px')
+        .style('left', `${x}px`)
+        .style('top', `${y}px`)
     }
   }
 

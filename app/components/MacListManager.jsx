@@ -34,7 +34,7 @@ export default class MacListManager extends Component {
   deleteItem = (mac) => {
     const { maclist } = this.state
     const macNameArray = maclist.map(item => item.name)
-    console.log(macNameArray)
+    // console.log(macNameArray)
     const index = macNameArray.indexOf(mac)
     const newMacList = maclist.slice(0, index).concat(maclist.slice(index + 1))
     this.setState({ maclist: newMacList })

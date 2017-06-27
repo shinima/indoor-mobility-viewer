@@ -21,7 +21,7 @@ class MacItemRow extends Component {
     }
   }
 
-  onStartEdit = e => this.setState({
+  onStartEdit = () => this.setState({
     editing: true,
     name: this.props.macItem.get('name'),
     mac: this.props.macItem.get('mac'),
@@ -31,7 +31,7 @@ class MacItemRow extends Component {
     const { name, mac } = this.state
     this.props.onEdit(Map({ name, mac }))
   }
-  onCancelEdit = e => this.setState({ editing: false })
+  onCancelEdit = () => this.setState({ editing: false })
 
   onChangeName = e => this.setState({ name: e.target.value })
 
@@ -68,27 +68,25 @@ class MacItemRow extends Component {
   }
 }
 
-const StaticMacMapping = ({ staticMacItems, onEditMacItem, onDeleteMacItem }) => {
-  return (
-    <div className="static-mac-mapping">
-      <p className="title">静态Mac地址映射表</p>
-      {staticMacItems.isEmpty() ? (
-        <div className="empty-mac-item-list">列表暂时为空</div>
-      ) : (
-        <ul className="mac-item-list">
-          {staticMacItems.map((macItem, index) =>
-            <MacItemRow
-              key={macItem.get('id')}
-              index={index}
-              macItem={macItem}
-              onEdit={newMacItem => onEditMacItem(macItem.get('id'), newMacItem)}
-              onDelete={() => onDeleteMacItem(macItem.get('id'))}
-            />
-          ).toArray()}
-        </ul>
-      )}
-    </div>
-  )
-}
+const StaticMacMapping = ({ staticMacItems, onEditMacItem, onDeleteMacItem }) => (
+  <div className="static-mac-mapping">
+    <p className="title">静态Mac地址映射表</p>
+    {staticMacItems.isEmpty() ? (
+      <div className="empty-mac-item-list">列表暂时为空</div>
+    ) : (
+      <ul className="mac-item-list">
+        {staticMacItems.map((macItem, index) => (
+          <MacItemRow
+            key={macItem.get('id')}
+            index={index}
+            macItem={macItem}
+            onEdit={newMacItem => onEditMacItem(macItem.get('id'), newMacItem)}
+            onDelete={() => onDeleteMacItem(macItem.get('id'))}
+          />
+        )).toArray()}
+      </ul>
+    )}
+  </div>
+)
 
 export default StaticMacMapping
