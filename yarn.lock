@@ -44,7 +44,7 @@
     fuse.js "^3.0.1"
     prop-types "^15.5.9"
 
-"@storybook/react@^3.1.5":
+"@storybook/react@^3.1.6":
   version "3.1.6"
   resolved "http://registry.npm.taobao.org/@storybook/react/download/@storybook/react-3.1.6.tgz#9393bb987ff08ee5f49c4557d12eb84377dee5d2"
   dependencies:
