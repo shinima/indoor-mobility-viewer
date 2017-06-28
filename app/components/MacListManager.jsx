@@ -1,16 +1,10 @@
 import React, { Component } from 'react'
 import MacList from './MacList'
 
-const validNameSet = new Set(['sfc-samsung', 'cx-meizu', 'lxy-meizu', 'a', 'b', 'c', 'bob'])
-const existedMacSet = new Set(['a0:b1:c2:d3:e4:f5', '00-11-22-33-44-55', '88:88:88:88:88:88'])
-
 export default class MacListManager extends Component {
   state = {
-    validNameSet,
-    existedMacSet,
-    // maclist: ['bob', 'a', 'b', 'c'],
-    // checkedMacList: ['a', 'b'],
-    // todo refactor data structure
+    validNameSet: new Set(['sfc-samsung', 'cx-meizu', 'lxy-meizu', 'a', 'b', 'c', 'bob']),
+    existedMacSet: new Set(['a0:b1:c2:d3:e4:f5', '00-11-22-33-44-55', '88:88:88:88:88:88']),
     maclist: [
       {
         name: 'bob',
@@ -34,7 +28,6 @@ export default class MacListManager extends Component {
   deleteItem = (mac) => {
     const { maclist } = this.state
     const macNameArray = maclist.map(item => item.name)
-    // console.log(macNameArray)
     const index = macNameArray.indexOf(mac)
     const newMacList = maclist.slice(0, index).concat(maclist.slice(index + 1))
     this.setState({ maclist: newMacList })
@@ -48,17 +41,14 @@ export default class MacListManager extends Component {
 
   toggleItem = (mac) => {
     const { maclist } = this.state
-    // todo 更改maclist中mac的active属性 如何操作object？？？
-    // const checkedMacList = maclist.filter(item => item.active).map(item => item.name)
-    // console.log(checkedMacList)
-    // const index = checkedMacList.indexOf(macName)
-    //
-    // if (index === -1) {
-    //   this.setState({ checkedMacList: checkedMacList.concat([macName]) })
-    // } else {
-    //   const newCheckedMacList = checkedMacList.slice(0, index).concat(checkedMacList.slice(index + 1))
-    //   this.setState({ checkedMacList: newCheckedMacList })
-    // }
+    const newMaclist = maclist.map((item) => {
+      if (mac.name === item.name) {
+        return Object.assign({}, item, { active: !item.active })
+      } else {
+        return item
+      }
+    })
+    this.setState({ maclist: newMaclist })
   }
 
   render() {
