@@ -18,7 +18,7 @@ export default class MacList extends Component {
       name: macName,
       active: false,
     }
-    if (maclist.indexOf(macName) !== -1) {
+    if (maclist.map(item => item.name).indexOf(macName) !== -1) {
       alert('该用户已存在列表中')
     } else if (validNameSet.has(macName)) {
       this.props.addItem(object)
