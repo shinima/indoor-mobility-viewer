@@ -114,9 +114,8 @@ export default class DrawingManager {
     }
   }
 
-  // todo 可以考虑扁平化trackMatrix数据结构 (一个track的数组起始也就够了)
   // todo 调用raise来提升高亮的track与trackPoint
-  updateTrackPoints(trackMatrix, { htid, htpid }) {
+  updateTrackPoints(tracks, { htid, htpid }) {
     const board = this.svg.select('.board')
     const trackPointsLayer = board.select('.track-points-layer')
 
@@ -128,20 +127,9 @@ export default class DrawingManager {
       }
     }
 
-    const trackPointsGroupJoin = trackPointsLayer.selectAll('.track-group')
-      .data(trackMatrix, tracks => tracks[0].mac)
-
-    // 每个mac一个trackPointsGroup
-    const trackPointsGroup = trackPointsGroupJoin.enter()
-      .append('g')
-      .classed('track-group', true)
-      .attr('data-mac', tracks => tracks[0].mac)
-      .merge(trackPointsGroupJoin)
-    trackPointsGroupJoin.exit().remove()
-
-    // 每个mac的一条track 一个trackPoints
-    const trackPointsJoin = trackPointsGroup.selectAll('.track')
-      .data(_.identity, track => String(track.trackId))
+    // 每条track 一个g.track
+    const trackPointsJoin = trackPointsLayer.selectAll('.track')
+      .data(tracks, track => track.trackId)
     const trackPoints = trackPointsJoin.enter()
       .append('g')
       .classed('track', true)
@@ -187,7 +175,7 @@ export default class DrawingManager {
       .remove()
   }
 
-  updateTrackPath(tracksMatrix, { htid }) {
+  updateTrackPath(tracks, { htid }) {
     const board = this.svg.select('.board')
     const trackPathLayer = board.select('.track-path-layer')
 
@@ -204,19 +192,9 @@ export default class DrawingManager {
       .curve(d3.curveCardinal.tension(0.7))
 
 
-    // 每一个mac一个pathGroup
-    const trackPathGroupJoin = trackPathLayer.selectAll('.path-group')
-      .data(tracksMatrix, tracks => tracks[0].mac)
-    const trackPathGroup = trackPathGroupJoin.enter()
-      .append('g')
-      .classed('path-group', true)
-      .attr('data-mac', tracks => tracks[0].mac)
-      .merge(trackPathGroupJoin)
-    trackPathGroup.exit().remove()
-
     // 每一条轨迹(track)对应一个path
-    const trackPathJoin = trackPathGroup.selectAll('path')
-      .data(_.identity, _.property('trackId'))
+    const trackPathJoin = trackPathLayer.selectAll('path')
+      .data(tracks, track => String(track.trackId))
     const trackPath = trackPathJoin.enter()
       .append('path')
       .attr('fill', 'none')
@@ -235,14 +213,14 @@ export default class DrawingManager {
       .remove()
   }
 
-  updateTrackMatrix(trackMatrix, { showPath, showPoints, htid, htpid }) {
+  updateTracks(tracks, { showPath, showPoints, htid, htpid }) {
     if (showPoints) {
-      this.updateTrackPoints(trackMatrix, { htid, htpid })
+      this.updateTrackPoints(tracks, { htid, htpid })
     } else {
       this.clearTrackPoints()
     }
     if (showPath) {
-      this.updateTrackPath(trackMatrix, { htid })
+      this.updateTrackPath(tracks, { htid })
     } else {
       this.clearTrackPath()
     }

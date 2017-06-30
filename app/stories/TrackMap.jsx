@@ -12,13 +12,12 @@ import staticMacMapping from '../resources/static-mac-mapping.json'
 import cluster from '../components/Map/cluster'
 import TrackDetailPanel from '../components/TrackDetailPanel'
 
-const allTrackMatrix = Map(_.groupBy(allItems, item => item.mac))
-  .map(cluster)
+const allTracks = Map(_.groupBy(allItems, item => item.mac))
+  .toList()
+  .flatMap(cluster)
   .toArray()
 
-const filteredTrackMatrix = allTrackMatrix.map(tracks => (
-  tracks.filter(track => track.floorId === floor.floorId)
-))
+const filteredTracks = allTracks.filter(track => track.floorId === floor.floorId)
 
 class InteractiveTrackMap extends Component {
   state = {
@@ -38,7 +37,7 @@ class InteractiveTrackMap extends Component {
       <div>
         <TrackMap
           floor={floor}
-          trackMatrix={filteredTrackMatrix}
+          tracks={filteredTracks}
           showPath
           showPoints
           htid={htid}
@@ -48,9 +47,7 @@ class InteractiveTrackMap extends Component {
           macs={fromJS(staticMacMapping).map(m => m.get('mac'))}
           hmac={hmac}
           onChangeHmac={hmac => this.setState({ hmac })}
-          tracks={allTrackMatrix.find(tracks => (
-            tracks[0].mac === hmac
-          ))}
+          tracks={allTracks.filter(track => (track.mac === hmac))}
           currentFloorId={currentFloorId}
           onChangeFloorId={action('change-floor-id')}
           onChangeHtid={htid => this.setState({ htid })}
@@ -66,7 +63,7 @@ storiesOf('TrackMap', module)
   .add('static', () => (
     <TrackMap
       floor={floor}
-      trackMatrix={filteredTrackMatrix}
+      tracks={filteredTracks}
       showPath
       showPoints
       htid={null}
