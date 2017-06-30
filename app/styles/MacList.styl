@@ -1,22 +1,4 @@
-$flat-button {
-  height 24px
-  line-height @height
-  border none
-  padding-top 0
-  padding-bottom 0
-  font-size 12px
-  cursor pointer
-}
-
-$widget-title {
-  font-size 14px
-  line-height 24px
-  margin 0
-  background steelblue
-  color white
-  font-weight bold
-  text-align center
-}
+@require './base.styl'
 
 .widgets {
   width 250px
@@ -81,6 +63,15 @@ $widget-title {
     }
   }
 
+  .empty-mac-item-list {
+    height 32px
+    font-size 16px
+    display flex
+    align-items center
+    justify-content center
+    border-top none
+  }
+
   .new-mac-item {
     padding-left 10px
     height 32px
@@ -100,4 +91,5 @@ $widget-title {
       margin-right 4px
     }
   }
+
 }

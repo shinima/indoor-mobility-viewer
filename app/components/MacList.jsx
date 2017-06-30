@@ -18,7 +18,7 @@ export default class MacList extends Component {
       name: macName,
       active: false,
     }
-    if (maclist.indexOf(macName) !== -1) {
+    if (maclist.map(item => item.name).indexOf(macName) !== -1) {
       alert('该用户已存在列表中')
     } else if (validNameSet.has(macName)) {
       this.props.addItem(object)
@@ -40,23 +40,26 @@ export default class MacList extends Component {
       <div className="widgets">
         <div className="mac-list-widget">
           <div className="title">MAC地址管理</div>
-          <div className="mac-list">
-            {maclist.map((mac, index) => (
-              <div className="mac-item" key={index}>
-                <div className="mac-color">
-                  <div className="color" style={{ background: `${getColor(mac.name)}` }} />
+          {maclist.length === 0 ? (
+            <div className="empty-mac-item-list">列表暂时为空</div>
+          ) :
+            (<div className="mac-list">
+              {maclist.map((mac, index) => (
+                <div className="mac-item" key={index}>
+                  <div className="mac-color">
+                    <div className="color" style={{ background: `${getColor(mac.name)}` }} />
+                  </div>
+                  <div className="mac-text">{mac.name}</div>
+                  <button className="mac-delete" onClick={() => this.handleDelete(mac.name)}>Del
+                  </button>
+                  <input
+                    type="checkbox"
+                    checked={mac.active}
+                    onChange={() => this.props.onToggleItem(mac)}
+                  />
                 </div>
-                <div className="mac-text">{mac.name}</div>
-                <button className="mac-delete" onClick={() => this.handleDelete(mac.name)}>Del
-                </button>
-                <input
-                  type="checkbox"
-                  checked={mac.active}
-                  onChange={() => this.props.onToggleItem(mac)}
-                />
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>)}
           <div className="new-mac-item">
             <input
               type="text"
