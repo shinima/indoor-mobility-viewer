@@ -7,19 +7,10 @@ function distance2(p1, p2) {
   return (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2
 }
 
-function drawFloor(floor, svgElement, zoom) {
+// 在svgElement上绘制地图
+function drawFloor(floor, svgElement) {
   const svg = d3.select(svgElement)
-
   const board = svg.select('.board')
-
-  zoom.scaleExtent([0.2, 2])
-    .on('zoom', () => {
-      board.attr('transform', String(d3.event.transform))
-      const tooltipWrapper = d3.select('.tooltip-wrapper')
-      tooltipWrapper.style('left', `${d3.event.transform.x}px`)
-        .style('top', `${d3.event.transform.y}px`)
-    })
-  svg.call(zoom)
 
   // 绘制region
   const regionsLayerJoin = board.select('.regions-layer-wrapper')
@@ -85,7 +76,6 @@ function drawFloor(floor, svgElement, zoom) {
   }
 }
 
-
 export default class DrawingManager {
   // private svgElement: SVGElement
   // private svg: d3.Selection<SVGElement, {}, null, null>
@@ -95,27 +85,170 @@ export default class DrawingManager {
   // 第一次绘制地图的时候自动缩放, 后续绘制地图就不需要自动缩放了
   needAutoResetTransform = true
 
-  constructor(svgElement) {
+  constructor(svgElement, tooltipWrapperElement) {
     this.svgElement = svgElement
     this.svg = d3.select(svgElement)
+    this.tooltipWrapper = d3.select(tooltipWrapperElement)
     this.zoom = d3.zoom()
     this.focusedItemId = -1
 
-    // 下面这段代码 "通过在地图上点击鼠标 在控制台打印该点的坐标"
-    // const board = this.svg.select('.board').node() as SVGGElement
-    // this.svg.on('click', () => {
-    //   console.log(d3.mouse(board))
-    // })
+    const board = this.svg.select('.board')
+    this.zoom.scaleExtent([0.2, 2])
+      .on('zoom', () => {
+        board.attr('transform', String(d3.event.transform))
+        this.tooltipWrapper.style('left', `${d3.event.transform.x}px`)
+          .style('top', `${d3.event.transform.y}px`)
+      })
+    this.svg.call(this.zoom)
   }
 
+  // destroy() {
+  //   todo 释放资源, 清空回调函数
+  // }
+
   updateFloor(floor) {
-    drawFloor(floor, this.svgElement, this.zoom)
+    drawFloor(floor, this.svgElement)
     if (this.needAutoResetTransform) {
       this.resetTransform(false)
       this.needAutoResetTransform = false
     }
   }
 
+  // todo 可以考虑扁平化trackMatrix数据结构 (一个track的数组起始也就够了)
+  // todo 调用raise来提升高亮的track与trackPoint
+  updateTrackPoints(trackMatrix, { htid, htpid }) {
+    const board = this.svg.select('.board')
+    const trackPointsLayer = board.select('.track-points-layer')
+
+    const trackPointsOpacity = (track) => {
+      if (htid === null || track.trackId === htid) {
+        return 1
+      } else {
+        return 0.2
+      }
+    }
+
+    const trackPointsGroupJoin = trackPointsLayer.selectAll('.track-group')
+      .data(trackMatrix, tracks => tracks[0].mac)
+
+    // 每个mac一个trackPointsGroup
+    const trackPointsGroup = trackPointsGroupJoin.enter()
+      .append('g')
+      .classed('track-group', true)
+      .attr('data-mac', tracks => tracks[0].mac)
+      .merge(trackPointsGroupJoin)
+    trackPointsGroupJoin.exit().remove()
+
+    // 每个mac的一条track 一个trackPoints
+    const trackPointsJoin = trackPointsGroup.selectAll('.track')
+      .data(_.identity, track => String(track.trackId))
+    const trackPoints = trackPointsJoin.enter()
+      .append('g')
+      .classed('track', true)
+      .attr('data-track-id', track => String(track.trackId))
+      .merge(trackPointsJoin)
+    trackPoints.transition()
+      .attr('opacity', trackPointsOpacity)
+    trackPoints.exit().remove(0)
+
+    const symbolMap = {
+      'track-start': d3.symbol().type(d3.symbolSquare).size(800),
+      normal: d3.symbol().type(d3.symbolCircle).size(500),
+      'track-end': d3.symbol().type(d3.symbolTriangle).size(800),
+    }
+    const symbolGenerator = trackPoint => symbolMap[trackPoint.pointType]()
+    const trackPointTransform = ({ x, y, trackPointId }) => {
+      const scale = trackPointId === htpid ? 3 : 1
+      return `translate(${x}, ${y}) scale(${scale})`
+    }
+
+    // 每个track-point一个symbol
+    const symbolsJoin = trackPoints.selectAll('.symbol')
+      .data(track => track.points, _.property('trackPointId'))
+    const symbols = symbolsJoin.enter()
+      .append('path')
+      .classed('symbol', true)
+      .attr('data-track-point-id', _.property('trackPointId'))
+      .attr('transform-origin', 'center center')
+      .attr('d', symbolGenerator)
+      .attr('fill', ({ mac }) => getColor(mac))
+      .attr('transform', trackPointTransform)
+      .merge(symbolsJoin)
+    symbols.transition()
+    // todo 当鼠标一下子划过多行(每一行对应一个track-point)时, 动画会变得很奇怪
+      .attr('transform', trackPointTransform)
+
+    symbolsJoin.exit().remove()
+  }
+
+  clearTrackPoints() {
+    this.svg.select('.board .track-points-layer')
+      .selectAll('*')
+      .remove()
+  }
+
+  updateTrackPath(tracksMatrix, { htid }) {
+    const board = this.svg.select('.board')
+    const trackPathLayer = board.select('.track-path-layer')
+
+    const opacity = (track) => {
+      if (htid === null || track.trackId === htid) {
+        return 1
+      } else {
+        return 0.2
+      }
+    }
+    const lineGenerator = d3.line()
+      .x(item => item.x)
+      .y(item => item.y)
+      .curve(d3.curveCardinal.tension(0.7))
+
+
+    // 每一个mac一个pathGroup
+    const trackPathGroupJoin = trackPathLayer.selectAll('.path-group')
+      .data(tracksMatrix, tracks => tracks[0].mac)
+    const trackPathGroup = trackPathGroupJoin.enter()
+      .append('g')
+      .classed('path-group', true)
+      .attr('data-mac', tracks => tracks[0].mac)
+      .merge(trackPathGroupJoin)
+    trackPathGroup.exit().remove()
+
+    // 每一条轨迹(track)对应一个path
+    const trackPathJoin = trackPathGroup.selectAll('path')
+      .data(_.identity, _.property('trackId'))
+    const trackPath = trackPathJoin.enter()
+      .append('path')
+      .attr('fill', 'none')
+      .attr('stroke', track => getColor(track.mac))
+      .attr('stroke-width', 8)
+      .attr('d', track => lineGenerator(track.points))
+      .merge(trackPathJoin)
+    trackPath.transition()
+      .attr('opacity', opacity)
+    trackPathJoin.exit().remove()
+  }
+
+  clearTrackPath() {
+    this.svg.select('.board .track-path-layer')
+      .selectAll('*')
+      .remove()
+  }
+
+  updateTrackMatrix(trackMatrix, { showPath, showPoints, htid, htpid }) {
+    if (showPoints) {
+      this.updateTrackPoints(trackMatrix, { htid, htpid })
+    } else {
+      this.clearTrackPoints()
+    }
+    if (showPath) {
+      this.updateTrackPath(trackMatrix, { htid })
+    } else {
+      this.clearTrackPath()
+    }
+  }
+
+  /** @deprecated */
   updateItems(items) {
     const self = this
     this.zoom.on('zoom.tooltip', () => {
@@ -167,7 +300,8 @@ export default class DrawingManager {
       .y(item => item.y)
       .curve(d3.curveCardinal.tension(0.7))
     const pathLayer = board.select('.path-layer')
-    const pathJoin = pathLayer.selectAll('path').data(itemsArray, items => items[0].mac)
+    const pathJoin = pathLayer.selectAll('path')
+      .data(itemsArray, items => items[0].mac)
     const path = pathJoin.enter()
       .append('path')
       .attr('fill', 'none')
@@ -199,7 +333,7 @@ export default class DrawingManager {
           .transition()
           .attr('transform', 'scale(1)')
         self.focusedItemId = -1
-        hideTooltip()
+        self.hideTooltip()
       }
     }
 
@@ -218,8 +352,7 @@ export default class DrawingManager {
       if (item.duration > 0) {
         durationText = `<p style="margin:0">停留${item.duration.toFixed(2)}分钟</p>`
       }
-      d3.select('.tooltip-wrapper')
-        .html(`
+      self.tooltipWrapper.html(`
         <div>
           <p style="margin: 0">${item.mac}</p>
           <p style="margin: 0">${moment(item.time).format('HH:mm:ss')}</p>
@@ -234,16 +367,15 @@ export default class DrawingManager {
       const item = items.find(item => (item.id === itemId))
       const x = currentTransform.applyX(item.x) - currentTransform.x
       const y = currentTransform.applyY(item.y) - currentTransform.y
-      d3.select('.tooltip-wrapper > div')
-        .style('left', `${x}px`)
+      self.tooltipWrapper.style('left', `${x}px`)
         .style('top', `${y}px`)
     }
   }
 
   resetTransform(useTransition = true) {
     const padding = {
-      left: 250,
-      bottom: 100,
+      left: 50,
+      bottom: 50,
       right: 50,
       top: 50,
     }
@@ -274,14 +406,14 @@ export default class DrawingManager {
     }
   }
 
+  hideTooltip() {
+    this.tooltipWrapper.transition()
+      .style('opacity', 0)
+      .on('end', function end() {
+        d3.select(this)
+          .style('opacity', null)
+          .style('display', 'none')
+      })
+  }
 }
 
-function hideTooltip() {
-  d3.select('.tooltip-wrapper > div')
-    .transition()
-    .style('opacity', 0)
-    .on('end', function end() {
-      d3.select(this).style('opacity', null)
-        .style('display', 'none')
-    })
-}
