@@ -53,7 +53,7 @@ function TrackPointRow({
 export default class TrackDetailPanel extends Component {
   render() {
     const {
-      macs, hmac, tracks, currentFloorId,
+      macs, hmac, tracks, floorId,
       htpid,
       onChangeHtid, onChangeHmac, onChangeHtpid,
     } = this.props
@@ -74,7 +74,7 @@ export default class TrackDetailPanel extends Component {
             <div
               className="track"
               key={track.trackId}
-              onMouseEnter={track.floorId === currentFloorId ?
+              onMouseEnter={track.floorId === floorId ?
                 () => onChangeHtid(track.trackId) : null}
               onMouseLeave={() => onChangeHtid(null)}
             >
@@ -84,7 +84,7 @@ export default class TrackDetailPanel extends Component {
                   {track.floorId}
                 </span>
               </div>
-              {track.floorId === currentFloorId ? (
+              {track.floorId === floorId ? (
                 <ol className="track-point-list" onMouseLeave={() => onChangeHtpid(null)}>
                   {track.points.map(trackPoint => (
                     <TrackPointRow

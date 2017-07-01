@@ -31,14 +31,14 @@ function drawFloor(floor, svgElement) {
     .remove()
   const regionsLayer = regionsLayerJoin.merge(regionsLayerEnter)
 
-  const regions = regionsLayer.selectAll('polygon').data(floor.regions)
-  regions.enter().append('polygon')
-    .merge(regions)
+  const regionsJoin = regionsLayer.selectAll('polygon').data(floor.regions)
+  regionsJoin.enter().append('polygon')
+    .merge(regionsJoin)
     .attr('fill', d => floor.config.colors[d.color])
     .attr('points', d => d.points.map(p => `${p.x},${p.y}`).join(' '))
     .attr('stroke', '#cccccc')
     .attr('stroke-width', '1')
-  regions.exit().remove()
+  regionsJoin.exit().remove()
 
   // 绘制文本
   const textsLayerJoin = board.select('.texts-layer-wrapper')
@@ -58,14 +58,14 @@ function drawFloor(floor, svgElement) {
     .style('opacity', 0)
     .remove()
   const textsLayer = textsLayerJoin.merge(textsLayerEnter)
-  const texts = textsLayer.selectAll('text').data(getAllLabelConfig())
-  texts.enter().append('text')
-    .merge(texts)
+  const textsJoin = textsLayer.selectAll('text').data(getAllLabelConfig())
+  textsJoin.enter().append('text')
+    .merge(textsJoin)
     .text(d => d.text)
     .attr('x', d => d.config.pos.x)
     .attr('y', d => d.config.pos.y)
     .attr('font-size', d => d.config.fontSize)
-  texts.exit().remove()
+  textsJoin.exit().remove()
 
   function getAllLabelConfig() {
     const nodes = floor.nodes.filter(node => node.labelConfig && node.labelConfig.show)
@@ -129,7 +129,7 @@ export default class DrawingManager {
 
     // 每条track 一个g.track
     const trackPointsJoin = trackPointsLayer.selectAll('.track')
-      .data(tracks, track => track.trackId)
+      .data(tracks, track => String(track.trackId))
     const trackPoints = trackPointsJoin.enter()
       .append('g')
       .classed('track', true)
@@ -137,7 +137,7 @@ export default class DrawingManager {
       .merge(trackPointsJoin)
     trackPoints.transition()
       .attr('opacity', trackPointsOpacity)
-    trackPoints.exit().remove(0)
+    trackPointsJoin.exit().remove()
 
     const symbolMap = {
       'track-start': d3.symbol().type(d3.symbolSquare).size(800),
@@ -152,18 +152,20 @@ export default class DrawingManager {
 
     // 每个track-point一个symbol
     const symbolsJoin = trackPoints.selectAll('.symbol')
-      .data(track => track.points, _.property('trackPointId'))
+      .data(track => track.points, trackPoint => trackPoint.trackPointId)
     const symbols = symbolsJoin.enter()
       .append('path')
       .classed('symbol', true)
-      .attr('data-track-point-id', _.property('trackPointId'))
+      .attr('data-track-point-id', trackPoint => trackPoint.trackPointId)
       .attr('transform-origin', 'center center')
       .attr('d', symbolGenerator)
       .attr('fill', ({ mac }) => getColor(mac))
       .attr('transform', trackPointTransform)
       .merge(symbolsJoin)
+
+    // todo 这个transition太僵硬了
+    // 当鼠标一下子划过多行(每一行对应一个track-point)时, 动画会变得很奇怪
     symbols.transition()
-    // todo 当鼠标一下子划过多行(每一行对应一个track-point)时, 动画会变得很奇怪
       .attr('transform', trackPointTransform)
 
     symbolsJoin.exit().remove()
