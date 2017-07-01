@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import * as d3 from 'd3'
 import moment from 'moment'
 import _ from 'lodash'
@@ -135,8 +136,10 @@ export default class DrawingManager {
       .classed('track', true)
       .attr('data-track-id', track => String(track.trackId))
       .merge(trackPointsJoin)
-    trackPoints.transition()
       .attr('opacity', trackPointsOpacity)
+    trackPoints
+      .filter(({ trackId }) => trackId === htid)
+      .raise()
     trackPointsJoin.exit().remove()
 
     const symbolMap = {
@@ -160,12 +163,7 @@ export default class DrawingManager {
       .attr('transform-origin', 'center center')
       .attr('d', symbolGenerator)
       .attr('fill', ({ mac }) => getColor(mac))
-      .attr('transform', trackPointTransform)
       .merge(symbolsJoin)
-
-    // todo 这个transition太僵硬了
-    // 当鼠标一下子划过多行(每一行对应一个track-point)时, 动画会变得很奇怪
-    symbols.transition()
       .attr('transform', trackPointTransform)
 
     symbolsJoin.exit().remove()
@@ -204,8 +202,9 @@ export default class DrawingManager {
       .attr('stroke-width', 8)
       .attr('d', track => lineGenerator(track.points))
       .merge(trackPathJoin)
-    trackPath.transition()
       .attr('opacity', opacity)
+    trackPath.filter(({ trackId }) => trackId === htid)
+      .raise()
     trackPathJoin.exit().remove()
   }
 

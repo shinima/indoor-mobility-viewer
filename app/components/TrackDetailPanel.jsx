@@ -3,6 +3,11 @@ import moment from 'moment'
 import classNames from 'classnames'
 import { getColor } from '../utils/utils'
 import '../styles/TrackDetailPanel.styl'
+import { floorConfig } from '../resources/floors'
+
+function getFloorNameByFloorId(floorId) {
+  return floorConfig.find(flr => flr.floorId === floorId).floorName
+}
 
 function TrackPointSymbol({ pointType, fill }) {
   if (pointType === 'track-start') {
@@ -53,22 +58,15 @@ function TrackPointRow({
 export default class TrackDetailPanel extends Component {
   render() {
     const {
-      macs, hmac, tracks, floorId,
-      htpid,
-      onChangeHtid, onChangeHmac, onChangeHtpid,
+      hmacName, tracks, floorId, htpid,
+      onChangeHtid, onChangeHtpid, onChangeFloorId, onChangeHmacName,
     } = this.props
-    // console.log(tracks)
     return (
       <div className="track-detail-panel">
-        <h1 className="title">轨迹详情</h1>
-        <div>
-          <span>mac: </span>
-          <select value={hmac} onChange={e => onChangeHmac(e.target.value)}>
-            {macs.map(mac => (
-              <option key={mac} value={mac}>{mac}</option>
-            )).toArray()}
-          </select>
-        </div>
+        <h1 className="title">
+          <button className="close" onClick={() => onChangeHmacName(null)}>X</button>
+          {hmacName} 轨迹详情
+        </h1>
         <div className="track-list">
           {tracks.map(track => (
             <div
@@ -79,9 +77,9 @@ export default class TrackDetailPanel extends Component {
               onMouseLeave={() => onChangeHtid(null)}
             >
               <div>
-                <span>轨迹{track.trackId}</span>
+                <span>轨迹 {track.trackId}</span>
                 <span style={{ color: 'steelblue', paddingLeft: 16 }}>
-                  {track.floorId}
+                  {getFloorNameByFloorId(track.floorId)}
                 </span>
               </div>
               {track.floorId === floorId ? (
@@ -96,7 +94,9 @@ export default class TrackDetailPanel extends Component {
                   ))}
                 </ol>
               ) : (
-                <div>该轨迹不在当前楼层内, 点击切换楼层</div>
+                <button onClick={() => onChangeFloorId(track.floorId)}>
+                  该轨迹不在当前楼层内, 点击切换楼层
+                </button>
               )}
             </div>
           ))}

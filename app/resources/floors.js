@@ -1,11 +1,11 @@
 export const floorConfig = [
-  { floorId: 31, name: 'B-1' },
-  { floorId: 32, name: 'B-2' },
-  { floorId: 33, name: 'B-3' },
-  { floorId: 34, name: 'B-4' },
-  { floorId: 35, name: 'B-5' },
-  { floorId: 36, name: 'B-6' },
-  { floorId: 61, name: 'B-7' },
+  { floorId: 31, floorName: 'B-1' },
+  { floorId: 32, floorName: 'B-2' },
+  { floorId: 33, floorName: 'B-3' },
+  { floorId: 34, floorName: 'B-4' },
+  { floorId: 35, floorName: 'B-5' },
+  { floorId: 36, floorName: 'B-6' },
+  { floorId: 61, floorName: 'B-7' },
 ]
 
 const requireFloor = require.context('../resources/', false, /floor-\d+\.json/)

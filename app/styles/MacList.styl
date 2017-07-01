@@ -1,13 +1,5 @@
 @require './base.styl'
 
-.widgets {
-  width 250px
-  position absolute
-  left 8px
-  top @left
-  background rgba(255, 255, 255, 0.9)
-}
-
 .mac-list-widget {
   border 1px solid steelblue
 
@@ -48,9 +40,14 @@
         font-family Consolas, monospace, 'microsoft yahei'
       }
 
-      .mac-delete {
+      .see-tracks {
         @extends $flat-button
         margin-left auto
+      }
+
+      .mac-delete {
+        @extends $flat-button
+        margin-left 8px
       }
 
       .mac-check {
@@ -80,10 +77,11 @@
     align-items center
     border-top 1px solid steelblue
 
-  input {
-    height 24px
-    font-family Consolas, monospace, 'microsoft yahei'
-  }
+    input {
+      width 150px
+      height 24px
+      font-family Consolas, monospace, 'microsoft yahei'
+    }
 
     button {
       @extends $flat-button
