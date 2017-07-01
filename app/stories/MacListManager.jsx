@@ -44,6 +44,7 @@ class MacListManager extends IComponent {
         deleteItem={this.deleteItem}
         addItem={this.addItem}
         onToggleItem={this.toggleItem}
+        onChangeHmacName={action('change-hmac-name')}
         translate={makeTranslateFn(staticMacMapping)}
       />
     )
@@ -57,6 +58,7 @@ storiesOf('MacListManager', module)
       deleteItem={action('delete-mac-item')}
       addItem={action('add-mac-item')}
       onToggleItem={action('choose-mac-item')}
+      onChangeHmacName={action('change-hmac-name')}
       translate={makeTranslateFn(staticMacMapping)}
     />
   ))
@@ -64,6 +66,10 @@ storiesOf('MacListManager', module)
   .add('empty', () => (
     <MacList
       macEntryList={defaultMacEntryList.clear()}
-      addItem={action('add-mac-list-item')}
+      deleteItem={action('delete-mac-item')}
+      addItem={action('add-mac-item')}
+      onToggleItem={action('choose-mac-item')}
+      onChangeHmacName={action('change-hmac-name')}
+      translate={makeTranslateFn(staticMacMapping)}
     />
   ))

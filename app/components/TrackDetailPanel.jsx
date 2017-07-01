@@ -55,11 +55,42 @@ function TrackPointRow({
   )
 }
 
+function TrackInfo({ track, index, floorId, onChangeFloorId, onCentralizeTrack }) {
+  const isInSameFloor = floorId === track.floorId
+  const onClickFloor = isInSameFloor ? null : () => onChangeFloorId(track.floorId)
+  return (
+    <div className="track-info">
+      <p className="first-line">
+        <span style={{ paddingRight: 8 }}>轨迹{index + 1}</span>
+        {isInSameFloor ? getFloorNameByFloorId(track.floorId) : (
+          <a onClick={onClickFloor} href="#">
+            {getFloorNameByFloorId(track.floorId)}
+          </a>
+        )}
+        {isInSameFloor ?
+          <button
+            className="centralize-button"
+            onClick={() => onCentralizeTrack(track.trackId)}
+          >
+            居中
+          </button>
+          : null
+        }
+      </p>
+      <p>
+        {moment(track.startTime).format('HH:mm')}
+        ~
+        {moment(track.endTime).format('HH:mm')}
+      </p>
+    </div>
+  )
+}
+
 export default class TrackDetailPanel extends Component {
   render() {
     const {
       hmacName, tracks, floorId, htpid,
-      onChangeHtid, onChangeHtpid, onChangeFloorId, onChangeHmacName,
+      onChangeHtid, onChangeHtpid, onChangeFloorId, onChangeHmacName, onCentralizeTrack,
     } = this.props
     return (
       <div className="track-detail-panel">
@@ -68,20 +99,20 @@ export default class TrackDetailPanel extends Component {
           {hmacName} 轨迹详情
         </h1>
         <div className="track-list">
-          {tracks.map(track => (
+          {tracks.map((track, index) => (
             <div
               className="track"
               key={track.trackId}
-              onMouseEnter={track.floorId === floorId ?
-                () => onChangeHtid(track.trackId) : null}
+              onMouseEnter={() => onChangeHtid(track.trackId)}
               onMouseLeave={() => onChangeHtid(null)}
             >
-              <div>
-                <span>轨迹 {track.trackId}</span>
-                <span style={{ color: 'steelblue', paddingLeft: 16 }}>
-                  {getFloorNameByFloorId(track.floorId)}
-                </span>
-              </div>
+              <TrackInfo
+                track={track}
+                index={index}
+                floorId={floorId}
+                onChangeFloorId={onChangeFloorId}
+                onCentralizeTrack={onCentralizeTrack}
+              />
               {track.floorId === floorId ? (
                 <ol className="track-point-list" onMouseLeave={() => onChangeHtpid(null)}>
                   {track.points.map(trackPoint => (
@@ -94,9 +125,7 @@ export default class TrackDetailPanel extends Component {
                   ))}
                 </ol>
               ) : (
-                <button onClick={() => onChangeFloorId(track.floorId)}>
-                  该轨迹不在当前楼层内, 点击切换楼层
-                </button>
+                <p className="track-hint">该轨迹不在当前楼层内</p>
               )}
             </div>
           ))}

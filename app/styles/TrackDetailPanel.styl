@@ -2,8 +2,12 @@
 
 .track-detail-panel {
   position absolute
-  right 0
-  border 1px solid steelblue
+  display flex
+  flex-direction column
+  top 8px
+  right 8px
+  bottom 8px
+  width 400px
   background white
 
   .title {
@@ -30,25 +34,31 @@
   }
 
   .track-list {
-    max-height 500px
     overflow-y auto
-    padding 0 16px
+    padding 0 8px
+    border 1px solid steelblue
+    border-top none
   }
 
   .track {
-    width 320px
-    margin-bottom 16px
-    padding 4px
-    mdl-box-shadow(0, 0, 0)
+    margin 16px 0
+    border 2px solid #ececec
     &:hover {
-      mdl-box-shadow(255, 0, 0)
-    }
-    &:first-child {
-      margin-top 16px
+      border-color #edb0a6
     }
 
-    .track-id {
-      margin 0
+    .track-info {
+      > p {
+        margin 0 8px
+        line-height 24px
+      }
+      .first-line {
+        display flex
+        .centralize-button {
+          @extends $flat-button
+          margin-left auto
+        }
+      }
     }
 
     .track-point-list {
@@ -60,6 +70,7 @@
         align-items center
         height 32px
         line-height @height
+        padding 0 8px
         cursor default
         &.highlighted {
           background antiquewhite
@@ -76,6 +87,11 @@
           margin-left 8px
         }
       }
+    }
+
+    .track-hint {
+      margin 0 8px
+      line-height 32px
     }
   }
 }

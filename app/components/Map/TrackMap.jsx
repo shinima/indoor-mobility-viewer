@@ -8,6 +8,8 @@ export default class TrackMap extends Component {
   // prop showPath: 是否要显示path
   // prop showPoints: 是否要显示points
   // prop htid: 高亮的track id, null表示没有光亮track
+  // prop ctid: 居中显示的track id. 初次渲染的时候忽略该prop, 该prop仅在发生变化的时候有效
+  //   并且需要保证ctid对应的path元素目前是渲染在地图上面的
 
   componentDidMount() {
     const { floor, tracks, showPath, showPoints, htid, htpid } = this.props
@@ -22,10 +24,10 @@ export default class TrackMap extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { floor, tracks, showPath, showPoints, htid, htpid } = this.props
+    const { floor, tracks, showPath, showPoints, htid, ctid, htpid } = this.props
     // 用floorId来判断是否为同一个楼层
     if (floor.floorId !== nextProps.floor.floorId) {
-      console.log('update-floor')
+      // console.log('update-floor')
       this.drawingManager.updateFloor(nextProps.floor)
     }
     // todo 这里暂时使用 !== 来直接判断相等
@@ -34,13 +36,17 @@ export default class TrackMap extends Component {
       || showPoints !== nextProps.showPoints
       || htid !== nextProps.htid
       || htpid !== nextProps.htpid) {
-      console.log('update-tracks')
+      // console.log('update-tracks')
       this.drawingManager.updateTracks(nextProps.tracks, {
         showPath: nextProps.showPath,
         showPoints: nextProps.showPoints,
         htid: nextProps.htid,
         htpid: nextProps.htpid,
       })
+    }
+    if (ctid !== nextProps.ctid) {
+      const track = nextProps.tracks.find(t => t.trackId === nextProps.ctid)
+      this.drawingManager.centralizeTrack(track)
     }
   }
 

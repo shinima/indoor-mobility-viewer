@@ -27,9 +27,10 @@ export default class MacList extends Component {
     const { macEntryList, translate } = this.props
     const { macName } = this.state
     const existedMacs = macEntryList.map(entry => entry.get('name')).map(translate).toSet()
-    if (existedMacs.has(translate(macName))) {
+    const mac = translate(macName)
+    if (existedMacs.has(mac)) {
       alert('该mac地址已经存在')
-    } else if (!isValidMac(macName)) {
+    } else if (!isValidMac(mac)) {
       alert('请输入正确的mac地址')
     } else {
       this.props.addItem(macName)

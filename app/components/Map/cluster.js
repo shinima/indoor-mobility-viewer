@@ -70,13 +70,17 @@ function makeTrackPoint(pending) {
 // }
 // 函数返回值类型 Track[]
 // type Track = {
-//   // 第一个点的id
+//   // 第一个点的id, 用来唯一标识track
 //   trackId: number
 //   duration: number
 //   floorId: number
+//   mac: string
+//   startTime: number
+//   endTime: number
 //   points: TrackPoint[]
 // }
 // type TrackPoint = {
+//   trackPointId: number
 //   floorId: number
 //   // 轨迹起始点 | 轨迹结束点 | 普通的轨迹点
 //   pointType: 'track-start' | 'track-end' | 'normal'
@@ -144,12 +148,14 @@ export default function cluster(locations) {
   for (const track of tracks) {
     const first = _.first(track.points)
     const last = _.last(track.points)
-    first.pointType = 'track-start'
     last.pointType = 'track-end'
+    first.pointType = 'track-start'
     track.duration = last.time + last.duration - first.time
     track.floorId = first.floorId
     track.trackId = first.trackPointId
     track.mac = first.mac
+    track.startTime = first.time
+    track.endTime = last.time + last.duration
   }
   return tracks
 }

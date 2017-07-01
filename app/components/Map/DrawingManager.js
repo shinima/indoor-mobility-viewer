@@ -1,4 +1,4 @@
-/* eslint-disable no-shadow */
+/* eslint-disable no-shadow,no-param-reassign */
 import * as d3 from 'd3'
 import moment from 'moment'
 import _ from 'lodash'
@@ -198,6 +198,7 @@ export default class DrawingManager {
     const trackPath = trackPathJoin.enter()
       .append('path')
       .attr('fill', 'none')
+      .attr('data-track-id', track => track.trackId)
       .attr('stroke', track => getColor(track.mac))
       .attr('stroke-width', 8)
       .attr('d', track => lineGenerator(track.points))
@@ -351,15 +352,32 @@ export default class DrawingManager {
     }
   }
 
+  centralizeTrack(track) {
+    const pathElement = this.svgElement.querySelector(`.track-path-layer path[data-track-id="${track.trackId}"]`)
+    const contentBox = pathElement.getBBox()
+    this.centralize(contentBox, true)
+  }
+
   resetTransform(useTransition = true) {
-    const padding = {
-      left: 50,
-      bottom: 50,
-      right: 50,
-      top: 50,
-    }
-    const boardElement = this.svgElement.querySelector('.board')
+    const boardElement = this.svg.select('.board').node()
     const contentBox = boardElement.getBBox()
+    this.centralize(contentBox, useTransition)
+  }
+
+  centralize(contentBox, useTransition, padding = {
+    left: 150,
+    bottom: 150,
+    right: 150,
+    top: 150,
+  }) {
+    if (contentBox.width === 0) {
+      contentBox.width = 200
+      contentBox.x -= 100
+    }
+    if (contentBox.height === 0) {
+      contentBox.height = 200
+      contentBox.y -= 100
+    }
     if (contentBox.width && contentBox.height) {
       const viewBox = {
         x: padding.left,

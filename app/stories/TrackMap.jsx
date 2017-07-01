@@ -34,6 +34,8 @@ class TrackMapPage extends IComponent {
     hmacName: 'sfc-samsung',
     // highlighted-track-id
     htid: null,
+    // centralized-track-id
+    ctid: null,
     // highlighted-track-point-id
     htpid: null,
   }
@@ -55,6 +57,10 @@ class TrackMapPage extends IComponent {
         return entry
       }
     }))
+  }
+
+  onCentralizeTrack = (trackId) => {
+    this.setState({ ctid: trackId })
   }
 
   onToggleItem = (macName) => {
@@ -92,6 +98,7 @@ class TrackMapPage extends IComponent {
           htpid={htpid}
           onChangeHtpid={htpid => this.setState({ htpid })}
           onChangeHmacName={this.onChangeHmacName}
+          onCentralizeTrack={this.onCentralizeTrack}
         />
       )
     } else {
@@ -100,7 +107,7 @@ class TrackMapPage extends IComponent {
   }
 
   render() {
-    const { hmacName, htid, htpid, floor, macEntryList } = this.state
+    const { hmacName, htid, ctid, htpid, floor, macEntryList } = this.state
     const translate = makeTranslateFn(staticMacMapping)
     const hmac = translate(hmacName)
     const activeMacSet = macEntryList
@@ -148,6 +155,7 @@ class TrackMapPage extends IComponent {
           showPath
           showPoints
           htid={htid}
+          ctid={ctid}
           htpid={htpid}
         />
         {this.renderTrackDetailPanel(hmac)}
