@@ -104,7 +104,6 @@ export default class TrackDetailPanel extends Component {
               className="track"
               key={track.trackId}
               onMouseEnter={() => onChangeHtid(track.trackId)}
-              onMouseLeave={() => onChangeHtid(null)}
             >
               <TrackInfo
                 track={track}

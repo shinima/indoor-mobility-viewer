@@ -12,8 +12,12 @@ export default class TrackMap extends Component {
   //   并且需要保证ctid对应的path元素目前是渲染在地图上面的
 
   componentDidMount() {
-    const { floor, tracks, showPath, showPoints, htid, htpid } = this.props
-    this.drawingManager = new DrawingManager(this.svg, this.tooltipWrapper)
+    const {
+      floor, tracks, showPath, showPoints, htid, htpid,
+      // onZoom, humanize, onChangeHtid, onChangeHtpid,
+    } = this.props
+    const getProps = () => this.props
+    this.drawingManager = new DrawingManager(this.svg, this.tooltipWrapper, getProps)
     this.drawingManager.updateFloor(floor)
     this.drawingManager.updateTracks(tracks, {
       showPath,
@@ -44,7 +48,7 @@ export default class TrackMap extends Component {
         htpid: nextProps.htpid,
       })
     }
-    if (ctid !== nextProps.ctid) {
+    if (ctid !== nextProps.ctid && nextProps.ctid != null) {
       const track = nextProps.tracks.find(t => t.trackId === nextProps.ctid)
       this.drawingManager.centralizeTrack(track)
     }

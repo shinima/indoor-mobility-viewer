@@ -8,6 +8,36 @@ function distance2(p1, p2) {
   return (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2
 }
 
+function showTooltip(tooltipWrapper, trackPoint, transform, humanize) {
+  let durationText = '<p style="margin:0">经过</p>'
+  if (trackPoint.duration > 0) {
+    durationText = `<p style="margin:0">停留${(trackPoint.duration / 60e3).toFixed(1)}分钟</p>`
+  }
+  const x = transform.applyX(trackPoint.x) - transform.x
+  const y = transform.applyY(trackPoint.y) - transform.y
+  tooltipWrapper.html(`
+    <div style="left: ${x}px; top: ${y}px;">
+      <p style="margin: 0">${humanize(trackPoint.mac)}</p>
+      <p style="margin: 0">${moment(trackPoint.time).format('HH:mm:ss')}</p>
+      ${durationText}
+    </div>
+  `).style('display', 'block')
+    .style('opacity', 0.3)
+    .interrupt('hide-tooltip')
+    .transition()
+    .style('opacity', 1)
+}
+
+function hideTooltip(tooltipWrapper) {
+  tooltipWrapper.transition('hide-tooltip')
+    .style('opacity', 0)
+    .on('end', function end() {
+      d3.select(this)
+        .style('opacity', null)
+        .style('display', 'none')
+    })
+}
+
 // 在svgElement上绘制地图
 function drawFloor(floor, svgElement) {
   const svg = d3.select(svgElement)
@@ -86,19 +116,26 @@ export default class DrawingManager {
   // 第一次绘制地图的时候自动缩放, 后续绘制地图就不需要自动缩放了
   needAutoResetTransform = true
 
-  constructor(svgElement, tooltipWrapperElement) {
+  constructor(svgElement, tooltipWrapperElement, getProps) {
     this.svgElement = svgElement
     this.svg = d3.select(svgElement)
     this.tooltipWrapper = d3.select(tooltipWrapperElement)
     this.zoom = d3.zoom()
-    this.focusedItemId = -1
+
+    this.getProps = getProps
+    const { humanize, onChangeHtid, onChangeHtpid, onZoom } = getProps()
+    this.humanize = humanize
+    this.onChangeHtid = onChangeHtid
+    this.onChangeHtpid = onChangeHtpid
 
     const board = this.svg.select('.board')
     this.zoom.scaleExtent([0.2, 2])
       .on('zoom', () => {
-        board.attr('transform', String(d3.event.transform))
+        const { transform } = d3.event
+        board.attr('transform', transform)
         this.tooltipWrapper.style('left', `${d3.event.transform.x}px`)
           .style('top', `${d3.event.transform.y}px`)
+        onZoom(transform)
       })
     this.svg.call(this.zoom)
   }
@@ -117,12 +154,13 @@ export default class DrawingManager {
 
   // todo 调用raise来提升高亮的track与trackPoint
   updateTrackPoints(tracks, { htid, htpid }) {
+    const self = this
     const board = this.svg.select('.board')
     const trackPointsLayer = board.select('.track-points-layer')
 
     const trackPointsOpacity = (track) => {
       if (htid === null || track.trackId === htid) {
-        return 1
+        return 0.8
       } else {
         return 0.2
       }
@@ -159,14 +197,31 @@ export default class DrawingManager {
     const symbols = symbolsJoin.enter()
       .append('path')
       .classed('symbol', true)
+      .style('cursor', 'pointer')
       .attr('data-track-point-id', trackPoint => trackPoint.trackPointId)
       .attr('transform-origin', 'center center')
       .attr('d', symbolGenerator)
       .attr('fill', ({ mac }) => getColor(mac))
       .merge(symbolsJoin)
       .attr('transform', trackPointTransform)
-
     symbolsJoin.exit().remove()
+    symbols.on('mouseenter', ({ trackPointId }) => this.onChangeHtpid(trackPointId))
+      .on('mouseleave', () => this.onChangeHtpid(null))
+      .on('click', function onClickSymbol() {
+        const { trackId } = d3.select(this.parentElement).datum()
+        const { htid } = self.getProps()
+        self.onChangeHtid(trackId === htid ? null : trackId)
+      })
+
+    // update tooltip
+    // htp: highlighted track point
+    const htp = _.flatMap(tracks, track => track.points)
+      .find(({ trackPointId }) => trackPointId === htpid)
+    if (htp) {
+      this.tooltipWrapper.call(showTooltip, htp, d3.zoomTransform(this.svgElement), this.humanize)
+    } else {
+      this.tooltipWrapper.call(hideTooltip)
+    }
   }
 
   clearTrackPoints() {
@@ -181,7 +236,7 @@ export default class DrawingManager {
 
     const opacity = (track) => {
       if (htid === null || track.trackId === htid) {
-        return 1
+        return 0.8
       } else {
         return 0.2
       }
@@ -198,6 +253,7 @@ export default class DrawingManager {
     const trackPath = trackPathJoin.enter()
       .append('path')
       .attr('fill', 'none')
+      .style('cursor', 'pointer')
       .attr('data-track-id', track => track.trackId)
       .attr('stroke', track => getColor(track.mac))
       .attr('stroke-width', 8)
@@ -207,6 +263,15 @@ export default class DrawingManager {
     trackPath.filter(({ trackId }) => trackId === htid)
       .raise()
     trackPathJoin.exit().remove()
+
+    trackPath.on('click', ({ trackId }) => {
+      const { htid } = this.getProps()
+      if (htid === trackId) {
+        this.onChangeHtid(null)
+      } else {
+        this.onChangeHtid(trackId)
+      }
+    })
   }
 
   clearTrackPath() {
@@ -225,130 +290,6 @@ export default class DrawingManager {
       this.updateTrackPath(tracks, { htid })
     } else {
       this.clearTrackPath()
-    }
-  }
-
-  /** @deprecated */
-  updateItems(items) {
-    const self = this
-    this.zoom.on('zoom.tooltip', () => {
-      if (this.focusedItemId !== -1) {
-        updateTooltipPosition(this.focusedItemId)
-      }
-    })
-
-    const itemsArray = _.values(_.groupBy(items, item => item.mac))
-    const radius = 12
-
-    const board = this.svg.select('.board')
-    const itemsLayer = board.select('.items-layer')
-    const circlesGroupJoin = itemsLayer.selectAll('g')
-      .data(itemsArray, items => String(items[0].mac))
-    const circlesGroup = circlesGroupJoin.enter()
-      .append('g')
-      .merge(circlesGroupJoin)
-    circlesGroupJoin.exit().remove()
-
-    const circlesJoin = circlesGroup.selectAll('circle')
-      .data(items => items, item => String(item.id))
-    const circles = circlesJoin.enter()
-      .append('circle')
-      .attr('transform-origin', 'center center')
-      .attr('stroke-width', 6)
-      .attr('cx', d => d.x)
-      .attr('cy', d => d.y)
-      .attr('r', 0)
-      .attr('data-item-id', d => d.id)
-      .transition()
-      .attr('r', (d, i) => {
-        if (i === 0) {
-          return 2 * radius
-        } else if (d.duration > 0) {
-          return 1.5 * radius
-        } else {
-          return radius
-        }
-      })
-      .selection()
-      .merge(circlesJoin)
-    circles.attr('fill', (d, i, g) => (i === g.length - 1 ? 'none' : getColor(d.mac)))
-      .attr('stroke', (d, i, g) => (i === g.length - 1 ? getColor(d.mac) : 'none'))
-    circlesJoin.exit().remove()
-
-    const line = d3.line()
-      .x(item => item.x)
-      .y(item => item.y)
-      .curve(d3.curveCardinal.tension(0.7))
-    const pathLayer = board.select('.path-layer')
-    const pathJoin = pathLayer.selectAll('path')
-      .data(itemsArray, items => items[0].mac)
-    const path = pathJoin.enter()
-      .append('path')
-      .attr('fill', 'none')
-      .attr('stroke', d => getColor(d[0].mac))
-      .attr('stroke-width', 8)
-      .merge(pathJoin)
-    pathJoin.exit().remove()
-    path.attr('d', d => line(_.takeRight(d, 20)))
-
-    this.svg.on('mousemove.tooltip', () => {
-      const currentTransform = d3.zoomTransform(this.svgElement)
-      const x = currentTransform.invertX(d3.event.x)
-      const y = currentTransform.invertY(d3.event.y)
-      const closestItem = _.minBy(items, item => distance2(item, { x, y }))
-      if (closestItem && distance2(closestItem, { x, y })
-        < (radius / Math.min(1, currentTransform.k)) ** 2) {
-        if (this.focusedItemId !== closestItem.id) {
-          blur()
-          focus(closestItem.id)
-        }
-      } else {
-        blur()
-      }
-    })
-
-    function blur() {
-      if (self.focusedItemId !== -1) {
-        itemsLayer.select(`[data-item-id="${self.focusedItemId}"]`)
-          .transition()
-          .attr('transform', 'scale(1)')
-        self.focusedItemId = -1
-        self.hideTooltip()
-      }
-    }
-
-    function focus(itemId) {
-      self.focusedItemId = itemId
-      const closestCircle = itemsLayer.select(`[data-item-id="${itemId}"]`)
-      closestCircle.raise()
-        .transition()
-        .attr('transform', 'scale(2)')
-      showTooltip(itemId)
-    }
-
-    function showTooltip(itemId) {
-      const item = items.find(item => (item.id === itemId))
-      let durationText = '<p style="margin:0">经过</p>'
-      if (item.duration > 0) {
-        durationText = `<p style="margin:0">停留${item.duration.toFixed(2)}分钟</p>`
-      }
-      self.tooltipWrapper.html(`
-        <div>
-          <p style="margin: 0">${item.mac}</p>
-          <p style="margin: 0">${moment(item.time).format('HH:mm:ss')}</p>
-          ${durationText}
-        </div>
-      `)
-      updateTooltipPosition(itemId)
-    }
-
-    function updateTooltipPosition(itemId) {
-      const currentTransform = d3.zoomTransform(self.svgElement)
-      const item = items.find(item => (item.id === itemId))
-      const x = currentTransform.applyX(item.x) - currentTransform.x
-      const y = currentTransform.applyY(item.y) - currentTransform.y
-      self.tooltipWrapper.style('left', `${x}px`)
-        .style('top', `${y}px`)
     }
   }
 
@@ -402,15 +343,4 @@ export default class DrawingManager {
         d3.zoomIdentity.translate(dx, dy).scale(scale))
     }
   }
-
-  hideTooltip() {
-    this.tooltipWrapper.transition()
-      .style('opacity', 0)
-      .on('end', function end() {
-        d3.select(this)
-          .style('opacity', null)
-          .style('display', 'none')
-      })
-  }
 }
-

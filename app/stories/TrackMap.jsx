@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import _ from 'lodash'
 import { Set, fromJS, Map } from 'immutable'
 import { storiesOf } from '@storybook/react'
+import { action } from '@storybook/addon-actions'
 import TrackMap from '../components/Map/TrackMap'
 import '../styles/global.styl'
 import '../styles/TrackMapPage.styl'
@@ -13,7 +14,7 @@ import TrackDetailPanel from '../components/TrackDetailPanel'
 import FloorList from '../components/FloorList'
 import floor31 from '../resources/floor-31.json'
 import floors from '../resources/floors'
-import { IComponent, makeTranslateFn } from '../utils/utils'
+import { IComponent, makeTranslateFn, makeHumanizeFn } from '../utils/utils'
 import MacList from '../components/MacList'
 
 const allTracks = Map(_.groupBy(allItems, item => item.mac))
@@ -41,6 +42,8 @@ class TrackMapPage extends IComponent {
   }
 
   updateMacEntryList = this.makeIUpdateFn('macEntryList')
+  translate = makeTranslateFn(staticMacMapping)
+  humanize = makeHumanizeFn(staticMacMapping)
 
   changeFloorId = (floorId) => {
     const nextFloor = floors.find(flr => flr.floorId === floorId)
@@ -50,7 +53,7 @@ class TrackMapPage extends IComponent {
   onChangeHmacName = (hmacName) => {
     this.setState({ hmacName })
     // 将对应的macEntry的设置为active
-    this.updateMacEntryList(list => list.map(entry => {
+    this.updateMacEntryList(list => list.map((entry) => {
       if (entry.get('name') === hmacName) {
         return entry.set('active', true)
       } else {
@@ -66,10 +69,12 @@ class TrackMapPage extends IComponent {
   onToggleItem = (macName) => {
     const { macEntryList, hmacName } = this.state
     let nextHmacName = hmacName
-    const entry = macEntryList.find(entry => entry.get('name') === macName)
-    if (entry.get('active')) {
-      // 如果当前这个mac是高亮的mac地址, 那么当用户将其设置为inactive的时候, 我们需要清空hmacName
-      nextHmacName = null
+    if (macName === hmacName) {
+      const entry = macEntryList.find(entry => entry.get('name') === macName)
+      if (entry.get('active')) {
+        // 如果当前这个mac是高亮的mac地址, 那么当用户将其设置为inactive的时候, 我们需要清空hmacName
+        nextHmacName = null
+      }
     }
     const nextMacEntryList = macEntryList.map((entry) => {
       if (entry.get('name') === macName) {
@@ -84,6 +89,14 @@ class TrackMapPage extends IComponent {
     })
   }
 
+  onChangeHtid = (htid) => {
+    this.setState({ htid })
+    if (htid != null) {
+      const track = allTracks.find(tr => tr.trackId === htid)
+      this.setState({ hmacName: this.humanize(track.mac) })
+    }
+  }
+  onChangeHtpid = htpid => this.setState({ htpid })
 
   renderTrackDetailPanel(hmac) {
     if (hmac != null) {
@@ -94,9 +107,9 @@ class TrackMapPage extends IComponent {
           tracks={allTracks.filter(track => (track.mac === hmac))}
           floorId={floor.floorId}
           onChangeFloorId={this.changeFloorId}
-          onChangeHtid={htid => this.setState({ htid })}
+          onChangeHtid={this.onChangeHtid}
           htpid={htpid}
-          onChangeHtpid={htpid => this.setState({ htpid })}
+          onChangeHtpid={this.onChangeHtpid}
           onChangeHmacName={this.onChangeHmacName}
           onCentralizeTrack={this.onCentralizeTrack}
         />
@@ -108,12 +121,12 @@ class TrackMapPage extends IComponent {
 
   render() {
     const { hmacName, htid, ctid, htpid, floor, macEntryList } = this.state
-    const translate = makeTranslateFn(staticMacMapping)
-    const hmac = translate(hmacName)
+
+    const hmac = this.translate(hmacName)
     const activeMacSet = macEntryList
       .filter(entry => entry.get('active'))
       .map(entry => entry.get('name'))
-      .map(translate)
+      .map(this.translate)
       .toSet()
     const visibleTracks = allTracks
       .filter(track => track.floorId === floor.floorId)
@@ -131,7 +144,7 @@ class TrackMapPage extends IComponent {
               this.updateMacEntryList(list => list.push(Map({ name, active: true })))
             }}
             onToggleItem={this.onToggleItem}
-            translate={translate}
+            translate={this.translate}
             onChangeHmacName={this.onChangeHmacName}
           />
           <FloorList
@@ -157,6 +170,10 @@ class TrackMapPage extends IComponent {
           htid={htid}
           ctid={ctid}
           htpid={htpid}
+          onChangeHtid={this.onChangeHtid}
+          onChangeHtpid={this.onChangeHtpid}
+          humanize={this.humanize}
+          onZoom={() => this.setState({ ctid: null })}
         />
         {this.renderTrackDetailPanel(hmac)}
       </div>
@@ -173,6 +190,7 @@ storiesOf('TrackMap', module)
       showPoints
       htid={null}
       htpid={null}
+      onZoom={action('zoom')}
     />
   ))
   .add('TrackMapPage', () => <TrackMapPage />)
