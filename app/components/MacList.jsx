@@ -38,7 +38,7 @@ export default class MacList extends Component {
   }
 
   render() {
-    const { macEntryList, translate, onChangeHmacName } = this.props
+    const { macEntryList, translate } = this.props
     const { macName } = this.state
 
     return (
@@ -57,12 +57,6 @@ export default class MacList extends Component {
                   />
                 </div>
                 <div className="mac-text">{macEntry.get('name')}</div>
-                <button
-                  className="see-tracks"
-                  onClick={() => onChangeHmacName(macEntry.get('name'))}
-                >
-                  Tracks
-                </button>
                 <button
                   className="mac-delete"
                   onClick={() => this.props.deleteItem(macEntry.get('name'))}

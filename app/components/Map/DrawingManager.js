@@ -4,10 +4,6 @@ import moment from 'moment'
 import _ from 'lodash'
 import { getColor } from '../../utils/utils'
 
-function distance2(p1, p2) {
-  return (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2
-}
-
 function showTooltip(tooltipWrapper, trackPoint, transform, humanize) {
   let durationText = '<p style="margin:0">经过</p>'
   if (trackPoint.duration > 0) {
@@ -22,20 +18,21 @@ function showTooltip(tooltipWrapper, trackPoint, transform, humanize) {
       ${durationText}
     </div>
   `).style('display', 'block')
-    .style('opacity', 0.3)
-    .interrupt('hide-tooltip')
-    .transition()
-    .style('opacity', 1)
+  // .style('opacity', 0.3)
+  // .interrupt('hide-tooltip')
+  // .transition()
+  // .style('opacity', 1)
 }
 
 function hideTooltip(tooltipWrapper) {
-  tooltipWrapper.transition('hide-tooltip')
-    .style('opacity', 0)
-    .on('end', function end() {
-      d3.select(this)
-        .style('opacity', null)
-        .style('display', 'none')
-    })
+  // tooltipWrapper.transition('hide-tooltip')
+  //   .style('opacity', 0)
+  //   .on('end', function end() {
+  //     d3.select(this)
+  //       .style('opacity', null)
+  //       .style('display', 'none')
+  //   })
+  tooltipWrapper.style('display', 'none')
 }
 
 // 在svgElement上绘制地图

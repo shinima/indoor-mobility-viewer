@@ -55,27 +55,27 @@ function TrackPointRow({
   )
 }
 
-function TrackInfo({ track, index, floorId, onChangeFloorId, onCentralizeTrack }) {
-  const isInSameFloor = floorId === track.floorId
-  const onClickFloor = isInSameFloor ? null : () => onChangeFloorId(track.floorId)
+// eslint-disable-next-line max-len
+function TrackInfo({ track, index, floorId, htid, onChangeHtid, onCentralizeTrack }) {
+  let button
+  if (track.floorId !== floorId || track.trackId !== htid) {
+    const onClick = () => onChangeHtid(track.trackId)
+    button = <button className="centralize-button" onClick={onClick}>切换</button>
+  } else {
+    const onClick = () => onCentralizeTrack(track.trackId)
+    button = <button className="centralize-button" onClick={onClick}>居中</button>
+  }
   return (
     <div className="track-info">
       <p className="first-line">
-        <span style={{ paddingRight: 8 }}>轨迹{index + 1}</span>
-        {isInSameFloor ? getFloorNameByFloorId(track.floorId) : (
-          <a onClick={onClickFloor} href="#">
-            {getFloorNameByFloorId(track.floorId)}
-          </a>
-        )}
-        {isInSameFloor ?
-          <button
-            className="centralize-button"
-            onClick={() => onCentralizeTrack(track.trackId)}
-          >
-            居中
-          </button>
-          : null
-        }
+        轨迹
+        <span style={{ paddingRight: 8, fontWeight: 'bold' }}>
+          {index + 1}
+        </span>
+        <span style={{ fontWeight: 'bold', color: 'steelblue' }}>
+          {getFloorNameByFloorId(track.floorId)}
+        </span>
+        {button}
       </p>
       <p>
         {moment(track.startTime).format('HH:mm')}
@@ -86,46 +86,55 @@ function TrackInfo({ track, index, floorId, onChangeFloorId, onCentralizeTrack }
   )
 }
 
+function TrackDetail({ track, floorId, htid, htpid, onChangeHtpid }) {
+  if (track.floorId === floorId && track.trackId === htid) {
+    return (
+      <ol className="track-point-list" onMouseLeave={() => onChangeHtpid(null)}>
+        {track.points.map(trackPoint => (
+          <TrackPointRow
+            key={trackPoint.trackPointId}
+            trackPoint={trackPoint}
+            onChangeHtpid={onChangeHtpid}
+            highlighted={trackPoint.trackPointId === htpid}
+          />
+        ))}
+      </ol>
+    )
+  } else {
+    return null
+  }
+}
+
 export default class TrackDetailPanel extends Component {
   render() {
     const {
-      hmacName, tracks, floorId, htpid,
-      onChangeHtid, onChangeHtpid, onChangeFloorId, onChangeHmacName, onCentralizeTrack,
+      tracks, floorId, ht, htid, htpid, humanize,
+      onChangeHtid, onChangeHtpid, onCentralizeTrack,
     } = this.props
     return (
       <div className="track-detail-panel">
         <h1 className="title">
-          <button className="close" onClick={() => onChangeHmacName(null)}>X</button>
-          {hmacName} 轨迹详情
+          <button className="close" onClick={() => onChangeHtid(null)}>X</button>
+          {humanize(ht.mac)} 轨迹详情
         </h1>
         <div className="track-list">
           {tracks.map((track, index) => (
-            <div
-              className="track"
-              key={track.trackId}
-              onMouseEnter={() => onChangeHtid(track.trackId)}
-            >
+            <div key={track.trackId} className={classNames('track', { highlighted: track.trackId === htid })}>
               <TrackInfo
                 track={track}
                 index={index}
                 floorId={floorId}
-                onChangeFloorId={onChangeFloorId}
+                htid={htid}
+                onChangeHtid={onChangeHtid}
                 onCentralizeTrack={onCentralizeTrack}
               />
-              {track.floorId === floorId ? (
-                <ol className="track-point-list" onMouseLeave={() => onChangeHtpid(null)}>
-                  {track.points.map(trackPoint => (
-                    <TrackPointRow
-                      key={trackPoint.trackPointId}
-                      trackPoint={trackPoint}
-                      onChangeHtpid={onChangeHtpid}
-                      highlighted={trackPoint.trackPointId === htpid}
-                    />
-                  ))}
-                </ol>
-              ) : (
-                <p className="track-hint">该轨迹不在当前楼层内</p>
-              )}
+              <TrackDetail
+                track={track}
+                floorId={floorId}
+                htid={htid}
+                htpid={htpid}
+                onChangeHtpid={onChangeHtpid}
+              />
             </div>
           ))}
         </div>

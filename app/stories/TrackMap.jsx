@@ -31,8 +31,6 @@ class TrackMapPage extends IComponent {
       name: item.name,
       active: true,
     }))),
-    // highlighted-mac-name 即想要查看当天轨迹的macName
-    hmacName: 'sfc-samsung',
     // highlighted-track-id
     htid: null,
     // centralized-track-id
@@ -47,19 +45,7 @@ class TrackMapPage extends IComponent {
 
   changeFloorId = (floorId) => {
     const nextFloor = floors.find(flr => flr.floorId === floorId)
-    this.setState({ floor: nextFloor })
-  }
-
-  onChangeHmacName = (hmacName) => {
-    this.setState({ hmacName })
-    // 将对应的macEntry的设置为active
-    this.updateMacEntryList(list => list.map((entry) => {
-      if (entry.get('name') === hmacName) {
-        return entry.set('active', true)
-      } else {
-        return entry
-      }
-    }))
+    this.setState({ floor: nextFloor, htid: null })
   }
 
   onCentralizeTrack = (trackId) => {
@@ -67,51 +53,49 @@ class TrackMapPage extends IComponent {
   }
 
   onToggleItem = (macName) => {
-    const { macEntryList, hmacName } = this.state
-    let nextHmacName = hmacName
-    if (macName === hmacName) {
-      const entry = macEntryList.find(entry => entry.get('name') === macName)
-      if (entry.get('active')) {
-        // 如果当前这个mac是高亮的mac地址, 那么当用户将其设置为inactive的时候, 我们需要清空hmacName
-        nextHmacName = null
-      }
-    }
-    const nextMacEntryList = macEntryList.map((entry) => {
+    this.updateMacEntryList(list => list.map((entry) => {
       if (entry.get('name') === macName) {
         return entry.set('active', !entry.get('active'))
       } else {
         return entry
       }
-    })
-    this.setState({
-      hmacName: nextHmacName,
-      macEntryList: nextMacEntryList,
-    })
+    }))
   }
 
   onChangeHtid = (htid) => {
-    this.setState({ htid })
     if (htid != null) {
-      const track = allTracks.find(tr => tr.trackId === htid)
-      this.setState({ hmacName: this.humanize(track.mac) })
+      const { floor } = this.state
+      // ht: highlighted-track
+      const ht = allTracks.find(tr => tr.trackId === htid)
+      if (floor.floorId === ht.floorId) {
+        this.setState({ htid })
+      } else {
+        // 如果发生了楼层切换, 那么默认居中显示highlighted-track
+        const nextFloor = floors.find(flr => flr.floorId === ht.floorId)
+        this.setState({ htid, ctid: htid, floor: nextFloor })
+      }
+    } else {
+      this.setState({ htid })
     }
   }
   onChangeHtpid = htpid => this.setState({ htpid })
 
-  renderTrackDetailPanel(hmac) {
-    if (hmac != null) {
-      const { hmacName, floor, htpid } = this.state
+  renderTrackDetailPanel() {
+    const { floor, htid, htpid } = this.state
+    if (htid != null) {
+      // ht: highlighted track
+      const ht = allTracks.find(tr => tr.trackId === htid)
       return (
         <TrackDetailPanel
-          hmacName={hmacName}
-          tracks={allTracks.filter(track => (track.mac === hmac))}
+          tracks={allTracks.filter(track => (track.mac === ht.mac))}
           floorId={floor.floorId}
-          onChangeFloorId={this.changeFloorId}
           onChangeHtid={this.onChangeHtid}
+          ht={ht}
+          htid={htid}
           htpid={htpid}
           onChangeHtpid={this.onChangeHtpid}
-          onChangeHmacName={this.onChangeHmacName}
           onCentralizeTrack={this.onCentralizeTrack}
+          humanize={this.humanize}
         />
       )
     } else {
@@ -120,9 +104,8 @@ class TrackMapPage extends IComponent {
   }
 
   render() {
-    const { hmacName, htid, ctid, htpid, floor, macEntryList } = this.state
+    const { htid, ctid, htpid, floor, macEntryList } = this.state
 
-    const hmac = this.translate(hmacName)
     const activeMacSet = macEntryList
       .filter(entry => entry.get('active'))
       .map(entry => entry.get('name'))
@@ -145,7 +128,6 @@ class TrackMapPage extends IComponent {
             }}
             onToggleItem={this.onToggleItem}
             translate={this.translate}
-            onChangeHmacName={this.onChangeHmacName}
           />
           <FloorList
             selectedFloorId={floor.floorId}
@@ -175,7 +157,7 @@ class TrackMapPage extends IComponent {
           humanize={this.humanize}
           onZoom={() => this.setState({ ctid: null })}
         />
-        {this.renderTrackDetailPanel(hmac)}
+        {this.renderTrackDetailPanel()}
       </div>
     )
   }
