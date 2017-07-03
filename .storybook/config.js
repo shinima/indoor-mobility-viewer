@@ -1,7 +1,7 @@
 import { configure } from '@storybook/react'
 
 function loadStories() {
-  require('../app/stories/MacListManager')
+  require('../app/stories/MacList')
   require('../app/stories/StaticMacMapping')
   require('../app/stories/FloorListManager')
   require('../app/stories/TrackMap')

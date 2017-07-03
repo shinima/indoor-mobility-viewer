@@ -27,10 +27,7 @@ class TrackMapPage extends IComponent {
     // 当前显示的楼层
     floor: _.first(floors),
     // mac地址过滤控件的状态
-    macEntryList: fromJS(staticMacMapping.map(item => ({
-      name: item.name,
-      active: true,
-    }))),
+    macEntryMap: Map(staticMacMapping.map(({ name }) => [name, true])),
     // highlighted-track-id
     htid: null,
     // centralized-track-id
@@ -39,9 +36,26 @@ class TrackMapPage extends IComponent {
     htpid: null,
   }
 
-  updateMacEntryList = this.makeIUpdateFn('macEntryList')
+  updateMacEntryMap = this.makeIUpdateFn('macEntryMap')
   translate = makeTranslateFn(staticMacMapping)
   humanize = makeHumanizeFn(staticMacMapping)
+
+  onDeleteMacEntry = (macName) => {
+    this.updateMacEntryMap(map => map.delete(macName))
+
+    // 如果当前高亮的轨迹正好要被删除, 那么将htid设置为null
+    const { htid, macEntryMap } = this.state
+    if (htid != null && macEntryMap.get(macName)) {
+      const highlightedTrack = allTracks.find(tr => tr.trackId === htid)
+      if (highlightedTrack.mac === this.translate(macName)) {
+        this.setState({ htid: null })
+      }
+    }
+  }
+
+  onAddMacEntry = (macName) => {
+    this.updateMacEntryMap(map => map.set(macName, true))
+  }
 
   changeFloorId = (floorId) => {
     const nextFloor = floors.find(flr => flr.floorId === floorId)
@@ -52,14 +66,18 @@ class TrackMapPage extends IComponent {
     this.setState({ ctid: trackId })
   }
 
-  onToggleItem = (macName) => {
-    this.updateMacEntryList(list => list.map((entry) => {
-      if (entry.get('name') === macName) {
-        return entry.set('active', !entry.get('active'))
-      } else {
-        return entry
+  onToggleMacEntry = (macName) => {
+    const not = x => !x
+    this.updateMacEntryMap(map => map.update(macName, not))
+
+    // 如果当前高亮的轨迹正好要设置为不可见, 那么将htid设置为null
+    const { htid, macEntryMap } = this.state
+    if (htid != null && macEntryMap.get(macName)) {
+      const highlightedTrack = allTracks.find(tr => tr.trackId === htid)
+      if (highlightedTrack.mac === this.translate(macName)) {
+        this.setState({ htid: null })
       }
-    }))
+    }
   }
 
   onChangeHtid = (htid) => {
@@ -104,11 +122,10 @@ class TrackMapPage extends IComponent {
   }
 
   render() {
-    const { htid, ctid, htpid, floor, macEntryList } = this.state
+    const { htid, ctid, htpid, floor, macEntryMap } = this.state
 
-    const activeMacSet = macEntryList
-      .filter(entry => entry.get('active'))
-      .map(entry => entry.get('name'))
+    const activeMacSet = macEntryMap.filter(Boolean)
+      .keySeq()
       .map(this.translate)
       .toSet()
     const visibleTracks = allTracks
@@ -119,14 +136,10 @@ class TrackMapPage extends IComponent {
       <div>
         <div className="widgets">
           <MacList
-            macEntryList={macEntryList}
-            deleteItem={(macName) => {
-              this.updateMacEntryList(list => list.filterNot(entry => entry.get('name') === macName))
-            }}
-            addItem={(name) => {
-              this.updateMacEntryList(list => list.push(Map({ name, active: true })))
-            }}
-            onToggleItem={this.onToggleItem}
+            macEntryMap={macEntryMap}
+            onDeleteMacEntry={this.onDeleteMacEntry}
+            onAddMacEntry={this.onAddMacEntry}
+            onToggleMacEntry={this.onToggleMacEntry}
             translate={this.translate}
           />
           <FloorList
@@ -171,7 +184,11 @@ storiesOf('TrackMap', module)
       showPath
       showPoints
       htid={null}
+      ctid={null}
       htpid={null}
+      onChangeHtid={action('change-highlighted-track-id')}
+      onChangeHtpid={action('change-highlighted-track-point-id')}
+      humanize={makeHumanizeFn(staticMacMapping)}
       onZoom={action('zoom')}
     />
   ))
