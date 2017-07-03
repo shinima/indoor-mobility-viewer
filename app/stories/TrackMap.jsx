@@ -80,6 +80,17 @@ class TrackMapPage extends IComponent {
     }
   }
 
+  // 高亮一个macName在当前楼层的第一条轨迹
+  onHighlightFirstTrack = (macName) => {
+    const mac = this.translate(macName)
+    const { floor } = this.state
+    const highlightedTrack = allTracks.find(tr => (tr.floorId === floor.floorId && tr.mac === mac))
+    if (highlightedTrack) {
+      this.setState({ htid: highlightedTrack.trackId })
+    }
+    // todo else 没有找到轨迹的话, 需要使用toast来提示用户
+  }
+
   onChangeHtid = (htid) => {
     if (htid != null) {
       const { floor } = this.state
@@ -140,6 +151,7 @@ class TrackMapPage extends IComponent {
             onDeleteMacEntry={this.onDeleteMacEntry}
             onAddMacEntry={this.onAddMacEntry}
             onToggleMacEntry={this.onToggleMacEntry}
+            onHighlightFirstTrack={this.onHighlightFirstTrack}
             translate={this.translate}
           />
           <FloorList

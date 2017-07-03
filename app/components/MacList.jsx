@@ -38,7 +38,7 @@ export default class MacList extends Component {
   }
 
   render() {
-    const { macEntryMap, translate } = this.props
+    const { macEntryMap, translate, onHighlightFirstTrack } = this.props
     const { macName } = this.state
 
     return (
@@ -51,7 +51,8 @@ export default class MacList extends Component {
             {macEntryMap.map((active, name) => (
               <div className="mac-item" key={name}>
                 <div className="mac-color">
-                  <div
+                  <button
+                    onClick={() => onHighlightFirstTrack(name)}
                     className="color"
                     style={{ background: `${getColor(translate(name))}` }}
                   />
