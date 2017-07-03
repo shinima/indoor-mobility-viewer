@@ -13,14 +13,17 @@ import cluster from '../components/Map/cluster'
 import TrackDetailPanel from '../components/TrackDetailPanel'
 import FloorList from '../components/FloorList'
 import floor31 from '../resources/floor-31.json'
-import floors from '../resources/floors'
+import floors, { floorConfig } from '../resources/floors'
 import { IComponent, makeTranslateFn, makeHumanizeFn } from '../utils/utils'
 import MacList from '../components/MacList'
 
+const floorCount = Map(Object.entries(_.groupBy(allItems, item => item.floorId))
+  .map(item => ({ floorId: item[0], count: item[1].length })).map(({floorId, count}) => [floorId, count]))
 const allTracks = Map(_.groupBy(allItems, item => item.mac))
   .toList()
   .flatMap(cluster)
   .toArray()
+const floorEntryMap = Map(floorConfig.map(({ floorId, floorName }) => [floorId, floorName]))
 
 class TrackMapPage extends IComponent {
   state = {
@@ -156,17 +159,11 @@ class TrackMapPage extends IComponent {
           />
           <FloorList
             selectedFloorId={floor.floorId}
-            // todo 相关的prop需要修改一下
-            floorDataArray={[
-              { floorId: 31, buildingFloor: 'B-1' },
-              { floorId: 32, buildingFloor: 'B-2' },
-              { floorId: 33, buildingFloor: 'B-3' },
-              { floorId: 34, buildingFloor: 'B-4' },
-              { floorId: 35, buildingFloor: 'B-5' },
-              { floorId: 36, buildingFloor: 'B-6' },
-              { floorId: 61, buildingFloor: 'B-7' },
-            ]}
+            floorDataArray={floorEntryMap}
             changeSelectedFloorId={this.changeFloorId}
+            getFloorCount={floorId => {
+              const count = floorCount.get(`${floorId}`)
+              return typeof(count) === 'undefined' ? 0 : count }}
           />
         </div>
         <TrackMap

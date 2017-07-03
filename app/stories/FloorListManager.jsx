@@ -1,22 +1,35 @@
 import React, { Component } from 'react'
+import _ from 'lodash'
+import { Map } from 'immutable'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
+import { floorConfig } from '../resources/floors'
+import allItems from '../resources/items.json'
 import FloorList from '../components/FloorList'
+
+const floorCount = Map(Object.entries(_.groupBy(allItems, item => item.floorId))
+  .map(item => ({ floorId: item[0], count: item[1].length })).map(({floorId, count}) => [floorId, count]))
+
+const defaultFloorEntryMap = Map(floorConfig.map(({ floorId, floorName }) =>
+  [floorId, floorName]))
 
 class FloorListManager extends Component {
   state = {
-    selectedFloorId: this.props.floorDataArray[0].floorId,
+    // 默认选择floorDataArray中的第一项作为默认项
+    selectedFloorId: this.props.floorDataArray.keyOf(this.props.floorDataArray.first()),
   }
 
   render() {
     const { selectedFloorId } = this.state
     const { floorDataArray } = this.props
-
     return (
       <FloorList
         floorDataArray={floorDataArray}
         selectedFloorId={selectedFloorId}
         changeSelectedFloorId={floorId => this.setState({ selectedFloorId: floorId })}
+        getFloorCount={floorId => {
+          const count = floorCount.get(`${floorId}`)
+          return typeof(count) === 'undefined' ? 0 : count }}
       />
     )
   }
@@ -26,28 +39,12 @@ storiesOf('FloorListManager', module)
   .add('static', () => (
     <FloorList
       selectedFloorId={31}
-      floorDataArray={[
-        { floorId: 31, buildingFloor: 'B-1' },
-        { floorId: 32, buildingFloor: 'B-2' },
-        { floorId: 33, buildingFloor: 'B-3' },
-        { floorId: 34, buildingFloor: 'B-4' },
-        { floorId: 35, buildingFloor: 'B-5' },
-        { floorId: 36, buildingFloor: 'B-6' },
-        { floorId: 61, buildingFloor: 'B-7' },
-      ]}
+      floorDataArray={defaultFloorEntryMap}
       changeSelectedFloorId={action('change-selected-floor-id')}
     />
   ))
   .add('interactive', () => (
     <FloorListManager
-      floorDataArray={[
-        { floorId: 31, buildingFloor: 'B-1' },
-        { floorId: 32, buildingFloor: 'B-2' },
-        { floorId: 33, buildingFloor: 'B-3' },
-        { floorId: 34, buildingFloor: 'B-4' },
-        { floorId: 35, buildingFloor: 'B-5' },
-        { floorId: 36, buildingFloor: 'B-6' },
-        { floorId: 61, buildingFloor: 'B-7' },
-      ]}
+      floorDataArray={defaultFloorEntryMap}
     />
   ))
