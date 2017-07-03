@@ -36,6 +36,7 @@ class InteractiveMacList extends IComponent {
         onAddMacEntry={this.onAddMacEntry}
         onToggleMacEntry={this.onToggleMacEntry}
         onHighlightFirstTrack={action('highlight-first-track')}
+        onCentralizeFirstTrack={action('centralize-first-track')}
         translate={makeTranslateFn(staticMacMapping)}
       />
     )
@@ -50,6 +51,7 @@ storiesOf('MacListManager', module)
       onAddMacEntry={action('add-mac-entry')}
       onToggleMacEntry={action('toggle-mac-entry')}
       onHighlightFirstTrack={action('highlight-first-track')}
+      onCentralizeFirstTrack={action('centralize-first-track')}
       translate={makeTranslateFn(staticMacMapping)}
     />
   ))
@@ -60,6 +62,7 @@ storiesOf('MacListManager', module)
       onAddMacEntry={action('add-mac-entry')}
       onToggleMacEntry={action('toggle-mac-entry')}
       onHighlightFirstTrack={action('highlight-first-track')}
+      onCentralizeFirstTrack={action('centralize-first-track')}
       translate={makeTranslateFn(staticMacMapping)}
     />
   ))

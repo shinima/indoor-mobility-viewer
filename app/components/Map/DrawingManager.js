@@ -293,7 +293,7 @@ export default class DrawingManager {
   centralizeTrack(track) {
     const pathElement = this.svgElement.querySelector(`.track-path-layer path[data-track-id="${track.trackId}"]`)
     const contentBox = pathElement.getBBox()
-    this.centralize(contentBox, true)
+    this.centralize(contentBox, true, { top: 50, bottom: 50, left: 300, right: 450 })
   }
 
   resetTransform(useTransition = true) {
@@ -302,12 +302,17 @@ export default class DrawingManager {
     this.centralize(contentBox, useTransition)
   }
 
-  centralize(contentBox, useTransition, padding = {
-    left: 150,
-    bottom: 150,
-    right: 150,
-    top: 150,
-  }) {
+  centralize(contentBox, useTransition, padding) {
+    const defaultPadding = 150
+    const getPadding = (key) => {
+      if (typeof padding === 'number') {
+        return padding
+      } else if (typeof padding === 'object' && typeof padding[key] === 'number') {
+        return padding[key]
+      } else {
+        return defaultPadding
+      }
+    }
     if (contentBox.width === 0) {
       contentBox.width = 200
       contentBox.x -= 100
@@ -318,10 +323,10 @@ export default class DrawingManager {
     }
     if (contentBox.width && contentBox.height) {
       const viewBox = {
-        x: padding.left,
-        y: padding.top,
-        width: this.svgElement.clientWidth - padding.left - padding.right,
-        height: this.svgElement.clientHeight - padding.top - padding.bottom,
+        x: getPadding('left'),
+        y: getPadding('top'),
+        width: this.svgElement.clientWidth - getPadding('left') - getPadding('right'),
+        height: this.svgElement.clientHeight - getPadding('top') - getPadding('bottom'),
       }
       const mb = {
         x: contentBox.x,

@@ -91,6 +91,16 @@ class TrackMapPage extends IComponent {
     // todo else 没有找到轨迹的话, 需要使用toast来提示用户
   }
 
+  // 居中显示一个macName在当前楼层的第一个轨迹
+  onCentralizeFirstTrack = (macName) => {
+    const mac = this.translate(macName)
+    const { floor } = this.state
+    const centralizedTrack = allTracks.find(tr => (tr.floorId === floor.floorId && tr.mac === mac))
+    if (centralizedTrack) {
+      this.setState({ ctid: centralizedTrack.trackId })
+    }
+  }
+
   onChangeHtid = (htid) => {
     if (htid != null) {
       const { floor } = this.state
@@ -152,6 +162,7 @@ class TrackMapPage extends IComponent {
             onAddMacEntry={this.onAddMacEntry}
             onToggleMacEntry={this.onToggleMacEntry}
             onHighlightFirstTrack={this.onHighlightFirstTrack}
+            onCentralizeFirstTrack={this.onCentralizeFirstTrack}
             translate={this.translate}
           />
           <FloorList
