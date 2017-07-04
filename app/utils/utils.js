@@ -1,5 +1,7 @@
 import * as d3 from 'd3'
 import { Component } from 'react'
+import _ from 'lodash'
+import * as Immutable from 'immutable'
 
 const colors = d3.schemeCategory10
 

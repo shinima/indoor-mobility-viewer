@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
-import React, { Component } from 'react'
+import React from 'react'
 import _ from 'lodash'
-import { Set, fromJS, Map } from 'immutable'
+import { fromJS, Map } from 'immutable'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import TrackMap from '../components/Map/TrackMap'
@@ -13,8 +13,8 @@ import cluster from '../components/Map/cluster'
 import TrackDetailPanel from '../components/TrackDetailPanel'
 import FloorList from '../components/FloorList'
 import floor31 from '../resources/floor-31.json'
-import floors from '../resources/floors'
-import { IComponent, makeTranslateFn, makeHumanizeFn } from '../utils/utils'
+import floors, { floorConfig } from '../resources/floors'
+import { IComponent, makeHumanizeFn, makeTranslateFn } from '../utils/utils'
 import MacList from '../components/MacList'
 
 const allTracks = Map(_.groupBy(allItems, item => item.mac))
@@ -22,6 +22,7 @@ const allTracks = Map(_.groupBy(allItems, item => item.mac))
   .flatMap(cluster)
   .toArray()
 
+// todo 当前楼层数据中显示的是所有items的统计数据，在对maclist操作时数据应有更新
 class TrackMapPage extends IComponent {
   state = {
     // 当前显示的楼层
@@ -38,6 +39,7 @@ class TrackMapPage extends IComponent {
     transformReset: false,
   }
 
+  updateFloorEntryMap = this.makeIUpdateFn('items')
   updateMacEntryMap = this.makeIUpdateFn('macEntryMap')
   translate = makeTranslateFn(staticMacMapping)
   humanize = makeHumanizeFn(staticMacMapping)
@@ -158,6 +160,13 @@ class TrackMapPage extends IComponent {
       .filter(track => track.floorId === floor.floorId)
       .filter(track => activeMacSet.has(track.mac))
 
+    const activeTracks = allTracks.filter(track => activeMacSet.has(track.mac))
+    const activeTrackPoints = _.flatten(activeTracks.map(track => track.points))
+    const countResult = _.countBy(activeTrackPoints, trackPoint => trackPoint.floorId)
+    const floorEntryList = fromJS(floorConfig).map(entry => (
+      entry.set('trackPointCount', countResult[entry.get('floorId')] || 0)
+    ))
+
     return (
       <div>
         <div className="widgets">
@@ -172,16 +181,7 @@ class TrackMapPage extends IComponent {
           />
           <FloorList
             selectedFloorId={floor.floorId}
-            // todo 相关的prop需要修改一下
-            floorDataArray={[
-              { floorId: 31, buildingFloor: 'B-1' },
-              { floorId: 32, buildingFloor: 'B-2' },
-              { floorId: 33, buildingFloor: 'B-3' },
-              { floorId: 34, buildingFloor: 'B-4' },
-              { floorId: 35, buildingFloor: 'B-5' },
-              { floorId: 36, buildingFloor: 'B-6' },
-              { floorId: 61, buildingFloor: 'B-7' },
-            ]}
+            floorEntryList={floorEntryList}
             changeSelectedFloorId={this.changeFloorId}
             // todo 重置缩放这个功能可以放在<ButtonGroup />组件中
             onResetTransform={() => this.setState({ transformReset: true })}

@@ -1,20 +1,37 @@
 import React, { Component } from 'react'
+import _ from 'lodash'
+import { Map, List, fromJS } from 'immutable'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
+import { floorConfig } from '../resources/floors'
+import { getFloorCount } from '../utils/utils'
+import cluster from '../components/Map/cluster'
+import allItems from '../resources/items.json'
 import FloorList from '../components/FloorList'
+
+const allTrackPoints = Map(_.groupBy(allItems, item => item.mac))
+  .toList()
+  .flatMap(cluster)
+  .flatMap(track => track.points)
+  .toArray()
+
+const countResult = _.countBy(allTrackPoints, trackPoint => trackPoint.floorId)
+const floorEntryList = fromJS(floorConfig).map(entry => (
+  entry.set('trackPointCount', countResult[entry.get('floorId')] || 0)
+))
 
 class FloorListManager extends Component {
   state = {
-    selectedFloorId: this.props.floorDataArray[0].floorId,
+    // 默认选择floorDataArray中的第一项作为默认项
+    selectedFloorId: this.props.floorEntryList.first().get('floorId'),
   }
 
   render() {
     const { selectedFloorId } = this.state
-    const { floorDataArray } = this.props
-
+    const { floorEntryList } = this.props
     return (
       <FloorList
-        floorDataArray={floorDataArray}
+        floorEntryList={floorEntryList}
         selectedFloorId={selectedFloorId}
         changeSelectedFloorId={floorId => this.setState({ selectedFloorId: floorId })}
       />
@@ -25,29 +42,13 @@ class FloorListManager extends Component {
 storiesOf('FloorListManager', module)
   .add('static', () => (
     <FloorList
-      selectedFloorId={31}
-      floorDataArray={[
-        { floorId: 31, buildingFloor: 'B-1' },
-        { floorId: 32, buildingFloor: 'B-2' },
-        { floorId: 33, buildingFloor: 'B-3' },
-        { floorId: 34, buildingFloor: 'B-4' },
-        { floorId: 35, buildingFloor: 'B-5' },
-        { floorId: 36, buildingFloor: 'B-6' },
-        { floorId: 61, buildingFloor: 'B-7' },
-      ]}
+      selectedFloorId={floorEntryList.first().get('floorId')}
+      floorEntryList={floorEntryList}
       changeSelectedFloorId={action('change-selected-floor-id')}
     />
   ))
   .add('interactive', () => (
     <FloorListManager
-      floorDataArray={[
-        { floorId: 31, buildingFloor: 'B-1' },
-        { floorId: 32, buildingFloor: 'B-2' },
-        { floorId: 33, buildingFloor: 'B-3' },
-        { floorId: 34, buildingFloor: 'B-4' },
-        { floorId: 35, buildingFloor: 'B-5' },
-        { floorId: 36, buildingFloor: 'B-6' },
-        { floorId: 61, buildingFloor: 'B-7' },
-      ]}
+      floorEntryList={floorEntryList}
     />
   ))
