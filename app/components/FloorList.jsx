@@ -3,7 +3,7 @@ import '../styles/FloorList.styl'
 
 export default class FloorList extends Component {
   render() {
-    const { floorDataArray, selectedFloorId, changeSelectedFloorId } = this.props
+    const { floorDataArray, selectedFloorId, changeSelectedFloorId, onResetTransform } = this.props
 
     return (
       <div className="floor-list-widget">
@@ -14,6 +14,7 @@ export default class FloorList extends Component {
               key={index}
               className="floor-item"
               onClick={() => changeSelectedFloorId(item.floorId)}
+              onDoubleClick={onResetTransform}
             >
               <div className="bar" style={{ background: 'rgba(0, 255, 0, 25)' }} />
               <div className="floor-text">

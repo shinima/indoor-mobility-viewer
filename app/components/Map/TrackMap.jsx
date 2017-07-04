@@ -2,6 +2,18 @@ import React, { Component } from 'react'
 import DrawingManager from './DrawingManager'
 import '../../styles/Map.styl'
 
+function isSameTracks(ts1, ts2) {
+  if (ts1.length !== ts2.length) {
+    return false
+  }
+  for (let index = 0; index < ts1.length; index += 1) {
+    if (ts1[index].trackId !== ts2[index].trackId) {
+      return false
+    }
+  }
+  return true
+}
+
 export default class TrackMap extends Component {
   // prop floor: 要绘制的楼层地图
   // prop tracks: 需要显示的track数组
@@ -10,6 +22,7 @@ export default class TrackMap extends Component {
   // prop htid: 高亮的track id, null表示没有光亮track
   // prop ctid: 居中显示的track id. 初次渲染的时候忽略该prop, 该prop仅在发生变化的时候有效
   //   并且需要保证ctid对应的path元素目前是渲染在地图上面的
+  // prop transformReset: transform是否重置(大概等于当前楼层是否居中显示)
 
   componentDidMount() {
     const {
@@ -28,14 +41,13 @@ export default class TrackMap extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { floor, tracks, showPath, showPoints, htid, ctid, htpid } = this.props
+    const { floor, tracks, showPath, showPoints, htid, ctid, htpid, transformReset } = this.props
     // 用floorId来判断是否为同一个楼层
     if (floor.floorId !== nextProps.floor.floorId) {
       // console.log('update-floor')
       this.drawingManager.updateFloor(nextProps.floor)
     }
-    // todo 这里暂时使用 !== 来直接判断相等
-    if (tracks !== nextProps.tracks
+    if (!isSameTracks(tracks, nextProps.tracks)
       || showPath !== nextProps.showPath
       || showPoints !== nextProps.showPoints
       || htid !== nextProps.htid
@@ -51,6 +63,9 @@ export default class TrackMap extends Component {
     if (ctid !== nextProps.ctid && nextProps.ctid != null) {
       const track = nextProps.tracks.find(t => t.trackId === nextProps.ctid)
       this.drawingManager.centralizeTrack(track)
+    }
+    if (!transformReset && nextProps.transformReset) {
+      this.drawingManager.resetTransform()
     }
   }
 

@@ -34,6 +34,8 @@ class TrackMapPage extends IComponent {
     ctid: null,
     // highlighted-track-point-id
     htpid: null,
+    // transform是否重置(大概等于当前楼层是否居中显示)
+    transformReset: false,
   }
 
   updateMacEntryMap = this.makeIUpdateFn('macEntryMap')
@@ -59,7 +61,7 @@ class TrackMapPage extends IComponent {
 
   changeFloorId = (floorId) => {
     const nextFloor = floors.find(flr => flr.floorId === floorId)
-    this.setState({ floor: nextFloor, htid: null })
+    this.setState({ floor: nextFloor })
   }
 
   onCentralizeTrack = (trackId) => {
@@ -146,7 +148,7 @@ class TrackMapPage extends IComponent {
   }
 
   render() {
-    const { htid, ctid, htpid, floor, macEntryMap } = this.state
+    const { htid, ctid, htpid, floor, macEntryMap, transformReset } = this.state
 
     const activeMacSet = macEntryMap.filter(Boolean)
       .keySeq()
@@ -181,6 +183,8 @@ class TrackMapPage extends IComponent {
               { floorId: 61, buildingFloor: 'B-7' },
             ]}
             changeSelectedFloorId={this.changeFloorId}
+            // todo 重置缩放这个功能可以放在<ButtonGroup />组件中
+            onResetTransform={() => this.setState({ transformReset: true })}
           />
         </div>
         <TrackMap
@@ -190,11 +194,12 @@ class TrackMapPage extends IComponent {
           showPoints
           htid={htid}
           ctid={ctid}
+          transformReset={transformReset}
           htpid={htpid}
           onChangeHtid={this.onChangeHtid}
           onChangeHtpid={this.onChangeHtpid}
           humanize={this.humanize}
-          onZoom={() => this.setState({ ctid: null })}
+          onZoom={() => this.setState({ ctid: null, transformReset: false })}
         />
         {this.renderTrackDetailPanel()}
       </div>

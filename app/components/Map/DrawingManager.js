@@ -297,22 +297,12 @@ export default class DrawingManager {
   }
 
   resetTransform(useTransition = true) {
-    const boardElement = this.svg.select('.board').node()
-    const contentBox = boardElement.getBBox()
-    this.centralize(contentBox, useTransition)
+    const regionsLayerWrapper = this.svg.select('.regions-layer-wrapper').node()
+    const contentBox = regionsLayerWrapper.getBBox()
+    this.centralize(contentBox, useTransition, { top: 50, bottom: 50, left: 300, right: 300 })
   }
 
   centralize(contentBox, useTransition, padding) {
-    const defaultPadding = 150
-    const getPadding = (key) => {
-      if (typeof padding === 'number') {
-        return padding
-      } else if (typeof padding === 'object' && typeof padding[key] === 'number') {
-        return padding[key]
-      } else {
-        return defaultPadding
-      }
-    }
     if (contentBox.width === 0) {
       contentBox.width = 200
       contentBox.x -= 100
@@ -323,10 +313,10 @@ export default class DrawingManager {
     }
     if (contentBox.width && contentBox.height) {
       const viewBox = {
-        x: getPadding('left'),
-        y: getPadding('top'),
-        width: this.svgElement.clientWidth - getPadding('left') - getPadding('right'),
-        height: this.svgElement.clientHeight - getPadding('top') - getPadding('bottom'),
+        x: padding.left,
+        y: padding.top,
+        width: this.svgElement.clientWidth - padding.left - padding.right,
+        height: this.svgElement.clientHeight - padding.top - padding.bottom,
       }
       const mb = {
         x: contentBox.x,
