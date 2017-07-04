@@ -1,7 +1,7 @@
 /* eslint-disable no-shadow */
 import React, { Component } from 'react'
 import _ from 'lodash'
-import { Set, fromJS, Map } from 'immutable'
+import { Set, fromJS, Map, is } from 'immutable'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import TrackMap from '../components/Map/TrackMap'
@@ -14,19 +14,20 @@ import TrackDetailPanel from '../components/TrackDetailPanel'
 import FloorList from '../components/FloorList'
 import floor31 from '../resources/floor-31.json'
 import floors, { floorConfig } from '../resources/floors'
-import { IComponent, makeTranslateFn, makeHumanizeFn } from '../utils/utils'
+import { IComponent, makeTranslateFn, makeHumanizeFn, getFloorCount } from '../utils/utils'
 import MacList from '../components/MacList'
 
 const floorCount = Map(Object.entries(_.groupBy(allItems, item => item.floorId))
   .map(item => ({
     floorId: item[0],
-    count: item[1].length
+    count: item[1].length,
   })).map(({ floorId, count }) => [floorId, count]))
+const max = floorCount.max()
+
 const allTracks = Map(_.groupBy(allItems, item => item.mac))
   .toList()
   .flatMap(cluster)
   .toArray()
-const floorEntryMap = Map(floorConfig.map(({ floorId, floorName }) => [floorId, floorName]))
 
 class TrackMapPage extends IComponent {
   state = {
@@ -34,6 +35,10 @@ class TrackMapPage extends IComponent {
     floor: _.first(floors),
     // mac地址过滤控件的状态
     macEntryMap: Map(staticMacMapping.map(({ name }) => [name, true])),
+    // floor信息
+    // todo 当前楼层数据中显示的是所有items的统计数据，在对maclist操作时数据应有更新
+    floorEntryMap: Map(floorConfig.map(({ floorId, floorName }) =>
+      [floorId, [floorName, getFloorCount(floorCount, floorId)]])),
     // highlighted-track-id
     htid: null,
     // centralized-track-id
@@ -42,9 +47,16 @@ class TrackMapPage extends IComponent {
     htpid: null,
   }
 
+  updateFloorEntryMap = this.makeIUpdateFn('floorEntryMap')
   updateMacEntryMap = this.makeIUpdateFn('macEntryMap')
   translate = makeTranslateFn(staticMacMapping)
   humanize = makeHumanizeFn(staticMacMapping)
+
+  shouldComponentUpdata(nextState) {
+    if (!is(nextState.macEntryMap, this.state.macEntryMap)) {
+      console.log('bian')
+    }
+  }
 
   onDeleteMacEntry = (macName) => {
     this.updateMacEntryMap(map => map.delete(macName))
@@ -139,7 +151,7 @@ class TrackMapPage extends IComponent {
   }
 
   render() {
-    const { htid, ctid, htpid, floor, macEntryMap } = this.state
+    const { htid, ctid, htpid, floor, macEntryMap, floorEntryMap } = this.state
 
     const activeMacSet = macEntryMap.filter(Boolean)
       .keySeq()
@@ -164,6 +176,7 @@ class TrackMapPage extends IComponent {
             selectedFloorId={floor.floorId}
             floorDataArray={floorEntryMap}
             changeSelectedFloorId={this.changeFloorId}
+            maxCount={max}
           />
         </div>
         <TrackMap

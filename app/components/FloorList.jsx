@@ -9,9 +9,12 @@ const statsBgColor = d3.scaleLinear()
   .interpolate(d3.interpolateHsl)
 const statsBarWidth = d3.scaleLinear().range([0, 200]).clamp(true)
 
+
 export default class FloorList extends Component {
   render() {
-    const { floorDataArray, selectedFloorId, changeSelectedFloorId } = this.props
+    const { floorDataArray, selectedFloorId, changeSelectedFloorId, maxCount } = this.props
+    statsBgColor.domain([1, maxCount])
+    statsBarWidth.domain([0, maxCount])
 
     return (
       <div className="floor-list-widget">
@@ -23,7 +26,13 @@ export default class FloorList extends Component {
               className="floor-item"
               onClick={() => changeSelectedFloorId(floorId)}
             >
-              <div className="bar" style={{ background: 'rgba(0, 255, 0, 25)' }} />
+              <div
+                className="bar"
+                style={{
+                  width: `${statsBarWidth(count)}px`,
+                  background: `${statsBgColor(count)}`,
+                }}
+              />
               <div className="floor-text">
                 <span>{floorName}</span>
                 <span className="count">{count}</span>

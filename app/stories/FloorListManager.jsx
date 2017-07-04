@@ -4,6 +4,7 @@ import { Map } from 'immutable'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
 import { floorConfig } from '../resources/floors'
+import { getFloorCount } from '../utils/utils'
 import allItems from '../resources/items.json'
 import FloorList from '../components/FloorList'
 
@@ -13,13 +14,10 @@ const floorCount = Map(Object.entries(_.groupBy(allItems, item => item.floorId))
     count: item[1].length,
   })).map(({ floorId, count }) => [floorId, count]))
 
-function getFloorCount(floorId) {
-  const count = floorCount.get(`${floorId}`)
-  return typeof (count) === 'undefined' ? 0 : count
-}
-
 const defaultFloorEntryMap = Map(floorConfig.map(({ floorId, floorName }) =>
-  [floorId, [floorName, getFloorCount(floorId)]]))
+  [floorId, [floorName, getFloorCount(floorCount, floorId)]]))
+
+const max = floorCount.max()
 
 class FloorListManager extends Component {
   state = {
@@ -35,6 +33,7 @@ class FloorListManager extends Component {
         floorDataArray={floorDataArray}
         selectedFloorId={selectedFloorId}
         changeSelectedFloorId={floorId => this.setState({ selectedFloorId: floorId })}
+        maxCount={max}
       />
     )
   }
@@ -46,6 +45,7 @@ storiesOf('FloorListManager', module)
       selectedFloorId={31}
       floorDataArray={defaultFloorEntryMap}
       changeSelectedFloorId={action('change-selected-floor-id')}
+      maxCount={max}
     />
   ))
   .add('interactive', () => (

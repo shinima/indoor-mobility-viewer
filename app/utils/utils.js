@@ -37,3 +37,8 @@ export function makeHumanizeFn(staticMacMapping) {
     return entry ? entry.name : mac
   }
 }
+
+export function getFloorCount(floorCount, floorId) {
+  const count = floorCount.get(`${floorId}`)
+  return typeof (count) === 'undefined' ? 0 : count
+}
