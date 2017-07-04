@@ -18,7 +18,10 @@ import { IComponent, makeTranslateFn, makeHumanizeFn } from '../utils/utils'
 import MacList from '../components/MacList'
 
 const floorCount = Map(Object.entries(_.groupBy(allItems, item => item.floorId))
-  .map(item => ({ floorId: item[0], count: item[1].length })).map(({floorId, count}) => [floorId, count]))
+  .map(item => ({
+    floorId: item[0],
+    count: item[1].length
+  })).map(({ floorId, count }) => [floorId, count]))
 const allTracks = Map(_.groupBy(allItems, item => item.mac))
   .toList()
   .flatMap(cluster)
@@ -161,9 +164,6 @@ class TrackMapPage extends IComponent {
             selectedFloorId={floor.floorId}
             floorDataArray={floorEntryMap}
             changeSelectedFloorId={this.changeFloorId}
-            getFloorCount={floorId => {
-              const count = floorCount.get(`${floorId}`)
-              return typeof(count) === 'undefined' ? 0 : count }}
           />
         </div>
         <TrackMap

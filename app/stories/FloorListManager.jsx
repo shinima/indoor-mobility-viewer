@@ -8,10 +8,18 @@ import allItems from '../resources/items.json'
 import FloorList from '../components/FloorList'
 
 const floorCount = Map(Object.entries(_.groupBy(allItems, item => item.floorId))
-  .map(item => ({ floorId: item[0], count: item[1].length })).map(({floorId, count}) => [floorId, count]))
+  .map(item => ({
+    floorId: item[0],
+    count: item[1].length,
+  })).map(({ floorId, count }) => [floorId, count]))
+
+function getFloorCount(floorId) {
+  const count = floorCount.get(`${floorId}`)
+  return typeof (count) === 'undefined' ? 0 : count
+}
 
 const defaultFloorEntryMap = Map(floorConfig.map(({ floorId, floorName }) =>
-  [floorId, floorName]))
+  [floorId, [floorName, getFloorCount(floorId)]]))
 
 class FloorListManager extends Component {
   state = {
@@ -27,9 +35,6 @@ class FloorListManager extends Component {
         floorDataArray={floorDataArray}
         selectedFloorId={selectedFloorId}
         changeSelectedFloorId={floorId => this.setState({ selectedFloorId: floorId })}
-        getFloorCount={floorId => {
-          const count = floorCount.get(`${floorId}`)
-          return typeof(count) === 'undefined' ? 0 : count }}
       />
     )
   }
