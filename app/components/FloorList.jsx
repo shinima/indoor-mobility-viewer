@@ -12,7 +12,8 @@ const statsBarWidth = d3.scaleLinear().range([0, 200]).clamp(true)
 
 export default class FloorList extends Component {
   render() {
-    const { floorDataArray, selectedFloorId, changeSelectedFloorId, maxCount } = this.props
+    const { floorEntryList, selectedFloorId, changeSelectedFloorId } = this.props
+    const maxCount = floorEntryList.map(entry => entry.get('trackPointCount')).max()
     statsBgColor.domain([1, maxCount])
     statsBarWidth.domain([0, maxCount])
 
@@ -20,31 +21,31 @@ export default class FloorList extends Component {
       <div className="floor-list-widget">
         <div className="title">楼层地图切换</div>
         <div className="floor-list">
-          {floorDataArray.map(([floorName, count], floorId) => (
+          {floorEntryList.map(entry => (
             <div
-              key={floorId}
+              key={entry.get('floorId')}
               className="floor-item"
-              onClick={() => changeSelectedFloorId(floorId)}
+              onClick={() => changeSelectedFloorId(entry.get('floorId'))}
             >
               <div
                 className="bar"
                 style={{
-                  width: `${statsBarWidth(count)}px`,
-                  background: `${statsBgColor(count)}`,
+                  width: statsBarWidth(entry.get('trackPointCount')),
+                  background: statsBgColor(entry.get('trackPointCount')),
                 }}
               />
               <div className="floor-text">
-                <span>{floorName}</span>
-                <span className="count">{count}</span>
+                <span>{entry.get('floorName')}</span>
+                <span className="count">{entry.get('trackPointCount')}</span>
               </div>
               <input
                 className="floor-radio"
                 type="radio"
-                checked={selectedFloorId === floorId}
+                checked={selectedFloorId === entry.get('floorId')}
                 readOnly
               />
             </div>
-          ))}
+          )).toArray()}
         </div>
       </div>
     )

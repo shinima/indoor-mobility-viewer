@@ -1,5 +1,7 @@
 import * as d3 from 'd3'
 import { Component } from 'react'
+import _ from 'lodash'
+import * as Immutable from 'immutable'
 
 const colors = d3.schemeCategory10
 
@@ -36,9 +38,4 @@ export function makeHumanizeFn(staticMacMapping) {
     const entry = staticMacMapping.find(item => item.mac === mac)
     return entry ? entry.name : mac
   }
-}
-
-export function getFloorCount(floorCount, floorId) {
-  const count = floorCount.get(`${floorId}`)
-  return typeof (count) === 'undefined' ? 0 : count
 }
