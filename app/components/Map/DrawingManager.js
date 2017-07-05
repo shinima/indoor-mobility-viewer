@@ -2,6 +2,8 @@
 import * as d3 from 'd3'
 import moment from 'moment'
 import _ from 'lodash'
+import drawFloor from './drawFloor'
+import centralize from './centralize'
 import { getColor } from '../../utils/utils'
 
 function showTooltip(tooltipWrapper, trackPoint, transform, humanize) {
@@ -33,75 +35,6 @@ function hideTooltip(tooltipWrapper) {
   //       .style('display', 'none')
   //   })
   tooltipWrapper.style('display', 'none')
-}
-
-// 在svgElement上绘制地图
-function drawFloor(floor, svgElement) {
-  const svg = d3.select(svgElement)
-  const board = svg.select('.board')
-
-  // 绘制region
-  const regionsLayerJoin = board.select('.regions-layer-wrapper')
-    .selectAll('g').classed('regions-layer', true)
-    .data([floor.floorId], _.identity)
-  const regionsLayerEnter = regionsLayerJoin.enter()
-    .append('g')
-    .classed('regions-layer', true)
-    .style('opacity', 0)
-  regionsLayerEnter.transition()
-    .style('opacity', 1)
-  regionsLayerJoin.on('end.remove', null)
-    .transition()
-    .style('opacity', 1)
-  regionsLayerJoin.exit()
-    .transition()
-    .style('opacity', 0)
-    .remove()
-  const regionsLayer = regionsLayerJoin.merge(regionsLayerEnter)
-
-  const regionsJoin = regionsLayer.selectAll('polygon').data(floor.regions)
-  regionsJoin.enter().append('polygon')
-    .merge(regionsJoin)
-    .attr('fill', d => floor.config.colors[d.color])
-    .attr('points', d => d.points.map(p => `${p.x},${p.y}`).join(' '))
-    .attr('stroke', '#cccccc')
-    .attr('stroke-width', '1')
-  regionsJoin.exit().remove()
-
-  // 绘制文本
-  const textsLayerJoin = board.select('.texts-layer-wrapper')
-    .selectAll('g').classed('texts-layer', true)
-    .data([floor.floorId], _.identity)
-  const textsLayerEnter = textsLayerJoin.enter()
-    .append('g')
-    .classed('texts-layer', true)
-    .style('opacity', 0)
-  textsLayerEnter.transition()
-    .style('opacity', 1)
-  textsLayerJoin.on('end.remove', null)
-    .transition()
-    .style('opacity', 1)
-  textsLayerJoin.exit()
-    .transition()
-    .style('opacity', 0)
-    .remove()
-  const textsLayer = textsLayerJoin.merge(textsLayerEnter)
-  const textsJoin = textsLayer.selectAll('text').data(getAllLabelConfig())
-  textsJoin.enter().append('text')
-    .merge(textsJoin)
-    .text(d => d.text)
-    .attr('x', d => d.config.pos.x)
-    .attr('y', d => d.config.pos.y)
-    .attr('font-size', d => d.config.fontSize)
-  textsJoin.exit().remove()
-
-  function getAllLabelConfig() {
-    const nodes = floor.nodes.filter(node => node.labelConfig && node.labelConfig.show)
-    return nodes.map(node => ({
-      text: node.name,
-      config: node.labelConfig,
-    }))
-  }
 }
 
 export default class DrawingManager {
@@ -303,36 +236,16 @@ export default class DrawingManager {
   }
 
   centralize(contentBox, useTransition, padding) {
-    if (contentBox.width === 0) {
-      contentBox.width = 200
-      contentBox.x -= 100
-    }
-    if (contentBox.height === 0) {
-      contentBox.height = 200
-      contentBox.y -= 100
-    }
-    if (contentBox.width && contentBox.height) {
-      const viewBox = {
-        x: padding.left,
-        y: padding.top,
-        width: this.svgElement.clientWidth - padding.left - padding.right,
-        height: this.svgElement.clientHeight - padding.top - padding.bottom,
-      }
-      const mb = {
-        x: contentBox.x,
-        y: contentBox.y,
-        width: contentBox.width,
-        height: contentBox.height,
-      }
-      const scaleX = viewBox.width / mb.width
-      const scaleY = viewBox.height / mb.height
-      const scale = _.clamp(Math.min(scaleX, scaleY), 0.2, 2)
-      const dx = (viewBox.x + viewBox.width / 2) - (mb.x + mb.width / 2) * scale
-      const dy = (viewBox.y + viewBox.height / 2) - (mb.y + mb.height / 2) * scale
+    const targetTransform = centralize(contentBox, {
+      width: this.svgElement.clientWidth,
+      height: this.svgElement.clientHeight,
+    }, padding)
+    if (targetTransform) {
       this.zoom.transform(useTransition
-          ? d3.select(this.svgElement).transition()
-          : d3.select(this.svgElement),
-        d3.zoomIdentity.translate(dx, dy).scale(scale))
+        ? d3.select(this.svgElement).transition()
+        : d3.select(this.svgElement),
+        targetTransform,
+      )
     }
   }
 }

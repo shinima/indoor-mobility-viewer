@@ -1,18 +1,7 @@
 import React, { Component } from 'react'
 import DrawingManager from './DrawingManager'
+import { isSameTracks } from './utils'
 import '../../styles/Map.styl'
-
-function isSameTracks(ts1, ts2) {
-  if (ts1.length !== ts2.length) {
-    return false
-  }
-  for (let index = 0; index < ts1.length; index += 1) {
-    if (ts1[index].trackId !== ts2[index].trackId) {
-      return false
-    }
-  }
-  return true
-}
 
 export default class TrackMap extends Component {
   // prop floor: 要绘制的楼层地图

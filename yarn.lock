@@ -3097,6 +3097,10 @@ he@1.1.x:
   version "1.1.1"
   resolved "http://registry.npm.taobao.org/he/download/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
 
+heatmap.js@^2.0.5:
+  version "2.0.5"
+  resolved "http://registry.npm.taobao.org/heatmap.js/download/heatmap.js-2.0.5.tgz#466d3b86513f5d49112a49d25700ab2730149153"
+
 history@^4.5.1, history@^4.6.0:
   version "4.6.3"
   resolved "http://registry.npm.taobao.org/history/download/history-4.6.3.tgz#6d723a8712c581d6bef37e8c26f4aedc6eb86967"
