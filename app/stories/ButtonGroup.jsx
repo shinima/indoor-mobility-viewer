@@ -30,7 +30,7 @@ export default class ButtonGroup extends Component {
             altText="setting"
           />
         </div>
-        <div className="function-button">
+        <div className="block">
           <Button
             icon={'/static/img/buttonGroup/center.svg'}
             text="居中地图"
@@ -56,7 +56,7 @@ export default class ButtonGroup extends Component {
             }}
           />
         </div>
-        <div className="change-track">
+        <div className="block">
           <Button
             icon={'/static/img/buttonGroup/previous.svg'}
             text="上一条轨迹"

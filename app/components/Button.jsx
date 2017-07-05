@@ -5,7 +5,13 @@ export default class Button extends Component {
     const { icon, text, altText, clickEvent } = this.props
     return (
       <div
-        style={{ display: 'flex', height: 40, alignItems: 'center', cursor: 'pointer' }}
+        style={{
+          display: 'flex',
+          height: 40,
+          alignItems: 'center',
+          cursor: 'pointer',
+          paddingLeft: 16,
+        }}
         onClick={clickEvent}
       >
         <img

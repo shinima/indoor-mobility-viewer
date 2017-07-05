@@ -184,8 +184,6 @@ class TrackMapPage extends IComponent {
         <div className="widgets">
           <ButtonGroup
             onResetTransform={() => this.setState({ transformReset: true })}
-            showPath={showPath}
-            showPoints={showPoints}
             onChangeShowPath={(show) => {
               this.setState({ showPath: show })
             }}
