@@ -8,6 +8,7 @@ function loadStories() {
   require('../app/stories/HeatMap')
   require('../app/stories/BrushManager')
   require('../app/stories/ButtonGroup')
+  require('../app/stories/HomePage')
   // You can require as many stories as you need.
 }
 

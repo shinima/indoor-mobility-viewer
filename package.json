@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server",
-    "storybook": "start-storybook -p 9001 -c .storybook",
+    "storybook": "start-storybook -p 9001 -s . -c .storybook",
     "eslint": "eslint  --ext .js,.jsx .",
     "eslint-fix": "eslint  --ext .js,.jsx --fix ."
   },

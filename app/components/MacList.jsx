@@ -61,18 +61,23 @@ export default class MacList extends Component {
                   />
                 </div>
                 <div className="mac-text">{name}</div>
-                <button
+                <div
                   className="mac-delete"
                   onClick={() => this.props.onDeleteMacEntry(name)}
                 >
-                  Del
-                </button>
-                <input
-                  type="checkbox"
-                  className="mac-check"
-                  checked={active}
-                  onChange={() => this.props.onToggleMacEntry(name)}
-                />
+                  <img
+                    style={{ width: 18, height: 18 }}
+                    src={'/static/img/delete.svg'}
+                    alt="delete"
+                  />
+                </div>
+                <div className="mac-check" onClick={() => this.props.onToggleMacEntry(name)}>
+                  <img
+                    style={{ width: '20px', height: '20px' }}
+                    src={`/static/img/buttonGroup/${active ? 'check-box' : 'check-box-empty'}.svg`}
+                    alt="checkbox"
+                  />
+                </div>
               </div>
             )).toArray()}
           </div>
@@ -83,7 +88,13 @@ export default class MacList extends Component {
             value={macName}
             onChange={e => this.setState({ macName: e.target.value })}
           />
-          <button className="button" onClick={this.handleAdd}>Add</button>
+          <div className="button" onClick={this.handleAdd}>
+            <img
+              style={{ width: 20, height: 20 }}
+              src={'/static/img/add.svg'}
+              alt="add"
+            />
+          </div>
         </div>
       </div>
     )
