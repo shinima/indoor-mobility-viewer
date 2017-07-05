@@ -1,0 +1,25 @@
+@require './base.styl'
+
+.button-group-widget
+  width 250px
+  margin-top 16px
+  border 1px solid steelblue
+  .title {
+    @extends $widget-title
+  }
+  .global-button
+    padding-left 10px
+    display flex
+    justify-content space-around
+    border-bottom 1px solid steelblue
+  .function-button
+    display flex
+    flex-direction column
+    padding-left 10px
+    align-items flex-start
+    border-bottom 1px solid steelblue
+  .change-track
+    padding-left 10px
+    display flex
+    flex-direction column
+    justify-content space-around
