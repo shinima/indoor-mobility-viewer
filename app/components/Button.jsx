@@ -2,9 +2,12 @@ import React, { Component } from 'react'
 
 export default class Button extends Component {
   render() {
-    const { icon, text, altText } = this.props
+    const { icon, text, altText, clickEvent } = this.props
     return (
-      <div style={{ display: 'flex', height: 40, alignItems: 'center' }}>
+      <div
+        style={{ display: 'flex', height: 40, alignItems: 'center', cursor: 'pointer' }}
+        onClick={clickEvent}
+      >
         <img
           style={{ width: '20px', height: '20px' }}
           src={icon}

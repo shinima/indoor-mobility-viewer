@@ -12,6 +12,7 @@ import staticMacMapping from '../resources/static-mac-mapping.json'
 import cluster from '../components/Map/cluster'
 import TrackDetailPanel from '../components/TrackDetailPanel'
 import FloorList from '../components/FloorList'
+import ButtonGroup from '../stories/ButtonGroup'
 import floor31 from '../resources/floor-31.json'
 import floors, { floorConfig } from '../resources/floors'
 import { IComponent, makeHumanizeFn, makeTranslateFn } from '../utils/utils'
@@ -34,6 +35,8 @@ class TrackMapPage extends IComponent {
     ctid: null,
     // highlighted-track-point-id
     htpid: null,
+    showPath: true,
+    showPoints: true,
     // transform是否重置(大概等于当前楼层是否居中显示)
     transformReset: false,
   }
@@ -148,8 +151,18 @@ class TrackMapPage extends IComponent {
     }
   }
 
+
   render() {
-    const { htid, ctid, htpid, floor, macEntryMap, transformReset } = this.state
+    const {
+      htid,
+      ctid,
+      htpid,
+      floor,
+      macEntryMap,
+      transformReset,
+      showPath,
+      showPoints,
+    } = this.state
 
     const activeMacSet = macEntryMap.filter(Boolean)
       .keySeq()
@@ -169,6 +182,17 @@ class TrackMapPage extends IComponent {
     return (
       <div>
         <div className="widgets">
+          <ButtonGroup
+            onResetTransform={() => this.setState({ transformReset: true })}
+            showPath={showPath}
+            showPoints={showPoints}
+            onChangeShowPath={(show) => {
+              this.setState({ showPath: show })
+            }}
+            onChangeShowPoints={(show) => {
+              this.setState({ showPoints: show })
+            }}
+          />
           <MacList
             macEntryMap={macEntryMap}
             onDeleteMacEntry={this.onDeleteMacEntry}
@@ -182,15 +206,13 @@ class TrackMapPage extends IComponent {
             selectedFloorId={floor.floorId}
             floorEntryList={floorEntryList}
             changeSelectedFloorId={this.changeFloorId}
-            // todo 重置缩放这个功能可以放在<ButtonGroup />组件中
-            onResetTransform={() => this.setState({ transformReset: true })}
           />
         </div>
         <TrackMap
           floor={floor}
           tracks={visibleTracks}
-          showPath
-          showPoints
+          showPath={showPath}
+          showPoints={showPoints}
           htid={htid}
           ctid={ctid}
           transformReset={transformReset}
@@ -207,7 +229,7 @@ class TrackMapPage extends IComponent {
 }
 
 storiesOf('TrackMap', module)
-  .add('static', () => (
+  .add(' static', () => (
     <TrackMap
       floor={floor31}
       tracks={allTracks.filter(track => track.floorId === floor31.floorId)}
@@ -216,10 +238,10 @@ storiesOf('TrackMap', module)
       htid={null}
       ctid={null}
       htpid={null}
-      onChangeHtid={action('change-highlighted-track-id')}
-      onChangeHtpid={action('change-highlighted-track-point-id')}
+      onChangeHtid={action(' change-highlighted-track-id')}
+      onChangeHtpid={action(' change-highlighted-track-point-id')}
       humanize={makeHumanizeFn(staticMacMapping)}
-      onZoom={action('zoom')}
+      onZoom={action(' zoom')}
     />
   ))
-  .add('TrackMapPage', () => <TrackMapPage />)
+  .add(' TrackMapPage', () => <TrackMapPage />)

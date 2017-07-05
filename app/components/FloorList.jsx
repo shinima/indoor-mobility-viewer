@@ -12,7 +12,7 @@ const statsBarWidth = d3.scaleLinear().range([0, 200]).clamp(true)
 
 export default class FloorList extends Component {
   render() {
-    const { floorEntryList, selectedFloorId, changeSelectedFloorId, onResetTransform } = this.props
+    const { floorEntryList, selectedFloorId, changeSelectedFloorId } = this.props
     const maxCount = floorEntryList.map(entry => entry.get('trackPointCount')).max()
     statsBgColor.domain([1, maxCount])
     statsBarWidth.domain([0, maxCount])
@@ -26,7 +26,6 @@ export default class FloorList extends Component {
               key={entry.get('floorId')}
               className="floor-item"
               onClick={() => changeSelectedFloorId(entry.get('floorId'))}
-              onDoubleClick={onResetTransform}
             >
               <div
                 className="bar"
@@ -39,12 +38,15 @@ export default class FloorList extends Component {
                 <span>{entry.get('floorName')}</span>
                 <span className="count">{entry.get('trackPointCount')}</span>
               </div>
-              <input
-                className="floor-radio"
-                type="radio"
-                checked={selectedFloorId === entry.get('floorId')}
-                readOnly
-              />
+              <div className="floor-radio">
+                <img
+                  style={{ width: '20px', height: '20px' }}
+                  src={`/static/img/${
+                    selectedFloorId === entry.get('floorId') ? 'check-radio' : 'empty-radio'}.svg`
+                  }
+                  alt="radio"
+                />
+              </div>
             </div>
           )).toArray()}
         </div>
