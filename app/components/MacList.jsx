@@ -61,12 +61,16 @@ export default class MacList extends Component {
                   />
                 </div>
                 <div className="mac-text">{name}</div>
-                <button
+                <div
                   className="mac-delete"
                   onClick={() => this.props.onDeleteMacEntry(name)}
                 >
-                  Del
-                </button>
+                  <img
+                    style={{ width: 18, height: 18 }}
+                    src={'/static/img/delete.svg'}
+                    alt="delete"
+                  />
+                </div>
                 <input
                   type="checkbox"
                   className="mac-check"
