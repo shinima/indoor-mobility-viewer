@@ -22,7 +22,6 @@ const allTracks = Map(_.groupBy(allItems, item => item.mac))
   .flatMap(cluster)
   .toArray()
 
-// todo 当前楼层数据中显示的是所有items的统计数据，在对maclist操作时数据应有更新
 class TrackMapPage extends IComponent {
   state = {
     // 当前显示的楼层
