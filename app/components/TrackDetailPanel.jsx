@@ -3,6 +3,7 @@ import moment from 'moment'
 import classNames from 'classnames'
 import { getColor } from '../utils/utils'
 import '../styles/TrackDetailPanel.styl'
+import Button from '../components/Button'
 import { floorConfig } from '../resources/floors'
 
 function getFloorNameByFloorId(floorId) {
@@ -109,17 +110,40 @@ export default class TrackDetailPanel extends Component {
   render() {
     const {
       tracks, floorId, ht, htid, htpid, humanize,
-      onChangeHtid, onChangeHtpid, onCentralizeTrack,
+      onChangeHtid, onChangeHtpid, onCentralizeTrack, previousDisabled, nextDisabled
     } = this.props
+    const previous = previousDisabled ? 'previous-disabled' : 'previous'
+    const next = nextDisabled ? 'next-disabled' : 'next'
     return (
       <div className="track-detail-panel">
         <h1 className="title">
-          <button className="close" onClick={() => onChangeHtid(null)}>X</button>
+          <img
+            className="close"
+            onClick={() => onChangeHtid(null)}
+            style={{ width: 20, height: 20 }}
+            src="/static/img/close.svg"
+            alt="close"
+          />
           {humanize(ht.mac)} 轨迹详情
         </h1>
+        <div className="prev-or-next">
+          <Button
+            icon={`/static/img/buttonGroup/${previous}.svg`}
+            text={previousDisabled ? '暂无轨迹' : '上一条轨迹'}
+            altText="previous"
+          />
+          <Button
+            icon={`/static/img/buttonGroup/${next}.svg`}
+            text={nextDisabled ? '暂无轨迹' : '下一条轨迹'}
+            altText="next"
+          />
+        </div>
         <div className="track-list">
           {tracks.map((track, index) => (
-            <div key={track.trackId} className={classNames('track', { highlighted: track.trackId === htid })}>
+            <div
+              key={track.trackId}
+              className={classNames('track', { highlighted: track.trackId === htid })}
+            >
               <TrackInfo
                 track={track}
                 index={index}

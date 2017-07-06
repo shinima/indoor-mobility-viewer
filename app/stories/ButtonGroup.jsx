@@ -21,8 +21,7 @@ export default class ButtonGroup extends Component {
     } = this.props
     const pathCheckStatus = showPath ? 'check-box' : 'check-box-empty'
     const pointsCheckStatus = showPoints ? 'check-box' : 'check-box-empty'
-    const previous = previousDisabled ? 'previous-disabled' : 'previous'
-    const next = nextDisabled ? 'next-disabled' : 'next'
+
     return (
       <div className="button-group-widget">
         <div className="title">按钮组</div>
@@ -62,18 +61,6 @@ export default class ButtonGroup extends Component {
               this.setState({ showPoints: !showPoints })
               onChangeShowPoints(!showPoints)
             }}
-          />
-        </div>
-        <div className="block" style={{ display: 'flex', flexDirection: 'row' }}>
-          <Button
-            icon={`/static/img/buttonGroup/${previous}.svg`}
-            text={previousDisabled ? '暂无轨迹' : '上一条轨迹'}
-            altText="previous"
-          />
-          <Button
-            icon={`/static/img/buttonGroup/${next}.svg`}
-            text={nextDisabled ? '暂无轨迹' : '下一条轨迹'}
-            altText="next"
           />
         </div>
       </div>

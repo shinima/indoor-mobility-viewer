@@ -163,6 +163,8 @@ class TrackMapPage extends IComponent {
           onChangeHtpid={this.onChangeHtpid}
           onCentralizeTrack={this.onCentralizeTrack}
           humanize={this.humanize}
+          previousDisabled={!this.couldSelectPrevious()}
+          nextDisabled={!this.couldSelectNext()}
         />
       )
     } else {
@@ -209,8 +211,6 @@ class TrackMapPage extends IComponent {
             onChangeShowPoints={(show) => {
               this.setState({ showPoints: show })
             }}
-            previousDisabled={!this.couldSelectPrevious()}
-            nextDisabled={!this.couldSelectNext()}
           />
           <MacList
             macEntryMap={macEntryMap}
