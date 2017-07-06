@@ -128,6 +128,25 @@ class TrackMapPage extends IComponent {
   }
   onChangeHtpid = htpid => this.setState({ htpid })
 
+  couldSelectPrevious = () => {
+    // todo 判断是否可选
+    return false
+  }
+
+  couldSelectNext = () => {
+    // todo 判断是否可选
+    return false
+  }
+
+  selectPrevious = () => {
+    // todo
+  }
+
+  selectNext = () => {
+    // todo
+  }
+
+
   renderTrackDetailPanel() {
     const { floor, htid, htpid } = this.state
     if (htid != null) {
@@ -190,6 +209,8 @@ class TrackMapPage extends IComponent {
             onChangeShowPoints={(show) => {
               this.setState({ showPoints: show })
             }}
+            previousDisabled={!this.couldSelectPrevious()}
+            nextDisabled={!this.couldSelectNext()}
           />
           <MacList
             macEntryMap={macEntryMap}

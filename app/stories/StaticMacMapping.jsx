@@ -17,7 +17,7 @@ const staticMacItems = fromJS({
   3: { id: 3, name: 'lxy-meizu', mac: '88:88:88:88:88:88' },
 }).mapKeys(Number)
 
-class StaticMacMappingContainer extends Component {
+export default class StaticMacMappingContainer extends Component {
   state = {
     staticMacItems,
   }
