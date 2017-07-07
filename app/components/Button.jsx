@@ -11,6 +11,7 @@ export default class Button extends Component {
           alignItems: 'center',
           cursor: 'pointer',
           paddingLeft: 16,
+          userSelect: 'none',
         }}
         onClick={clickEvent}
       >
@@ -19,7 +20,7 @@ export default class Button extends Component {
           src={icon}
           alt={altText}
         />
-        <span style={{ marginLeft: 10 }}>{text}</span>
+        <div style={{ marginLeft: 10, marginBottom: 2 }}>{text}</div>
       </div>
     )
   }
