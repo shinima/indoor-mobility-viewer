@@ -16,8 +16,6 @@ export default class ButtonGroup extends Component {
       onResetTransform,
       onChangeShowPath,
       onChangeShowPoints,
-      previousDisabled,
-      nextDisabled,
     } = this.props
     const pathCheckStatus = showPath ? 'check-box' : 'check-box-empty'
     const pointsCheckStatus = showPoints ? 'check-box' : 'check-box-empty'
@@ -42,13 +40,13 @@ export default class ButtonGroup extends Component {
             icon={'/static/img/buttonGroup/center.svg'}
             text="居中地图"
             altText="center"
-            clickEvent={onResetTransform}
+            onClick={onResetTransform}
           />
           <Button
             icon={`/static/img/buttonGroup/${pathCheckStatus}.svg`}
             text="显示轨迹"
             altText="showPath"
-            clickEvent={() => {
+            onClick={() => {
               this.setState({ showPath: !showPath })
               onChangeShowPath(!showPath)
             }}
@@ -57,7 +55,7 @@ export default class ButtonGroup extends Component {
             icon={`/static/img/buttonGroup/${pointsCheckStatus}.svg`}
             text="显示轨迹点"
             altText="showPoints"
-            clickEvent={() => {
+            onClick={() => {
               this.setState({ showPoints: !showPoints })
               onChangeShowPoints(!showPoints)
             }}

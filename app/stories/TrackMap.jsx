@@ -13,6 +13,7 @@ import cluster from '../components/Map/cluster'
 import TrackDetailPanel from '../components/TrackDetailPanel'
 import FloorList from '../components/FloorList'
 import ButtonGroup from '../stories/ButtonGroup'
+import Legend from '../stories/Legend'
 import floor31 from '../resources/floor-31.json'
 import floors, { floorConfig } from '../resources/floors'
 import { IComponent, makeHumanizeFn, makeTranslateFn } from '../utils/utils'
@@ -133,9 +134,6 @@ class TrackMapPage extends IComponent {
     if (htid != null) {
       // ht: highlighted track
       const ht = allTracks.find(tr => tr.trackId === htid)
-      const tracksIdArray = allTracks.filter(track => (track.mac === ht.mac))
-        .map(track => track.trackId)
-      const index = tracksIdArray.indexOf(ht.trackId)
       return (
         <TrackDetailPanel
           tracks={allTracks.filter(track => (track.mac === ht.mac))}
@@ -147,8 +145,6 @@ class TrackMapPage extends IComponent {
           onChangeHtpid={this.onChangeHtpid}
           onCentralizeTrack={this.onCentralizeTrack}
           humanize={this.humanize}
-          previousDisabled={index === 0}
-          nextDisabled={index === (tracksIdArray.length - 1)}
         />
       )
     } else {
@@ -210,6 +206,7 @@ class TrackMapPage extends IComponent {
             floorEntryList={floorEntryList}
             changeSelectedFloorId={this.changeFloorId}
           />
+          <Legend />
         </div>
         <TrackMap
           floor={floor}

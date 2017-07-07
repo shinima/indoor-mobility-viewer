@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 export default class Button extends Component {
   render() {
-    const { icon, text, altText, clickEvent } = this.props
+    const { icon, text, altText, onClick } = this.props
     return (
       <div
         style={{
@@ -13,7 +13,7 @@ export default class Button extends Component {
           paddingLeft: 16,
           userSelect: 'none',
         }}
-        onClick={clickEvent}
+        onClick={onClick}
       >
         <img
           style={{ width: '20px', height: '20px' }}

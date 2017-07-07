@@ -5,33 +5,10 @@ import { getColor } from '../utils/utils'
 import '../styles/TrackDetailPanel.styl'
 import Button from '../components/Button'
 import { floorConfig } from '../resources/floors'
+import TrackPointSymbol from '../components/TrackPointSymbol'
 
 function getFloorNameByFloorId(floorId) {
   return floorConfig.find(flr => flr.floorId === floorId).floorName
-}
-
-function TrackPointSymbol({ pointType, fill }) {
-  if (pointType === 'track-start') {
-    return (
-      <svg className="symbol" viewBox="0 0 1 1">
-        <rect x="0" y="0" width="1" height="1" fill={fill} />
-      </svg>
-    )
-  } else if (pointType === 'normal') {
-    return (
-      <svg className="symbol circle" viewBox="0 0 2 2">
-        <circle cx="1" cy="1" r="1" fill={fill} />
-      </svg>
-    )
-  } else if (pointType === 'track-end') {
-    return (
-      <svg className="symbol" viewBox="0 0 2 2">
-        <polygon points="1,0 2,2 0,2" fill={fill} />
-      </svg>
-    )
-  } else {
-    throw new Error(`Invalid pointType: ${pointType}`)
-  }
 }
 
 function TrackPointRow({
@@ -110,10 +87,12 @@ export default class TrackDetailPanel extends Component {
   render() {
     const {
       tracks, floorId, ht, htid, htpid, humanize,
-      onChangeHtid, onChangeHtpid, onCentralizeTrack, previousDisabled, nextDisabled,
+      onChangeHtid, onChangeHtpid, onCentralizeTrack,
     } = this.props
     const tracksIdArray = tracks.map(track => track.trackId)
     const index = tracksIdArray.indexOf(ht.trackId)
+    const previousDisabled = index === 0
+    const nextDisabled = index === tracksIdArray.length - 1
     const previous = previousDisabled ? 'previous-disabled' : 'previous'
     const next = nextDisabled ? 'next-disabled' : 'next'
     return (
@@ -122,7 +101,7 @@ export default class TrackDetailPanel extends Component {
           <img
             className="close"
             onClick={() => onChangeHtid(null)}
-            style={{ width: 20, height: 20 }}
+            style={{ width: 20, height: '100%' }}
             src="/static/img/close.svg"
             alt="close"
           />
@@ -133,13 +112,13 @@ export default class TrackDetailPanel extends Component {
             icon={`/static/img/buttonGroup/${previous}.svg`}
             text={previousDisabled ? '暂无轨迹' : '上一条轨迹'}
             altText="previous"
-            clickEvent={!previousDisabled ? () => onChangeHtid(tracksIdArray[index - 1]) : null}
+            onClick={!previousDisabled ? () => onChangeHtid(tracksIdArray[index - 1]) : null}
           />
           <Button
             icon={`/static/img/buttonGroup/${next}.svg`}
             text={nextDisabled ? '暂无轨迹' : '下一条轨迹'}
             altText="next"
-            clickEvent={!nextDisabled ? () => onChangeHtid(tracksIdArray[index + 1]) : null}
+            onClick={!nextDisabled ? () => onChangeHtid(tracksIdArray[index + 1]) : null}
           />
         </div>
         <div className="track-list">
