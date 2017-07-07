@@ -110,8 +110,10 @@ export default class TrackDetailPanel extends Component {
   render() {
     const {
       tracks, floorId, ht, htid, htpid, humanize,
-      onChangeHtid, onChangeHtpid, onCentralizeTrack, previousDisabled, nextDisabled
+      onChangeHtid, onChangeHtpid, onCentralizeTrack, previousDisabled, nextDisabled,
     } = this.props
+    const tracksIdArray = tracks.map(track => track.trackId)
+    const index = tracksIdArray.indexOf(ht.trackId)
     const previous = previousDisabled ? 'previous-disabled' : 'previous'
     const next = nextDisabled ? 'next-disabled' : 'next'
     return (
@@ -131,11 +133,13 @@ export default class TrackDetailPanel extends Component {
             icon={`/static/img/buttonGroup/${previous}.svg`}
             text={previousDisabled ? '暂无轨迹' : '上一条轨迹'}
             altText="previous"
+            clickEvent={!previousDisabled ? () => onChangeHtid(tracksIdArray[index - 1]) : null}
           />
           <Button
             icon={`/static/img/buttonGroup/${next}.svg`}
             text={nextDisabled ? '暂无轨迹' : '下一条轨迹'}
             altText="next"
+            clickEvent={!nextDisabled ? () => onChangeHtid(tracksIdArray[index + 1]) : null}
           />
         </div>
         <div className="track-list">

@@ -128,30 +128,14 @@ class TrackMapPage extends IComponent {
   }
   onChangeHtpid = htpid => this.setState({ htpid })
 
-  couldSelectPrevious = () => {
-    // todo 判断是否可选
-    return false
-  }
-
-  couldSelectNext = () => {
-    // todo 判断是否可选
-    return false
-  }
-
-  selectPrevious = () => {
-    // todo
-  }
-
-  selectNext = () => {
-    // todo
-  }
-
-
   renderTrackDetailPanel() {
     const { floor, htid, htpid } = this.state
     if (htid != null) {
       // ht: highlighted track
       const ht = allTracks.find(tr => tr.trackId === htid)
+      const tracksIdArray = allTracks.filter(track => (track.mac === ht.mac))
+        .map(track => track.trackId)
+      const index = tracksIdArray.indexOf(ht.trackId)
       return (
         <TrackDetailPanel
           tracks={allTracks.filter(track => (track.mac === ht.mac))}
@@ -163,8 +147,8 @@ class TrackMapPage extends IComponent {
           onChangeHtpid={this.onChangeHtpid}
           onCentralizeTrack={this.onCentralizeTrack}
           humanize={this.humanize}
-          previousDisabled={!this.couldSelectPrevious()}
-          nextDisabled={!this.couldSelectNext()}
+          previousDisabled={index === 0}
+          nextDisabled={index === (tracksIdArray.length - 1)}
         />
       )
     } else {
