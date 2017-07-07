@@ -70,7 +70,7 @@ class TrackMapPage extends IComponent {
   }
 
   onCentralizeTrack = (trackId) => {
-    this.setState({ ctid: trackId })
+    this.setState({ ctid: trackId, showPath: true })
   }
 
   onToggleMacEntry = (macName) => {
@@ -185,13 +185,12 @@ class TrackMapPage extends IComponent {
         <div className="widgets">
           <ButtonGroup
             onResetTransform={() => this.setState({ transformReset: true })}
-            onChangeShowPath={(show) => {
-              this.setState({ showPath: show })
-            }}
-            onChangeShowPoints={(show) => {
-              this.setState({ showPoints: show })
-            }}
+            showPath={showPath}
+            showPoints={showPoints}
+            onToggleShowPath={() => this.setState({ showPath: !showPath })}
+            onToggleShowPoints={() => this.setState({ showPoints: !showPoints })}
           />
+          <Legend />
           <MacList
             macEntryMap={macEntryMap}
             onDeleteMacEntry={this.onDeleteMacEntry}
@@ -206,7 +205,6 @@ class TrackMapPage extends IComponent {
             floorEntryList={floorEntryList}
             changeSelectedFloorId={this.changeFloorId}
           />
-          <Legend />
         </div>
         <TrackMap
           floor={floor}

@@ -110,14 +110,22 @@ export default class TrackDetailPanel extends Component {
         <div className="prev-or-next">
           <Button
             icon={`/static/img/buttonGroup/${previous}.svg`}
-            text={previousDisabled ? '暂无轨迹' : '上一条轨迹'}
+            text="上一条轨迹"
             altText="previous"
+            style={{
+              color: previousDisabled ? '#888888' : 'black',
+              cursor: previousDisabled ? 'default' : 'pointer',
+            }}
             onClick={!previousDisabled ? () => onChangeHtid(tracksIdArray[index - 1]) : null}
           />
           <Button
             icon={`/static/img/buttonGroup/${next}.svg`}
-            text={nextDisabled ? '暂无轨迹' : '下一条轨迹'}
+            text="下一条轨迹"
             altText="next"
+            style={{
+              color: nextDisabled ? '#888888' : 'black',
+              cursor: nextDisabled ? 'default' : 'pointer',
+            }}
             onClick={!nextDisabled ? () => onChangeHtid(tracksIdArray[index + 1]) : null}
           />
         </div>

@@ -5,17 +5,12 @@ import Button from '../components/Button'
 import '../styles/ButtonGroup.styl'
 
 export default class ButtonGroup extends Component {
-  state = {
-    showPath: true,
-    showPoints: true,
-  }
-
   render() {
-    const { showPath, showPoints } = this.state
+    const { showPath, showPoints } = this.props
     const {
       onResetTransform,
-      onChangeShowPath,
-      onChangeShowPoints,
+      onToggleShowPath,
+      onToggleShowPoints,
     } = this.props
     const pathCheckStatus = showPath ? 'check-box' : 'check-box-empty'
     const pointsCheckStatus = showPoints ? 'check-box' : 'check-box-empty'
@@ -46,19 +41,13 @@ export default class ButtonGroup extends Component {
             icon={`/static/img/buttonGroup/${pathCheckStatus}.svg`}
             text="显示轨迹"
             altText="showPath"
-            onClick={() => {
-              this.setState({ showPath: !showPath })
-              onChangeShowPath(!showPath)
-            }}
+            onClick={onToggleShowPath}
           />
           <Button
             icon={`/static/img/buttonGroup/${pointsCheckStatus}.svg`}
             text="显示轨迹点"
             altText="showPoints"
-            onClick={() => {
-              this.setState({ showPoints: !showPoints })
-              onChangeShowPoints(!showPoints)
-            }}
+            onClick={onToggleShowPoints}
           />
         </div>
       </div>
@@ -70,7 +59,8 @@ storiesOf('ButtonGroup', module)
   .add('static', () => (
     <ButtonGroup
       onResetTransform={action('reset-transform')}
-      onChangeShowPath={action('show-path')}
-      onChangeShowPoints={action('show-points')}
+      showPath
+      onToggleShowPath={action('toggle-path')}
+      onToggleShowPoints={action('toggle-points')}
     />
   ))

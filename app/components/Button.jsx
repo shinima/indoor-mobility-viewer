@@ -2,17 +2,17 @@ import React, { Component } from 'react'
 
 export default class Button extends Component {
   render() {
-    const { icon, text, altText, onClick } = this.props
+    const { icon, text, altText, onClick, style = {} } = this.props
     return (
       <div
-        style={{
+        style={Object.assign({
           display: 'flex',
           height: 40,
           alignItems: 'center',
           cursor: 'pointer',
           paddingLeft: 16,
           userSelect: 'none',
-        }}
+        }, style)}
         onClick={onClick}
       >
         <img

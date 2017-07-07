@@ -6,7 +6,7 @@ import TrackPointSymbol from '../components/TrackPointSymbol'
 
 export default class Legend extends Component {
   render() {
-    const fill = '#888888'
+    const fill = 'steelblue'
     return (
       <div className="points-list-widget">
         <div className="title">图例说明</div>
@@ -46,5 +46,5 @@ export default class Legend extends Component {
   }
 }
 
-storiesOf('PointSymbol', module)
+storiesOf('Legend', module)
   .add('static', () => <Legend />)
