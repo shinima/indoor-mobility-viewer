@@ -1,37 +1,40 @@
-/* eslint-disable no-shadow */
 import React from 'react'
 import _ from 'lodash'
+import { connect } from 'react-redux'
 import { fromJS, Map } from 'immutable'
-import { storiesOf } from '@storybook/react'
-import { action } from '@storybook/addon-actions'
 import TrackMap from '../components/Map/TrackMap'
-import '../styles/global.styl'
-import '../styles/TrackMapPage.styl'
-import allItems from '../resources/items.json'
-import staticMacMapping from '../resources/static-mac-mapping.json'
-import cluster from '../components/Map/cluster'
 import TrackDetailPanel from '../components/TrackDetailPanel'
 import FloorList from '../components/FloorList'
 import ButtonGroup from '../components/ButtonGroup'
 import Legend from '../components/Legend'
-import floor31 from '../resources/floor-31.json'
-import floors, { floorConfig } from '../resources/floors'
-import { IComponent, makeHumanizeFn, makeTranslateFn } from '../utils/utils'
+import bindSearchParameters from '../utils/bindSearchParameters'
+import { IComponent } from '../utils/utils'
 import MacList from '../components/MacList'
+import '../styles/TrackMapPage.styl'
 
-const allTracks = Map(_.groupBy(allItems, item => item.mac))
-  .toList()
-  .flatMap(cluster)
-  .toArray()
+function mapStateToProps({ allTracks, floors, settings }, ownProps) {
+  const { floorConfig, staticMacItems } = settings
+  // calculate floor from floors and floorId
+  const { floorId } = ownProps
+  const floor = floors.find(flr => flr.floorId === floorId) || floors[0]
 
-class TrackMapPage extends IComponent {
+  return Object.assign({ allTracks, floors, floorConfig, floor, staticMacItems }, ownProps)
+}
+
+const searchBindingDefinitons = [
+  // date=2017-07-10&floorId=31&htid=966270890
+  { key: 'floorId', getter: Number, default: null },
+  { key: 'htid', getter: Number, default: null },
+  // { key: 'date', getter: , default: null },
+]
+
+@bindSearchParameters(searchBindingDefinitons)
+@connect(mapStateToProps)
+export default class TrackMapPage extends IComponent {
   state = {
-    // 当前显示的楼层
-    floor: _.first(floors),
     // mac地址过滤控件的状态
-    macEntryMap: Map(staticMacMapping.map(({ name }) => [name, true])),
-    // highlighted-track-id
-    htid: null,
+    // todo 这个不应该直接使用props进行初始化, 应该从浏览器缓存localStorage中进行获取
+    macEntryMap: Map(this.props.staticMacItems.map(entry => [entry.get('name'), true]).toArray()),
     // centralized-track-id
     ctid: null,
     // highlighted-track-point-id
@@ -44,18 +47,29 @@ class TrackMapPage extends IComponent {
 
   updateFloorEntryMap = this.makeIUpdateFn('items')
   updateMacEntryMap = this.makeIUpdateFn('macEntryMap')
-  translate = makeTranslateFn(staticMacMapping)
-  humanize = makeHumanizeFn(staticMacMapping)
+
+  translate = (macName) => {
+    const { staticMacItems } = this.props
+    const entry = staticMacItems.find(item => item.get('name') === macName)
+    return entry ? entry.get('mac') : macName
+  }
+
+  humanize = (mac) => {
+    const { staticMacItems } = this.props
+    const entry = staticMacItems.find(item => item.get('mac') === mac)
+    return entry ? entry.get('macName') : mac
+  }
 
   onDeleteMacEntry = (macName) => {
+    const { allTracks, htid } = this.props
     this.updateMacEntryMap(map => map.delete(macName))
 
     // 如果当前高亮的轨迹正好要被删除, 那么将htid设置为null
-    const { htid, macEntryMap } = this.state
+    const { macEntryMap } = this.state
     if (htid != null && macEntryMap.get(macName)) {
       const highlightedTrack = allTracks.find(tr => tr.trackId === htid)
       if (highlightedTrack.mac === this.translate(macName)) {
-        this.setState({ htid: null })
+        this.props.updateSearch({ htid: null })
       }
     }
   }
@@ -64,9 +78,8 @@ class TrackMapPage extends IComponent {
     this.updateMacEntryMap(map => map.set(macName, true))
   }
 
-  changeFloorId = (floorId) => {
-    const nextFloor = floors.find(flr => flr.floorId === floorId)
-    this.setState({ floor: nextFloor })
+  onChangeFloorId = (floorId) => {
+    this.props.updateSearch({ floorId })
   }
 
   onCentralizeTrack = (trackId) => {
@@ -74,6 +87,7 @@ class TrackMapPage extends IComponent {
   }
 
   onToggleMacEntry = (macName) => {
+    const { allTracks } = this.props
     const not = x => !x
     this.updateMacEntryMap(map => map.update(macName, not))
 
@@ -89,22 +103,21 @@ class TrackMapPage extends IComponent {
 
   // 高亮一个macName在当前楼层的第一条轨迹
   onHighlightFirstTrack = (macName) => {
+    const { allTracks, floor } = this.props
     const mac = this.translate(macName)
-    const { floor, macEntryMap } = this.state
+    const { macEntryMap } = this.state
     const highlightedTrack = allTracks.find(tr => (tr.floorId === floor.floorId && tr.mac === mac))
     if (highlightedTrack) {
-      this.setState({
-        htid: highlightedTrack.trackId,
-        macEntryMap: macEntryMap.set(macName, true),
-      })
+      this.setState({ macEntryMap: macEntryMap.set(macName, true) })
+      this.props.updateSearch({ htid: highlightedTrack.trackId })
     }
     // todo else 没有找到轨迹的话, 需要使用toast来提示用户
   }
 
   // 居中显示一个macName在当前楼层的第一个轨迹
   onCentralizeFirstTrack = (macName) => {
+    const { allTracks, floor } = this.props
     const mac = this.translate(macName)
-    const { floor } = this.state
     const centralizedTrack = allTracks.find(tr => (tr.floorId === floor.floorId && tr.mac === mac))
     if (centralizedTrack) {
       this.setState({ ctid: centralizedTrack.trackId })
@@ -112,25 +125,23 @@ class TrackMapPage extends IComponent {
   }
 
   onChangeHtid = (htid) => {
-    if (htid != null) {
-      const { floor } = this.state
-      // ht: highlighted-track
-      const ht = allTracks.find(tr => tr.trackId === htid)
-      if (floor.floorId === ht.floorId) {
-        this.setState({ htid })
-      } else {
-        // 如果发生了楼层切换, 那么默认居中显示highlighted-track
-        const nextFloor = floors.find(flr => flr.floorId === ht.floorId)
-        this.setState({ htid, ctid: htid, floor: nextFloor })
-      }
+    const { allTracks, floor, floors } = this.props
+    const ht = allTracks.find(tr => tr.trackId === htid)
+    // ht: highlighted-track
+    if (ht && floor.floorId !== ht.floorId) {
+      // todo 如果发生了楼层切换, 那么默认居中显示highlighted-track
+      const nextFloor = floors.find(flr => flr.floorId === ht.floorId)
+      this.setState({ ctid: htid })
+      this.props.updateSearch({ htid, floorId: nextFloor.floorId })
     } else {
-      this.setState({ htid })
+      this.props.updateSearch({ htid })
     }
   }
   onChangeHtpid = htpid => this.setState({ htpid })
 
   renderTrackDetailPanel() {
-    const { floor, htid, htpid } = this.state
+    const { allTracks, htid, floor } = this.props
+    const { htpid } = this.state
     if (htid != null) {
       // ht: highlighted track
       const ht = allTracks.find(tr => tr.trackId === htid)
@@ -154,11 +165,10 @@ class TrackMapPage extends IComponent {
 
 
   render() {
+    const { allTracks, floorConfig, floor, htid, history } = this.props
     const {
-      htid,
       ctid,
       htpid,
-      floor,
       macEntryMap,
       transformReset,
       showPath,
@@ -189,7 +199,7 @@ class TrackMapPage extends IComponent {
             showPoints={showPoints}
             onToggleShowPath={() => this.setState({ showPath: !showPath })}
             onToggleShowPoints={() => this.setState({ showPoints: !showPoints })}
-            history={{ push: action('history-push') }}
+            history={history}
           />
           <Legend />
           <MacList
@@ -204,7 +214,7 @@ class TrackMapPage extends IComponent {
           <FloorList
             selectedFloorId={floor.floorId}
             floorEntryList={floorEntryList}
-            changeSelectedFloorId={this.changeFloorId}
+            changeSelectedFloorId={this.onChangeFloorId}
           />
         </div>
         <TrackMap
@@ -226,21 +236,3 @@ class TrackMapPage extends IComponent {
     )
   }
 }
-
-storiesOf('TrackMap', module)
-  .add(' static', () => (
-    <TrackMap
-      floor={floor31}
-      tracks={allTracks.filter(track => track.floorId === floor31.floorId)}
-      showPath
-      showPoints
-      htid={null}
-      ctid={null}
-      htpid={null}
-      onChangeHtid={action(' change-highlighted-track-id')}
-      onChangeHtpid={action(' change-highlighted-track-point-id')}
-      humanize={makeHumanizeFn(staticMacMapping)}
-      onZoom={action(' zoom')}
-    />
-  ))
-  .add('TrackMapPage', () => <TrackMapPage />)

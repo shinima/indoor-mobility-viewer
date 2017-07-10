@@ -82,7 +82,6 @@ export default class DrawingManager {
     }
   }
 
-  // todo 调用raise来提升高亮的track与trackPoint
   updateTrackPoints(tracks, { htid, htpid }) {
     const self = this
     const board = this.svg.select('.board')

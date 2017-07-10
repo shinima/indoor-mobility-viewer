@@ -1,5 +1,4 @@
 const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
   module: {
@@ -20,7 +19,11 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               // presets: ['env', 'es2015', 'react'],
-              plugins: ["transform-react-jsx", "transform-class-properties"]
+              plugins: [
+                'transform-react-jsx',
+                'transform-class-properties',
+                'transform-decorators-legacy',
+              ],
             }
           }
         ],

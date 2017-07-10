@@ -43,7 +43,7 @@ class MacItemRow extends Component {
     if (!editing) {
       return (
         <li className="mac-item">
-          <div className="index">{index + 1}</div>
+          <div className="index">{index}</div>
           <div className="name">{macItem.get('name')}</div>
           <div className="mac">{macItem.get('mac')}</div>
           <button className="button edit" onClick={this.onStartEdit}>edit</button>
@@ -53,7 +53,7 @@ class MacItemRow extends Component {
     } else {
       return (
         <li className="mac-item">
-          <div className="index">{index + 1}</div>
+          <div className="index">{index}</div>
           <div className="name">
             <input type="text" value={name} onChange={this.onChangeName} />
           </div>

@@ -1,8 +1,9 @@
 const path = require('path')
+const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: './app/main.jsx',
+  entry: ['react-hot-loader/patch', './app/main.jsx'],
 
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -26,7 +27,11 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              plugins: ['transform-react-jsx', 'transform-class-properties'],
+              plugins: [
+                'transform-react-jsx',
+                'transform-class-properties',
+                'transform-decorators-legacy',
+              ],
             },
           },
         ],
@@ -35,17 +40,7 @@ module.exports = {
   },
 
   resolve: {
-    // 解析模块请求的选项
-    // （不适用于对 loader 解析）
-
-    modules: [
-      'node_modules',
-      path.resolve(__dirname, 'app'),
-    ],
-    // 用于查找模块的目录
-
     extensions: ['.js', '.json', '.jsx', '.css'],
-    // 使用的扩展名
   },
 
   devtool: 'source-map',
@@ -55,15 +50,15 @@ module.exports = {
   target: 'web',
 
   devServer: {
-    contentBase: path.join(__dirname, 'public'),
-    hot: false,
+    contentBase: __dirname,
+    hot: true,
   },
 
   plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
     new HtmlWebpackPlugin({
       template: 'app/template.html',
     }),
   ],
-  // 附加插件列表
-
 }
