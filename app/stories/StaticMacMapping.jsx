@@ -13,7 +13,7 @@ import StaticMacMapping from '../components/StaticMacMapping'
 
 const staticMacItems = fromJS({
   1: { id: 1, name: 'sfc-samsung', mac: 'a0:b1:c2:d3:e4:f5' },
-  2: { id: 2, name: 'cx-meizu', mac: '00-11-22-33-44-55' },
+  2: { id: 2, name: 'x-meizu', mac: '00-11-22-33-44-55' },
   3: { id: 3, name: 'lxy-meizu', mac: '88:88:88:88:88:88' },
 }).mapKeys(Number)
 
