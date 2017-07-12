@@ -23,12 +23,8 @@
       border steelblue 1px solid
       border-top none
       font-size 14px
-      .index {
-        width 32px
-        line-height $item-height
-        text-align center
-      }
       .name {
+        padding-left 16px
         width 120px
         line-height $item-height
         font-family monospace
@@ -53,6 +49,20 @@
           margin-left 16px
         }
       }
+    }
+  }
+  .new-mac-item {
+    height 32px
+    display flex
+    align-items center
+    border 1px solid steelblue
+    border-top none
+
+    input {
+      margin-left 16px
+      width 120px
+      height 24px
+      font-family Consolas, monospace, 'microsoft yahei'
     }
   }
   .empty-mac-item-list {

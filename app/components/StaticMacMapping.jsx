@@ -6,7 +6,6 @@ import '../styles/StaticMacMapping.styl'
 class MacItemRow extends Component {
   static propTypes = {
     macItem: PropTypes.object.isRequired,
-    index: PropTypes.number.isRequired,
   }
 
   state = {
@@ -28,7 +27,8 @@ class MacItemRow extends Component {
   })
 
   onConfirmEdit = () => {
-    const { name, mac } = this.state
+    const { name, mac, editing } = this.state
+    this.setState({ editing: false })
     this.props.onEdit(Map({ name, mac }))
   }
   onCancelEdit = () => this.setState({ editing: false })
@@ -38,12 +38,11 @@ class MacItemRow extends Component {
   onChangeMac = e => this.setState({ mac: e.target.value })
 
   render() {
-    const { macItem, index } = this.props
+    const { macItem } = this.props
     const { name, mac, editing } = this.state
     if (!editing) {
       return (
         <li className="mac-item">
-          <div className="index">{index}</div>
           <div className="name">{macItem.get('name')}</div>
           <div className="mac">{macItem.get('mac')}</div>
           <button className="button edit" onClick={this.onStartEdit}>edit</button>
@@ -53,7 +52,6 @@ class MacItemRow extends Component {
     } else {
       return (
         <li className="mac-item">
-          <div className="index">{index}</div>
           <div className="name">
             <input type="text" value={name} onChange={this.onChangeName} />
           </div>
@@ -68,25 +66,60 @@ class MacItemRow extends Component {
   }
 }
 
-const StaticMacMapping = ({ staticMacItems, onEditMacItem, onDeleteMacItem }) => (
-  <div className="static-mac-mapping">
-    <p className="title">静态Mac地址映射表</p>
-    {staticMacItems.isEmpty() ? (
-      <div className="empty-mac-item-list">列表暂时为空</div>
-    ) : (
-      <ul className="mac-item-list">
-        {staticMacItems.map((macItem, index) => (
-          <MacItemRow
-            key={macItem.get('id')}
-            index={index}
-            macItem={macItem}
-            onEdit={newMacItem => onEditMacItem(macItem.get('id'), newMacItem)}
-            onDelete={() => onDeleteMacItem(macItem.get('id'))}
-          />
-        )).toArray()}
-      </ul>
-    )}
-  </div>
-)
+class StaticMacMapping extends Component {
+  state = {
+    name: '',
+    mac: '',
+  }
+
+  render() {
+    const { staticMacItems, onEditMacItem, onDeleteMacItem, onAddMacItem } = this.props
+    const { name, mac } = this.state
+
+    return (
+
+      <div className="static-mac-mapping">
+        <p className="title">静态Mac地址映射表</p>
+        {staticMacItems === null ? (
+          <div className="empty-mac-item-list">列表暂时为空</div>
+        ) : (
+          <div>
+            <ul className="mac-item-list">
+              {staticMacItems.map(macItem => (
+                <MacItemRow
+                  key={macItem.get('id')}
+                  macItem={macItem}
+                  onEdit={newMacItem => onEditMacItem(macItem.get('id'), newMacItem)}
+                  onDelete={() => onDeleteMacItem(macItem.get('id'))}
+                />
+              )).toArray()}
+            </ul>
+            <div className="new-mac-item">
+              <input
+                placeholder="name"
+                type="text"
+                value={name}
+                onChange={e => this.setState({ name: e.target.value })}
+              />
+              <input
+                placeholder="mac"
+                type="text"
+                value={mac}
+                onChange={e => this.setState({ mac: e.target.value })}
+              />
+              <button
+                style={{ marginLeft: 16 }}
+                onClick={() => {
+                  onAddMacItem(name, mac)
+                  this.setState({ name: '', mac: '' })
+                }}>add
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  }
+}
 
 export default StaticMacMapping

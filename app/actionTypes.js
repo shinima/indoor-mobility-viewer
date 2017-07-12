@@ -1,2 +1,4 @@
 export const DELETE_MAC_ITEM = 'DELETE_MAC_ITEM'
 export const EDIT_MAC_ITEM = 'EDIT_MAC_ITEM'
+export const ADD_MAC_ITEM = 'ADD_MAC_ITEM'
+export const UPDATE_MAC_ITEMS = 'UPDATE_MAC_ITEMS'
