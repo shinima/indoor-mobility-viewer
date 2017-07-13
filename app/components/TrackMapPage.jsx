@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
-import { fromJS, Map } from 'immutable'
+import { fromJS, Map, is } from 'immutable'
 import TrackMap from '../components/Map/TrackMap'
 import TrackDetailPanel from '../components/TrackDetailPanel'
 import FloorList from '../components/FloorList'
@@ -21,14 +21,14 @@ function mapStateToProps({ allTracks, floors, settings }, ownProps) {
   return Object.assign({ allTracks, floors, floorConfig, floor, staticMacItems }, ownProps)
 }
 
-const searchBindingDefinitons = [
+const searchBindingDefinitions = [
   // date=2017-07-10&floorId=31&htid=966270890
   { key: 'floorId', getter: Number, default: null },
   { key: 'htid', getter: Number, default: null },
   // { key: 'date', getter: , default: null },
 ]
 
-@bindSearchParameters(searchBindingDefinitons)
+@bindSearchParameters(searchBindingDefinitions)
 @connect(mapStateToProps)
 export default class TrackMapPage extends IComponent {
   state = {
@@ -45,8 +45,15 @@ export default class TrackMapPage extends IComponent {
     transformReset: false,
   }
 
-  updateFloorEntryMap = this.makeIUpdateFn('items')
   updateMacEntryMap = this.makeIUpdateFn('macEntryMap')
+
+  componentWillReceiveProps(nextProps) {
+    if (!is(nextProps.staticMacItems, this.props.staticMacItems)) {
+      this.setState({
+        macEntryMap: Map(nextProps.staticMacItems.map(entry => [entry.get('name'), true]).toArray()),
+      })
+    }
+  }
 
   translate = (macName) => {
     const { staticMacItems } = this.props

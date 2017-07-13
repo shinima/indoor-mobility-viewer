@@ -7,7 +7,7 @@ export default function rpc(endpoint) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(args)
+      body: JSON.stringify(args),
     })
     if (response.ok) {
       return response.json()

@@ -130,7 +130,7 @@ export default class TrackDetailPanel extends Component {
           />
         </div>
         <div className="track-list">
-          {tracks.map((track, index) => (
+          {tracks.map(track => (
             <div
               key={track.trackId}
               className={classNames('track', { highlighted: track.trackId === htid })}

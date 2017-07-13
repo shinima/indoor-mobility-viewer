@@ -1,11 +1,27 @@
 import React, { Component } from 'react'
 import { Switch, HashRouter, Route, Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { fromJS } from 'immutable'
+import rpc from '../utils/rpc'
+import * as A from '../actionTypes'
 import TrackMapPage from './TrackMapPage'
 import SettingsPage from './SettingsPage'
 import HeatMapPage from './HeatMapPage'
 // import { connect } from 'react-redux'
 
+@connect()
 export default class App extends Component {
+  componentDidMount() {
+    const get = rpc('get-static-mac-mappings')
+    get().then((response) => {
+      if (response.ok) {
+        const data = fromJS(response.mappings).toOrderedMap()
+          .mapKeys((__, entry) => entry.get('id'))
+        this.props.dispatch({ type: A.UPDATE_MAC_ITEMS, data })
+      }
+    })
+  }
+
   render() {
     return (
       <HashRouter>

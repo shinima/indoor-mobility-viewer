@@ -28,7 +28,7 @@ class MacItemRow extends Component {
   })
 
   onConfirmEdit = () => {
-    const { name, mac, editing } = this.state
+    const { name, mac } = this.state
     if (isValidMac(mac)) {
       this.setState({ editing: false })
       this.props.onEdit(Map({ name, mac }))
@@ -71,6 +71,7 @@ class MacItemRow extends Component {
   }
 }
 
+// eslint-disable-next-line react/no-multi-comp
 class StaticMacMapping extends Component {
   static propTypes = {
     staticMacItems: PropTypes.object.isRequired,
@@ -89,7 +90,6 @@ class StaticMacMapping extends Component {
       this.props.onAddMacItem(name, mac)
       this.setState({ name: '', mac: '' })
     } else {
-      console.log(isValidMac(mac))
       alert('请输入正确的mac地址')
     }
   }
@@ -131,8 +131,8 @@ class StaticMacMapping extends Component {
                 value={mac}
                 onChange={e => this.setState({ mac: e.target.value })}
               />
-              <button
-                onClick={this.handleAdd}>add
+              <button onClick={this.handleAdd}>
+                add
               </button>
             </div>
           </div>
