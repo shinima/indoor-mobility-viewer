@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
 import _ from 'lodash'
+import wrapDisplayName from 'recompose/wrapDisplayName'
 import hoistNonReactStatic from 'hoist-non-react-statics'
 import querystring from 'querystring'
 
 export default function bindSearchParameters(definitions) {
   return (sourceComponent) => {
     const targetComponent = class extends Component {
+      static displayName = wrapDisplayName(sourceComponent, 'bindSearchParameter')
+
       render() {
         const { location: { search }, history } = this.props
         const extraProps = {}
