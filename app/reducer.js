@@ -7,10 +7,10 @@ import floors, { floorConfig } from './resources/floors'
 import cluster from './components/Map/cluster'
 import * as A from './actionTypes'
 
-const initStaticMacItems = fromJS(staticMacMapping)
-  .map((entry, index) => entry.set('id', index + 1))
-  .toOrderedMap()
-  .mapKeys((__, entry) => entry.get('id'))
+// const initStaticMacItems = fromJS(staticMacMapping)
+//   .map((entry, index) => entry.set('id', index + 1))
+//   .toOrderedMap()
+//   .mapKeys((__, entry) => entry.get('id'))
 
 function staticMacItems(state = OrderedMap(), action) {
   if (action.type === A.EDIT_MAC_ITEM) {

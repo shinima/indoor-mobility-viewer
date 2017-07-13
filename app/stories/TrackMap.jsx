@@ -42,7 +42,6 @@ class TrackMapPage extends IComponent {
     transformReset: false,
   }
 
-  updateFloorEntryMap = this.makeIUpdateFn('items')
   updateMacEntryMap = this.makeIUpdateFn('macEntryMap')
   translate = makeTranslateFn(staticMacMapping)
   humanize = makeHumanizeFn(staticMacMapping)

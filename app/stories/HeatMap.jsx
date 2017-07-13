@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Map, fromJS } from 'immutable'
+import { fromJS } from 'immutable'
 import _ from 'lodash'
 import { storiesOf } from '@storybook/react'
 import { action } from '@storybook/addon-actions'
