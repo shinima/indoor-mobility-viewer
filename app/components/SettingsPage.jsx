@@ -54,17 +54,23 @@ export default class SettingsPage extends Component {
   }
 
   addMacItem = (name, mac) => {
-    const add = rpc('add-static-mac-mapping')
-    add(name, mac).then(response => {
-      if (response.ok) {
-        this.props.dispatch({
-          type: A.ADD_MAC_ITEM,
-          id: response.id,
-          name,
-          mac,
-        })
-      }
-    })
+    if (name === '' || mac === '') {
+      alert('name和mac均不可为空')
+    } else {
+      const add = rpc('add-static-mac-mapping')
+      add(name, mac).then(response => {
+        if (response.ok) {
+          this.props.dispatch({
+            type: A.ADD_MAC_ITEM,
+            id: response.id,
+            name,
+            mac,
+          })
+        } else {
+          alert(response.message)
+        }
+      })
+    }
   }
 
   render() {

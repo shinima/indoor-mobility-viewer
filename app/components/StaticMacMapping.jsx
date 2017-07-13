@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { is, Map } from 'immutable'
+import { isValidMac } from '../utils/utils'
 import '../styles/StaticMacMapping.styl'
 
 class MacItemRow extends Component {
@@ -28,8 +29,12 @@ class MacItemRow extends Component {
 
   onConfirmEdit = () => {
     const { name, mac, editing } = this.state
-    this.setState({ editing: false })
-    this.props.onEdit(Map({ name, mac }))
+    if (isValidMac(mac)) {
+      this.setState({ editing: false })
+      this.props.onEdit(Map({ name, mac }))
+    } else {
+      alert('请输入正确的mac')
+    }
   }
   onCancelEdit = () => this.setState({ editing: false })
 
@@ -67,13 +72,30 @@ class MacItemRow extends Component {
 }
 
 class StaticMacMapping extends Component {
+  static propTypes = {
+    staticMacItems: PropTypes.object.isRequired,
+    onEditMacItem: PropTypes.func.isRequired,
+    onDeleteMacItem: PropTypes.func.isRequired,
+    onAddMacItem: PropTypes.func.isRequired,
+  }
   state = {
     name: '',
     mac: '',
   }
 
+  handleAdd = () => {
+    const { name, mac } = this.state
+    if (isValidMac(mac)) {
+      this.props.onAddMacItem(name, mac)
+      this.setState({ name: '', mac: '' })
+    } else {
+      console.log(isValidMac(mac))
+      alert('请输入正确的mac地址')
+    }
+  }
+
   render() {
-    const { staticMacItems, onEditMacItem, onDeleteMacItem, onAddMacItem } = this.props
+    const { staticMacItems, onEditMacItem, onDeleteMacItem } = this.props
     const { name, mac } = this.state
 
     return (
@@ -96,23 +118,21 @@ class StaticMacMapping extends Component {
             </ul>
             <div className="new-mac-item">
               <input
+                style={{ width: 100 }}
                 placeholder="name"
                 type="text"
                 value={name}
                 onChange={e => this.setState({ name: e.target.value })}
               />
               <input
+                style={{ width: 150, marginLeft: 24 }}
                 placeholder="mac"
                 type="text"
                 value={mac}
                 onChange={e => this.setState({ mac: e.target.value })}
               />
               <button
-                style={{ marginLeft: 16 }}
-                onClick={() => {
-                  onAddMacItem(name, mac)
-                  this.setState({ name: '', mac: '' })
-                }}>add
+                onClick={this.handleAdd}>add
               </button>
             </div>
           </div>

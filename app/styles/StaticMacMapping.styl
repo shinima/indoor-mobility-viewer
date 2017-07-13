@@ -27,19 +27,19 @@
         padding-left 16px
         width 120px
         line-height $item-height
-        font-family monospace
+        font-family Consolas, monospace
         input {
           width 120px
-          font-family monospace
+          font-family Consolas, monospace
         }
       }
       .mac {
         width 160px
         line-height $item-height
-        font-family monospace
+        font-family Consolas, monospace
         input {
           width 160px
-          font-family monospace
+          font-family Consolas, monospace
         }
       }
       .button {
@@ -59,10 +59,15 @@
     border-top none
 
     input {
-      margin-left 16px
-      width 120px
-      height 24px
+      margin-left 8px
+      height 18px
       font-family Consolas, monospace, 'microsoft yahei'
+    }
+
+    > button {
+      @extends $flat-button
+      width 60px
+      margin-left 82px
     }
   }
   .empty-mac-item-list {
