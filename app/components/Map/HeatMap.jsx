@@ -30,13 +30,16 @@ export default class HeatMap extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { floor, items } = this.props
+    const { floor, items, transformReset } = this.props
     if (floor.floorId !== nextProps.floorId) {
       drawFloor(nextProps.floor, this.svgElement)
     }
     if (!isSameItems(items, nextProps.items
       || floor.floorId !== nextProps.floor.floorId)) {
       this.updateHeatMap(nextProps.items)
+    }
+    if (!transformReset && nextProps.transformReset) {
+      this.resetTransform(true)
     }
   }
 
@@ -47,6 +50,7 @@ export default class HeatMap extends Component {
   onZoom = () => {
     this.board.attr('transform', d3.event.transform)
     this.updateHeatMap(this.props.items)
+    this.props.onZoom()
   }
 
   resetTransform(useTransition = true) {

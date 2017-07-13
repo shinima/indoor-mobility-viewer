@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Switch, HashRouter, Route, Link } from 'react-router-dom'
 import TrackMapPage from './TrackMapPage'
 import SettingsPage from './SettingsPage'
+import HeatMapPage from './HeatMapPage'
 // import { connect } from 'react-redux'
 
 export default class App extends Component {
@@ -15,7 +16,7 @@ export default class App extends Component {
           <Route path="/comparison" component={ComparisonPage} />
           <Route path="/settings" component={SettingsPage} />
         </Switch>
-      </HashRouter >
+      </HashRouter>
     )
   }
 }
@@ -26,7 +27,6 @@ const ComparisonPage = () => (
     <Link to="/">回到首页</Link>
   </div>
 )
-const HeatMapPage = ComparisonPage
 
 const Home = () => (
   <div>
