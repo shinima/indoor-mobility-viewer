@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash'
 import { connect } from 'react-redux'
-import { fromJS, Map, is } from 'immutable'
+import { fromJS, OrderedMap, is } from 'immutable'
 import TrackMap from '../components/Map/TrackMap'
 import TrackDetailPanel from '../components/TrackDetailPanel'
 import FloorList from '../components/FloorList'
@@ -34,7 +34,7 @@ export default class TrackMapPage extends IComponent {
   state = {
     // mac地址过滤控件的状态
     // todo 这个不应该直接使用props进行初始化, 应该从浏览器缓存localStorage中进行获取
-    macEntryMap: Map(this.props.staticMacItems.map(entry => [entry.get('name'), true]).toArray()),
+    macEntryMap: OrderedMap(this.props.staticMacItems.map(entry => [entry.get('name'), true]).toArray()),
     // centralized-track-id
     ctid: null,
     // highlighted-track-point-id
@@ -50,7 +50,7 @@ export default class TrackMapPage extends IComponent {
   componentWillReceiveProps(nextProps) {
     if (!is(nextProps.staticMacItems, this.props.staticMacItems)) {
       this.setState({
-        macEntryMap: Map(nextProps.staticMacItems.map(entry => [entry.get('name'), true]).toArray()),
+        macEntryMap: OrderedMap(nextProps.staticMacItems.map(entry => [entry.get('name'), true]).toArray()),
       })
     }
   }
