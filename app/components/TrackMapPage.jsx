@@ -33,8 +33,8 @@ const searchBindingDefinitions = [
 export default class TrackMapPage extends IComponent {
   state = {
     // mac地址过滤控件的状态
-    // todo 这个不应该直接使用props进行初始化, 应该从浏览器缓存localStorage中进行获取
-    macEntryMap: OrderedMap(this.props.staticMacItems.map(entry => [entry.get('name'), true]).toArray()),
+    macEntryMap: localStorage.getItem('mac-list') === null
+      ? OrderedMap() : OrderedMap(JSON.parse(localStorage.getItem('mac-list'))),
     // centralized-track-id
     ctid: null,
     // highlighted-track-point-id
@@ -43,16 +43,6 @@ export default class TrackMapPage extends IComponent {
     showPoints: true,
     // transform是否重置(大概等于当前楼层是否居中显示)
     transformReset: false,
-  }
-
-  updateMacEntryMap = this.makeIUpdateFn('macEntryMap')
-
-  componentWillReceiveProps(nextProps) {
-    if (!is(nextProps.staticMacItems, this.props.staticMacItems)) {
-      this.setState({
-        macEntryMap: OrderedMap(nextProps.staticMacItems.map(entry => [entry.get('name'), true]).toArray()),
-      })
-    }
   }
 
   translate = (macName) => {
@@ -69,10 +59,12 @@ export default class TrackMapPage extends IComponent {
 
   onDeleteMacEntry = (macName) => {
     const { allTracks, htid } = this.props
-    this.updateMacEntryMap(map => map.delete(macName))
+    const { macEntryMap } = this.state
+    const newMacEntryMap = macEntryMap.delete(macName)
+    this.setState({ macEntryMap: newMacEntryMap })
+    localStorage.setItem('mac-list', JSON.stringify(newMacEntryMap))
 
     // 如果当前高亮的轨迹正好要被删除, 那么将htid设置为null
-    const { macEntryMap } = this.state
     if (htid != null && macEntryMap.get(macName)) {
       const highlightedTrack = allTracks.find(tr => tr.trackId === htid)
       if (highlightedTrack.mac === this.translate(macName)) {
@@ -82,7 +74,10 @@ export default class TrackMapPage extends IComponent {
   }
 
   onAddMacEntry = (macName) => {
-    this.updateMacEntryMap(map => map.set(macName, true))
+    const { macEntryMap } = this.state
+    const newMacEntryMap = macEntryMap.set(macName, true)
+    this.setState({ macEntryMap: newMacEntryMap })
+    localStorage.setItem('mac-list', JSON.stringify(newMacEntryMap))
   }
 
   onChangeFloorId = (floorId) => {
@@ -95,11 +90,12 @@ export default class TrackMapPage extends IComponent {
 
   onToggleMacEntry = (macName) => {
     const { allTracks } = this.props
-    const not = x => !x
-    this.updateMacEntryMap(map => map.update(macName, not))
-
-    // 如果当前高亮的轨迹正好要设置为不可见, 那么将htid设置为null
     const { htid, macEntryMap } = this.state
+    const not = x => !x
+    const newMacEntryMap = macEntryMap.update(macName, not)
+    this.setState({ macEntryMap: newMacEntryMap })
+    localStorage.setItem('mac-list', JSON.stringify(newMacEntryMap))
+    // 如果当前高亮的轨迹正好要设置为不可见, 那么将htid设置为null
     if (htid != null && macEntryMap.get(macName)) {
       const highlightedTrack = allTracks.find(tr => tr.trackId === htid)
       if (highlightedTrack.mac === this.translate(macName)) {
@@ -169,7 +165,6 @@ export default class TrackMapPage extends IComponent {
       return null
     }
   }
-
 
   render() {
     const { allTracks, floorConfig, floor, htid, history } = this.props
