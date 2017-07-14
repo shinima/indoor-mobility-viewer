@@ -1,7 +1,7 @@
 const host = 'http://10.214.224.29:3000'
 const prefix = '/rpc@'
-export default function rpc(endpoint) {
-  return async function (...args) {
+function rpc(endpoint) {
+  return async function rpcfn(...args) {
     const response = await fetch(`${host}${prefix}${endpoint}`, {
       method: 'POST',
       headers: {
@@ -18,3 +18,6 @@ export default function rpc(endpoint) {
 }
 
 export const getStaticMacMappings = rpc('get-static-mac-mappings')
+export const deleteStaticMacMapping = rpc('delete-static-mac-mapping')
+export const addStaticMacMapping = rpc('add-static-mac-mapping')
+export const updateStaticMacMapping = rpc('update-static-mac-mapping')

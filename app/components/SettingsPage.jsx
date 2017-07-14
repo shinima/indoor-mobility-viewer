@@ -2,42 +2,40 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import StaticMacMapping from './StaticMacMapping'
-import rpc from '../utils/rpc'
+import * as rpc from '../utils/rpc'
 import * as A from '../actionTypes'
 
 @connect(({ settings: { staticMacItems } }) => ({ staticMacItems }))
 export default class SettingsPage extends Component {
 
-  editMacItem = (id, macItem) => {
-    const update = rpc('update-static-mac-mapping')
-    update(id, macItem.get('name'), macItem.get('mac')).then((response) => {
-      if (response.ok) {
-        this.props.dispatch({ type: A.EDIT_MAC_ITEM, id, macItem })
-      }
-    })
+  editMacItem = async (id, macItem) => {
+    const { ok } = await rpc.updateStaticMacMapping(id, macItem.get('name'), macItem.get('mac'))
+    if (ok) {
+      this.props.dispatch({ type: A.EDIT_MAC_ITEM, id, macItem })
+    } else {
+      alert('Edit mac-item error.')
+    }
   }
 
-  deleteMacItem = (id) => {
-    const deleteMac = rpc('delete-static-mac-mapping')
-    deleteMac(id).then((response) => {
-      if (response.ok) {
-        this.props.dispatch({ type: A.DELETE_MAC_ITEM, id })
-      }
-    })
+  deleteMacItem = async (id) => {
+    const { ok } = await rpc.deleteStaticMacMapping(id)
+    if (ok) {
+      this.props.dispatch({ type: A.DELETE_MAC_ITEM, id })
+    } else {
+      alert('Delete static-mac-mapping error.')
+    }
   }
 
-  addMacItem = (name, mac) => {
+  addMacItem = async (name, mac) => {
     if (name === '' || mac === '') {
       alert('name和mac均不可为空')
     } else {
-      const add = rpc('add-static-mac-mapping')
-      add(name, mac).then((response) => {
-        if (response.ok) {
-          this.props.dispatch({ type: A.ADD_MAC_ITEM, id: response.id, name, mac })
-        } else {
-          alert(response.message)
-        }
-      })
+      const { ok, message, id } = await rpc.addStaticMacMapping(name, mac)
+      if (ok) {
+        this.props.dispatch({ type: A.ADD_MAC_ITEM, id, name, mac })
+      } else {
+        alert(message)
+      }
     }
   }
 
