@@ -16,7 +16,7 @@ const allTrackPoints = Map(_.groupBy(allItems, item => item.mac))
 
 const countResult = _.countBy(allTrackPoints, trackPoint => trackPoint.floorId)
 const floorEntryList = fromJS(floorConfig).map(entry => (
-  entry.set('trackPointCount', countResult[entry.get('floorId')] || 0)
+  entry.set('pointsCount', countResult[entry.get('floorId')] || 0)
 ))
 
 class FloorListManager extends Component {

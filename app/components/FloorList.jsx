@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import ImmutablePropTypes from 'react-immutable-proptypes'
 import * as d3 from 'd3'
 import '../styles/FloorList.styl'
 
@@ -11,9 +13,19 @@ const statsBarWidth = d3.scaleLinear().range([0, 200]).clamp(true)
 
 
 export default class FloorList extends Component {
+  static propTypes = {
+    floorEntryList: ImmutablePropTypes.iterableOf(ImmutablePropTypes.mapContains({
+      floorId: PropTypes.number.isRequired,
+      floorName: PropTypes.string.isRequired,
+      pointsCount: PropTypes.number.isRequired,
+    }).isRequired).isRequired,
+    changeSelectedFloorId: PropTypes.func.isRequired,
+    selectedFloorId: PropTypes.number.isRequired,
+  }
+
   render() {
     const { floorEntryList, selectedFloorId, changeSelectedFloorId } = this.props
-    const maxCount = floorEntryList.map(entry => entry.get('trackPointCount')).max()
+    const maxCount = floorEntryList.map(entry => entry.get('pointsCount')).max()
     statsBgColor.domain([1, maxCount])
     statsBarWidth.domain([0, maxCount])
 
@@ -30,13 +42,13 @@ export default class FloorList extends Component {
               <div
                 className="bar"
                 style={{
-                  width: statsBarWidth(entry.get('trackPointCount')),
-                  background: statsBgColor(entry.get('trackPointCount')),
+                  width: statsBarWidth(entry.get('pointsCount')),
+                  background: statsBgColor(entry.get('pointsCount')),
                 }}
               />
               <div className="floor-text">
                 <span>{entry.get('floorName')}</span>
-                <span className="count">{entry.get('trackPointCount')}</span>
+                <span className="count">{entry.get('pointsCount')}</span>
               </div>
               <div className="floor-radio">
                 <img

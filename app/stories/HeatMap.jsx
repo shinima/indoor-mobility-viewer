@@ -25,7 +25,7 @@ class HeatMapPage extends Component {
   render() {
     const { floor } = this.state
 
-    const floorEntryList = fromJS(floorConfig).map(entry => entry.set('trackPointCount', 0))
+    const floorEntryList = fromJS(floorConfig).map(entry => entry.set('pointsCount', 0))
 
     return (
       <div>

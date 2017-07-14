@@ -16,3 +16,5 @@ export default function rpc(endpoint) {
     }
   }
 }
+
+export const getStaticMacMappings = rpc('get-static-mac-mappings')

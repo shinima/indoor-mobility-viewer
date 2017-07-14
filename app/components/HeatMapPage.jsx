@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
 import { connect } from 'react-redux'
 import { fromJS } from 'immutable'
 import bindSearchParameters from '../utils/bindSearchParameters'
@@ -25,11 +26,11 @@ const mapStateToProps = ({ floors, settings }, ownProps) => {
 @bindSearchParameters(searchBindingDefinitons)
 @connect(mapStateToProps)
 export default class HeatMapPage extends Component {
-  static propTypes = {
-    // TODO: 完善propTypes
-    floorConfig: PropTypes.any.isRequired,
-    floor: PropTypes.any.isRequired,
-  }
+  // static propTypes = {
+  //   // TODO: 完善propTypes
+  //   floorConfig: PropTypes.any.isRequired,
+  //   floor: PropTypes.any.isRequired,
+  // }
 
   state = {
     transformReset: false,
@@ -43,8 +44,10 @@ export default class HeatMapPage extends Component {
     const { floor, floorConfig, history } = this.props
     const { transformReset } = this.state
 
+    const countResult = _.countBy(allItems, item => item.floorId)
+
     const floorEntryList = fromJS(floorConfig)
-      .map(entry => entry.set('trackPointCount', 0))
+      .map(entry => entry.set('pointsCount', _.get(countResult, entry.get('floorId'), 0)))
 
     return (
       <div>

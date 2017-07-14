@@ -12,7 +12,7 @@ import * as A from './actionTypes'
 //   .toOrderedMap()
 //   .mapKeys((__, entry) => entry.get('id'))
 
-function staticMacItems(state = OrderedMap(), action) {
+function staticMacItems(state = null, action) {
   if (action.type === A.EDIT_MAC_ITEM) {
     return state.mergeIn([action.id], action.macItem)
   } else if (action.type === A.DELETE_MAC_ITEM) {

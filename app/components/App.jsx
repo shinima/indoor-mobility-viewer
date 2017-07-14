@@ -2,27 +2,31 @@ import React, { Component } from 'react'
 import { Switch, HashRouter, Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fromJS } from 'immutable'
-import rpc from '../utils/rpc'
+import { getStaticMacMappings } from '../utils/rpc'
 import * as A from '../actionTypes'
 import TrackMapPage from './TrackMapPage'
 import SettingsPage from './SettingsPage'
 import HeatMapPage from './HeatMapPage'
-// import { connect } from 'react-redux'
 
-@connect()
+@connect(({ settings: { staticMacItems } }) => ({ staticMacItems }))
 export default class App extends Component {
-  componentDidMount() {
-    const get = rpc('get-static-mac-mappings')
-    get().then((response) => {
-      if (response.ok) {
-        const data = fromJS(response.mappings).toOrderedMap()
-          .mapKeys((__, entry) => entry.get('id'))
-        this.props.dispatch({ type: A.UPDATE_MAC_ITEMS, data })
-      }
-    })
+  async componentDidMount() {
+    const { ok, mappings } = await getStaticMacMappings()
+    if (ok) {
+      const data = fromJS(mappings)
+        .toOrderedMap()
+        .mapKeys((__, entry) => entry.get('id'))
+      this.props.dispatch({ type: A.UPDATE_MAC_ITEMS, data })
+    } else {
+      alert('Loading static-mac-mappings error.')
+    }
   }
 
   render() {
+    const { staticMacItems } = this.props
+    if (staticMacItems == null) {
+      return null
+    }
     return (
       <HashRouter>
         <Switch>

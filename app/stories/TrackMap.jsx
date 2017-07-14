@@ -176,7 +176,7 @@ class TrackMapPage extends IComponent {
     const activeTrackPoints = _.flatten(activeTracks.map(track => track.points))
     const countResult = _.countBy(activeTrackPoints, trackPoint => trackPoint.floorId)
     const floorEntryList = fromJS(floorConfig).map(entry => (
-      entry.set('trackPointCount', countResult[entry.get('floorId')] || 0)
+      entry.set('pointsCount', countResult[entry.get('floorId')] || 0)
     ))
 
     return (
