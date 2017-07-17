@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { Switch, HashRouter, Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fromJS } from 'immutable'
-import { getStaticMacMappings } from '../utils/rpc'
+// import * as rpc from '../utils/rpc'
+import * as rpc from '../utils/rpcMock'
 import * as A from '../actionTypes'
 import TrackMapPage from './TrackMapPage'
 import SettingsPage from './SettingsPage'
@@ -11,7 +12,7 @@ import HeatMapPage from './HeatMapPage'
 @connect(({ settings: { staticMacItems } }) => ({ staticMacItems }))
 export default class App extends Component {
   async componentDidMount() {
-    const { ok, mappings } = await getStaticMacMappings()
+    const { ok, mappings } = await rpc.getStaticMacMappings()
     if (ok) {
       const data = fromJS(mappings)
         .toOrderedMap()
