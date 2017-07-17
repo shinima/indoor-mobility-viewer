@@ -1,7 +1,8 @@
 import React from 'react'
 import _ from 'lodash'
+import moment from 'moment'
 import { connect } from 'react-redux'
-import { fromJS, OrderedMap, is } from 'immutable'
+import { fromJS, OrderedMap } from 'immutable'
 import TrackMap from '../components/Map/TrackMap'
 import TrackDetailPanel from '../components/TrackDetailPanel'
 import FloorList from '../components/FloorList'
@@ -21,16 +22,37 @@ function mapStateToProps({ allTracks, floors, settings }, ownProps) {
   return Object.assign({ allTracks, floors, floorConfig, floor, staticMacItems }, ownProps)
 }
 
+function dateGetter(arg) {
+  if (arg === 'test-date') {
+    return arg
+  } else {
+    const date = moment(arg, 'YYYY-M-D')
+    if (date.isValid()) {
+      return date
+    } else {
+      return 'test-date'
+    }
+  }
+}
+
 const searchBindingDefinitions = [
-  // date=2017-07-10&floorId=31&htid=966270890
   { key: 'floorId', getter: Number, default: null },
   { key: 'htid', getter: Number, default: null },
-  // { key: 'date', getter: , default: null },
+  { key: 'date', getter: dateGetter, default: 'test-date' },
 ]
 
 @bindSearchParameters(searchBindingDefinitions)
 @connect(mapStateToProps)
 export default class TrackMapPage extends IComponent {
+  // static propTypes = {
+  //   date: Moment | 'test-date'
+  // }
+
+  // todo 当日期发生变化的时候, 需要重新获取当天的数据
+  // componentDidUpdate(nextProps) {
+  //   if (typeof this.props.date === 'string' && )
+  // }
+
   state = {
     // mac地址过滤控件的状态
     macEntryMap: localStorage.getItem('mac-list') === null
