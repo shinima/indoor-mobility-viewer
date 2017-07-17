@@ -34,8 +34,6 @@ class HeatMapPage extends Component {
             selectedFloorId={floor.floorId}
             floorEntryList={floorEntryList}
             changeSelectedFloorId={this.changeFloorId}
-            // todo 重置缩放这个功能可以放在<ButtonGroup />组件中
-            onResetTransform={() => this.setState({ transformReset: true })}
           />
         </div>
         <HeatMap

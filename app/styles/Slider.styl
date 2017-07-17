@@ -3,14 +3,16 @@
 .slider {
   margin-top 16px
   border 1px solid steelblue
+  display flex
+  flex-direction column
   .title {
     @extends $widget-title
   }
 
   .slider-svg {
-    margin 20px
-    display block
+    align-self center
     height 40px
+    margin 8px 0
 
     circle {
       transition r 200ms, fill 200ms, stroke 200ms

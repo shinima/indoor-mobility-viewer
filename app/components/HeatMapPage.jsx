@@ -8,6 +8,7 @@ import FloorList from './FloorList'
 import HeatMap from './Map/HeatMap'
 import ButtonGroup from './ButtonGroup'
 import allItems from '../resources/items.json'
+import Slider from './Slider'
 
 const action = prefix => (...args) => console.log(`[${prefix}]`, ...args)
 
@@ -34,6 +35,7 @@ export default class HeatMapPage extends Component {
 
   state = {
     transformReset: false,
+    time: 0,
   }
 
   onChangeFloorId = (floorId) => {
@@ -42,7 +44,7 @@ export default class HeatMapPage extends Component {
 
   render() {
     const { floor, floorConfig, history } = this.props
-    const { transformReset } = this.state
+    const { transformReset, time } = this.state
 
     const countResult = _.countBy(allItems, item => item.floorId)
 
@@ -61,12 +63,15 @@ export default class HeatMapPage extends Component {
             onToggleShowPoints={action('toggle-show-points')}
             history={history}
           />
+          <Slider
+            width={238}
+            value={time / (24 * 3600)}
+            onChange={value => this.setState({ time: value * 24 * 3600 })}
+          />
           <FloorList
             selectedFloorId={floor.floorId}
             floorEntryList={floorEntryList}
             changeSelectedFloorId={this.onChangeFloorId}
-            // todo 重置缩放这个功能可以放在<ButtonGroup />组件中
-            onResetTransform={() => this.setState({ transformReset: true })}
           />
         </div>
         <HeatMap

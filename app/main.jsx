@@ -4,6 +4,7 @@ import { Provider } from 'react-redux'
 import { AppContainer } from 'react-hot-loader'
 import App from './components/App'
 import store from './store'
+import './styles/global.styl'
 
 function render(Component) {
   ReactDOM.render(
