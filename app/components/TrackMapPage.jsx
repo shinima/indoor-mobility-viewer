@@ -76,7 +76,7 @@ export default class TrackMapPage extends IComponent {
   humanize = (mac) => {
     const { staticMacItems } = this.props
     const entry = staticMacItems.find(item => item.get('mac') === mac)
-    return entry ? entry.get('macName') : mac
+    return entry ? entry.get('name') : mac
   }
 
   onDeleteMacEntry = (macName) => {

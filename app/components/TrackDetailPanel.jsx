@@ -33,8 +33,7 @@ function TrackPointRow({
   )
 }
 
-// eslint-disable-next-line max-len
-function TrackInfo({ track, index, floorId, htid, onChangeHtid, onCentralizeTrack }) {
+function TrackInfo({ track, floorId, htid, onChangeHtid, onCentralizeTrack }) {
   let button
   if (track.floorId !== floorId || track.trackId !== htid) {
     const onClick = () => onChangeHtid(track.trackId)
@@ -48,7 +47,7 @@ function TrackInfo({ track, index, floorId, htid, onChangeHtid, onCentralizeTrac
       <p className="first-line">
         轨迹
         <span style={{ paddingRight: 8, fontWeight: 'bold' }}>
-          {index + 1}
+          {track.trackId}
         </span>
         <span style={{ fontWeight: 'bold', color: 'steelblue' }}>
           {getFloorNameByFloorId(track.floorId)}
@@ -137,7 +136,6 @@ export default class TrackDetailPanel extends Component {
             >
               <TrackInfo
                 track={track}
-                index={index}
                 floorId={floorId}
                 htid={htid}
                 onChangeHtid={onChangeHtid}
