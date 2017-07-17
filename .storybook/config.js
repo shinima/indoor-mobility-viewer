@@ -6,7 +6,7 @@ function loadStories() {
   require('../app/stories/FloorListManager')
   require('../app/stories/TrackMap')
   require('../app/stories/HeatMap')
-  require('../app/stories/BrushManager')
+  require('../app/stories/Slider')
   require('../app/stories/ButtonGroup')
   require('../app/stories/Legend')
   // You can require as many stories as you need.

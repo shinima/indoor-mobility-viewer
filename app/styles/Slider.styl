@@ -1,0 +1,29 @@
+@require './base.styl'
+
+.slider {
+  margin-top 16px
+  border 1px solid steelblue
+  .title {
+    @extends $widget-title
+  }
+
+  .slider-svg {
+    margin 20px
+    display block
+    height 40px
+
+    circle {
+      transition r 200ms, fill 200ms, stroke 200ms
+      stroke steelblue
+      stroke-width 2
+      fill steelblue
+      &.dragging {
+        r 8
+      }
+      &.lowest {
+        fill #fafafa
+        stroke #b9b9b9
+      }
+    }
+  }
+}
