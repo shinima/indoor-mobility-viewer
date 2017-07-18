@@ -46,27 +46,24 @@ export default class Slider extends Component {
     const x = this.scaleX.range([26, width - 26])(value)
 
     return (
-      <div className="slider">
-        <div className="title">时间控制</div>
-        <svg className="slider-svg" style={{ width, height }}>
-          <line x1={26} x2={x} y1={9} y2={9} strokeWidth="2" stroke="steelblue" />
-          <line x1={x} x2={width - 26} y1={9} y2={9} strokeWidth="2" stroke="#b9b9b9" />
-          <circle
-            className={classNames({ dragging, lowest: value === 0 })}
-            cx={x}
-            cy={9}
-            r={5}
-          />
-          <rect
-            ref={node => (this.rect = d3.select(node))}
-            style={{ cursor: 'pointer' }}
-            x="20"
-            width={width - 40}
-            height={height}
-            fill="transparent"
-          />
-        </svg>
-      </div>
+      <svg className="slider" style={{ width, height }}>
+        <line x1={26} x2={x} y1={9} y2={9} strokeWidth="2" stroke="steelblue" />
+        <line x1={x} x2={width - 26} y1={9} y2={9} strokeWidth="2" stroke="#b9b9b9" />
+        <circle
+          className={classNames({ dragging, lowest: value === 0 })}
+          cx={x}
+          cy={9}
+          r={5}
+        />
+        <rect
+          ref={node => (this.rect = d3.select(node))}
+          style={{ cursor: 'pointer' }}
+          x="20"
+          width={width - 40}
+          height={height}
+          fill="transparent"
+        />
+      </svg>
     )
   }
 }

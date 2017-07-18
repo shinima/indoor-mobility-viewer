@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server",
+    "build": "set NODE_ENV=production&& webpack",
     "storybook": "start-storybook -p 9001 -s . -c .storybook",
     "eslint": "eslint  --ext .js,.jsx .",
     "eslint-fix": "eslint  --ext .js,.jsx --fix ."
@@ -40,7 +41,7 @@
     "immutable": "^3.8.1",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
-    "prop-types": "latest",
+    "prop-types": "^15.5.10",
     "querystring": "^0.2.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",

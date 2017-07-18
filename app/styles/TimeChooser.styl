@@ -1,0 +1,38 @@
+@require './base.styl'
+
+.time-chooser {
+  margin-top 16px
+  border 1px solid steelblue
+
+  .title {
+    @extends $widget-title
+  }
+
+  .slider {
+    display block
+    margin-left 8px
+    margin-bottom 8px
+  }
+
+  .date {
+    display flex
+    align-items center
+    .time-display {
+      margin 0 8px
+      font-size 18px
+      line-height 40px
+      font-family Monospaced
+      user-select none
+      > small {
+        margin-left 4px
+      }
+    }
+
+    .button {
+      cursor pointer
+      &.next {
+        margin-left 8px
+      }
+    }
+  }
+}

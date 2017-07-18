@@ -15,8 +15,8 @@ export default function bindSearchParameters(definitions) {
         const setters = {}
         const parsedSearch = querystring.parse(search.substring(1))
         for (const {
-        key, getter = _.identity, setter = String, default: defaultValue,
-      } of definitions) {
+          key, getter = _.identity, setter = String, default: defaultValue,
+        } of definitions) {
           if (parsedSearch[key] === undefined) {
             extraProps[key] = defaultValue
           } else {
@@ -33,7 +33,11 @@ export default function bindSearchParameters(definitions) {
               parsed[key] = setters[key](value)
             }
           }
-          history.push(`?${querystring.stringify(parsed)}`)
+          const nextSearch = `?${querystring.stringify(parsed)}`
+          // 仅当search发生变化时, 更新URL
+          if (search !== nextSearch) {
+            history.push(nextSearch)
+          }
         }
         return React.createElement(sourceComponent,
           Object.assign({ updateSearch }, extraProps, this.props))

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import moment from 'moment'
 import _ from 'lodash'
 import { connect } from 'react-redux'
 import { fromJS } from 'immutable'
@@ -7,13 +7,20 @@ import bindSearchParameters from '../utils/bindSearchParameters'
 import FloorList from './FloorList'
 import HeatMap from './Map/HeatMap'
 import ButtonGroup from './ButtonGroup'
-import allItems from '../resources/items.json'
-import Slider from './Slider'
+import TimeChooser from './TimeChooser'
+import * as rpc from '../utils/rpcMock'
 
 const action = prefix => (...args) => console.log(`[${prefix}]`, ...args)
 
+const defaultDate = '2017-06-20'
+
 const searchBindingDefinitons = [
   { key: 'floorId', getter: Number, default: null },
+  {
+    key: 't',
+    getter: Number,
+    default: moment(defaultDate).valueOf(),
+  },
 ]
 
 const mapStateToProps = ({ floors, settings }, ownProps) => {
@@ -35,7 +42,27 @@ export default class HeatMapPage extends Component {
 
   state = {
     transformReset: false,
-    time: 0,
+    // todo 当天所有的数据
+    allItems: [],
+  }
+
+  async componentDidMount() {
+    const { t } = this.props
+    const allItems = await rpc.getLocations(t)
+    this.setState({ allItems })
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!moment(nextProps.t).isSame(moment(this.props.t), 'day')) {
+      this.setState({ allItems: [] })
+    }
+  }
+
+  async componentDidUpdate(prevProps) {
+    const { t } = this.props
+    if (!moment(prevProps.t).isSame(moment(t), 'day')) {
+      this.setState({ allItems: await rpc.getLocations(t) })
+    }
   }
 
   onChangeFloorId = (floorId) => {
@@ -43,13 +70,19 @@ export default class HeatMapPage extends Component {
   }
 
   render() {
-    const { floor, floorConfig, history } = this.props
-    const { transformReset, time } = this.state
+    const { floor, floorConfig, history, t } = this.props
+    const { transformReset, allItems } = this.state
 
-    const countResult = _.countBy(allItems, item => item.floorId)
+    // 1小时对应的毫秒数
+    const span = 3600e3
+    const itemsInSpan = allItems.filter(item => (t - item.time >= 0 && t - item.time < span))
+    const countResult = _.countBy(itemsInSpan, item => item.floorId)
 
+    // 在除以240的配置, 一个小时(3600K ms)内, 如达到15K的定位点数量, 则认为最热
     const floorEntryList = fromJS(floorConfig)
       .map(entry => entry.set('pointsCount', _.get(countResult, entry.get('floorId'), 0)))
+
+    const items = itemsInSpan.filter(item => (item.floorId === floor.floorId))
 
     return (
       <div>
@@ -63,12 +96,12 @@ export default class HeatMapPage extends Component {
             onToggleShowPoints={action('toggle-show-points')}
             history={history}
           />
-          <Slider
-            width={238}
-            value={time / (24 * 3600)}
-            onChange={value => this.setState({ time: value * 24 * 3600 })}
+          <TimeChooser
+            time={moment(t)}
+            onChangeTime={m => this.props.updateSearch({ t: m.valueOf() })}
           />
           <FloorList
+            max={span / 240}
             selectedFloorId={floor.floorId}
             floorEntryList={floorEntryList}
             changeSelectedFloorId={this.onChangeFloorId}
@@ -76,7 +109,8 @@ export default class HeatMapPage extends Component {
         </div>
         <HeatMap
           floor={floor}
-          items={allItems.filter(item => item.floorId === floor.floorId)}
+          items={items}
+          span={span}
           onZoom={() => this.setState({ transformReset: false })}
           transformReset={transformReset}
         />

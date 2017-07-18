@@ -1,15 +1,29 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import * as d3 from 'd3'
 import Heatmap from 'heatmap.js'
 import drawFloor from './drawFloor'
 import centralize from './centralize'
 import { isSameItems } from './utils'
 
+// 热度图配置
 const config = {
+  // 点的半径
   radius: 40,
+  // 热度图的max配置与时间长度的比例
+  // 1ms内数据点为maxPerMs个时, 热度图达到最热
+  maxPerMs: 1 / 200e3,
 }
 
 export default class HeatMap extends Component {
+  static propTypes = {
+    floor: PropTypes.object.isRequired,
+    items: PropTypes.array.isRequired,
+    transformReset: PropTypes.bool.isRequired,
+    onZoom: PropTypes.func.isRequired,
+    span: PropTypes.number.isRequired,
+  }
+
   componentDidMount() {
     const { floor } = this.props
     // 绘制地图
@@ -35,7 +49,7 @@ export default class HeatMap extends Component {
       drawFloor(nextProps.floor, this.svgElement)
     }
     if (!isSameItems(items, nextProps.items
-      || floor.floorId !== nextProps.floor.floorId)) {
+        || floor.floorId !== nextProps.floor.floorId)) {
       this.updateHeatMap(nextProps.items)
     }
     if (!transformReset && nextProps.transformReset) {
@@ -71,12 +85,9 @@ export default class HeatMap extends Component {
   }
 
   updateHeatMap(items) {
-    // console.log('update-heat-map')
     const transform = d3.zoomTransform(this.svgElement)
-    // todo 可以把看不见的点先去掉
     this.heatmap.setData({
-      // todo max的值应该与 时间长短有关
-      max: items.length / 100,
+      max: this.props.span * config.maxPerMs,
       min: 0,
       data: items.map(({ x, y }) => ({
         x: Math.round(transform.applyX(x)),

@@ -43,7 +43,7 @@ module.exports = {
     extensions: ['.js', '.json', '.jsx', '.css'],
   },
 
-  devtool: 'source-map',
+  devtool: process.env.NODE_ENV === 'production' ? false : 'source-map',
 
   context: __dirname,
 
@@ -57,6 +57,9 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'development',
+    }),
     new HtmlWebpackPlugin({
       template: 'app/template.html',
     }),

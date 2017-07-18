@@ -14,6 +14,7 @@ const statsBarWidth = d3.scaleLinear().range([0, 200]).clamp(true)
 
 export default class FloorList extends Component {
   static propTypes = {
+    max: PropTypes.number,
     floorEntryList: ImmutablePropTypes.iterableOf(ImmutablePropTypes.mapContains({
       floorId: PropTypes.number.isRequired,
       floorName: PropTypes.string.isRequired,
@@ -24,10 +25,14 @@ export default class FloorList extends Component {
   }
 
   render() {
-    const { floorEntryList, selectedFloorId, changeSelectedFloorId } = this.props
-    const maxCount = floorEntryList.map(entry => entry.get('pointsCount')).max()
-    statsBgColor.domain([1, maxCount])
-    statsBarWidth.domain([0, maxCount])
+    const {
+      floorEntryList,
+      selectedFloorId,
+      changeSelectedFloorId,
+      max = floorEntryList.map(entry => entry.get('pointsCount')).max(),
+    } = this.props
+    statsBgColor.domain([1, max])
+    statsBarWidth.domain([0, max])
 
     return (
       <div className="floor-list-widget">
