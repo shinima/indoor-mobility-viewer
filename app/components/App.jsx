@@ -59,5 +59,6 @@ const Home = () => (
       <li><Link to="/comparison">区域对比图</Link></li>
     </ul>
     <p>当然还有一个<Link to="/settings">设置页面</Link></p>
+    <p><a target="_blank" href="/static/doc-for-development.html">开发者文档</a></p>
   </div>
 )
