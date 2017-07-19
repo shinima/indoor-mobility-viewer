@@ -6,7 +6,8 @@ import { fromJS } from 'immutable'
 import bindSearchParameters from '../utils/bindSearchParameters'
 import FloorList from './FloorList'
 import HeatMap from './Map/HeatMap'
-import ButtonGroup from './ButtonGroup'
+import GlobalButtons from './GlobalButtons'
+import Button from './Button'
 import TimeChooser from './TimeChooser'
 import * as rpc from '../utils/rpcMock'
 
@@ -87,14 +88,13 @@ export default class HeatMapPage extends Component {
     return (
       <div>
         <div className="widgets">
-          {/* TODO: 里面的按钮不太对... */}
-          <ButtonGroup
-            onResetTransform={() => this.setState({ transformReset: true })}
-            showPath
-            showPoints
-            onToggleShowPath={action('toggle-show-path')}
-            onToggleShowPoints={action('toggle-show-points')}
-            history={history}
+          <GlobalButtons history={history} />
+          <Button
+            style={{ border: '1px solid steelblue', borderTop: 'none' }}
+            icon={'/static/img/buttonGroup/center.svg'}
+            text="居中地图"
+            altText="center"
+            onClick={() => this.setState({ transformReset: true })}
           />
           <TimeChooser
             time={moment(t)}
