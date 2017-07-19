@@ -98,7 +98,7 @@ export default class HeatMapPage extends Component {
           />
           <TimeChooser
             time={moment(t)}
-            onChangeTime={m => this.props.updateSearch({ t: m.valueOf() })}
+            onChangeTime={m => this.props.updateSearch({ t: m.valueOf() }, true)}
           />
           <FloorList
             max={span / 240}

@@ -24,7 +24,7 @@ export default function bindSearchParameters(definitions) {
           }
           setters[key] = setter
         }
-        const updateSearch = (updateMap) => {
+        const updateSearch = (updateMap, useReplace = false) => {
           const parsed = Object.assign({}, parsedSearch)
           for (const [key, value] of Object.entries(updateMap)) {
             if (value == null) {
@@ -36,7 +36,11 @@ export default function bindSearchParameters(definitions) {
           const nextSearch = `?${querystring.stringify(parsed)}`
           // 仅当search发生变化时, 更新URL
           if (search !== nextSearch) {
-            history.push(nextSearch)
+            if (useReplace) {
+              history.replace(nextSearch)
+            } else {
+              history.push(nextSearch)
+            }
           }
         }
         return React.createElement(sourceComponent,
