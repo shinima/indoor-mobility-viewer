@@ -130,7 +130,7 @@ html, body { font-family: Inconsolata, monospace, 仿宋; }
 #write { padding-left: 10ch; padding-right: 10ch; }
 .pin-outline #write { padding-left: calc(250px + 10ch); }
 pre.md-meta-block { font-family: monospace, 仿宋; color: rgb(88, 88, 88); padding: 15px; background: inherit; border: 1px dashed grey; font-size: 0.8rem; line-height: 1.45; }
-h1, h2, h3, h4, h5, h6, [mdlike="h1"], [mdlike="h2"], [mdlike="h3"], [mdlike="h4"], [mdlike="h5"], [mdlike="h6"] { font-weight: bold; font-family: "PT Mono", monospace, 仿宋; color: rgb(99, 99, 172); }
+h1, h2, h3, h4, h5, h6, [mdlike="h1"], [mdlike="h2"], [mdlike="h3"], [mdlike="h4"], [mdlike="h5"], [mdlike="h6"] { font-weight: bold; font-family: "PT Mono", "Courier New", monospace, 仿宋; color: rgb(99, 99, 172); }
 [mdlike="h1"] > .md-blockmeta, [mdlike="h2"] > .md-blockmeta, [mdlike="h3"] > .md-blockmeta, [mdlike="h4"] > .md-blockmeta, [mdlike="h5"] > .md-blockmeta, [mdlike="h6"] > .md-blockmeta { color: inherit; font-weight: inherit; font-style: inherit; }
 h1, [mdlike="h1"] { font-size: 2rem; }
 h1::before { content: "# "; }
@@ -239,7 +239,7 @@ em { color: rgb(64, 4, 105); }
 a { color: rgb(0, 93, 173); }
 #write a:hover { background-color: rgb(42, 100, 150); color: white; text-decoration: none; }
 .md-meta, .md-content { display: inline; }
-#typora-source .cm-header { font-weight: bold; font-family: "PT Mono", monospace; color: rgb(99, 99, 172); font-size: 1rem; line-height: 1rem; }
+#typora-source .cm-header { font-weight: bold; font-family: "PT Mono", "Courier New", monospace, 仿宋; color: rgb(99, 99, 172); font-size: 1rem; line-height: 1rem; }
 #typora-source .cm-strong { color: rgb(181, 48, 46); }
 #typora-source .cm-em { color: rgb(64, 4, 105); }
 #typora-source .cm-link { color: rgb(0, 93, 173); }
@@ -255,6 +255,6 @@ a { color: rgb(0, 93, 173); }
 </style>
 </head>
 <body class='typora-export' >
-<div  id='write'  class = 'is-node'><h1><a name='header-n0' class='md-header-anchor '></a>Location Viewer</h1><p>本文档列举了一些安装/开发/部署过程中需要了解注意的地方。</p><h2><a name='header-n56' class='md-header-anchor '></a>安装</h2><p>运行<code>yarn install</code>来安装依赖</p><h2><a name='header-n216' class='md-header-anchor '></a>脚本</h2><p><em>package.json</em>中包含了一些脚本。</p><ol><li>start脚本将启动webpack-dev-server用于进行开发；</li><li>build脚本用于打包工具，打包结果将会输出到<em>app/build</em>目录下，然后将<em>app/static</em>复制一份到<em>app/build</em>下；</li><li>storybook脚本可以用于浏览各个组件；</li><li>eslint脚本和eslint-fix是静态代码检查/修复工具。</li></ol><h2><a name='header-n142' class='md-header-anchor '></a>部署</h2><p>打包之后，以<em>build/</em>为root文件夹启动HTTP服务即可。目前版本的location-viewer暂时没有后台。</p><p>热度图用到了定位数据，定位数据较大（一周七个楼层的数据大概有700MB），所有并没有放在版本库中。定位数据文件的文件名格式为<em>YYYY-MM-DD.json</em>，位于<em>static/locations/</em>文件夹下。</p><p>目前location-viewer在<a href='http://10.214.208.50:83'>host-50:83</a>有一份部署。</p><h2><a name='header-n219' class='md-header-anchor '></a>Magic Numbers</h2><p><em>app/components/Map/HeatMap.jsx</em></p><p><code>config</code>变量用来对热度图进行配置，<code>config.radius</code>字段用来控制热度图中每个数据点绘图的半径，具体配置见<a href='https://www.patrick-wied.at/static/heatmapjs/docs.html#heatmap-configure'>heatmap.js的文档</a>。<code>config.maxPerMs</code>字段用来决定<a href='https://www.patrick-wied.at/static/heatmapjs/docs.html#heatmap-setDataMax'>热度图的max配置</a>与时间长度的关系，默认的值为1/200K，在该配置下，一个坐标在一小时（3600K ms）中到达18(= 3600K * 1/200K)个数据点时，该坐标到达最热。(K表示千)</p><p><code>HeatMapPage#render</code>方法中，<code>&lt;FloorList max={span / 240} /&gt;</code>中的240表示：一个小时(3600K ms)内, 一个楼层达到15K(= 3600K / 240)的定位点数量, 则认为该楼层到达最热，在楼层选择控件中热度条到达最大。</p></div>
+<div  id='write'  class = 'is-node'><h1><a name='header-n0' class='md-header-anchor '></a>Location Viewer</h1><p>本文档列举了一些安装/开发/部署过程中需要了解注意的地方。</p><h2><a name='header-n4' class='md-header-anchor '></a>安装</h2><p>运行<code>yarn install</code>来安装依赖</p><h2><a name='header-n7' class='md-header-anchor '></a>脚本</h2><p><em>package.json</em>中包含了一些脚本。</p><ol start='' ><li>start脚本将启动webpack-dev-server用于进行开发；</li><li>build脚本用于打包工具，打包结果将会输出到<em>app/build</em>目录下，然后将<em>app/static</em>复制一份到<em>app/build</em>下；</li><li>storybook脚本可以用于浏览各个组件；</li><li>eslint脚本和eslint-fix是静态代码检查/修复工具。</li></ol><h2><a name='header-n23' class='md-header-anchor '></a>部署</h2><p>打包之后，以<em>build/</em>为root文件夹启动HTTP服务即可。目前版本的location-viewer暂时没有后台。</p><p>热度图用到了定位数据，定位数据较大（一周七个楼层的数据大概有700MB），所有并没有放在版本库中。定位数据文件的文件名格式为<em>YYYY-MM-DD.json</em>，位于<em>static/locations/</em>文件夹下。</p><p>目前location-viewer在<a href='http://10.214.208.50:83'>host-50:83</a>有一份部署。</p><h2><a name='header-n30' class='md-header-anchor '></a>Magic Numbers</h2><p><em>app/components/Map/HeatMap.jsx</em></p><p><code>config</code>变量用来对热度图进行配置，<code>config.radius</code>字段用来控制热度图中每个数据点绘图的半径，具体配置见<a href='https://www.patrick-wied.at/static/heatmapjs/docs.html#heatmap-configure'>heatmap.js的文档</a>。<code>config.maxPerMs</code>字段用来决定<a href='https://www.patrick-wied.at/static/heatmapjs/docs.html#heatmap-setDataMax'>热度图的max配置</a>与时间长度的关系，默认的值为1/200K，在该配置下，一个坐标在一小时（3600K ms）中到达18(= 3600K * 1/200K)个数据点时，该坐标到达最热。(K表示千)</p><p><code>HeatMapPage#render</code>方法中，<code>&lt;FloorList max={span / 240} /&gt;</code>中的240表示：一个小时(3600K ms)内, 一个楼层达到15K(= 3600K / 240)的定位点数量, 则认为该楼层到达最热，在楼层选择控件中热度条到达最大。</p></div>
 </body>
 </html>

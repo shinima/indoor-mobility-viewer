@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, HashRouter, Route, Link } from 'react-router-dom'
+import { Switch, HashRouter, BrowserRouter, Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fromJS } from 'immutable'
 // import * as rpc from '../utils/rpc'
@@ -8,6 +8,8 @@ import * as A from '../actionTypes'
 import TrackMapPage from './TrackMapPage'
 import SettingsPage from './SettingsPage'
 import HeatMapPage from './HeatMapPage'
+
+const Router = process.env.NODE_ENV === 'production' ? BrowserRouter : HashRouter
 
 @connect(({ settings: { staticMacItems } }) => ({ staticMacItems }))
 export default class App extends Component {
@@ -29,7 +31,7 @@ export default class App extends Component {
       return null
     }
     return (
-      <HashRouter>
+      <Router>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/track-map" component={TrackMapPage} />
@@ -37,7 +39,7 @@ export default class App extends Component {
           <Route path="/comparison" component={ComparisonPage} />
           <Route path="/settings" component={SettingsPage} />
         </Switch>
-      </HashRouter>
+      </Router>
     )
   }
 }
