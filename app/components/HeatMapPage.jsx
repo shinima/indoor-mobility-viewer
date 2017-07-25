@@ -98,6 +98,7 @@ export default class HeatMapPage extends Component {
           />
           <TimeChooser
             time={moment(t)}
+            hasSlider
             onChangeTime={m => this.props.updateSearch({ t: m.valueOf() }, true)}
           />
           <FloorList

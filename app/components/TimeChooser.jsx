@@ -31,7 +31,7 @@ export default class TimeChooser extends Component {
   }
 
   render() {
-    const { time } = this.props
+    const { time, hasSlider } = this.props
     const ms = time.valueOf() - time.clone().startOf('day').valueOf()
 
     return (
@@ -40,7 +40,7 @@ export default class TimeChooser extends Component {
         <div className="date">
           <p className="time-display">
             {time.format('YYYY-MM-DD')}
-            <small>{time.format('HH:mm:ss')}</small>
+            {hasSlider ? <small>{time.format('HH:mm:ss')}</small> : null}
           </p>
           <svg
             width="20"
@@ -59,11 +59,11 @@ export default class TimeChooser extends Component {
             <polygon points="0,0 20,10 0,20" fill="steelblue" />
           </svg>
         </div>
-        <Slider
+        {hasSlider ? <Slider
           width={238}
           value={ms / (24 * 3600e3)}
           onChange={this.onChangeValue}
-        />
+        /> : null}
       </div>
     )
   }

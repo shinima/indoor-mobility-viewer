@@ -11,7 +11,10 @@ import Legend from '../components/Legend'
 import bindSearchParameters from '../utils/bindSearchParameters'
 import { IComponent } from '../utils/utils'
 import MacList from '../components/MacList'
+import TimeChooser from './TimeChooser'
 import '../styles/TrackMapPage.styl'
+
+const defaultDate = '2017-06-20'
 
 function mapStateToProps({ allTracks, floors, settings }, ownProps) {
   const { floorConfig, staticMacItems } = settings
@@ -39,6 +42,7 @@ const searchBindingDefinitions = [
   { key: 'floorId', getter: Number, default: null },
   { key: 'htid', getter: Number, default: null },
   { key: 'date', getter: dateGetter, default: 'test-date' },
+  { key: 't', getter: Number, default: moment(defaultDate).valueOf() },
 ]
 
 @bindSearchParameters(searchBindingDefinitions)
@@ -189,7 +193,7 @@ export default class TrackMapPage extends IComponent {
   }
 
   render() {
-    const { allTracks, floorConfig, floor, htid, history } = this.props
+    const { allTracks, floorConfig, floor, htid, history, t } = this.props
     const {
       ctid,
       htpid,
@@ -224,6 +228,11 @@ export default class TrackMapPage extends IComponent {
             onToggleShowPath={() => this.setState({ showPath: !showPath })}
             onToggleShowPoints={() => this.setState({ showPoints: !showPoints })}
             history={history}
+          />
+          <TimeChooser
+            time={moment(t)}
+            hasSlider={false}
+            onChangeTime={m => this.props.updateSearch({ t: m.valueOf() }, true)}
           />
           <Legend />
           <MacList
