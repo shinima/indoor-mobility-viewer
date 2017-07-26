@@ -1,8 +1,8 @@
 import * as d3 from 'd3'
-import _ from 'lodash'
+import * as _ from 'lodash'
 
 // 在svgElement上绘制地图
-export default function drawFloor(floor, svgElement) {
+export default function drawFloor(floor: Floor, svgElement: SVGSVGElement) {
   const svg = d3.select(svgElement)
   const board = svg.select('.board')
 

@@ -1,12 +1,23 @@
 /* eslint-disable no-shadow,no-param-reassign */
 import * as d3 from 'd3'
-import moment from 'moment'
-import _ from 'lodash'
+import * as moment from 'moment'
+import * as _ from 'lodash'
 import drawFloor from './drawFloor'
 import centralize from './centralize'
 import { getColor } from '../../utils/utils'
+import { TrackMapProp } from './TrackMap'
 
-function showTooltip(tooltipWrapper, trackPoint, transform, humanize) {
+type Padding = {
+  top: number
+  bottom: number
+  left: number
+  right: number
+}
+
+function showTooltip(tooltipWrapper: d3.Selection<HTMLDivElement>,
+  trackPoint: TrackPoint,
+  transform: d3.ZoomTransform,
+  humanize: HumanizeFn) {
   let durationText = '<p style="margin:0">经过</p>'
   if (trackPoint.duration > 0) {
     durationText = `<p style="margin:0">停留${(trackPoint.duration / 60e3).toFixed(1)}分钟</p>`
@@ -26,7 +37,7 @@ function showTooltip(tooltipWrapper, trackPoint, transform, humanize) {
   // .style('opacity', 1)
 }
 
-function hideTooltip(tooltipWrapper) {
+function hideTooltip(tooltipWrapper: d3.Selection<HTMLDivElement>) {
   // tooltipWrapper.transition('hide-tooltip')
   //   .style('opacity', 0)
   //   .on('end', function end() {
@@ -38,15 +49,20 @@ function hideTooltip(tooltipWrapper) {
 }
 
 export default class DrawingManager {
-  // private svgElement: SVGElement
-  // private svg: d3.Selection<SVGElement, {}, null, null>
-  // private zoom = d3.zoom()
-  // private focusedItemId = -1
+  private svgElement: SVGSVGElement
+  private svg: d3.Selection<SVGElement, {}, null, null>
+  private zoom = d3.zoom()
+  private focusedItemId = -1
+  private tooltipWrapper: d3.Selection<HTMLDivElement, null, null, null>
+  private getProps: () => TrackMapProp
+  private humanize: (mac: string) => string
+  private onChangeHtid: (trackId: number) => void
+  private onChangeHtpid: (trackPointId: number) => void
 
   // 第一次绘制地图的时候自动缩放, 后续绘制地图就不需要自动缩放了
   needAutoResetTransform = true
 
-  constructor(svgElement, tooltipWrapperElement, getProps) {
+  constructor(svgElement: SVGSVGElement, tooltipWrapperElement: HTMLDivElement, getProps: () => TrackMapProp) {
     this.svgElement = svgElement
     this.svg = d3.select(svgElement)
     this.tooltipWrapper = d3.select(tooltipWrapperElement)
@@ -65,7 +81,7 @@ export default class DrawingManager {
         board.attr('transform', transform)
         this.tooltipWrapper.style('left', `${d3.event.transform.x}px`)
           .style('top', `${d3.event.transform.y}px`)
-        onZoom(transform)
+        onZoom()
       })
     this.svg.call(this.zoom)
   }
@@ -74,7 +90,7 @@ export default class DrawingManager {
   //   todo 释放资源, 清空回调函数
   // }
 
-  updateFloor(floor) {
+  updateFloor(floor: Floor) {
     drawFloor(floor, this.svgElement)
     if (this.needAutoResetTransform) {
       this.resetTransform(false)
@@ -82,12 +98,12 @@ export default class DrawingManager {
     }
   }
 
-  updateTrackPoints(tracks, { htid, htpid }) {
+  updateTrackPoints(tracks: Track[], { htid, htpid }: Partial<TrackMapProp>) {
     const self = this
     const board = this.svg.select('.board')
     const trackPointsLayer = board.select('.track-points-layer')
 
-    const trackPointsOpacity = (track) => {
+    const trackPointsOpacity = (track: Track) => {
       if (htid === null || track.trackId === htid) {
         return 0.8
       } else {
@@ -97,7 +113,7 @@ export default class DrawingManager {
 
     // 每条track 一个g.track
     const trackPointsJoin = trackPointsLayer.selectAll('.track')
-      .data(tracks, track => String(track.trackId))
+      .data(tracks, (track: Track) => String(track.trackId))
     const trackPoints = trackPointsJoin.enter()
       .append('g')
       .classed('track', true)
@@ -114,15 +130,15 @@ export default class DrawingManager {
       normal: d3.symbol().type(d3.symbolCircle).size(500),
       'track-end': d3.symbol().type(d3.symbolTriangle).size(800),
     }
-    const symbolGenerator = trackPoint => symbolMap[trackPoint.pointType]()
-    const trackPointTransform = ({ x, y, trackPointId }) => {
+    const symbolGenerator = (trackPoint: TrackPoint) => symbolMap[trackPoint.pointType]()
+    const trackPointTransform = ({ x, y, trackPointId }: TrackPoint) => {
       const scale = trackPointId === htpid ? 3 : 1
       return `translate(${x}, ${y}) scale(${scale})`
     }
 
     // 每个track-point一个symbol
     const symbolsJoin = trackPoints.selectAll('.symbol')
-      .data(track => track.points, trackPoint => trackPoint.trackPointId)
+      .data(track => track.points, (trackPoint: TrackPoint) => String(trackPoint.trackPointId))
     const symbols = symbolsJoin.enter()
       .append('path')
       .classed('symbol', true)
@@ -136,8 +152,8 @@ export default class DrawingManager {
     symbolsJoin.exit().remove()
     symbols.on('mouseenter', ({ trackPointId }) => this.onChangeHtpid(trackPointId))
       .on('mouseleave', () => this.onChangeHtpid(null))
-      .on('click', function onClickSymbol() {
-        const { trackId } = d3.select(this.parentElement).datum()
+      .on('click', function onClickSymbol(this: SVGPathElement) {
+        const { trackId } = d3.select(this.parentElement).datum() as Track
         const { htid } = self.getProps()
         self.onChangeHtid(trackId === htid ? null : trackId)
       })
@@ -159,18 +175,18 @@ export default class DrawingManager {
       .remove()
   }
 
-  updateTrackPath(tracks, { htid }) {
+  updateTrackPath(tracks: Track[], { htid }: Partial<TrackMapProp>) {
     const board = this.svg.select('.board')
     const trackPathLayer = board.select('.track-path-layer')
 
-    const opacity = (track) => {
+    const opacity = (track: Track) => {
       if (htid === null || track.trackId === htid) {
         return 0.8
       } else {
         return 0.2
       }
     }
-    const lineGenerator = d3.line()
+    const lineGenerator = d3.line<TrackPoint>()
       .x(item => item.x)
       .y(item => item.y)
       .curve(d3.curveCardinal.tension(0.7))
@@ -178,7 +194,7 @@ export default class DrawingManager {
 
     // 每一条轨迹(track)对应一个path
     const trackPathJoin = trackPathLayer.selectAll('path')
-      .data(tracks, track => String(track.trackId))
+      .data(tracks, (track: Track) => String(track.trackId))
     const trackPath = trackPathJoin.enter()
       .append('path')
       .attr('fill', 'none')
@@ -209,7 +225,7 @@ export default class DrawingManager {
       .remove()
   }
 
-  updateTracks(tracks, { showPath, showPoints, htid, htpid }) {
+  updateTracks(tracks: Track[], { showPath, showPoints, htid, htpid }: Partial<TrackMapProp>) {
     if (showPoints) {
       this.updateTrackPoints(tracks, { htid, htpid })
     } else {
@@ -222,19 +238,19 @@ export default class DrawingManager {
     }
   }
 
-  centralizeTrack(track) {
-    const pathElement = this.svgElement.querySelector(`.track-path-layer path[data-track-id="${track.trackId}"]`)
+  centralizeTrack(track: Track) {
+    const pathElement = this.svgElement.querySelector(`.track-path-layer path[data-track-id="${track.trackId}"]`) as SVGPathElement
     const contentBox = pathElement.getBBox()
     this.centralize(contentBox, true, { top: 50, bottom: 50, left: 300, right: 450 })
   }
 
   resetTransform(useTransition = true) {
-    const regionsLayerWrapper = this.svg.select('.regions-layer-wrapper').node()
+    const regionsLayerWrapper = this.svg.select('.regions-layer-wrapper').node() as SVGGElement
     const contentBox = regionsLayerWrapper.getBBox()
     this.centralize(contentBox, useTransition, { top: 50, bottom: 50, left: 300, right: 300 })
   }
 
-  centralize(contentBox, useTransition, padding) {
+  centralize(contentBox: SVGRect, useTransition: boolean, padding: Padding) {
     const targetTransform = centralize(contentBox, {
       width: this.svgElement.clientWidth,
       height: this.svgElement.clientHeight,
@@ -242,7 +258,7 @@ export default class DrawingManager {
     if (targetTransform) {
       this.zoom.transform(useTransition
         ? d3.select(this.svgElement).transition()
-        : d3.select(this.svgElement),
+        : d3.select(this.svgElement) as any,
         targetTransform,
       )
     }

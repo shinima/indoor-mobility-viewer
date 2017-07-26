@@ -1,4 +1,5 @@
-import moment from 'moment'
+import * as moment from 'moment'
+import { MomentInput } from 'moment'
 
 const floorCoordConfigArray = [
   {
@@ -93,7 +94,8 @@ const floorCoordConfigArray = [
   },
 ]
 
-const converters = {}
+type Conveter = (x: number, y: number) => { x: number, y: number }
+const converters: { [floorId: number]: Conveter } = {}
 for (const config of floorCoordConfigArray) {
   converters[config.floorId] = (x, y) => {
     const xScaled = -x * config.scale
@@ -127,17 +129,17 @@ export async function getStaticMacMappings() {
   // get-static-mac-mappings
   return {
     ok: true,
-    mappings: JSON.parse(JSON.stringify(db.mappings)),
+    mappings: JSON.parse(JSON.stringify(db.mappings)) as typeof db.mappings,
   }
 }
 
-export async function deleteStaticMacMapping(id) {
+export async function deleteStaticMacMapping(id: number) {
   // delete-static-mac-mapping
   db.mappings = db.mappings.filter(mapping => mapping.id !== id)
   return { ok: true }
 }
 
-export async function addStaticMacMapping(name, mac) {
+export async function addStaticMacMapping(name: string, mac: string) {
   // add-static-mac-mapping
   const nextId = db.mappings.reduce((max, { id }) => Math.max(max, id), 0) + 1
   db.mappings.push({
@@ -149,7 +151,7 @@ export async function addStaticMacMapping(name, mac) {
 }
 
 // export const updateStaticMacMapping = rpc('update-static-mac-mapping')
-export async function updateStaticMacMapping(id, name, mac) {
+export async function updateStaticMacMapping(id: number, name: string, mac: string) {
   for (const mapping of db.mappings) {
     if (mapping.id === id) {
       mapping.name = name
@@ -159,11 +161,11 @@ export async function updateStaticMacMapping(id, name, mac) {
   return { ok: true }
 }
 
-export async function getLocations(date) {
+export async function getLocations(date: MomentInput) {
   const datePart = moment(date).format('YYYY-MM-DD')
   const response = await fetch(`/static/locations/${datePart}.json`)
   if (response.ok) {
-    const rawItems = await response.json()
+    const rawItems: Item[] = await response.json()
     return rawItems.map((item) => {
       const { x, y } = converters[item.floorId](item.x, item.y)
       return {

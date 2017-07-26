@@ -1,21 +1,28 @@
-import React, { Component } from 'react'
-import moment from 'moment'
-import classNames from 'classnames'
+import * as React from 'react'
+import { Component } from 'react'
+import * as moment from 'moment'
+import * as classNames from 'classnames'
 import { getColor } from '../utils/utils'
 import '../styles/TrackDetailPanel.styl'
 import Button from '../components/Button'
 import { floorConfig } from '../resources/floors'
 import TrackPointSymbol from '../components/TrackPointSymbol'
 
-function getFloorNameByFloorId(floorId) {
+function getFloorNameByFloorId(floorId: number) {
   return floorConfig.find(flr => flr.floorId === floorId).floorName
+}
+
+type TrackPointRowProp = {
+  trackPoint: TrackPoint,
+  onChangeHtpid: (trackPointId: number) => void
+  highlighted: boolean,
 }
 
 function TrackPointRow({
                          trackPoint: { trackPointId, mac, time, duration, pointType },
                          onChangeHtpid,
                          highlighted,
-                       }) {
+                       }: TrackPointRowProp) {
   // 超过180秒(3分钟)就认为是停留
   const isStay = duration > 180e3
 
@@ -33,7 +40,15 @@ function TrackPointRow({
   )
 }
 
-function TrackInfo({ track, floorId, htid, onChangeHtid, onCentralizeTrack }) {
+type TrackInfo = {
+  track: Track
+  floorId: number
+  htid: number
+  onChangeHtid: (trackId: number) => void
+  onCentralizeTrack: (trackId: number) => void
+}
+
+function TrackInfo({ track, floorId, htid, onChangeHtid, onCentralizeTrack }: TrackInfo) {
   let button
   if (track.floorId !== floorId || track.trackId !== htid) {
     const onClick = () => onChangeHtid(track.trackId)
@@ -63,7 +78,15 @@ function TrackInfo({ track, floorId, htid, onChangeHtid, onCentralizeTrack }) {
   )
 }
 
-function TrackDetail({ track, floorId, htid, htpid, onChangeHtpid }) {
+type TrackDetailProp = {
+  track: Track
+  floorId: number
+  htid: number
+  htpid: number
+  onChangeHtpid: (trackPointId: number) => void
+}
+
+function TrackDetail({ track, floorId, htid, htpid, onChangeHtpid }: TrackDetailProp) {
   if (track.floorId === floorId && track.trackId === htid) {
     return (
       <ol className="track-point-list" onMouseLeave={() => onChangeHtpid(null)}>
@@ -82,7 +105,19 @@ function TrackDetail({ track, floorId, htid, htpid, onChangeHtpid }) {
   }
 }
 
-export default class TrackDetailPanel extends Component {
+type TrackDetailPanelProp = {
+  tracks: Track[]
+  floorId: number
+  ht: Track
+  htid: number
+  htpid: number
+  humanize: (mac: Mac) => string
+  onChangeHtid: (trackId: number) => void
+  onChangeHtpid: (trackPointId: number) => void
+  onCentralizeTrack: (trackId: number) => void
+}
+
+export default class TrackDetailPanel extends Component<TrackDetailPanelProp> {
   render() {
     const {
       tracks, floorId, ht, htid, htpid, humanize,

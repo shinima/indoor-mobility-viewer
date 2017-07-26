@@ -1,9 +1,20 @@
-import React, { Component } from 'react'
+import * as React from 'react'
+import { History } from 'history'
+import { Component } from 'react'
 import Button from './Button'
 import GlobalButtons from './GlobalButtons'
 import '../styles/ButtonGroup.styl'
 
-export default class ButtonGroup extends Component {
+type P = {
+  showPath: boolean
+  showPoints: boolean
+  history: History
+  onResetTransform: () => void
+  onToggleShowPath: () => void
+  onToggleShowPoints: () => void
+}
+
+export default class ButtonGroup extends Component<P> {
   render() {
     const { showPath, showPoints, history } = this.props
     const {

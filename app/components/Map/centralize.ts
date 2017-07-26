@@ -1,9 +1,16 @@
 /* eslint-disable no-param-reassign */
 import * as d3 from 'd3'
-import _ from 'lodash'
+import * as _ from 'lodash'
+
+type Padding = {
+  left: number
+  top: number
+  right: number
+  bottom: number
+}
 
 // 根据contentBox, viewport和padding配置, 计算得到target-transform
-export default function centralize(contentBox, viewport, padding) {
+export default function centralize(contentBox: SVGRect, viewport: Partial<SVGRect>, padding: Padding) {
   if (contentBox.width === 0) {
     contentBox.width = 200
     contentBox.x -= 100

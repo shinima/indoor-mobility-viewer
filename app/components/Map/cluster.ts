@@ -1,11 +1,9 @@
-import _ from 'lodash'
+import * as _ from 'lodash'
 
 class MajorityHelper {
-  constructor() {
-    this.map = new Map()
-  }
+  private map = new Map<number, number>()
 
-  add(x) {
+  add(x: number) {
     if (this.map.has(x)) {
       this.map.set(x, this.map.get(x) + 1)
     } else {
@@ -13,12 +11,12 @@ class MajorityHelper {
     }
   }
 
-  remove(x) {
+  remove(x: number) {
     this.map.set(x, this.map.get(x) - 1)
   }
 
   getMajority() {
-    let majority = null
+    let majority: number = null
     for (const [x, count] of this.map.entries()) {
       if (majority === null || count > this.map.get(majority)) {
         majority = x
@@ -38,11 +36,11 @@ class MajorityHelper {
   }
 }
 
-function distance2(p1, p2) {
+function distance2(p1: Point, p2: Point) {
   return (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2
 }
 
-function makeTrackPoint(pending) {
+function makeTrackPoint(pending: Location[]):TrackPoint {
   const size = pending.length
   const first = _.first(pending)
   const last = _.last(pending)
@@ -90,7 +88,7 @@ function makeTrackPoint(pending) {
 //   y: number
 //   time: number
 // }
-export default function cluster(locations) {
+export default function cluster(locations: Location[]): Track[] {
   const windowSize = 5
   const threshhold = 3
   // 步骤一: 楼层去抖 (对数据原地修改)
@@ -117,9 +115,9 @@ export default function cluster(locations) {
   // 步骤二: 划分track
   // 时间相差小于30s且空间相差小于10m认为是同一个trackPoint
   // 时间相差小于1h认为是同一个track
-  const tracks = []
+  const tracks: Partial<Track>[] = []
   let pending = []
-  let cntTrack = null
+  let cntTrack: Partial<Track> = null
   for (const location of locations) {
     const lastPending = pending[pending.length - 1]
     if (cntTrack === null
@@ -157,5 +155,5 @@ export default function cluster(locations) {
     track.startTime = first.time
     track.endTime = last.time + last.duration
   }
-  return tracks
+  return tracks as Track[]
 }

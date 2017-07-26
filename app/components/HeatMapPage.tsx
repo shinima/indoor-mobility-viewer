@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-import moment from 'moment'
-import _ from 'lodash'
+import * as React from 'react'
+import { Component } from 'react'
+import * as moment from 'moment'
+import * as _ from 'lodash'
 import { connect } from 'react-redux'
 import { fromJS } from 'immutable'
 import bindSearchParameters from '../utils/bindSearchParameters'
@@ -11,7 +12,7 @@ import Button from './Button'
 import TimeChooser from './TimeChooser'
 import * as rpc from '../utils/rpcMock'
 
-const action = prefix => (...args) => console.log(`[${prefix}]`, ...args)
+const action = (prefix: string) => (...args: any[]) => console.log(`[${prefix}]`, ...args)
 
 const defaultDate = '2017-06-20'
 

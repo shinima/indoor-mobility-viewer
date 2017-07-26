@@ -1,10 +1,18 @@
-import React, { Component } from 'react'
-import moment from 'moment'
-import PropTypes from 'prop-types'
+import * as React from 'react'
+import { Component } from 'react'
+import * as moment from 'moment'
+import { Moment } from 'moment'
+import * as PropTypes from 'prop-types'
 import Slider from './Slider'
 import '../styles/TimeChooser.styl'
 
-export default class TimeChooser extends Component {
+type P = {
+  time: Moment
+  onChangeTime: (m: Moment) => void
+  hasSlider: boolean
+}
+
+export default class TimeChooser extends Component<P> {
   static propTypes = {
     time: PropTypes.instanceOf(moment).isRequired,
     onChangeTime: PropTypes.func.isRequired,
@@ -20,7 +28,7 @@ export default class TimeChooser extends Component {
     onChangeTime(time.clone().add(1, 'day'))
   }
 
-  onChangeValue = (value) => {
+  onChangeValue = (value: number) => {
     const { time, onChangeTime } = this.props
     if (value === 1) {
       // -1毫秒是为了防止日期发生变化

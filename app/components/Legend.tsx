@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import * as React from 'react'
+import { Component } from 'react'
 import TrackPointSymbol from '../components/TrackPointSymbol'
 import '../styles/Legend.styl'
 

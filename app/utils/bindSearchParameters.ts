@@ -1,11 +1,19 @@
-import React, { Component } from 'react'
-import _ from 'lodash'
-import wrapDisplayName from 'recompose/wrapDisplayName'
-import hoistNonReactStatic from 'hoist-non-react-statics'
-import querystring from 'querystring'
+import * as React from 'react'
+import { Component, ComponentClass } from 'react'
+import * as _ from 'lodash'
+import { wrapDisplayName } from 'recompose'
+import * as hoistNonReactStatic from 'hoist-non-react-statics'
+import * as querystring from 'querystring'
 
-export default function bindSearchParameters(definitions) {
-  return (sourceComponent) => {
+type SearchBindDefinitions = {
+  key: string
+  getter: Function
+  setter: Function
+  defualt: any
+}[]
+
+export default function bindSearchParameters(definitions: SearchBindDefinitions) {
+  return (sourceComponent: ComponentClass) => {
     const targetComponent = class extends Component {
       static displayName = wrapDisplayName(sourceComponent, 'bindSearchParameter')
 

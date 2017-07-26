@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import classNames from 'classnames'
+import * as React from 'react'
+import { Component } from 'react'
+import * as classNames from 'classnames'
 import * as d3 from 'd3'
 import '../styles/Slider.styl'
 
@@ -8,12 +8,17 @@ function self() {
   return this
 }
 
-export default class Slider extends Component {
-  static propTypes = {
-    width: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-    onChange: PropTypes.func.isRequired,
-  }
+type P = {
+  width: number
+  onChange: (value: number) => void
+  value: number
+}
+
+export default class Slider extends Component<P> {
+  rect: d3.Selection<SVGRectElement, null, null, null> = null
+  scaleX = d3.scaleLinear()
+    .domain([0, 1])
+    .clamp(true)
 
   state = {
     dragging: false,
@@ -33,11 +38,6 @@ export default class Slider extends Component {
     })
     this.rect.call(dragRect)
   }
-
-  rect = null
-  scaleX = d3.scaleLinear()
-    .domain([0, 1])
-    .clamp(true)
 
   render() {
     const { dragging } = this.state

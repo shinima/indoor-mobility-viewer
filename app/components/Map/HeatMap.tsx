@@ -16,13 +16,13 @@ const config = {
 }
 
 export default class HeatMap extends Component {
-  static propTypes = {
-    floor: PropTypes.object.isRequired,
-    items: PropTypes.array.isRequired,
-    transformReset: PropTypes.bool.isRequired,
-    onZoom: PropTypes.func.isRequired,
-    span: PropTypes.number.isRequired,
-  }
+  // static propTypes = {
+  //   floor: PropTypes.object.isRequired,
+  //   items: PropTypes.array.isRequired,
+  //   transformReset: PropTypes.bool.isRequired,
+  //   onZoom: PropTypes.func.isRequired,
+  //   span: PropTypes.number.isRequired,
+  // }
 
   componentDidMount() {
     const { floor } = this.props

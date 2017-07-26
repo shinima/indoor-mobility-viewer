@@ -1,6 +1,15 @@
-import React, { Component } from 'react'
+import * as React from 'react'
+import { Component } from 'react'
 
-export default class Button extends Component {
+type P = {
+  icon: string
+  text: string
+  altText: string
+  onClick?: () => void
+  style?: React.CSSProperties
+}
+
+export default class Button extends Component<P> {
   render() {
     const { icon, text, altText, onClick, style = {} } = this.props
     return (

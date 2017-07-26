@@ -1,6 +1,11 @@
-import React from 'react'
+import * as React from 'react'
 
-export default function TrackPointSymbol({ pointType, fill }) {
+type Prop = {
+  pointType: string
+  fill: string
+}
+
+export default function TrackPointSymbol({ pointType, fill }: Prop) {
   if (pointType === 'track-start') {
     return (
       <svg className="symbol" viewBox="0 0 1 1">

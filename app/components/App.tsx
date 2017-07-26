@@ -1,7 +1,9 @@
-import React, { Component } from 'react'
+import * as React from 'react'
+import { Dispatch } from 'redux'
+import { Component } from 'react'
 import { Switch, HashRouter, BrowserRouter, Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { fromJS } from 'immutable'
+import { List, OrderedMap, Map } from 'immutable'
 // import * as rpc from '../utils/rpc'
 import * as rpc from '../utils/rpcMock'
 import * as A from '../actionTypes'
@@ -11,12 +13,17 @@ import HeatMapPage from './HeatMapPage'
 
 const Router = process.env.NODE_ENV === 'production' ? BrowserRouter : HashRouter
 
-@connect(({ settings: { staticMacItems } }) => ({ staticMacItems }))
-export default class App extends Component {
+type AppProp = {
+  dispatch: Dispatch<S.State>
+  staticMacItems: S.StaticMacItems
+}
+
+class App extends Component<AppProp> {
   async componentDidMount() {
     const { ok, mappings } = await rpc.getStaticMacMappings()
     if (ok) {
-      const data = fromJS(mappings)
+      const data = List(mappings)
+        .map(Map)
         .toOrderedMap()
         .mapKeys((__, entry) => entry.get('id'))
       this.props.dispatch({ type: A.UPDATE_MAC_ITEMS, data })
@@ -64,3 +71,6 @@ const Home = () => (
     <p><a target="_blank" href="/static/doc-for-development.html">开发者文档</a></p>
   </div>
 )
+
+
+export default connect(({ settings: { staticMacItems } }) => ({ staticMacItems }))(App)

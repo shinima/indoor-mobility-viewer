@@ -1,28 +1,30 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
-import ImmutablePropTypes from 'react-immutable-proptypes'
+import * as React from 'react'
+import { Component } from 'react'
+import * as PropTypes from 'prop-types'
 import * as d3 from 'd3'
 import '../styles/FloorList.styl'
 
-const statsBgColor = d3.scaleLinear()
+const statsBgColor = d3.scaleLinear<d3.HSLColor>()
   .clamp(true)
   // green/0.1 -> red/0.4
   .range([d3.hsl('rgba(0,255,0,0.1)'), d3.hsl('rgba(255,0,0,0.4)')])
   .interpolate(d3.interpolateHsl)
 const statsBarWidth = d3.scaleLinear().range([0, 200]).clamp(true)
 
+// todo
+type P = any
 
-export default class FloorList extends Component {
-  static propTypes = {
-    max: PropTypes.number,
-    floorEntryList: ImmutablePropTypes.iterableOf(ImmutablePropTypes.mapContains({
-      floorId: PropTypes.number.isRequired,
-      floorName: PropTypes.string.isRequired,
-      pointsCount: PropTypes.number.isRequired,
-    }).isRequired).isRequired,
-    changeSelectedFloorId: PropTypes.func.isRequired,
-    selectedFloorId: PropTypes.number.isRequired,
-  }
+export default class FloorList extends Component<P> {
+  // static propTypes = {
+  //   max: PropTypes.number,
+  //   floorEntryList: ImmutablePropTypes.iterableOf(ImmutablePropTypes.mapContains({
+  //     floorId: PropTypes.number.isRequired,
+  //     floorName: PropTypes.string.isRequired,
+  //     pointsCount: PropTypes.number.isRequired,
+  //   }).isRequired).isRequired,
+  //   changeSelectedFloorId: PropTypes.func.isRequired,
+  //   selectedFloorId: PropTypes.number.isRequired,
+  // }
 
   render() {
     const {

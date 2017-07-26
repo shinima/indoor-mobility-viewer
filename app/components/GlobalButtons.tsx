@@ -1,8 +1,14 @@
-import React, { Component } from 'react'
+import * as React from 'react'
+import { History } from 'history'
+import { Component } from 'react'
 import Button from './Button'
 import '../styles/globalButtons.styl'
 
-export default class GlobalButtons extends Component {
+type P = {
+  history: History
+}
+
+export default class GlobalButtons extends Component<P> {
   render() {
     const { history } = this.props
     return (

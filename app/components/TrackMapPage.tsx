@@ -1,6 +1,7 @@
-import React from 'react'
-import _ from 'lodash'
-import moment from 'moment'
+import * as React from 'react'
+import * as _ from 'lodash'
+import * as moment from 'moment'
+import { Moment } from 'moment'
 import { connect } from 'react-redux'
 import { fromJS, OrderedMap } from 'immutable'
 import TrackMap from '../components/Map/TrackMap'
@@ -16,7 +17,7 @@ import '../styles/TrackMapPage.styl'
 
 const defaultDate = '2017-06-20'
 
-function mapStateToProps({ allTracks, floors, settings }, ownProps) {
+function mapStateToProps({ allTracks, floors, settings }: S.State, ownProps) {
   const { floorConfig, staticMacItems } = settings
   // calculate floor from floors and floorId
   const { floorId } = ownProps
@@ -25,7 +26,7 @@ function mapStateToProps({ allTracks, floors, settings }, ownProps) {
   return Object.assign({ allTracks, floors, floorConfig, floor, staticMacItems }, ownProps)
 }
 
-function dateGetter(arg) {
+function dateGetter(arg: string): string | Moment {
   if (arg === 'test-date') {
     return arg
   } else {

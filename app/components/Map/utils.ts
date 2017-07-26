@@ -1,4 +1,4 @@
-export function isSameTracks(ts1, ts2) {
+export function isSameTracks(ts1:Track[], ts2:Track[]) {
   if (ts1.length !== ts2.length) {
     return false
   }
@@ -10,7 +10,7 @@ export function isSameTracks(ts1, ts2) {
   return true
 }
 
-export function isSameItems(items1, items2) {
+export function isSameItems(items1: Item[], items2: Item[]) {
   if (items1.length !== items2.length) {
     return false
   }

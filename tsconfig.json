@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es2017",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "allowJs": false,
+    "experimentalDecorators": true,
+    "jsx": "react"
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

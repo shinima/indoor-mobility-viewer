@@ -3,7 +3,7 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: ['react-hot-loader/patch', './app/main.jsx'],
+  entry: ['react-hot-loader/patch', './app/main.tsx'],
 
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -22,6 +22,10 @@ module.exports = {
         loaders: ['style-loader', 'css-loader', 'stylus-loader'],
       },
       {
+        test: /\.tsx?$/,
+        loader: 'awesome-typescript-loader',
+      },
+      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: [
@@ -37,11 +41,12 @@ module.exports = {
           },
         ],
       },
+      { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
     ],
   },
 
   resolve: {
-    extensions: ['.js', '.json', '.jsx', '.css'],
+    extensions: ['.js', '.json', '.css', '.ts', '.tsx'],
   },
 
   devtool: process.env.NODE_ENV === 'production' ? false : 'source-map',

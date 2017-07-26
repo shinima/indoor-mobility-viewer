@@ -1,24 +1,32 @@
-import React, { Component } from 'react'
+import * as React from 'react'
+import { Map } from 'immutable'
+import { Component } from 'react'
 import { getColor, isValidMac } from '../utils/utils'
 import '../styles/MacList.styl'
 
-export default class MacList extends Component {
-  // type props = {
-  //   macEntryMap: Map<MacName -> boolean>
-  //   onDeleteMacEntry: (name: string) => void
-  //   onAddMacEntry: (name: string) => void
-  //   ontoggleMacEntry: (name: string) => void
-  //   onHighlightFirstTrack: (name: string) => void
-  //   onCentralizeFirstTrack: (name: string) => void
-  //   translate用来将mac-name翻译为具体的mac
-  //   translate: (name: string) => string
-  // }
+type P = {
+  macEntryMap: Map<string, boolean>
+  onDeleteMacEntry: (name: string) => void
+  onAddMacEntry: (name: string) => void
+  onToggleMacEntry: (name: string) => void
+  ontoggleMacEntry: (name: string) => void
+  onHighlightFirstTrack: (name: string) => void
+  onCentralizeFirstTrack: (name: string) => void
+  // translate用来将mac-name翻译为具体的mac
+  translate: (name: string) => string
+}
+
+type S = {
+  macName: string
+}
+
+export default class MacList extends Component<P, S> {
   state = {
     // 添加新的mac的控件的值
     macName: '',
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: P) {
     const { macEntryMap } = this.props
     if (nextProps.macEntryMap.size > macEntryMap.size) {
       this.setState({ macName: '' })

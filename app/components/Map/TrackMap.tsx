@@ -1,17 +1,37 @@
-import React, { Component } from 'react'
+import * as React from 'react'
+import { Component } from 'react'
 import DrawingManager from './DrawingManager'
 import { isSameTracks } from './utils'
 import '../../styles/Map.styl'
 
-export default class TrackMap extends Component {
-  // prop floor: 要绘制的楼层地图
-  // prop tracks: 需要显示的track数组
-  // prop showPath: 是否要显示path
-  // prop showPoints: 是否要显示points
-  // prop htid: 高亮的track id, null表示没有光亮track
-  // prop ctid: 居中显示的track id. 初次渲染的时候忽略该prop, 该prop仅在发生变化的时候有效
+export type TrackMapProp = {
+  // 要绘制的楼层地图
+  floor: Floor
+  // 需要显示的track数组
+  tracks: Track[]
+  // 是否要显示path
+  showPath: boolean
+  // 是否要显示points
+  showPoints: boolean
+  // 高亮的track id, null表示没有高亮track
+  htid: number
+  htpid: number
+  // 居中显示的track id. 初次渲染的时候忽略该prop, 该prop仅在发生变化的时候有效
   //   并且需要保证ctid对应的path元素目前是渲染在地图上面的
-  // prop transformReset: transform是否重置(大概等于当前楼层是否居中显示)
+  ctid: number
+  // transform是否重置(大概等于当前楼层是否居中显示)
+  transformReset: boolean
+
+  onChangeHtid: (trackId: number) => void
+  onChangeHtpid: (trackPointId: number) => void
+  onZoom: () => void
+  humanize: (mac: string) => string
+}
+
+export default class TrackMap extends Component<TrackMapProp> {
+  drawingManager: DrawingManager = null
+  svg: SVGSVGElement = null
+  tooltipWrapper: HTMLDivElement = null
 
   componentDidMount() {
     const {
@@ -29,7 +49,7 @@ export default class TrackMap extends Component {
     })
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: TrackMapProp) {
     const { floor, tracks, showPath, showPoints, htid, ctid, htpid, transformReset } = this.props
     // 用floorId来判断是否为同一个楼层
     if (floor.floorId !== nextProps.floor.floorId) {
@@ -65,10 +85,6 @@ export default class TrackMap extends Component {
   // componentWillUnmount() {
   //   this.drawingManager.destroy()
   // }
-
-  drawingManager = null
-  svg = null
-  tooltipWrapper = null
 
   render() {
     return (

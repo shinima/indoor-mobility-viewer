@@ -1,4 +1,6 @@
-import React, { Component } from 'react'
+import * as React from 'react'
+import { Map } from 'immutable'
+import { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import StaticMacMapping from './StaticMacMapping'
@@ -6,10 +8,13 @@ import StaticMacMapping from './StaticMacMapping'
 import * as rpc from '../utils/rpcMock'
 import * as A from '../actionTypes'
 
-@connect(({ settings: { staticMacItems } }) => ({ staticMacItems }))
-export default class SettingsPage extends Component {
+type Prop = {
+  dispatch: Dispatch
+  staticMacItems: S.StaticMacItems
+}
 
-  editMacItem = async (id, macItem) => {
+class SettingsPage extends Component<Prop> {
+  editMacItem = async (id: number, macItem: Map<string, string>) => {
     const { ok } = await rpc.updateStaticMacMapping(id, macItem.get('name'), macItem.get('mac'))
     if (ok) {
       this.props.dispatch({ type: A.EDIT_MAC_ITEM, id, macItem })
@@ -18,7 +23,7 @@ export default class SettingsPage extends Component {
     }
   }
 
-  deleteMacItem = async (id) => {
+  deleteMacItem = async (id: number) => {
     const { ok } = await rpc.deleteStaticMacMapping(id)
     if (ok) {
       this.props.dispatch({ type: A.DELETE_MAC_ITEM, id })
@@ -27,15 +32,15 @@ export default class SettingsPage extends Component {
     }
   }
 
-  addMacItem = async (name, mac) => {
+  addMacItem = async (name: string, mac: string) => {
     if (name === '' || mac === '') {
       alert('name和mac均不可为空')
     } else {
-      const { ok, message, id } = await rpc.addStaticMacMapping(name, mac)
+      const { ok, id } = await rpc.addStaticMacMapping(name, mac)
       if (ok) {
         this.props.dispatch({ type: A.ADD_MAC_ITEM, id, name, mac })
-      } else {
-        alert(message)
+        // } else {
+        //   alert(message)
       }
     }
   }
@@ -55,3 +60,7 @@ export default class SettingsPage extends Component {
     )
   }
 }
+
+const mapStateToProps = ({ settings: { staticMacItems } }: S.State) => ({ staticMacItems })
+
+export default connect(mapStateToProps)(SettingsPage)

@@ -25,7 +25,7 @@
 
 ## Magic Numbers
 
-*app/components/Map/HeatMap.jsx*
+*app/components/Map/HeatMap.tsx*
 
 `config`变量用来对热度图进行配置，`config.radius`字段用来控制热度图中每个数据点绘图的半径，具体配置见[heatmap.js的文档](https://www.patrick-wied.at/static/heatmapjs/docs.html#heatmap-configure)。`config.maxPerMs`字段用来决定[热度图的max配置](https://www.patrick-wied.at/static/heatmapjs/docs.html#heatmap-setDataMax)与时间长度的关系，默认的值为1/200K，在该配置下，一个坐标在一小时（3600K ms）中到达18(= 3600K * 1/200K)个数据点时，该坐标到达最热。(K表示千)
 
