@@ -5,7 +5,6 @@
     "sourceMap": true,
     "noImplicitAny": true,
     "allowJs": false,
-    "experimentalDecorators": true,
     "jsx": "react"
   },
   "exclude": [

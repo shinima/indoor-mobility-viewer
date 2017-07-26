@@ -1,26 +1,39 @@
 import * as React from 'react'
+import { History, Location } from 'history'
 import { Component, ComponentClass } from 'react'
 import * as _ from 'lodash'
 import { wrapDisplayName } from 'recompose'
-import * as hoistNonReactStatic from 'hoist-non-react-statics'
 import * as querystring from 'querystring'
+
+const hoistNonReactStatic = require('hoist-non-react-statics')
+
+export type SearchParamBinding<T> = {
+  location: Location
+  history: History
+  updateSearch: (updateMap: { [key: string]: any }, useReplace?: boolean) => void
+} & T
 
 type SearchBindDefinitions = {
   key: string
-  getter: Function
-  setter: Function
-  defualt: any
+  getter?: Function
+  setter?: Function
+  default?: any
 }[]
 
 export default function bindSearchParameters(definitions: SearchBindDefinitions) {
   return (sourceComponent: ComponentClass) => {
-    const targetComponent = class extends Component {
+    type Prop = {
+      location: Location
+      history: History
+    }
+
+    const targetComponent = class extends Component<Prop> {
       static displayName = wrapDisplayName(sourceComponent, 'bindSearchParameter')
 
       render() {
         const { location: { search }, history } = this.props
-        const extraProps = {}
-        const setters = {}
+        const extraProps: { [key: string]: any } = {}
+        const setters: { [key: string]: Function } = {}
         const parsedSearch = querystring.parse(search.substring(1))
         for (const {
           key, getter = _.identity, setter = String, default: defaultValue,
@@ -32,7 +45,7 @@ export default function bindSearchParameters(definitions: SearchBindDefinitions)
           }
           setters[key] = setter
         }
-        const updateSearch = (updateMap, useReplace = false) => {
+        const updateSearch = (updateMap: { [key: string]: any }, useReplace = false) => {
           const parsed = Object.assign({}, parsedSearch)
           for (const [key, value] of Object.entries(updateMap)) {
             if (value == null) {

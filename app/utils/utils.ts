@@ -20,7 +20,7 @@ export function isValidMac(mac: string) {
   return /([0-9a-f]{2}:){5}[0-9a-f]{2}/i.test(mac)
 }
 
-export class IComponent extends Component {
+export class IComponent<P={}, S={}> extends Component<P, S> {
   makeIUpdateFn(key: string) {
     return (updater: <T>(old: T) => T) => {
       this.setState(({ [key]: old }) => ({ [key]: updater(old) }))

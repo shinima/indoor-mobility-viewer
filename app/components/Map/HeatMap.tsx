@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import * as React from 'react'
+import { Component } from 'react'
 import * as d3 from 'd3'
-import Heatmap from 'heatmap.js'
 import drawFloor from './drawFloor'
 import centralize from './centralize'
 import { isSameItems } from './utils'
+
+const Heatmap = require('heatmap.js').default
 
 // 热度图配置
 const config = {
@@ -15,7 +16,15 @@ const config = {
   maxPerMs: 1 / 200e3,
 }
 
-export default class HeatMap extends Component {
+type Prop = {
+  floor: Floor
+  items: Location[]
+  transformReset: boolean
+  onZoom: () => void
+  span: number
+}
+
+export default class HeatMap extends Component<Prop> {
   // static propTypes = {
   //   floor: PropTypes.object.isRequired,
   //   items: PropTypes.array.isRequired,
@@ -23,6 +32,12 @@ export default class HeatMap extends Component {
   //   onZoom: PropTypes.func.isRequired,
   //   span: PropTypes.number.isRequired,
   // }
+  canvasWrapper: HTMLDivElement = null
+  svgElement: SVGSVGElement = null
+  svg: d3.Selection<SVGSVGElement> = null
+  board: d3.Selection<SVGGElement> = null
+  zoom: d3.ZoomBehavior<Element, {}> = null
+  heatmap: any = null
 
   componentDidMount() {
     const { floor } = this.props
@@ -43,13 +58,13 @@ export default class HeatMap extends Component {
     this.resetTransform(false)
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Prop) {
     const { floor, items, transformReset } = this.props
-    if (floor.floorId !== nextProps.floorId) {
+    if (floor.floorId !== nextProps.floor.floorId) {
       drawFloor(nextProps.floor, this.svgElement)
     }
-    if (!isSameItems(items, nextProps.items
-        || floor.floorId !== nextProps.floor.floorId)) {
+    if (!isSameItems(items, nextProps.items)
+      || floor.floorId !== nextProps.floor.floorId) {
       this.updateHeatMap(nextProps.items)
     }
     if (!transformReset && nextProps.transformReset) {
@@ -68,7 +83,7 @@ export default class HeatMap extends Component {
   }
 
   resetTransform(useTransition = true) {
-    const regionsLayerWrapper = this.svg.select('.regions-layer-wrapper').node()
+    const regionsLayerWrapper = this.svg.select('.regions-layer-wrapper').node() as SVGGElement
     const contentBox = regionsLayerWrapper.getBBox()
     const targetTransform = centralize(contentBox, {
       width: this.svgElement.clientWidth,
@@ -78,13 +93,13 @@ export default class HeatMap extends Component {
     if (targetTransform) {
       this.zoom.transform(useTransition
         ? d3.select(this.svgElement).transition()
-        : d3.select(this.svgElement),
+        : d3.select(this.svgElement) as any,
         targetTransform,
       )
     }
   }
 
-  updateHeatMap(items) {
+  updateHeatMap(items: Location[]) {
     const transform = d3.zoomTransform(this.svgElement)
     this.heatmap.setData({
       max: this.props.span * config.maxPerMs,
@@ -97,11 +112,6 @@ export default class HeatMap extends Component {
       })),
     })
   }
-
-  svgElement = null
-  svg = null
-  board = null
-  zoom = null
 
   render() {
     return (

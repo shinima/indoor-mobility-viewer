@@ -9,7 +9,6 @@ type P = {
   onDeleteMacEntry: (name: string) => void
   onAddMacEntry: (name: string) => void
   onToggleMacEntry: (name: string) => void
-  ontoggleMacEntry: (name: string) => void
   onHighlightFirstTrack: (name: string) => void
   onCentralizeFirstTrack: (name: string) => void
   // translate用来将mac-name翻译为具体的mac

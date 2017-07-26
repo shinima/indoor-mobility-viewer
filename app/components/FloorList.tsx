@@ -31,7 +31,8 @@ export default class FloorList extends Component<P> {
       floorEntryList,
       selectedFloorId,
       changeSelectedFloorId,
-      max = floorEntryList.map(entry => entry.get('pointsCount')).max(),
+      // todo remove any
+      max = floorEntryList.map((entry: any) => entry.get('pointsCount')).max(),
     } = this.props
     statsBgColor.domain([1, max])
     statsBarWidth.domain([0, max])
@@ -40,7 +41,7 @@ export default class FloorList extends Component<P> {
       <div className="floor-list-widget">
         <div className="title">楼层地图切换</div>
         <div className="floor-list">
-          {floorEntryList.map(entry => (
+          {floorEntryList.map((entry: any) => (
             <div
               key={entry.get('floorId')}
               className="floor-item"

@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { Component } from 'react'
+import { History } from 'history'
 import * as moment from 'moment'
 import * as _ from 'lodash'
 import { connect } from 'react-redux'
 import { fromJS } from 'immutable'
-import bindSearchParameters from '../utils/bindSearchParameters'
+import bindSearchParameters, { SearchParamBinding } from '../utils/bindSearchParameters'
 import FloorList from './FloorList'
 import HeatMap from './Map/HeatMap'
 import GlobalButtons from './GlobalButtons'
@@ -25,7 +26,12 @@ const searchBindingDefinitons = [
   },
 ]
 
-const mapStateToProps = ({ floors, settings }, ownProps) => {
+type Def = {
+  floorId: number
+  t: number
+}
+
+const mapStateToProps = ({ floors, settings }: S.State, ownProps: Def) => {
   const { floorConfig } = settings
   // calculate floor from floors and floorId
   const { floorId } = ownProps
@@ -33,9 +39,13 @@ const mapStateToProps = ({ floors, settings }, ownProps) => {
   return Object.assign({ floors, floorConfig, floor }, ownProps)
 }
 
-@bindSearchParameters(searchBindingDefinitons)
-@connect(mapStateToProps)
-export default class HeatMapPage extends Component {
+type Prop = SearchParamBinding<Def> & {
+  floors: Floor[]
+  floorConfig: S.FloorConfig
+  floor: Floor
+}
+
+class HeatMapPage extends Component<Prop> {
   // static propTypes = {
   //   // TODO: 完善propTypes
   //   floorConfig: PropTypes.any.isRequired,
@@ -45,7 +55,7 @@ export default class HeatMapPage extends Component {
   state = {
     transformReset: false,
     // todo 当天所有的数据
-    allItems: [],
+    allItems: [] as Location[],
   }
 
   async componentDidMount() {
@@ -54,20 +64,20 @@ export default class HeatMapPage extends Component {
     this.setState({ allItems })
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps: Prop) {
     if (!moment(nextProps.t).isSame(moment(this.props.t), 'day')) {
       this.setState({ allItems: [] })
     }
   }
 
-  async componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps: Prop) {
     const { t } = this.props
     if (!moment(prevProps.t).isSame(moment(t), 'day')) {
       this.setState({ allItems: await rpc.getLocations(t) })
     }
   }
 
-  onChangeFloorId = (floorId) => {
+  onChangeFloorId = (floorId: number) => {
     this.props.updateSearch({ floorId })
   }
 
@@ -82,7 +92,7 @@ export default class HeatMapPage extends Component {
 
     // 在除以240的配置, 一个小时(3600K ms)内, 如达到15K的定位点数量, 则认为最热
     const floorEntryList = fromJS(floorConfig)
-      .map(entry => entry.set('pointsCount', _.get(countResult, entry.get('floorId'), 0)))
+      .map((entry: any) => entry.set('pointsCount', _.get(countResult, entry.get('floorId'), 0)))
 
     const items = itemsInSpan.filter(item => (item.floorId === floor.floorId))
 
@@ -120,3 +130,5 @@ export default class HeatMapPage extends Component {
     )
   }
 }
+
+export default bindSearchParameters(searchBindingDefinitons)(connect(mapStateToProps)(HeatMapPage))

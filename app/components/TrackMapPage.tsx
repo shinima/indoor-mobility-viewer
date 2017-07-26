@@ -3,13 +3,14 @@ import * as _ from 'lodash'
 import * as moment from 'moment'
 import { Moment } from 'moment'
 import { connect } from 'react-redux'
-import { fromJS, OrderedMap } from 'immutable'
+import { fromJS, OrderedMap, Map } from 'immutable'
+import { History } from 'history'
 import TrackMap from '../components/Map/TrackMap'
 import TrackDetailPanel from '../components/TrackDetailPanel'
 import FloorList from '../components/FloorList'
 import ButtonGroup from '../components/ButtonGroup'
 import Legend from '../components/Legend'
-import bindSearchParameters from '../utils/bindSearchParameters'
+import bindSearchParameters, { SearchParamBinding } from '../utils/bindSearchParameters'
 import { IComponent } from '../utils/utils'
 import MacList from '../components/MacList'
 import TimeChooser from './TimeChooser'
@@ -17,7 +18,14 @@ import '../styles/TrackMapPage.styl'
 
 const defaultDate = '2017-06-20'
 
-function mapStateToProps({ allTracks, floors, settings }: S.State, ownProps) {
+type Def = {
+  floorId: number
+  htid: number
+  date: Moment | string
+  t: number
+}
+
+function mapStateToProps({ allTracks, floors, settings }: S.State, ownProps: Def) {
   const { floorConfig, staticMacItems } = settings
   // calculate floor from floors and floorId
   const { floorId } = ownProps
@@ -46,13 +54,25 @@ const searchBindingDefinitions = [
   { key: 't', getter: Number, default: moment(defaultDate).valueOf() },
 ]
 
-@bindSearchParameters(searchBindingDefinitions)
-@connect(mapStateToProps)
-export default class TrackMapPage extends IComponent {
-  // static propTypes = {
-  //   date: Moment | 'test-date'
-  // }
+type P = SearchParamBinding<Def> & {
+  allTracks: Track[]
+  floors: Floor[]
+  floorConfig: S.FloorConfig
+  floor: Floor
+  staticMacItems: S.StaticMacItems
+}
 
+type S = {
+  macEntryMap: OrderedMap<string, boolean>
+  ctid: number
+  htpid: number
+  htid: number
+  showPath: boolean
+  showPoints: boolean
+  transformReset: boolean
+}
+
+class TrackMapPage extends IComponent<P, S> {
   // todo 当日期发生变化的时候, 需要重新获取当天的数据
   // componentDidUpdate(nextProps) {
   //   if (typeof this.props.date === 'string' && )
@@ -60,31 +80,33 @@ export default class TrackMapPage extends IComponent {
 
   state = {
     // mac地址过滤控件的状态
-    macEntryMap: localStorage.getItem('mac-list') === null
-      ? OrderedMap() : OrderedMap(JSON.parse(localStorage.getItem('mac-list'))),
+    macEntryMap: (localStorage.getItem('mac-list') === null
+      ? OrderedMap()
+      : OrderedMap(JSON.parse(localStorage.getItem('mac-list')))) as OrderedMap<string, boolean>,
     // centralized-track-id
-    ctid: null,
+    ctid: null as number,
     // highlighted-track-point-id
-    htpid: null,
+    htpid: null as number,
+    htid: null as number,
     showPath: true,
     showPoints: true,
     // transform是否重置(大概等于当前楼层是否居中显示)
     transformReset: false,
   }
 
-  translate = (macName) => {
+  translate: TranslateFn = (macName) => {
     const { staticMacItems } = this.props
     const entry = staticMacItems.find(item => item.get('name') === macName)
     return entry ? entry.get('mac') : macName
   }
 
-  humanize = (mac) => {
+  humanize: HumanizeFn = (mac) => {
     const { staticMacItems } = this.props
     const entry = staticMacItems.find(item => item.get('mac') === mac)
     return entry ? entry.get('name') : mac
   }
 
-  onDeleteMacEntry = (macName) => {
+  onDeleteMacEntry = (macName: string) => {
     const { allTracks, htid } = this.props
     const { macEntryMap } = this.state
     const newMacEntryMap = macEntryMap.delete(macName)
@@ -100,25 +122,25 @@ export default class TrackMapPage extends IComponent {
     }
   }
 
-  onAddMacEntry = (macName) => {
+  onAddMacEntry = (macName: string) => {
     const { macEntryMap } = this.state
     const newMacEntryMap = macEntryMap.set(macName, true)
     this.setState({ macEntryMap: newMacEntryMap })
     localStorage.setItem('mac-list', JSON.stringify(newMacEntryMap))
   }
 
-  onChangeFloorId = (floorId) => {
+  onChangeFloorId = (floorId: number) => {
     this.props.updateSearch({ floorId })
   }
 
-  onCentralizeTrack = (trackId) => {
+  onCentralizeTrack = (trackId: number) => {
     this.setState({ ctid: trackId, showPath: true })
   }
 
-  onToggleMacEntry = (macName) => {
+  onToggleMacEntry = (macName: string) => {
     const { allTracks } = this.props
     const { htid, macEntryMap } = this.state
-    const not = x => !x
+    const not = (x: any) => !x
     const newMacEntryMap = macEntryMap.update(macName, not)
     this.setState({ macEntryMap: newMacEntryMap })
     localStorage.setItem('mac-list', JSON.stringify(newMacEntryMap))
@@ -132,7 +154,7 @@ export default class TrackMapPage extends IComponent {
   }
 
   // 高亮一个macName在当前楼层的第一条轨迹
-  onHighlightFirstTrack = (macName) => {
+  onHighlightFirstTrack = (macName: string) => {
     const { allTracks, floor } = this.props
     const mac = this.translate(macName)
     const { macEntryMap } = this.state
@@ -145,7 +167,7 @@ export default class TrackMapPage extends IComponent {
   }
 
   // 居中显示一个macName在当前楼层的第一个轨迹
-  onCentralizeFirstTrack = (macName) => {
+  onCentralizeFirstTrack = (macName: string) => {
     const { allTracks, floor } = this.props
     const mac = this.translate(macName)
     const centralizedTrack = allTracks.find(tr => (tr.floorId === floor.floorId && tr.mac === mac))
@@ -154,7 +176,7 @@ export default class TrackMapPage extends IComponent {
     }
   }
 
-  onChangeHtid = (htid) => {
+  onChangeHtid = (htid: number) => {
     const { allTracks, floor, floors } = this.props
     const ht = allTracks.find(tr => tr.trackId === htid)
     // ht: highlighted-track
@@ -167,7 +189,7 @@ export default class TrackMapPage extends IComponent {
       this.props.updateSearch({ htid })
     }
   }
-  onChangeHtpid = htpid => this.setState({ htpid })
+  onChangeHtpid = (htpid: number) => this.setState({ htpid })
 
   renderTrackDetailPanel() {
     const { allTracks, htid, floor } = this.props
@@ -215,9 +237,9 @@ export default class TrackMapPage extends IComponent {
     const activeTracks = allTracks.filter(track => activeMacSet.has(track.mac))
     const activeTrackPoints = _.flatten(activeTracks.map(track => track.points))
     const countResult = _.countBy(activeTrackPoints, trackPoint => trackPoint.floorId)
-    const floorEntryList = fromJS(floorConfig).map(entry => (
+    const floorEntryList = fromJS(floorConfig).map((entry: Map<string, number | string>) => (
       entry.set('pointsCount', countResult[entry.get('floorId')] || 0)
-    ))
+    )) as Map<string, number | string>
 
     return (
       <div>
@@ -270,3 +292,5 @@ export default class TrackMapPage extends IComponent {
     )
   }
 }
+
+export default bindSearchParameters(searchBindingDefinitions)(connect(mapStateToProps)(TrackMapPage))

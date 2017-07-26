@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import { combineReducers } from 'redux'
 import { Map, OrderedMap } from 'immutable'
-import floors, { Floor, floorConfig } from './resources/floors'
+import floors, { floorConfig } from './resources/floors'
 import cluster from './components/Map/cluster'
 import * as A from './actionTypes'
 
@@ -16,16 +16,18 @@ declare global {
     }
 
     interface Settings {
-      floorConfig: {
-        floorId: number
-        floorName: string
-      }[]
+      floorConfig: FloorConfig
       staticMacItems: StaticMacItems
     }
 
     // todo
     // id -> OrderedMap<{ id:number, name: string, mac: string }>
     type StaticMacItems = OrderedMap<number, Map<any, any>>
+
+    type FloorConfig = {
+      floorId: number
+      floorName: string
+    }[]
 
     interface Action {
       [key: string]: any
