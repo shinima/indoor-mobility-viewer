@@ -86,7 +86,7 @@ class HeatMapPage extends Component<Prop> {
     const { transformReset, allItems } = this.state
 
     // 1小时对应的毫秒数
-    const span = 3600e3
+    const span = 600e3
     const itemsInSpan = allItems.filter(item => (t - item.time >= 0 && t - item.time < span))
     const countResult = _.countBy(itemsInSpan, item => item.floorId)
 

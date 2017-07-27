@@ -5,7 +5,7 @@ import drawFloor from './drawFloor'
 import centralize from './centralize'
 import { isSameItems } from './utils'
 
-const Heatmap = require('heatmap.js').default
+const Heatmap = require('heatmap.js')
 
 // 热度图配置
 const config = {
