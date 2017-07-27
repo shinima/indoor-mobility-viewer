@@ -11,7 +11,7 @@ import HeatMap from './Map/HeatMap'
 import GlobalButtons from './GlobalButtons'
 import Button from './Button'
 import TimeChooser from './TimeChooser'
-import * as rpc from '../utils/rpcMock'
+import * as rpc from '../utils/rpc'
 
 const action = (prefix: string) => (...args: any[]) => console.log(`[${prefix}]`, ...args)
 
@@ -31,15 +31,16 @@ type Def = {
   t: number
 }
 
-const mapStateToProps = ({ floors, settings }: S.State, ownProps: Def) => {
+const mapStateToProps = ({ allItems, floors, settings }: S.State, ownProps: Def) => {
   const { floorConfig } = settings
   // calculate floor from floors and floorId
   const { floorId } = ownProps
   const floor = floors.find(flr => flr.floorId === floorId) || floors[0]
-  return Object.assign({ floors, floorConfig, floor }, ownProps)
+  return Object.assign({ allItems, floors, floorConfig, floor }, ownProps)
 }
 
 type Prop = SearchParamBinding<Def> & {
+  allItems: LocationItem[]
   floors: Floor[]
   floorConfig: S.FloorConfig
   floor: Floor
@@ -59,21 +60,40 @@ class HeatMapPage extends Component<Prop> {
   }
 
   async componentDidMount() {
-    const { t } = this.props
-    const allItems = await rpc.getLocations(t)
-    this.setState({ allItems })
+    const { t, allItems } = this.props
+    // console.log(moment(1501137952340).toISOString())
+    // console.log(moment(1501137952340 - 3600000).toISOString())
+    // // const allItems = await rpc.getLocations(t)
+    // this.setState({ allItems })
+
+    const start = t - 600e3
+    const response = await rpc.getLocations(moment(start).toISOString(), moment(t).toISOString(), [31, 32])
+    if (response.ok) {
+      const data = response.data
+      this.setState({ allItems: data })
+    } else {
+      alert('Loading Location Items error.')
+    }
+
   }
 
   componentWillReceiveProps(nextProps: Prop) {
-    if (!moment(nextProps.t).isSame(moment(this.props.t), 'day')) {
+    if (!moment(nextProps.t).isSame(moment(this.props.t))) {
       this.setState({ allItems: [] })
     }
   }
 
   async componentDidUpdate(prevProps: Prop) {
     const { t } = this.props
-    if (!moment(prevProps.t).isSame(moment(t), 'day')) {
-      this.setState({ allItems: await rpc.getLocations(t) })
+    if (!moment(prevProps.t).isSame(moment(t))) {
+      const start = t - 600e3
+      const response = await rpc.getLocations(moment(start).toISOString(), moment(t).toISOString(), [31, 32])
+      if (response.ok) {
+        const data = response.data
+        this.setState({ allItems: data })
+      } else {
+        alert('Loading Location Items error.')
+      }
     }
   }
 
