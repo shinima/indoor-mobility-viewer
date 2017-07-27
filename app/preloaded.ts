@@ -12,23 +12,13 @@ declare global {
   type TrackPointType = 'track-start' | 'normal' | 'track-end'
   type Mac = string
 
-  type LocationItem = {
-    floorId: number
-    x: number
-    y: number
-    time: number
-  }
-
-  // TODO: rename to LocationPoint
-  interface Location {
-    floorId: number
+  export type LocationItem = {
     id: number
-    mac: Mac
+    mac: string
+    floorId: number
     x: number
     y: number
-    path: string
     time: number
-    // duration: number
   }
 
   interface TrackPoint {

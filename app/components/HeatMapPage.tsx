@@ -12,6 +12,7 @@ import GlobalButtons from './GlobalButtons'
 import Button from './Button'
 import TimeChooser from './TimeChooser'
 import * as rpc from '../utils/rpc'
+import LocationItemCache from '../utils/LocationItemCache'
 
 const action = (prefix: string) => (...args: any[]) => console.log(`[${prefix}]`, ...args)
 
@@ -31,69 +32,58 @@ type Def = {
   t: number
 }
 
-const mapStateToProps = ({ allItems, floors, settings }: S.State, ownProps: Def) => {
+const mapStateToProps = ({ floors, settings }: S.State, ownProps: Def) => {
   const { floorConfig } = settings
   // calculate floor from floors and floorId
   const { floorId } = ownProps
   const floor = floors.find(flr => flr.floorId === floorId) || floors[0]
-  return Object.assign({ allItems, floors, floorConfig, floor }, ownProps)
+  return Object.assign({ floors, floorConfig, floor }, ownProps)
 }
 
 type Prop = SearchParamBinding<Def> & {
-  allItems: LocationItem[]
   floors: Floor[]
   floorConfig: S.FloorConfig
   floor: Floor
 }
 
-class HeatMapPage extends Component<Prop> {
-  // static propTypes = {
-  //   // TODO: 完善propTypes
-  //   floorConfig: PropTypes.any.isRequired,
-  //   floor: PropTypes.any.isRequired,
-  // }
+type State = {
+  transformReset: boolean
+  items: LocationItem[]
+}
+
+class HeatMapPage extends Component<Prop, State> {
+  private cache: LocationItemCache
 
   state = {
     transformReset: false,
-    // todo 当天所有的数据
-    allItems: [] as Location[],
+    items: [] as LocationItem[],
   }
 
   async componentDidMount() {
-    const { t, allItems } = this.props
-    // console.log(moment(1501137952340).toISOString())
-    // console.log(moment(1501137952340 - 3600000).toISOString())
-    // // const allItems = await rpc.getLocations(t)
-    // this.setState({ allItems })
+    const { t, floor: { floorId } } = this.props
 
     const start = t - 600e3
-    const response = await rpc.getLocations(moment(start).toISOString(), moment(t).toISOString(), [31, 32])
-    if (response.ok) {
-      const data = response.data
-      this.setState({ allItems: data })
-    } else {
-      alert('Loading Location Items error.')
-    }
-
+    this.cache = new LocationItemCache(floorId)
+    this.cache.setSegment(start, t)
+    this.cache.on('set-items', (items: LocationItem[]) => {
+      this.setState({ items })
+    })
   }
 
-  componentWillReceiveProps(nextProps: Prop) {
-    if (!moment(nextProps.t).isSame(moment(this.props.t))) {
-      this.setState({ allItems: [] })
-    }
-  }
+  // componentWillReceiveProps(nextProps: Prop) {
+  //   if (nextProps.t !== ) {
+  //     this.setState({ allItems: [] })
+  //   }
+  // }
 
   async componentDidUpdate(prevProps: Prop) {
     const { t } = this.props
-    if (!moment(prevProps.t).isSame(moment(t))) {
+    if (prevProps.t !== t) {
       const start = t - 600e3
-      const response = await rpc.getLocations(moment(start).toISOString(), moment(t).toISOString(), [31, 32])
-      if (response.ok) {
-        const data = response.data
-        this.setState({ allItems: data })
-      } else {
-        alert('Loading Location Items error.')
-      }
+      // const data = await this.cache.query(start, t)
+      // console.log('data:', data)
+      // this.setState({ allItems: data })
+      this.cache.setSegment(start, t)
     }
   }
 
@@ -103,18 +93,19 @@ class HeatMapPage extends Component<Prop> {
 
   render() {
     const { floor, floorConfig, history, t } = this.props
-    const { transformReset, allItems } = this.state
+    const { transformReset, items } = this.state
 
     // 1小时对应的毫秒数
     const span = 600e3
-    const itemsInSpan = allItems.filter(item => (t - item.time >= 0 && t - item.time < span))
-    const countResult = _.countBy(itemsInSpan, item => item.floorId)
+    // const itemsInSpan = allItems.filter(item => (t - item.time >= 0 && t - item.time < span))
+    // const countResult = _.countBy(itemsInSpan, item => item.floorId)
 
     // 在除以240的配置, 一个小时(3600K ms)内, 如达到15K的定位点数量, 则认为最热
     const floorEntryList = fromJS(floorConfig)
-      .map((entry: any) => entry.set('pointsCount', _.get(countResult, entry.get('floorId'), 0)))
+    // .map((entry: any) => entry.set('pointsCount', _.get(countResult, entry.get('floorId'), 0)))
+      .map((entry: any) => entry.set('pointsCount', 0))
 
-    const items = itemsInSpan.filter(item => (item.floorId === floor.floorId))
+    // const items = itemsInSpan.filter(item => (item.floorId === floor.floorId))
 
     return (
       <div>

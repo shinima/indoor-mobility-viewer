@@ -18,7 +18,7 @@ const config = {
 
 type Prop = {
   floor: Floor
-  items: Location[]
+  items: LocationItem[]
   transformReset: boolean
   onZoom: () => void
   span: number
@@ -99,7 +99,7 @@ export default class HeatMap extends Component<Prop> {
     }
   }
 
-  updateHeatMap(items: Location[]) {
+  updateHeatMap(items: LocationItem[]) {
     const transform = d3.zoomTransform(this.svgElement)
     this.heatmap.setData({
       max: this.props.span * config.maxPerMs,

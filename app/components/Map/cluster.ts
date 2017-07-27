@@ -40,7 +40,7 @@ function distance2(p1: Point, p2: Point) {
   return (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2
 }
 
-function makeTrackPoint(pending: Location[]):TrackPoint {
+function makeTrackPoint(pending: LocationItem[]):TrackPoint {
   const size = pending.length
   const first = _.first(pending)
   const last = _.last(pending)
@@ -88,7 +88,7 @@ function makeTrackPoint(pending: Location[]):TrackPoint {
 //   y: number
 //   time: number
 // }
-export default function cluster(locations: Location[]): Track[] {
+export default function cluster(locations: LocationItem[]): Track[] {
   const windowSize = 5
   const threshhold = 3
   // 步骤一: 楼层去抖 (对数据原地修改)
