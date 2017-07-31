@@ -68,6 +68,7 @@ class HeatMapPage extends Component<Prop, State> {
     this.cache.on('set-items', (items: LocationItem[]) => {
       this.setState({ items })
     })
+    // todo will-unmount 中需要清理资源
   }
 
   // componentWillReceiveProps(nextProps: Prop) {

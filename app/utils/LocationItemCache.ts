@@ -27,9 +27,12 @@ export default class LocationItemCache extends EventEmitter {
   }
 
   async setSegment(left: number, right: number) {
-    // this.emit('set-items', this.getItemsBetweenSeg({ left, right }))
+    this.emit('loading', true)
     const items = await this.query(left, right)
-    this.emit('set-items', items)
+    if (!this.running) {
+      this.emit('set-items', items)
+      this.emit('loading', false)
+    }
   }
 
   /** 判断一个时间段的数据是否完整 */
@@ -151,11 +154,12 @@ export default class LocationItemCache extends EventEmitter {
   }
 }
 
-function subtract(query: Readonly<Seg>, segs: ReadonlyArray<Readonly<Seg>>): Seg[] {
+export function subtract(query: Readonly<Seg>, segs: ReadonlyArray<Readonly<Seg>>): Seg[] {
   // 取出query.left, 避免对query进行原地修改
   let queryLeft = query.left
   const result: Seg[] = []
   let index = 0
+  // 跳过太小的那些seg
   while (index < segs.length && segs[index].right <= queryLeft) {
     index += 1
   }
@@ -171,7 +175,7 @@ function subtract(query: Readonly<Seg>, segs: ReadonlyArray<Readonly<Seg>>): Seg
     index += 1
   }
   if (queryLeft < query.right) {
-    result.push(query)
+    result.push({ left: queryLeft, right: query.right })
   }
   return result
 }
