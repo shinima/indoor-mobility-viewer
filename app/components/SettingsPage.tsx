@@ -4,8 +4,8 @@ import { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import StaticMacMapping from './StaticMacMapping'
-// import * as rpc from '../utils/rpc'
-import * as rpc from '../utils/rpcMock'
+import * as rpc from '../utils/rpc'
+// import * as rpc from '../utils/rpcMock'
 import * as A from '../actionTypes'
 
 type Prop = {

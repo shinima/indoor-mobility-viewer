@@ -25,10 +25,17 @@ export const deleteStaticMacMapping = rpc('delete-static-mac-mapping')
 export const addStaticMacMapping = rpc('add-static-mac-mapping')
 export const updateStaticMacMapping = rpc('update-static-mac-mapping')
 
-type Rpc<ARG1, ARG2, ARG3, Data> = (arg1: ARG1, arg2: ARG2, arg3: ARG3) => Promise<{
+type Rpc1<ARG1, ARG2, ARG3, Data> = (arg1: ARG1, arg2: ARG2, arg3: ARG3) => Promise<{
   ok: boolean
   message?: string
   data?: Data
 }>
 
-export const getLocations = rpc('get-locations') as Rpc<MomentInput, MomentInput, number[], LocationItem[]>
+type P<T> = Promise<{
+  ok: boolean
+  message?: string
+  data?: T
+}>
+
+export const getLocationsByTime = rpc('get-locations-by-time') as Rpc1<MomentInput, MomentInput, number[], LocationItem[]>
+export const getLocationsByMac: (date: MomentInput, mac: string) => P<LocationItem[]> = rpc('get-locations-by-mac')

@@ -77,13 +77,17 @@ class HeatMapPage extends Component<Prop, State> {
   // }
 
   async componentDidUpdate(prevProps: Prop) {
-    const { t } = this.props
-    if (prevProps.t !== t) {
+    const { t, floorId } = this.props
+    if (prevProps.t !== t || prevProps.floorId !== floorId) {
       const start = t - 600e3
       // const data = await this.cache.query(start, t)
       // console.log('data:', data)
       // this.setState({ allItems: data })
+      this.cache = new LocationItemCache(floorId)
       this.cache.setSegment(start, t)
+      this.cache.on('set-items', (items: LocationItem[]) => {
+        this.setState({ items })
+      })
     }
   }
 

@@ -86,7 +86,7 @@ export default class LocationItemCache extends EventEmitter {
 
   private async load(segs: Seg[]) {
     for (const seg of segs) {
-      const { ok, data } = await rpc.getLocations(seg.left, seg.right, [this.floorId])
+      const { ok, data } = await rpc.getLocationsByTime(seg.left, seg.right, [this.floorId])
       if (ok) {
         this.addSeg(seg)
         this.addData(data)

@@ -4,6 +4,7 @@ import * as moment from 'moment'
 import { Moment } from 'moment'
 import { connect } from 'react-redux'
 import { fromJS, OrderedMap, Map } from 'immutable'
+import { Dispatch } from 'redux'
 import { History } from 'history'
 import TrackMap from '../components/Map/TrackMap'
 import TrackDetailPanel from '../components/TrackDetailPanel'
@@ -15,6 +16,8 @@ import { IComponent } from '../utils/utils'
 import MacList from '../components/MacList'
 import TimeChooser from './TimeChooser'
 import '../styles/TrackMapPage.styl'
+import * as rpc from '../utils/rpc'
+import * as A from '../actionTypes'
 
 const defaultDate = '2017-06-20'
 
@@ -60,6 +63,7 @@ type P = SearchParamBinding<Def> & {
   floorConfig: S.FloorConfig
   floor: Floor
   staticMacItems: S.StaticMacItems
+  dispatch: Dispatch<S.State>
 }
 
 type S = {
@@ -92,6 +96,23 @@ class TrackMapPage extends IComponent<P, S> {
     showPoints: true,
     // transform是否重置(大概等于当前楼层是否居中显示)
     transformReset: false,
+  }
+
+  componentDidMount() {
+    const { t } = this.props
+    this.props.dispatch({ type: A.FETCH_LOCATION_ITEMS, date: moment(t), mac: 'dc:37:14:50:9d:01' })
+  }
+
+  componentDidUpdate(prevProps: P) {
+    const { t } = this.props
+    if (prevProps.t !== t) {
+      this.props.dispatch({
+        type: A.FETCH_LOCATION_ITEMS,
+        date: moment(t),
+        mac: 'dc:37:14:50:9d:01'
+      })
+    }
+
   }
 
   translate: TranslateFn = (macName) => {
