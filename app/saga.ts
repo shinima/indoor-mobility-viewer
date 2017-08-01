@@ -4,15 +4,15 @@ import * as A from './actionTypes'
 
 export default function* rootSaga() {
   console.log('root saga start')
-  yield takeEvery(A.FETCH_LOCATION_ITEMS, fetchLocationItems)
+  yield takeEvery('FETCH_LOCATION_ITEMS', fetchLocationItems)
 }
 
-function* fetchLocationItems({ date, mac }: FetchLocationItemsAction) {
+function* fetchLocationItems({ date, mac }: Action.FetchLocationItemsAction) {
   try {
     const response = yield rpc.getLocationsByMac(date, mac)
     if (response.ok) {
-      yield put({
-        type: A.UPDATE_LOCATION_ITEMS,
+      yield put<Action>({
+        type: 'UPDATE_LOCATION_ITEMS',
         data: response.data
       })
     }

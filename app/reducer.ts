@@ -11,7 +11,7 @@ import * as A from './actionTypes'
 declare global {
   namespace S {
     interface State {
-      allItems: LocationItem[]
+      // allItems: LocationItem[]
       allTracks: Track[]
       floors: Floor[]
       settings: Settings
@@ -30,23 +30,19 @@ declare global {
       floorId: number
       floorName: string
     }[]
-
-    interface Action {
-      [key: string]: any
-    }
   }
 }
 
-function staticMacItems(state: S.StaticMacItems = OrderedMap(), action: S.Action) {
-  if (action.type === A.EDIT_MAC_ITEM) {
-    return state.mergeIn([action.id], action.macItem)
-  } else if (action.type === A.DELETE_MAC_ITEM) {
+function staticMacItems(state: S.StaticMacItems = OrderedMap(), action: Action) {
+  if (action.type === 'EDIT_MAC_ITEM') {
+    return state.mergeIn([action.id], action.macItem as any)
+  } else if (action.type === 'DELETE_MAC_ITEM') {
     return state.delete(action.id)
-  } else if (action.type === A.ADD_MAC_ITEM) {
+  } else if (action.type === 'ADD_MAC_ITEM') {
     const { name, mac, id } = action
     return state.set(id, Map({ name, mac, id }))
     // return state.set(name, mac) todo
-  } else if (action.type === A.UPDATE_MAC_ITEMS) {
+  } else if (action.type === 'UPDATE_MAC_ITEMS') {
     return action.data
   } else {
     return state
@@ -61,8 +57,8 @@ function staticMacItems(state: S.StaticMacItems = OrderedMap(), action: S.Action
 //   }
 // }
 
-function allTracks(state: Track[] = [], action: S.Action) {
-  if (action.type === A.UPDATE_LOCATION_ITEMS) {
+function allTracks(state: Track[] = [], action: Action) {
+  if (action.type === 'UPDATE_LOCATION_ITEMS') {
     return Map(_.groupBy(action.data, (item: any) => item.mac))
       .toList()
       .flatMap<number, Track>(cluster)
@@ -81,5 +77,5 @@ export default combineReducers<S.State>({
     floorConfig: () => floorConfig,
     // staticMacMapping: () => staticMacMapping,
     staticMacItems,
-  }),
-})
+  } as any),
+} as any)

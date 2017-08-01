@@ -22,11 +22,11 @@ class App extends Component<AppProp> {
   async componentDidMount() {
     const { ok, mappings } = await rpc.getStaticMacMappings()
     if (ok) {
-      const data = List(mappings)
+      const data: any = List(mappings)
         .map(Map)
         .toOrderedMap()
         .mapKeys((__, entry) => entry.get('id'))
-      this.props.dispatch({ type: A.UPDATE_MAC_ITEMS, data })
+      this.props.dispatch<Action>({ type: 'UPDATE_MAC_ITEMS', data })
     } else {
       alert('Loading static-mac-mappings error.')
     }

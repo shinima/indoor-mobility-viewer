@@ -17,7 +17,7 @@ class SettingsPage extends Component<Prop> {
   editMacItem = async (id: number, macItem: Map<string, string>) => {
     const { ok } = await rpc.updateStaticMacMapping(id, macItem.get('name'), macItem.get('mac'))
     if (ok) {
-      this.props.dispatch({ type: A.EDIT_MAC_ITEM, id, macItem })
+      this.props.dispatch<Action>({ type: 'EDIT_MAC_ITEM', id, macItem })
     } else {
       alert('Edit mac-item error.')
     }
@@ -26,7 +26,7 @@ class SettingsPage extends Component<Prop> {
   deleteMacItem = async (id: number) => {
     const { ok } = await rpc.deleteStaticMacMapping(id)
     if (ok) {
-      this.props.dispatch({ type: A.DELETE_MAC_ITEM, id })
+      this.props.dispatch<Action>({ type: 'DELETE_MAC_ITEM', id })
     } else {
       alert('Delete static-mac-mapping error.')
     }
@@ -38,7 +38,7 @@ class SettingsPage extends Component<Prop> {
     } else {
       const { ok, id } = await rpc.addStaticMacMapping(name, mac)
       if (ok) {
-        this.props.dispatch({ type: A.ADD_MAC_ITEM, id, name, mac })
+        this.props.dispatch<Action>({ type: 'ADD_MAC_ITEM', id, name, mac })
         // } else {
         //   alert(message)
       }

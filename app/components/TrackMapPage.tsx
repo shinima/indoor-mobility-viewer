@@ -100,14 +100,14 @@ class TrackMapPage extends IComponent<P, S> {
 
   componentDidMount() {
     const { t } = this.props
-    this.props.dispatch({ type: A.FETCH_LOCATION_ITEMS, date: moment(t), mac: 'dc:37:14:50:9d:01' })
+    this.props.dispatch({ type: 'FETCH_LOCATION_ITEMS', date: moment(t), mac: 'dc:37:14:50:9d:01' })
   }
 
   componentDidUpdate(prevProps: P) {
     const { t } = this.props
     if (prevProps.t !== t) {
       this.props.dispatch({
-        type: A.FETCH_LOCATION_ITEMS,
+        type: 'FETCH_LOCATION_ITEMS',
         date: moment(t),
         mac: 'dc:37:14:50:9d:01'
       })
