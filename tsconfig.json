@@ -4,6 +4,7 @@
     "target": "es2017",
     "sourceMap": true,
     "noImplicitAny": true,
+    "noStrictGenericChecks": true,
     "allowJs": false,
     "jsx": "react"
   },

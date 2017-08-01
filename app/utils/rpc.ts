@@ -20,7 +20,12 @@ function rpc(endpoint: string) {
   }
 }
 
-export const getStaticMacMappings = rpc('get-static-mac-mappings')
+type GetStaticMacMappings = () => P<{
+  id: number
+  name: string
+  mac: string
+}[]>
+export const getStaticMacMappings: GetStaticMacMappings = rpc('get-static-mac-mappings')
 export const deleteStaticMacMapping = rpc('delete-static-mac-mapping')
 export const addStaticMacMapping = rpc('add-static-mac-mapping')
 export const updateStaticMacMapping = rpc('update-static-mac-mapping')

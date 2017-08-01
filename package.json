@@ -56,7 +56,7 @@
     "d3": "^4.9.1",
     "heatmap.js": "^2.0.5",
     "hoist-non-react-statics": "^2.1.0",
-    "immutable": "^3.8.1",
+    "immutable": "4.0.0-rc.2",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "prop-types": "^15.5.10",
@@ -70,7 +70,7 @@
     "react-router-dom": "^4.1.1",
     "react-router-redux": "^4.0.8",
     "recompose": "^0.24.0",
-    "redux": "^3.7.0",
+    "redux": "^3.7.2",
     "redux-saga": "^0.15.4"
   },
   "jest": {

@@ -5,6 +5,9 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import StaticMacMapping from './StaticMacMapping'
 import * as rpc from '../utils/rpc'
+// import * as rpc from '../utils/rpcMock'
+import * as A from '../actionTypes'
+import { MacItemRecord } from '../reducer'
 
 type Prop = {
   dispatch: Dispatch
@@ -12,8 +15,8 @@ type Prop = {
 }
 
 class SettingsPage extends Component<Prop> {
-  editMacItem = async (id: number, macItem: Map<string, string>) => {
-    const { ok } = await rpc.updateStaticMacMapping(id, macItem.get('name'), macItem.get('mac'))
+  editMacItem = async (id: number, macItem: MacItemRecord) => {
+    const { ok } = await rpc.updateStaticMacMapping(id, macItem.name, macItem.mac)
     if (ok) {
       this.props.dispatch<Action>({ type: 'EDIT_MAC_ITEM', id, macItem })
     } else {
