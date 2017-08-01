@@ -64,7 +64,7 @@ declare global {
   }
 
   type HumanizeFn = (mac: string) => string
-  type TranslateFn = (macMac: string) => Mac
+  type TranslateFn = (macName: string) => Mac
 
   type Dispatch = Redux.Dispatch<S.State>
   type Store = Redux.Store<S.State>

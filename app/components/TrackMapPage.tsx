@@ -5,7 +5,6 @@ import { Moment } from 'moment'
 import { connect } from 'react-redux'
 import { fromJS, OrderedMap, Map } from 'immutable'
 import { Dispatch } from 'redux'
-import { History } from 'history'
 import TrackMap from '../components/Map/TrackMap'
 import TrackDetailPanel from '../components/TrackDetailPanel'
 import FloorList from '../components/FloorList'
@@ -16,8 +15,6 @@ import { IComponent } from '../utils/utils'
 import MacList from '../components/MacList'
 import TimeChooser from './TimeChooser'
 import '../styles/TrackMapPage.styl'
-import * as rpc from '../utils/rpc'
-import * as A from '../actionTypes'
 
 const defaultDate = '2017-06-20'
 
@@ -77,11 +74,6 @@ type S = {
 }
 
 class TrackMapPage extends IComponent<P, S> {
-  // todo 当日期发生变化的时候, 需要重新获取当天的数据
-  // componentDidUpdate(nextProps) {
-  //   if (typeof this.props.date === 'string' && )
-  // }
-
   state = {
     // mac地址过滤控件的状态
     macEntryMap: (localStorage.getItem('mac-list') === null
@@ -100,24 +92,27 @@ class TrackMapPage extends IComponent<P, S> {
 
   componentDidMount() {
     const { t } = this.props
-    this.props.dispatch({ type: 'FETCH_LOCATION_ITEMS', date: moment(t), mac: 'dc:37:14:50:9d:01' })
+    const macList = this.state.macEntryMap.keySeq().toArray().map(this.translate)
+    // todo 直接刷新该页面会导致staticMacItems暂时为空，Mac地址没有转换
+    this.props.dispatch<Action>({ type: 'FETCH_LOCATION_ITEMS', date: moment(t), macList: macList })
   }
 
   componentDidUpdate(prevProps: P) {
     const { t } = this.props
+    const macList = this.state.macEntryMap.keySeq().toArray().map(this.translate)
     if (prevProps.t !== t) {
       this.props.dispatch({
         type: 'FETCH_LOCATION_ITEMS',
         date: moment(t),
-        mac: 'dc:37:14:50:9d:01'
+        macList: macList,
       })
     }
-
   }
 
   translate: TranslateFn = (macName) => {
     const { staticMacItems } = this.props
     const entry = staticMacItems.find(item => item.get('name') === macName)
+    // console.log(String(entry))
     return entry ? entry.get('mac') : macName
   }
 

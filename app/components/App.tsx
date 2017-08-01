@@ -3,10 +3,6 @@ import { Dispatch } from 'redux'
 import { Component } from 'react'
 import { Switch, HashRouter, BrowserRouter, Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { List, OrderedMap, Map } from 'immutable'
-import * as rpc from '../utils/rpc'
-// import * as rpc from '../utils/rpcMock'
-import * as A from '../actionTypes'
 import TrackMapPage from './TrackMapPage'
 import SettingsPage from './SettingsPage'
 import HeatMapPage from './HeatMapPage'
@@ -19,17 +15,8 @@ type AppProp = {
 }
 
 class App extends Component<AppProp> {
-  async componentDidMount() {
-    const { ok, mappings } = await rpc.getStaticMacMappings()
-    if (ok) {
-      const data: any = List(mappings)
-        .map(Map)
-        .toOrderedMap()
-        .mapKeys((__, entry) => entry.get('id'))
-      this.props.dispatch<Action>({ type: 'UPDATE_MAC_ITEMS', data })
-    } else {
-      alert('Loading static-mac-mappings error.')
-    }
+  componentDidMount() {
+    this.props.dispatch({ type: 'FETCH_MAC_ITEMS' })
   }
 
   render() {

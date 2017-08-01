@@ -1,23 +1,6 @@
 import { MomentInput } from 'moment'
 import { OrderedMap, Map } from 'immutable'
 
-// export const DELETE_MAC_ITEM = 'DELETE_MAC_ITEM'
-// export const EDIT_MAC_ITEM = 'EDIT_MAC_ITEM'
-// export const ADD_MAC_ITEM = 'ADD_MAC_ITEM'
-// export const UPDATE_MAC_ITEMS = 'UPDATE_MAC_ITEMS'
-
-// export const UPDATE_LOCATION_ITEMS = 'UPDATE_LOCATION_ITEMS'
-//
-// export const FETCH_LOCATION_ITEMS = 'FETCH_LOCATIONS_ITEMS'
-
-// declare global {
-//   interface FetchLocationItemsAction {
-//     type: 'FETCH_LOCATION_ITEMS'
-//     date: MomentInput
-//     mac: string
-//   }
-// }
-
 declare global {
   type Action = Action.Action
   type ActionType = Action.ActionType
@@ -31,6 +14,10 @@ declare global {
       | UpdateLocationItemsAction | FetchLocationItemsAction
 
     export type ActionType = Action['type']
+
+    export type FetchMacItemsAction = {
+      type: 'FETCH_MAC_ITEMS',
+    }
 
     export type UpdateMacItemsAction = {
       type: 'UPDATE_MAC_ITEMS',
@@ -61,9 +48,10 @@ declare global {
     }
 
     export type FetchLocationItemsAction = {
-      type: 'FETCH_LOCATION_ITEMS'
-      date: MomentInput
-      mac: string
+      type: 'FETCH_LOCATION_ITEMS',
+      date: MomentInput,
+      // todo macList的类型不知道怎么定
+      macList: any,
     }
   }
 }
