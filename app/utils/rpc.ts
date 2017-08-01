@@ -20,27 +20,25 @@ function rpc(endpoint: string) {
   }
 }
 
-type GetStaticMacMappings = () => P<{
-  id: number
-  name: string
-  mac: string
-}[]>
-export const getStaticMacMappings: GetStaticMacMappings = rpc('get-static-mac-mappings')
-export const deleteStaticMacMapping = rpc('delete-static-mac-mapping')
-export const addStaticMacMapping = rpc('add-static-mac-mapping')
-export const updateStaticMacMapping = rpc('update-static-mac-mapping')
-
-type Rpc1<ARG1, ARG2, ARG3, Data> = (arg1: ARG1, arg2: ARG2, arg3: ARG3) => Promise<{
-  ok: boolean
-  message?: string
-  data?: Data
-}>
-
-type P<T> = Promise<{
+type Data<T = null> = Promise<{
   ok: boolean
   message?: string
   data?: T
 }>
 
-export const getLocationsByTime = rpc('get-locations-by-time') as Rpc1<MomentInput, MomentInput, number[], LocationItem[]>
-export const getLocationsByMac: (date: MomentInput, mac: string) => P<LocationItem[]> = rpc('get-locations-by-mac')
+type GetStaticMacMappings = () => Data<{
+  id: number
+  name: string
+  mac: string
+}[]>
+export const getStaticMacMappings: GetStaticMacMappings = rpc('get-static-mac-mappings')
+
+export const deleteStaticMacMapping = rpc('delete-static-mac-mapping')
+export const addStaticMacMapping = rpc('add-static-mac-mapping')
+export const updateStaticMacMapping = rpc('update-static-mac-mapping')
+
+type GetLocationsByTime = (start: MomentInput, end: MomentInput, floorIds?: number[]) => Data<LocationItem[]>
+export const getLocationsByTime: GetLocationsByTime = rpc('get-locations-by-time')
+
+type GetLocationsByMac = (date: MomentInput, macList: string[]) => Data<LocationItem[]>
+export const getLocationsByMac: GetLocationsByMac = rpc('get-locations-by-mac')

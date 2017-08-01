@@ -1,9 +1,8 @@
 import * as _ from 'lodash'
 import { combineReducers } from 'redux'
-import { Map, OrderedMap, Record } from 'immutable'
+import { OrderedMap, Record } from 'immutable'
 import floors, { floorConfig } from './resources/floors'
 import cluster from './components/Map/cluster'
-import * as A from './actionTypes'
 
 // const allItems: Location[] = require('./resources/items.json')
 // console.log(getLocations('2017-06-22T00:00:00', '2017-06-22T00:03:00', [31, 32]))
@@ -12,7 +11,7 @@ export const MacItemRecord = Record({
   id: 0,
   name: '',
   mac: '',
-})
+}, 'MacItemRecord')
 const macItemRecord = MacItemRecord()
 export type MacItemRecord = typeof macItemRecord
 

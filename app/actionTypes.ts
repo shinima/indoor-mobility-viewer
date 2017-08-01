@@ -51,8 +51,7 @@ declare global {
     export type FetchLocationItemsAction = {
       type: 'FETCH_LOCATION_ITEMS',
       date: MomentInput,
-      // todo macList的类型不知道怎么定
-      macList: any,
+      macList: string[],
     }
   }
 }

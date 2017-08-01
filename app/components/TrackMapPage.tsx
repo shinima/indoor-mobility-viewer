@@ -118,7 +118,11 @@ class TrackMapPage extends IComponent<P, S> {
     const { t } = this.props
     const macList = this.state.macEntryMap.keySeq().toArray().map(this.translate)
     // todo 直接刷新该页面会导致staticMacItems暂时为空，Mac地址没有转换
-    this.props.dispatch<Action>({ type: 'FETCH_LOCATION_ITEMS', date: moment(t), macList: macList })
+    this.props.dispatch<Action>({
+      type: 'FETCH_LOCATION_ITEMS',
+      date: moment(t),
+      macList,
+    })
   }
 
   onDeleteMacEntry = (macName: string) => {

@@ -1,7 +1,7 @@
 import * as rpc from './utils/rpc'
-import { Map, List } from 'immutable'
+import { List } from 'immutable'
 import { put, takeEvery } from 'redux-saga/effects'
-import * as A from './actionTypes'
+import { MacItemRecord } from './reducer'
 
 export default function* rootSaga() {
   console.log('root saga start')
@@ -11,11 +11,11 @@ export default function* rootSaga() {
 
 function* fetchLocationItems({ date, macList }: Action.FetchLocationItemsAction) {
   try {
-    const response = yield rpc.getLocationsByMac(date, macList)
-    if (response.ok) {
+    const { ok, data }: { ok: boolean, data?: LocationItem[] } = yield rpc.getLocationsByMac(date, macList)
+    if (ok) {
       yield put<Action>({
         type: 'UPDATE_LOCATION_ITEMS',
-        data: response.data
+        data,
       })
     }
   } catch (error) {
@@ -23,15 +23,15 @@ function* fetchLocationItems({ date, macList }: Action.FetchLocationItemsAction)
   }
 }
 
-function* fetchMacItems(){
-  try{
-    const response = yield rpc.getStaticMacMappings()
-    if (response.ok) {
-      const data: any = List(response.mappings)
-        .map(Map)
+function* fetchMacItems() {
+  try {
+    const { ok, data } = yield rpc.getStaticMacMappings()
+    if (ok) {
+      const staticMacItems = List(data)
+        .map(MacItemRecord)
         .toOrderedMap()
         .mapKeys((__, entry) => entry.get('id'))
-      yield put<Action>({ type: 'UPDATE_MAC_ITEMS', data })
+      yield put<Action>({ type: 'UPDATE_MAC_ITEMS', staticMacItems })
     }
   } catch (error) {
     console.log(error)
