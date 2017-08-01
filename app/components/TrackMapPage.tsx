@@ -91,21 +91,13 @@ class TrackMapPage extends IComponent<P, S> {
   }
 
   componentDidMount() {
-    const { t } = this.props
-    const macList = this.state.macEntryMap.keySeq().toArray().map(this.translate)
-    // todo 直接刷新该页面会导致staticMacItems暂时为空，Mac地址没有转换
-    this.props.dispatch<Action>({ type: 'FETCH_LOCATION_ITEMS', date: moment(t), macList: macList })
+    this.fetchData()
   }
 
   componentDidUpdate(prevProps: P) {
     const { t } = this.props
-    const macList = this.state.macEntryMap.keySeq().toArray().map(this.translate)
     if (prevProps.t !== t) {
-      this.props.dispatch({
-        type: 'FETCH_LOCATION_ITEMS',
-        date: moment(t),
-        macList: macList,
-      })
+      this.fetchData()
     }
   }
 
@@ -120,6 +112,13 @@ class TrackMapPage extends IComponent<P, S> {
     const { staticMacItems } = this.props
     const entry = staticMacItems.find(item => item.get('mac') === mac)
     return entry ? entry.get('name') : mac
+  }
+
+  fetchData = () => {
+    const { t } = this.props
+    const macList = this.state.macEntryMap.keySeq().toArray().map(this.translate)
+    // todo 直接刷新该页面会导致staticMacItems暂时为空，Mac地址没有转换
+    this.props.dispatch<Action>({ type: 'FETCH_LOCATION_ITEMS', date: moment(t), macList: macList })
   }
 
   onDeleteMacEntry = (macName: string) => {
@@ -140,9 +139,16 @@ class TrackMapPage extends IComponent<P, S> {
 
   onAddMacEntry = (macName: string) => {
     const { macEntryMap } = this.state
+    const { t } = this.props
     const newMacEntryMap = macEntryMap.set(macName, true)
     this.setState({ macEntryMap: newMacEntryMap })
     localStorage.setItem('mac-list', JSON.stringify(newMacEntryMap))
+    const macList = this.state.macEntryMap.keySeq().toArray().map(this.translate)
+    this.props.dispatch<Action>({
+      type: 'FETCH_LOCATION_ITEMS',
+      date: moment(t),
+      macList: macList.concat([this.translate(macName)]),
+    })
   }
 
   onChangeFloorId = (floorId: number) => {
@@ -154,6 +160,7 @@ class TrackMapPage extends IComponent<P, S> {
   }
 
   onToggleMacEntry = (macName: string) => {
+    console.log('轨迹面板')
     const { allTracks } = this.props
     const { htid, macEntryMap } = this.state
     const not = (x: any) => !x
@@ -205,7 +212,13 @@ class TrackMapPage extends IComponent<P, S> {
       this.props.updateSearch({ htid })
     }
   }
+
   onChangeHtpid = (htpid: number) => this.setState({ htpid })
+
+  onChangeTime = (m: Moment) => {
+    // todo 解决一下轨迹详情面板打开时切换日期出现的问题
+    this.props.updateSearch({ t: m.valueOf() }, true)
+  }
 
   renderTrackDetailPanel() {
     const { allTracks, htid, floor } = this.props
@@ -271,7 +284,7 @@ class TrackMapPage extends IComponent<P, S> {
           <TimeChooser
             time={moment(t)}
             hasSlider={false}
-            onChangeTime={m => this.props.updateSearch({ t: m.valueOf() }, true)}
+            onChangeTime={this.onChangeTime}
           />
           <Legend />
           <MacList
