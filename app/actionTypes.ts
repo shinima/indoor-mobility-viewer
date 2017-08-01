@@ -1,5 +1,6 @@
 import { MomentInput } from 'moment'
 import { OrderedMap, Map } from 'immutable'
+import { MacItemRecord } from './reducer'
 
 // export const DELETE_MAC_ITEM = 'DELETE_MAC_ITEM'
 // export const EDIT_MAC_ITEM = 'EDIT_MAC_ITEM'
@@ -34,13 +35,13 @@ declare global {
 
     export type UpdateMacItemsAction = {
       type: 'UPDATE_MAC_ITEMS',
-      data: OrderedMap<number, Map<any, any>>,
+      staticMacItems: S.StaticMacItems,
     }
 
     export type EditMacItemAction = {
       type: 'EDIT_MAC_ITEM',
       id: number,
-      macItem: Map<string, string>,
+      macItem: MacItemRecord,
     }
 
     export type AddMacItemAction = {
@@ -57,7 +58,7 @@ declare global {
 
     export type UpdateLocationItemsAction = {
       type: 'UPDATE_LOCATION_ITEMS',
-      data: any,
+      data: LocationItem[],
     }
 
     export type FetchLocationItemsAction = {

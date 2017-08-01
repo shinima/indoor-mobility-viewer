@@ -10,6 +10,7 @@ import * as A from '../actionTypes'
 import TrackMapPage from './TrackMapPage'
 import SettingsPage from './SettingsPage'
 import HeatMapPage from './HeatMapPage'
+import { MacItemRecord } from "../reducer";
 
 const Router = process.env.NODE_ENV === 'production' ? BrowserRouter : HashRouter
 
@@ -20,13 +21,13 @@ type AppProp = {
 
 class App extends Component<AppProp> {
   async componentDidMount() {
-    const { ok, mappings } = await rpc.getStaticMacMappings()
+    const { ok, data } = await rpc.getStaticMacMappings()
     if (ok) {
-      const data: any = List(mappings)
-        .map(Map)
+      const staticMacItems: S.StaticMacItems = List(data)
+        .map(MacItemRecord)
         .toOrderedMap()
         .mapKeys((__, entry) => entry.get('id'))
-      this.props.dispatch<Action>({ type: 'UPDATE_MAC_ITEMS', data })
+      this.props.dispatch<Action>({ type: 'UPDATE_MAC_ITEMS', staticMacItems })
     } else {
       alert('Loading static-mac-mappings error.')
     }

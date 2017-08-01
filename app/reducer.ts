@@ -1,12 +1,20 @@
 import * as _ from 'lodash'
 import { combineReducers } from 'redux'
-import { Map, OrderedMap } from 'immutable'
+import { Map, OrderedMap, Record } from 'immutable'
 import floors, { floorConfig } from './resources/floors'
 import cluster from './components/Map/cluster'
 import * as A from './actionTypes'
 
 // const allItems: Location[] = require('./resources/items.json')
 // console.log(getLocations('2017-06-22T00:00:00', '2017-06-22T00:03:00', [31, 32]))
+
+export const MacItemRecord = Record({
+  id: 0,
+  name: '',
+  mac: '',
+})
+const macItemRecord = MacItemRecord()
+export type MacItemRecord = typeof macItemRecord
 
 declare global {
   namespace S {
@@ -22,9 +30,7 @@ declare global {
       staticMacItems: StaticMacItems
     }
 
-    // todo
-    // id -> OrderedMap<{ id:number, name: string, mac: string }>
-    type StaticMacItems = OrderedMap<number, Map<any, any>>
+    type StaticMacItems = OrderedMap<number, MacItemRecord>
 
     type FloorConfig = {
       floorId: number
@@ -35,15 +41,14 @@ declare global {
 
 function staticMacItems(state: S.StaticMacItems = OrderedMap(), action: Action) {
   if (action.type === 'EDIT_MAC_ITEM') {
-    return state.mergeIn([action.id], action.macItem as any)
+    return state.mergeIn([action.id], action.macItem)
   } else if (action.type === 'DELETE_MAC_ITEM') {
     return state.delete(action.id)
   } else if (action.type === 'ADD_MAC_ITEM') {
     const { name, mac, id } = action
-    return state.set(id, Map({ name, mac, id }))
-    // return state.set(name, mac) todo
+    return state.set(id, MacItemRecord({ name, mac, id }))
   } else if (action.type === 'UPDATE_MAC_ITEMS') {
-    return action.data
+    return action.staticMacItems
   } else {
     return state
   }
@@ -59,10 +64,7 @@ function staticMacItems(state: S.StaticMacItems = OrderedMap(), action: Action) 
 
 function allTracks(state: Track[] = [], action: Action) {
   if (action.type === 'UPDATE_LOCATION_ITEMS') {
-    return Map(_.groupBy(action.data, (item: any) => item.mac))
-      .toList()
-      .flatMap<number, Track>(cluster)
-      .toArray()
+    return _.flatMap(_.groupBy(action.data, item => item.mac), cluster)
   } else {
     return state
   }
@@ -77,5 +79,5 @@ export default combineReducers<S.State>({
     floorConfig: () => floorConfig,
     // staticMacMapping: () => staticMacMapping,
     staticMacItems,
-  } as any),
-} as any)
+  }),
+})

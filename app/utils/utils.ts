@@ -1,9 +1,8 @@
 import * as d3 from 'd3'
+import { List } from 'immutable'
 import { Component } from 'react'
-import { Iterable } from 'immutable'
 
-// todo
-type StaticMacMapping = Iterable.Indexed<{ name: string, mac: string }>
+type StaticMacMapping = List<{ name: string, mac: string }>
 
 const colors = d3.schemeCategory10
 

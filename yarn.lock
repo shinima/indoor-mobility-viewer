@@ -3977,6 +3977,10 @@ ignore@^3.2.0:
   version "3.3.3"
   resolved "http://registry.npm.taobao.org/ignore/download/ignore-3.3.3.tgz#432352e57accd87ab3110e82d3fea0e47812156d"
 
+immutable@4.0.0-rc.2:
+  version "4.0.0-rc.2"
+  resolved "http://registry.npm.taobao.org/immutable/download/immutable-4.0.0-rc.2.tgz#fdd0948aae728fda2306a02f72bb73e1773432d1"
+
 immutable@^3.8.1:
   version "3.8.1"
   resolved "http://registry.npm.taobao.org/immutable/download/immutable-3.8.1.tgz#200807f11ab0f72710ea485542de088075f68cd2"
@@ -6444,9 +6448,9 @@ redux-saga@^0.15.4:
   version "0.15.4"
   resolved "http://registry.npm.taobao.org/redux-saga/download/redux-saga-0.15.4.tgz#27982a947280053b7ecbb5d3170c837a5fe6b261"
 
-redux@^3.6.0, redux@^3.7.0:
-  version "3.7.1"
-  resolved "http://registry.npm.taobao.org/redux/download/redux-3.7.1.tgz#bfc535c757d3849562ead0af18ac52122cd7268e"
+redux@^3.6.0, redux@^3.7.2:
+  version "3.7.2"
+  resolved "http://registry.npm.taobao.org/redux/download/redux-3.7.2.tgz#06b73123215901d25d065be342eb026bc1c8537b"
   dependencies:
     lodash "^4.2.1"
     lodash-es "^4.2.1"

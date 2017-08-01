@@ -1,15 +1,15 @@
 import * as React from 'react'
 import { Component } from 'react'
-import * as PropTypes from 'prop-types'
-import { Iterable, is, Map } from 'immutable'
+import { is, Map } from 'immutable'
 import { isValidMac } from '../utils/utils'
+import { MacItemRecord } from '../reducer'
 import '../styles/StaticMacMapping.styl'
 
 type ChangeEvent = React.ChangeEvent<HTMLInputElement>
 
 type MacItemRowProps = {
-  macItem: Map<string, string | number>
-  onEdit: (map: Map<string, string>) => void
+  macItem: MacItemRecord
+  onEdit: (editInfo: { name: string, mac: string }) => void
   onDelete: () => void
 }
 
@@ -42,7 +42,7 @@ class MacItemRow extends Component<MacItemRowProps, MacItemRowState> {
     const { name, mac } = this.state
     if (isValidMac(mac as string)) {
       this.setState({ editing: false })
-      this.props.onEdit(Map({ name: name as string, mac: mac as string }))
+      this.props.onEdit({ name, mac })
     } else {
       alert('请输入正确的mac')
     }
@@ -85,7 +85,7 @@ class MacItemRow extends Component<MacItemRowProps, MacItemRowState> {
 type P = {
   // todo
   staticMacItems: S.StaticMacItems
-  onEditMacItem: (id: number, macItem: Map<string, string | number>) => void
+  onEditMacItem: (id: number, macItem: MacItemRecord) => void
   onDeleteMacItem: (id: number) => void
   onAddMacItem: (name: string, mac: string) => void
 }
@@ -97,12 +97,6 @@ type S = {
 
 // eslint-disable-next-line react/no-multi-comp
 export default class StaticMacMapping extends Component<P, S> {
-  // static propTypes = {
-  //   staticMacItems: PropTypes.object.isRequired,
-  //   onEditMacItem: PropTypes.func.isRequired,
-  //   onDeleteMacItem: PropTypes.func.isRequired,
-  //   onAddMacItem: PropTypes.func.isRequired,
-  // }
   state = {
     name: '',
     mac: '',
@@ -133,10 +127,10 @@ export default class StaticMacMapping extends Component<P, S> {
               <ul className="mac-item-list">
                 {staticMacItems.map(macItem => (
                   <MacItemRow
-                    key={macItem.get('id') as number}
+                    key={macItem.id}
                     macItem={macItem}
-                    onEdit={newMacItem => onEditMacItem(macItem.get('id') as number, newMacItem)}
-                    onDelete={() => onDeleteMacItem(macItem.get('id') as number)}
+                    onEdit={editInfo => onEditMacItem(macItem.id, MacItemRecord(editInfo))}
+                    onDelete={() => onDeleteMacItem(macItem.id)}
                   />
                 )).toArray()}
               </ul>
