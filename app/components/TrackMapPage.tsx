@@ -96,7 +96,7 @@ class TrackMapPage extends IComponent<P, S> {
   componentDidMount() {
     const { t } = this.props
     let time = t
-    if (moment(t).format('YYYY-MM-DD') === moment(getNow()).format('YYYY-MM-DD')) {
+    if (moment(t).isSame(getNow(), 'day')) {
       time = getNow()
     }
     this.fetchData(time)
@@ -105,7 +105,7 @@ class TrackMapPage extends IComponent<P, S> {
   componentDidUpdate(prevProps: P) {
     const { t, staticMacItems } = this.props
     if (prevProps.t !== t || !is(prevProps.staticMacItems, staticMacItems)) {
-      if (moment(t).format('YYYY-MM-DD') === moment(getNow()).format('YYYY-MM-DD')) {
+      if (moment(t).isSame(getNow(), 'day')) {
         clearInterval(this.handle)
         this.fetchRealTimeData(getNow())
         // 切换到当前时间时，每隔3秒发送一次请求

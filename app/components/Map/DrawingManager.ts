@@ -128,6 +128,7 @@ export default class DrawingManager {
     const symbolMap = {
       'track-start': d3.symbol().type(d3.symbolSquare).size(800),
       normal: d3.symbol().type(d3.symbolCircle).size(500),
+      raw: d3.symbol().type(d3.symbolCircle).size(125),
       'track-end': d3.symbol().type(d3.symbolTriangle).size(800),
     }
     const symbolGenerator = (trackPoint: TrackPoint) => symbolMap[trackPoint.pointType]()
@@ -145,12 +146,13 @@ export default class DrawingManager {
       .style('cursor', 'pointer')
       .attr('data-track-point-id', trackPoint => trackPoint.trackPointId)
       .attr('transform-origin', 'center center')
-      .attr('d', symbolGenerator)
       .attr('fill', ({ mac }) => getColor(mac))
       .merge(symbolsJoin)
-      .attr('transform', trackPointTransform)
     symbolsJoin.exit().remove()
-    symbols.on('mouseenter', ({ trackPointId }) => this.onChangeHtpid(trackPointId))
+    symbols
+      .attr('transform', trackPointTransform)
+      .attr('d', symbolGenerator)
+      .on('mouseenter', ({ trackPointId }) => this.onChangeHtpid(trackPointId))
       .on('mouseleave', () => this.onChangeHtpid(null))
       .on('click', function onClickSymbol(this: SVGPathElement) {
         const { trackId } = d3.select(this.parentElement).datum() as Track
@@ -202,9 +204,9 @@ export default class DrawingManager {
       .attr('data-track-id', track => track.trackId)
       .attr('stroke', track => getColor(track.mac))
       .attr('stroke-width', 8)
-      .attr('d', track => lineGenerator(track.points))
       .merge(trackPathJoin)
       .attr('opacity', opacity)
+      .attr('d', track => lineGenerator(track.points))
     trackPath.filter(({ trackId }) => trackId === htid)
       .raise()
     trackPathJoin.exit().remove()

@@ -1,7 +1,7 @@
 import * as moment from 'moment'
 
-const now = moment().startOf('day').valueOf()
-const target = moment('2017-06-24').startOf('day').valueOf()
+const now = moment().valueOf()
+const target = moment('2017-06-24 11:23:28', 'YYYY-MM-DD HH:mm:ss').valueOf()
 const diff = now - target
 
 export default function getNow() {

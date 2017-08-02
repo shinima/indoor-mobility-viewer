@@ -1,4 +1,5 @@
 import * as _ from 'lodash'
+import getNow from '../../utils/getNow'
 
 class MajorityHelper {
   private map = new Map<number, number>()
@@ -38,23 +39,6 @@ class MajorityHelper {
 
 function distance2(p1: Point, p2: Point) {
   return (p1.x - p2.x) ** 2 + (p1.y - p2.y) ** 2
-}
-
-function makeTrackPoint(pending: LocationItem[]):TrackPoint {
-  const size = pending.length
-  const first = _.first(pending)
-  const last = _.last(pending)
-  return {
-    trackPointId: first.id,
-    mac: first.mac,
-    floorId: first.floorId,
-    // notice 这里pointType均为normal
-    pointType: 'normal',
-    duration: last.time - first.time,
-    x: _.sumBy(pending, 'x') / size,
-    y: _.sumBy(pending, 'y') / size,
-    time: first.time,
-  }
 }
 
 // locations: LocationItem[]
@@ -115,6 +99,10 @@ export default function cluster(locations: LocationItem[]): Track[] {
   // 步骤二: 划分track
   // 时间相差小于30s且空间相差小于10m认为是同一个trackPoint
   // 时间相差小于1h认为是同一个track
+  // notice 最近10分钟的定位点不需要进行聚类
+  const now = getNow()
+  // const oldLocations = locations.filter(loc => now - loc.time > 10 * 60e3)
+  // const realtimeLocations = locations.filter(loc => now - loc.time <= 10 * 60e3)
   const tracks: Partial<Track>[] = []
   let pending = []
   let cntTrack: Partial<Track> = null
@@ -122,7 +110,7 @@ export default function cluster(locations: LocationItem[]): Track[] {
     const lastPending = pending[pending.length - 1]
     if (cntTrack === null
       || location.floorId !== lastPending.floorId
-      || location.time - lastPending.time > 1000e3) {
+      || location.time - lastPending.time > 3600e3) {
       // 产生新的track
       if (cntTrack !== null) {
         cntTrack.points.push(makeTrackPoint(pending))
@@ -133,7 +121,8 @@ export default function cluster(locations: LocationItem[]): Track[] {
       cntTrack = { points: [] }
     } else if (location.time - lastPending.time > 3600e3
       // notice 目前大概250像素对应实际距离10米
-      || distance2(location, lastPending) > 250 ** 2) {
+      || distance2(location, lastPending) > 250 ** 2
+      || now - location.time <= 60e3) {
       // 产生新的trackPoint
       cntTrack.points.push(makeTrackPoint(pending))
       pending = []
@@ -146,7 +135,9 @@ export default function cluster(locations: LocationItem[]): Track[] {
   for (const track of tracks) {
     const first = _.first(track.points)
     const last = _.last(track.points)
-    last.pointType = 'track-end'
+    if (last.pointType !== 'raw') {
+      last.pointType = 'track-end'
+    }
     first.pointType = 'track-start'
     track.duration = last.time + last.duration - first.time
     track.floorId = first.floorId
@@ -156,4 +147,36 @@ export default function cluster(locations: LocationItem[]): Track[] {
     track.endTime = last.time + last.duration
   }
   return tracks as Track[]
+
+
+  function makeTrackPoint(pending: LocationItem[]): TrackPoint {
+    const size = pending.length
+    const first = _.first(pending)
+    if (size === 1 && now - first.time <= 60e3) {
+      // 产生实时轨迹点
+      return {
+        trackPointId: first.id,
+        mac: first.mac,
+        floorId: first.floorId,
+        pointType: 'raw',
+        duration: 0,
+        x: first.x,
+        y: first.y,
+        time: first.time,
+      }
+    }
+
+    const last = _.last(pending)
+    return {
+      trackPointId: first.id,
+      mac: first.mac,
+      floorId: first.floorId,
+      // notice 这里pointType均为normal
+      pointType: 'normal',
+      duration: last.time - first.time,
+      x: _.sumBy(pending, 'x') / size,
+      y: _.sumBy(pending, 'y') / size,
+      time: first.time,
+    }
+  }
 }

@@ -9,7 +9,7 @@ declare module 'd3-selection' {
 }
 
 declare global {
-  type TrackPointType = 'track-start' | 'normal' | 'track-end'
+  type TrackPointType = 'track-start' | 'normal' | 'track-end' | 'raw'
   type Mac = string
 
   export type LocationItem = {

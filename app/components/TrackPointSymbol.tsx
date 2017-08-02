@@ -24,6 +24,12 @@ export default function TrackPointSymbol({ pointType, fill }: Prop) {
         <polygon points="1,0 2,2 0,2" fill={fill} />
       </svg>
     )
+  } else if (pointType === 'raw') {
+    return (
+      <svg className="symbol circle" viewBox="0 0 2 2">
+        <circle cx="1" cy="1" r="0.5" fill={fill} />
+      </svg>
+    )
   } else {
     throw new Error(`Invalid pointType: ${pointType}`)
   }
