@@ -42,3 +42,6 @@ export const getLocationsByTime: GetLocationsByTime = rpc('get-locations-by-time
 
 type GetLocationsByMac = (date: MomentInput, macList: string[]) => Data<LocationItem[]>
 export const getLocationsByMac: GetLocationsByMac = rpc('get-locations-by-mac')
+
+type GetRealTimeLocationsByMac = (date: MomentInput, macList: string[]) => Data<LocationItem[]>
+export const getRealTimeLocationsByMac: GetRealTimeLocationsByMac = rpc('get-realtime-locations-by-mac')

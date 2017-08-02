@@ -7,6 +7,11 @@ export default function* rootSaga() {
   console.log('root saga start')
   yield takeEvery('FETCH_LOCATION_ITEMS', fetchLocationItems)
   yield takeEvery('FETCH_MAC_ITEMS', fetchMacItems)
+  yield takeEvery('FETCH_REALTIME_LOCATION_ITEMS', fetchRealTimeLocationItems)
+}
+
+function compare(a: LocationItem, b: LocationItem) {
+  return a.time - b.time
 }
 
 function* fetchLocationItems({ date, macList }: Action.FetchLocationItemsAction) {
@@ -15,7 +20,7 @@ function* fetchLocationItems({ date, macList }: Action.FetchLocationItemsAction)
     if (ok) {
       yield put<Action>({
         type: 'UPDATE_LOCATION_ITEMS',
-        data,
+        data: data.sort(compare),
       })
     }
   } catch (error) {
@@ -32,6 +37,21 @@ function* fetchMacItems() {
         .toOrderedMap()
         .mapKeys((__, entry) => entry.get('id'))
       yield put<Action>({ type: 'UPDATE_MAC_ITEMS', staticMacItems })
+    }
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+function* fetchRealTimeLocationItems({ date, macList }: Action.FetchRealTimeLocationItemsAction) {
+  try {
+    const { ok, data }: { ok: boolean, data?: LocationItem[] }
+      = yield rpc.getRealTimeLocationsByMac(date, macList)
+    if (ok) {
+      yield put<Action>({
+        type: 'UPDATE_LOCATION_ITEMS',
+        data: data.sort(compare),
+      })
     }
   } catch (error) {
     console.log(error)

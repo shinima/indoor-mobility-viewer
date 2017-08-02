@@ -123,6 +123,9 @@ export default class TrackDetailPanel extends Component<TrackDetailPanelProp> {
       tracks, floorId, ht, htid, htpid, humanize,
       onChangeHtid, onChangeHtpid, onCentralizeTrack,
     } = this.props
+    if (ht == null) {
+      return null
+    }
     const tracksIdArray = tracks.map(track => track.trackId)
     const index = tracksIdArray.indexOf(ht.trackId)
     const previousDisabled = index === 0

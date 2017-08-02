@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import TrackMapPage from './TrackMapPage'
 import SettingsPage from './SettingsPage'
 import HeatMapPage from './HeatMapPage'
-import { MacItemRecord } from "../reducer";
 
 const Router = process.env.NODE_ENV === 'production' ? BrowserRouter : HashRouter
 

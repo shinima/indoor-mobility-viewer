@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import * as moment from 'moment'
 import { Moment } from 'moment'
 import { connect } from 'react-redux'
-import { fromJS, OrderedMap, Map } from 'immutable'
+import { fromJS, OrderedMap, Map, is } from 'immutable'
 import { Dispatch } from 'redux'
 import TrackMap from '../components/Map/TrackMap'
 import TrackDetailPanel from '../components/TrackDetailPanel'
@@ -15,6 +15,7 @@ import { IComponent } from '../utils/utils'
 import MacList from '../components/MacList'
 import TimeChooser from './TimeChooser'
 import '../styles/TrackMapPage.styl'
+import getNow from '../utils/getNow'
 
 const defaultDate = '2017-06-20'
 
@@ -74,6 +75,8 @@ type S = {
 }
 
 class TrackMapPage extends IComponent<P, S> {
+  handle = -1
+
   state = {
     // mac地址过滤控件的状态
     macEntryMap: (localStorage.getItem('mac-list') === null
@@ -91,13 +94,26 @@ class TrackMapPage extends IComponent<P, S> {
   }
 
   componentDidMount() {
-    this.fetchData()
+    const { t } = this.props
+    let time = t
+    if (moment(t).format('YYYY-MM-DD') === moment(getNow()).format('YYYY-MM-DD')) {
+      time = getNow()
+    }
+    this.fetchData(time)
   }
 
   componentDidUpdate(prevProps: P) {
-    const { t } = this.props
-    if (prevProps.t !== t) {
-      this.fetchData()
+    const { t, staticMacItems } = this.props
+    if (prevProps.t !== t || !is(prevProps.staticMacItems, staticMacItems)) {
+      if (moment(t).format('YYYY-MM-DD') === moment(getNow()).format('YYYY-MM-DD')) {
+        clearInterval(this.handle)
+        this.fetchRealTimeData(getNow())
+        // 切换到当前时间时，每隔3秒发送一次请求
+        this.handle = setInterval(() => this.fetchRealTimeData(getNow()), 3000) as any
+      } else {
+        clearInterval(this.handle)
+        this.fetchData(t)
+      }
     }
   }
 
@@ -114,15 +130,28 @@ class TrackMapPage extends IComponent<P, S> {
     return entry ? entry.get('name') : mac
   }
 
-  fetchData = () => {
-    const { t } = this.props
-    const macList = this.state.macEntryMap.keySeq().toArray().map(this.translate)
-    // todo 直接刷新该页面会导致staticMacItems暂时为空，Mac地址没有转换
-    this.props.dispatch<Action>({
-      type: 'FETCH_LOCATION_ITEMS',
-      date: moment(t),
-      macList,
-    })
+  fetchData = (time: number) => {
+    const { staticMacItems } = this.props
+    if (staticMacItems.size !== 0) {
+      const macList = this.state.macEntryMap.keySeq().toArray().map(this.translate)
+      this.props.dispatch<Action>({
+        type: 'FETCH_LOCATION_ITEMS',
+        date: moment(time),
+        macList,
+      })
+    }
+  }
+
+  fetchRealTimeData = (time: number) => {
+    const { staticMacItems } = this.props
+    if (staticMacItems.size !== 0) {
+      const macList = this.state.macEntryMap.keySeq().toArray().map(this.translate)
+      this.props.dispatch<Action>({
+        type: 'FETCH_REALTIME_LOCATION_ITEMS',
+        date: moment(time),
+        macList,
+      })
+    }
   }
 
   onDeleteMacEntry = (macName: string) => {
@@ -164,7 +193,6 @@ class TrackMapPage extends IComponent<P, S> {
   }
 
   onToggleMacEntry = (macName: string) => {
-    console.log('轨迹面板')
     const { allTracks } = this.props
     const { htid, macEntryMap } = this.state
     const not = (x: any) => !x
@@ -220,8 +248,7 @@ class TrackMapPage extends IComponent<P, S> {
   onChangeHtpid = (htpid: number) => this.setState({ htpid })
 
   onChangeTime = (m: Moment) => {
-    // todo 解决一下轨迹详情面板打开时切换日期出现的问题
-    this.props.updateSearch({ t: m.valueOf() }, true)
+    this.props.updateSearch({ t: m.valueOf(), htid: null }, true)
   }
 
   renderTrackDetailPanel() {

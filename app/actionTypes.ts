@@ -9,10 +9,13 @@ declare global {
   namespace Action {
     export type Action =
       UpdateMacItemsAction
+      | FetchMacItemsAction
       | EditMacItemAction
       | AddMacItemAction
       | DeleteMacItemAction
-      | UpdateLocationItemsAction | FetchLocationItemsAction
+      | UpdateLocationItemsAction
+      | FetchLocationItemsAction
+      | FetchRealTimeLocationItemsAction
 
     export type ActionType = Action['type']
 
@@ -50,6 +53,12 @@ declare global {
 
     export type FetchLocationItemsAction = {
       type: 'FETCH_LOCATION_ITEMS',
+      date: MomentInput,
+      macList: string[],
+    }
+
+    export type FetchRealTimeLocationItemsAction = {
+      type: 'FETCH_REALTIME_LOCATION_ITEMS',
       date: MomentInput,
       macList: string[],
     }
