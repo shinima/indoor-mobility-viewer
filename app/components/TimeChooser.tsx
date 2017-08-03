@@ -4,6 +4,7 @@ import * as moment from 'moment'
 import { Moment } from 'moment'
 import * as PropTypes from 'prop-types'
 import Slider from './Slider'
+import getNow from '../utils/getNow'
 import '../styles/TimeChooser.styl'
 
 type P = {
@@ -12,10 +13,27 @@ type P = {
   hasSlider: boolean
 }
 
+const minDate = moment('2017-06-20', 'YYYY-MM-DD', true)
+const maxDate = moment(getNow()).format('YYYY-MM-DD')
+
 export default class TimeChooser extends Component<P> {
   static propTypes = {
     time: PropTypes.instanceOf(moment).isRequired,
     onChangeTime: PropTypes.func.isRequired,
+  }
+
+  state = {}
+
+  couldSelectPrev = () => {
+    const { time } = this.props
+    const prev = time.clone().subtract(1, 'day')
+    return prev.isBetween(minDate, maxDate, 'day', '[]')
+  }
+
+  couldSelectNext = () => {
+    const { time } = this.props
+    const next = time.clone().add(1, 'day')
+    return next.isBetween(minDate, maxDate, 'day', '[]')
   }
 
   onSelectPrevDate = () => {
@@ -54,17 +72,19 @@ export default class TimeChooser extends Component<P> {
             width="20"
             height="20"
             className="button"
-            onClick={this.onSelectPrevDate}
+            onClick={this.couldSelectPrev() ? this.onSelectPrevDate : null}
           >
-            <polygon points="20,0 20,20 0,10" fill="steelblue" />
+            <polygon points="20,0 20,20 0,10"
+                     fill={this.couldSelectPrev() ? "steelblue" : "#888888"} />
           </svg>
           <svg
             width="20"
             height="20"
             className="button next"
-            onClick={this.onSelectNextDate}
+            onClick={this.couldSelectNext() ? this.onSelectNextDate : null}
           >
-            <polygon points="0,0 20,10 0,20" fill="steelblue" />
+            <polygon points="0,0 20,10 0,20"
+                     fill={this.couldSelectNext() ? "steelblue" : "#888888"} />
           </svg>
         </div>
         {hasSlider ? <Slider

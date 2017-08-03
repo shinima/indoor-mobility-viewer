@@ -1,8 +1,10 @@
 import * as React from 'react'
+import  * as moment from 'moment'
 import { History } from 'history'
 import { Component } from 'react'
 import Button from './Button'
 import GlobalButtons from './GlobalButtons'
+import getNow from '../utils/getNow'
 import '../styles/ButtonGroup.styl'
 
 type P = {
@@ -15,6 +17,18 @@ type P = {
 }
 
 export default class ButtonGroup extends Component<P> {
+  state = {
+    now: getNow(),
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({
+        now: getNow(),
+      })
+    }, 1000)
+  }
+  
   render() {
     const { showPath, showPoints, history } = this.props
     const {
@@ -27,6 +41,9 @@ export default class ButtonGroup extends Component<P> {
 
     return (
       <div className="button-group-widget">
+        <div className="real-time">
+          {moment(this.state.now).format('MM-DD HH:mm:ss')}
+        </div>
         <GlobalButtons history={history} />
         <div className="block">
           <Button
