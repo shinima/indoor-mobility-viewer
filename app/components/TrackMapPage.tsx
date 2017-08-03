@@ -117,6 +117,10 @@ class TrackMapPage extends IComponent<P, S> {
     }
   }
 
+  componentWillUnmount() {
+    clearInterval(this.handle)
+  }
+
   translate: TranslateFn = (macName) => {
     const { staticMacItems } = this.props
     const entry = staticMacItems.find(item => item.get('name') === macName)

@@ -61,6 +61,7 @@ class HeatMapPage extends Component<Prop, State> {
 
   async componentDidMount() {
     const { t, floor: { floorId } } = this.props
+    console.log(floorId)
 
     const start = t - 600e3
     this.cache = new LocationItemCache(floorId)
@@ -71,14 +72,9 @@ class HeatMapPage extends Component<Prop, State> {
     // todo will-unmount 中需要清理资源
   }
 
-  // componentWillReceiveProps(nextProps: Prop) {
-  //   if (nextProps.t !== ) {
-  //     this.setState({ allItems: [] })
-  //   }
-  // }
-
   async componentDidUpdate(prevProps: Prop) {
     const { t, floorId } = this.props
+    // console.log(floorId)
     if (prevProps.t !== t || prevProps.floorId !== floorId) {
       const start = t - 600e3
       // const data = await this.cache.query(start, t)
