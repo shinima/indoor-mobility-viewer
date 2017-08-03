@@ -21,14 +21,20 @@ export default class ButtonGroup extends Component<P> {
     now: getNow(),
   }
 
+  handle = -1
+
   componentDidMount() {
-    setInterval(() => {
+    this.handle = setInterval(() => {
       this.setState({
         now: getNow(),
       })
-    }, 1000)
+    }, 1000) as any
   }
-  
+
+  componentWillUnmount() {
+    clearInterval(this.handle)
+  }
+
   render() {
     const { showPath, showPoints, history } = this.props
     const {
