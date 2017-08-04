@@ -61,8 +61,6 @@ class HeatMapPage extends Component<Prop, State> {
 
   async componentDidMount() {
     const { t, floor: { floorId } } = this.props
-    console.log(floorId)
-
     const start = t - 600e3
     this.cache = new LocationItemCache(floorId)
     this.cache.setSegment(start, t)
@@ -73,13 +71,9 @@ class HeatMapPage extends Component<Prop, State> {
   }
 
   async componentDidUpdate(prevProps: Prop) {
-    const { t, floorId } = this.props
-    // console.log(floorId)
-    if (prevProps.t !== t || prevProps.floorId !== floorId) {
+    const { t, floor: { floorId } } = this.props
+    if (prevProps.t !== t || prevProps.floor.floorId !== floorId) {
       const start = t - 600e3
-      // const data = await this.cache.query(start, t)
-      // console.log('data:', data)
-      // this.setState({ allItems: data })
       this.cache = new LocationItemCache(floorId)
       this.cache.setSegment(start, t)
       this.cache.on('set-items', (items: LocationItem[]) => {
