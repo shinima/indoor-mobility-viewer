@@ -1,17 +1,63 @@
 @require './base.styl'
 
-.button-group-widget
-  width 250px
-  .block
-    display flex
-    flex-direction column
-    border 1px solid steelblue
-    border-top none
-  .real-time
-    margin-bottom 16px
+$border-color = #dadada
+
+.button-group-widget {
+  .real-time {
+    height 88px
     display flex
     justify-content center
     align-items center
-    font-size 16px
-    height 40px
-    border 1px solid steelblue
+    font-size 20px
+    letter-spacing 2px
+    color white
+    background #1881dc
+  }
+  .reset-transform-button-wrapper {
+    padding 19px 0 19px 70px
+    border-bottom $border-color 1px solid
+
+    .reset-transform-button {
+      width 293px
+      height 36px
+      display flex
+      align-items center
+      justify-content center
+      border #cccccc 1px solid
+      fill white
+      font-size 16px
+      color #515151
+      background white
+
+      > img {
+        margin-left 11px
+      }
+    }
+  }
+
+  .checkboxes-widget {
+    padding 0 70px 18px 70px
+    border-bottom 1px solid $border-color
+
+    .title {
+      @extends $widget-title
+    }
+
+    .checkboxes-row {
+      display flex
+      .checkbox-wrapper {
+        display flex
+        align-items center
+        cursor default
+        &:first-child {
+          margin-right auto
+        }
+
+        > p {
+          margin 0
+          margin-left 10px
+        }
+      }
+    }
+  }
+}

@@ -1,24 +1,28 @@
 @require './base.styl'
 
-.points-list-widget
-  margin-top 16px
-  border 1px solid steelblue
+.legend {
+  position absolute
+  z-index 1
+  top 110px
+  left 500px
+  display flex
+  pointer-events none
+  cursor default
 
-  .title
-    @extends $widget-title
-
-  .points-list
+  .box {
     display flex
-    height 40px
-    .box
-      display flex
-      align-items center
-      margin-left 8px
-      flex 1 1 0
-      .symbol
-        width 14px
-        margin-top 2px
-      .text
-        margin-left 8px
-        font-size 14px
-        width 48px
+    align-items center
+    margin-left 40px
+    &:first-child {
+      margin-left 0
+    }
+
+    .text {
+      font-size 16px
+      color #4d4b4e
+      margin-right 10px
+    //margin-left 8px
+    //width 48px
+    }
+  }
+}

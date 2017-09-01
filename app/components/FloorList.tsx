@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { Component } from 'react'
-import * as PropTypes from 'prop-types'
 import * as d3 from 'd3'
+import { List, Map } from 'immutable'
+import * as classNames from 'classnames'
 import '../styles/FloorList.styl'
 
 const statsBgColor = d3.scaleLinear<d3.HSLColor>()
@@ -9,12 +9,16 @@ const statsBgColor = d3.scaleLinear<d3.HSLColor>()
   // green/0.1 -> red/0.4
   .range([d3.hsl('rgba(0,255,0,0.1)'), d3.hsl('rgba(255,0,0,0.4)')])
   .interpolate(d3.interpolateHsl)
-const statsBarWidth = d3.scaleLinear().range([0, 200]).clamp(true)
+const statsBarWidth = d3.scaleLinear().range([0, 300]).clamp(true)
 
-// todo
-type P = any
+type P = {
+  max?: number
+  floorEntryList: any // todo
+  selectedFloorId: number
+  changeSelectedFloorId: (floorId: number) => void
+}
 
-export default class FloorList extends Component<P> {
+export default class FloorList extends React.Component<P> {
   // static propTypes = {
   //   max: PropTypes.number,
   //   floorEntryList: ImmutablePropTypes.iterableOf(ImmutablePropTypes.mapContains({
@@ -31,7 +35,6 @@ export default class FloorList extends Component<P> {
       floorEntryList,
       selectedFloorId,
       changeSelectedFloorId,
-      // todo remove any
       max = floorEntryList.map((entry: any) => entry.get('pointsCount')).max(),
     } = this.props
     statsBgColor.domain([1, max])
@@ -39,12 +42,12 @@ export default class FloorList extends Component<P> {
 
     return (
       <div className="floor-list-widget">
-        <div className="title">楼层地图切换</div>
+        <div className="title">楼层热度</div>
         <div className="floor-list">
           {floorEntryList.map((entry: any) => (
             <div
               key={entry.get('floorId')}
-              className="floor-item"
+              className={classNames('floor-item', { active: selectedFloorId === entry.get('floorId') })}
               onClick={() => changeSelectedFloorId(entry.get('floorId'))}
             >
               <div
@@ -54,18 +57,11 @@ export default class FloorList extends Component<P> {
                   background: statsBgColor(entry.get('pointsCount')),
                 }}
               />
-              <div className="floor-text">
-                <span>{entry.get('floorName')}</span>
-                <span className="count">{entry.get('pointsCount')}</span>
+              <div className="floor-name">
+                {entry.get('floorName')}
               </div>
-              <div className="floor-radio">
-                <img
-                  style={{ width: '20px', height: '20px' }}
-                  src={`/static/img/${
-                    selectedFloorId === entry.get('floorId') ? 'check-radio' : 'empty-radio'}.svg`
-                  }
-                  alt="radio"
-                />
+              <div className="points-count">
+                {entry.get('pointsCount')}
               </div>
             </div>
           )).toArray()}

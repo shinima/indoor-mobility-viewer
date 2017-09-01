@@ -2,6 +2,7 @@ import * as React from 'react'
 import { Map } from 'immutable'
 import { Component } from 'react'
 import { getColor, isValidMac } from '../utils/utils'
+import Checkbox from './Checkbox'
 import '../styles/MacList.styl'
 
 type P = {
@@ -59,32 +60,21 @@ export default class MacList extends Component<P, S> {
           <div className="mac-list">
             {macEntryMap.map((active, name) => (
               <div className="mac-item" key={name}>
-                <div className="mac-color">
-                  <button
-                    onClick={() => onHighlightFirstTrack(name)}
-                    onDoubleClick={() => onCentralizeFirstTrack(name)}
-                    className="color"
-                    style={{ background: `${getColor(translate(name))}` }}
-                  />
-                </div>
+                <button
+                  onClick={() => onHighlightFirstTrack(name)}
+                  onDoubleClick={() => onCentralizeFirstTrack(name)}
+                  className="mac-color"
+                  style={{ background: `${getColor(translate(name))}` }}
+                />
                 <div className="mac-text">{name}</div>
-                <div
+                <img
+                  style={{ height: 16 }}
+                  src={'/static/img/delete2.svg'}
+                  alt="delete"
                   className="mac-delete"
                   onClick={() => this.props.onDeleteMacEntry(name)}
-                >
-                  <img
-                    style={{ width: 18, height: 18 }}
-                    src={'/static/img/delete.svg'}
-                    alt="delete"
-                  />
-                </div>
-                <div className="mac-check" onClick={() => this.props.onToggleMacEntry(name)}>
-                  <img
-                    style={{ width: '20px', height: '20px' }}
-                    src={`/static/img/buttonGroup/${active ? 'check-box' : 'check-box-empty'}.svg`}
-                    alt="checkbox"
-                  />
-                </div>
+                />
+                <Checkbox checked={active} onChange={() => this.props.onToggleMacEntry(name)} />
               </div>
             )).toArray()}
           </div>
@@ -95,13 +85,7 @@ export default class MacList extends Component<P, S> {
             value={macName}
             onChange={e => this.setState({ macName: e.target.value })}
           />
-          <div className="button" onClick={this.handleAdd}>
-            <img
-              style={{ width: 20, height: 20 }}
-              src={'/static/img/add.svg'}
-              alt="add"
-            />
-          </div>
+          <button className="add-button" onClick={this.handleAdd} />
         </div>
       </div>
     )

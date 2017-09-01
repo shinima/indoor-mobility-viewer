@@ -38,7 +38,7 @@ declare global {
   }
 }
 
-function staticMacItems(state: S.StaticMacItems = OrderedMap(), action: Action) {
+function staticMacItems(state: S.StaticMacItems = null, action: Action) {
   if (action.type === 'EDIT_MAC_ITEM') {
     return state.mergeIn([action.id], action.macItem)
   } else if (action.type === 'DELETE_MAC_ITEM') {

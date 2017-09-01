@@ -1,24 +1,24 @@
 @require './base.styl'
 
 .floor-list-widget {
-  margin-top 16px
-  border 1px solid steelblue
+  padding-left 70px
+
   .title {
     @extends $widget-title
   }
+
   .floor-list {
     .floor-item {
       position relative
+      height 37px
       display flex
-      height 32px
-      border-top 1px solid steelblue
-      &:first-child {
-        border-top none
-      }
+      align-items center
       cursor pointer
-      transition background 0.3s ease-in
-      &:hover {
-        background rgba(51, 51, 51, 0.25)
+      margin-left -70px
+      padding-left 70px
+
+      &.active {
+        background #eceef4
       }
 
       .bar {
@@ -28,22 +28,12 @@
         bottom 0
       }
 
-      .floor-text {
-        width 160px
-        line-height 32px
-        padding-left 8px
-        font-family Consolas, monospace, 'microsoft yahei'
-        margin 0
-        .count {
-          margin-left 8px
-        }
+      .floor-name {
+        width 60px
       }
-      .floor-radio {
-        display block
-        margin-left auto
-        margin-top auto
-        margin-right 10px
-        pointer-events none
+
+      .points-count {
+        width 100px
       }
     }
   }

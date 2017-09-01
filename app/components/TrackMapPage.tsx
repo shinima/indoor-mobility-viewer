@@ -14,6 +14,7 @@ import bindSearchParameters, { SearchParamBinding } from '../utils/bindSearchPar
 import { IComponent } from '../utils/utils'
 import MacList from '../components/MacList'
 import TimeChooser from './TimeChooser'
+import DateChooser from './DateChooser'
 import '../styles/TrackMapPage.styl'
 import getNow from '../utils/getNow'
 
@@ -280,7 +281,10 @@ class TrackMapPage extends IComponent<P, S> {
   }
 
   render() {
-    const { allTracks, floorConfig, floor, htid, history, t } = this.props
+    const { staticMacItems, allTracks, floorConfig, floor, htid, history, t } = this.props
+    if (staticMacItems == null) {
+      return null
+    }
     const {
       ctid,
       htpid,
@@ -307,6 +311,7 @@ class TrackMapPage extends IComponent<P, S> {
 
     return (
       <div>
+        <Legend />
         <div className="widgets">
           <ButtonGroup
             onResetTransform={() => this.setState({ transformReset: true })}
@@ -316,12 +321,15 @@ class TrackMapPage extends IComponent<P, S> {
             onToggleShowPoints={() => this.setState({ showPoints: !showPoints })}
             history={history}
           />
-          <TimeChooser
+          <DateChooser
             time={moment(t)}
-            hasSlider={false}
             onChangeTime={this.onChangeTime}
           />
-          <Legend />
+          {/*<TimeChooser*/}
+          {/*time={moment(t)}*/}
+          {/*hasSlider={false}*/}
+          {/*onChangeTime={this.onChangeTime}*/}
+          {/*/>*/}
           <MacList
             macEntryMap={macEntryMap}
             onDeleteMacEntry={this.onDeleteMacEntry}

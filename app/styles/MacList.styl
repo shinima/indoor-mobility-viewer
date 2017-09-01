@@ -1,8 +1,9 @@
 @require './base.styl'
 
 .mac-list-widget {
-  margin-top 16px
-  border 1px solid steelblue
+  padding-left 70px
+  padding-bottom 18px
+  border-bottom 1px solid #ccc
 
   .title {
     @extends $widget-title
@@ -15,16 +16,15 @@
     .mac-item {
       display flex
       align-items center
+      width 300px
       height 32px
-      border-top 1px solid steelblue
-      &:first-child {
-        border-top none
-      }
 
-      .mac-color > .color {
-        width 16px
-        height 16px
-        margin 8px
+      .mac-color {
+        padding 0
+        width 10px
+        height 10px
+        margin-left 4px
+        margin-right 16px
         border-radius 50%
         cursor pointer
         border none
@@ -35,28 +35,17 @@
       }
 
       .mac-text {
-        width 160px
         margin 0
-        margin-left 5px
         line-height @height
         font-size 14px
-        font-family Consolas, monospace, 'microsoft yahei'
+        font-family Consolas, 'microsoft yahei', monospace
       }
 
       .mac-delete {
-        @extends $flat-button
-        margin-left auto
-        width 18px
-        height 18px
-        margin-right 10px
-      }
-
-      .mac-check {
         display block
-        margin-left 8px
-        margin-right 10px
-        margin-top 4px
         cursor pointer
+        margin-right 10px
+        margin-left auto
       }
     }
   }
@@ -71,26 +60,28 @@
   }
 
   .new-mac-item {
-    padding-left 10px
-    height 32px
+    width 300px
     display flex
-    justify-content space-around
-    align-items center
-    border-top 1px solid steelblue
 
-    input {
-      margin-left 16px
-      width 150px
-      height 24px
-      font-family Consolas, monospace, 'microsoft yahei'
+    > input {
+      flex-grow 1
+      height 36px
+      line-height @height
+      padding-left 10px
+      border 1px solid #ccc
+      border-radius 2px
+      font-size 20px
+      color #595959
+      font-family Consolas, 'Microsoft yahei', monospace
     }
 
-    .button {
-      @extends $flat-button
-      margin-left auto
-      margin-right 10px
-      margin-top 4px
+    .add-button {
+      margin-left 10px
+      width 36px
+      height 36px
+      border 1px solid #ccc
+      border-radius 2px
+      background url(/static/img/add.svg) no-repeat center center
     }
   }
-
 }

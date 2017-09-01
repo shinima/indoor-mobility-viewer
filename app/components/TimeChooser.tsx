@@ -16,6 +16,7 @@ type P = {
 const minDate = moment('2017-06-20', 'YYYY-MM-DD', true)
 const maxDate = moment(getNow()).format('YYYY-MM-DD')
 
+/** @deprecated */
 export default class TimeChooser extends Component<P> {
   static propTypes = {
     time: PropTypes.instanceOf(moment).isRequired,

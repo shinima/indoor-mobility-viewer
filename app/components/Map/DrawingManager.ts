@@ -145,7 +145,6 @@ export default class DrawingManager {
       .classed('symbol', true)
       .style('cursor', 'pointer')
       .attr('data-track-point-id', trackPoint => trackPoint.trackPointId)
-      .attr('transform-origin', 'center center')
       .attr('fill', ({ mac }) => getColor(mac))
       .merge(symbolsJoin)
     symbolsJoin.exit().remove()
