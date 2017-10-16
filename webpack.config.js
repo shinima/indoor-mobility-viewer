@@ -14,6 +14,10 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.ya?ml/,
+        loaders: ['json-loader', 'yaml-loader'],
+      },
+      {
         test: /\.css$/,
         loaders: ['style-loader', 'css-loader'],
       },
@@ -24,24 +28,10 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'awesome-typescript-loader',
+        options: {
+          transpileOnly: true,
+        },
       },
-      {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              plugins: [
-                'transform-react-jsx',
-                'transform-class-properties',
-                'transform-decorators-legacy',
-              ],
-            },
-          },
-        ],
-      },
-      { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
     ],
   },
 

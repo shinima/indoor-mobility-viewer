@@ -13,10 +13,10 @@ import Legend from '../components/Legend'
 import bindSearchParameters, { SearchParamBinding } from '../utils/bindSearchParameters'
 import { IComponent } from '../utils/utils'
 import MacList from '../components/MacList'
-import TimeChooser from './TimeChooser'
 import DateChooser from './DateChooser'
 import '../styles/TrackMapPage.styl'
 import getNow from '../utils/getNow'
+import AlgorithmChooser from './AlgorithmChooser'
 
 const defaultDate = '2017-06-20'
 
@@ -313,6 +313,7 @@ class TrackMapPage extends IComponent<P, S> {
       <div>
         <Legend />
         <div className="widgets">
+          <AlgorithmChooser macEntryMap={macEntryMap} />
           <ButtonGroup
             onResetTransform={() => this.setState({ transformReset: true })}
             showPath={showPath}
@@ -325,11 +326,6 @@ class TrackMapPage extends IComponent<P, S> {
             time={moment(t)}
             onChangeTime={this.onChangeTime}
           />
-          {/*<TimeChooser*/}
-          {/*time={moment(t)}*/}
-          {/*hasSlider={false}*/}
-          {/*onChangeTime={this.onChangeTime}*/}
-          {/*/>*/}
           <MacList
             macEntryMap={macEntryMap}
             onDeleteMacEntry={this.onDeleteMacEntry}
