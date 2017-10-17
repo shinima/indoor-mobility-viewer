@@ -34,7 +34,6 @@ declare global {
   }
 
   interface Track {
-    duration: number
     floorId: number
     trackId: number
     mac: string

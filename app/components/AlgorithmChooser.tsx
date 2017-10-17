@@ -1,45 +1,12 @@
 import * as React from 'react'
 import { List, Map, OrderedMap } from 'immutable'
+import { connect } from 'react-redux'
 import Checkbox from './Checkbox'
+import fetchCXServer from '../utils/fetchCXServer'
+import { CXTracking, PointType } from '../utils/TestDatInterface'
+import { Arg, config } from '../utils/config'
+import convertTrackings from '../utils/convertTrackings'
 import '../styles/AlgorithmChooser.styl'
-
-interface NumberArg {
-  type: 'int' | 'double' | 'oddInt'
-  name: string
-  defaultValue: number
-  unit: string
-  desc: string
-}
-
-interface BooleanArg {
-  type: 'boolean'
-  name: string
-  defaultValue: boolean
-  desc: string
-}
-
-interface EnumArg {
-  type: 'enum'
-  name: string
-  defaultValue: string
-  values: string[]
-  desc: string
-}
-
-type Arg = NumberArg | EnumArg | BooleanArg
-
-interface Config {
-  cluster: {
-    clusterType: string
-    args: Arg[]
-  }[]
-  floorFixer: {
-    fixerType: string
-    args: Arg[]
-  }[]
-}
-
-const config: Config = require('../resources/algorithmconfig.yml')
 
 function extractClusterDefaultValues(clusterType: string) {
   const args = config.cluster.find(c => c.clusterType === clusterType).args
@@ -53,6 +20,7 @@ function extractFixerDefaultValues(fixerType: string) {
 
 interface P {
   macEntryMap: OrderedMap<string, boolean>
+  dispatch?: Dispatch
 }
 
 interface S {
@@ -62,7 +30,7 @@ interface S {
   fixerValues: List<any>
 }
 
-export default class AlgorithmChooser extends React.Component<P, S> {
+class AlgorithmChooser extends React.Component<P, S> {
   constructor() {
     super()
     const clusterType = config.cluster[0].clusterType
@@ -111,11 +79,20 @@ export default class AlgorithmChooser extends React.Component<P, S> {
   }
 
   onSubmit = async () => {
-    const { macEntryMap } = this.props
+    const { dispatch, macEntryMap } = this.props
     const { clusterType, clusterValues, fixerType, fixerValues } = this.state
-    const macs = macEntryMap.filter((checked, mac) => checked).keySeq().toArray()
+    const macs = macEntryMap.keySeq().toArray()
+    const data = await fetchCXServer(macs, clusterType, clusterValues, fixerType, fixerValues)
 
-    await fetchCXServer(macs, clusterType, clusterValues, fixerType, fixerValues)
+    dispatch<Action>({
+      type: 'UPDATE_LOCATION_ITEMS',
+      locationItems: data.locations,
+    })
+
+    dispatch<Action>({
+      type: 'UPDATE_TRACKS',
+      tracks: convertTrackings(data.trackings),
+    })
   }
 
   render() {
@@ -214,42 +191,8 @@ function Args({ args, values, onChange }: {
   )
 }
 
-async function fetchCXServer(
-  macs: string[],
-  clusterType: string, clusterValues: List<any>,
-  fixerType: string, fixerValues: List<any>,
-) {
-  const configClusterArgs = config.cluster.find(c => c.clusterType === clusterType).args
-  const cluster = Map({ clusterType })
-    .merge(Map(configClusterArgs.map((arg, i) => [arg.name, clusterValues.get(i)])))
-  const configFixerArgs = config.floorFixer.find(f => f.fixerType === fixerType).args
-  const floorFixer = Map({ fixerType })
-    .merge(Map(configFixerArgs.map((arg, i) => [arg.name, fixerValues.get(i)])))
-
-  const body = JSON.stringify({
-    // TODO: add date
-    macs,
-    cluster,
-    floorFixer,
-  }, null, 2)
-  console.log(body)
-
-  try {
-    const response = await fetch('http://10.214.224.82:8892/algorithm/generateRawTracking', {
-      method: 'POST',
-      body,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    if (response.ok) {
-      const json = await response.json()
-      console.log('receive from server:')
-      console.log(json)
-    } else {
-      throw new Error('Server does not respond with 200')
-    }
-  } catch (e) {
-    console.error(e)
-  }
+function mapStateProps(state: S.State, ownProps: P) {
+  return ownProps
 }
+
+export default connect(mapStateProps)(AlgorithmChooser)

@@ -13,9 +13,9 @@ import bindSearchParameters, { SearchParamBinding } from '../utils/bindSearchPar
 import { IComponent } from '../utils/utils'
 import MacList from '../components/MacList'
 import DateChooser from './DateChooser'
-import '../styles/TrackMapPage.styl'
 import getNow from '../utils/getNow'
 import AlgorithmChooser from './AlgorithmChooser'
+import '../styles/TrackMapPage.styl'
 
 const defaultDate = '2017-06-20'
 
@@ -73,8 +73,6 @@ type S = {
 }
 
 class TrackMapPage extends IComponent<P, S> {
-  handle = -1
-
   state = {
     // mac地址过滤控件的状态
     macEntryMap: (localStorage.getItem('mac-list') === null
@@ -103,38 +101,17 @@ class TrackMapPage extends IComponent<P, S> {
   componentDidUpdate(prevProps: P) {
     const { t } = this.props
     if (prevProps.t !== t) {
-      if (moment(t).isSame(getNow(), 'day')) {
-        clearInterval(this.handle)
-        this.fetchRealTimeData(getNow())
-        // 切换到当前时间时，每隔3秒发送一次请求
-        this.handle = setInterval(() => this.fetchRealTimeData(getNow()), 3000) as any
-      } else {
-        clearInterval(this.handle)
-        this.fetchData(t)
-      }
+      this.fetchData(t)
     }
   }
 
-  componentWillUnmount() {
-    clearInterval(this.handle)
-  }
-
   fetchData = (time: number) => {
-    const macList = this.state.macEntryMap.filter(checked => checked).keySeq().toArray()
-    this.props.dispatch<Action>({
-      type: 'FETCH_LOCATION_ITEMS',
-      date: moment(time),
-      macList,
-    })
-  }
-
-  fetchRealTimeData = (time: number) => {
-    const macList = this.state.macEntryMap.filter(checked => checked).keySeq().toArray()
-    this.props.dispatch<Action>({
-      type: 'FETCH_REALTIME_LOCATION_ITEMS',
-      date: moment(time),
-      macList,
-    })
+    // const macList = this.state.macEntryMap.filter(checked => checked).keySeq().toArray()
+    // this.props.dispatch<Action>({
+    //   type: 'FETCH_LOCATION_ITEMS',
+    //   date: moment(time),
+    //   macList,
+    // })
   }
 
   onDeleteMacEntry = (mac: string) => {
@@ -239,22 +216,23 @@ class TrackMapPage extends IComponent<P, S> {
     if (htid != null) {
       // ht: highlighted track
       const ht = allTracks.find(tr => tr.trackId === htid)
-      return (
-        <TrackDetailPanel
-          tracks={allTracks.filter(track => (track.mac === ht.mac))}
-          floorId={floor.floorId}
-          onChangeHtid={this.onChangeHtid}
-          ht={ht}
-          htid={htid}
-          htpid={htpid}
-          onChangeHtpid={this.onChangeHtpid}
-          onCentralizeTrack={this.onCentralizeTrack}
-          humanize={_.identity}
-        />
-      )
-    } else {
-      return null
+      if (ht) {
+        return (
+          <TrackDetailPanel
+            tracks={allTracks.filter(track => (track.mac === ht.mac))}
+            floorId={floor.floorId}
+            onChangeHtid={this.onChangeHtid}
+            ht={ht}
+            htid={htid}
+            htpid={htpid}
+            onChangeHtpid={this.onChangeHtpid}
+            onCentralizeTrack={this.onCentralizeTrack}
+            humanize={_.identity}
+          />
+        )
+      }
     }
+    return null
   }
 
   render() {

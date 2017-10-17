@@ -2,23 +2,11 @@ import * as _ from 'lodash'
 import { combineReducers } from 'redux'
 import { OrderedMap, Record } from 'immutable'
 import floors, { floorConfig } from './resources/floors'
-import cluster from './components/Map/cluster'
-
-// const allItems: Location[] = require('./resources/items.json')
-// console.log(getLocations('2017-06-22T00:00:00', '2017-06-22T00:03:00', [31, 32]))
-
-export const MacItemRecord = Record({
-  id: 0,
-  name: '',
-  mac: '',
-}, 'MacItemRecord')
-const macItemRecord = MacItemRecord()
-export type MacItemRecord = typeof macItemRecord
 
 declare global {
   namespace S {
     interface State {
-      // allItems: LocationItem[]
+      allItems: LocationItem[]
       allTracks: Track[]
       floors: Floor[]
       floorConfig: FloorConfig
@@ -31,25 +19,24 @@ declare global {
   }
 }
 
-// function allItems(state: LocationItem[] = [], action: S.Action) {
-//   if (action.type === A.UPDATE_LOCATION_ITEMS) {
-//     return action.data
-//   } else {
-//     return state
-//   }
-// }
+function allItems(state: LocationItem[] = [], action: Action) {
+  if (action.type === 'UPDATE_LOCATION_ITEMS') {
+    return action.locationItems
+  } else {
+    return state
+  }
+}
 
 function allTracks(state: Track[] = [], action: Action) {
-  if (action.type === 'UPDATE_LOCATION_ITEMS') {
-    return _.flatMap(_.groupBy(action.data, item => item.mac), cluster)
+  if (action.type === 'UPDATE_TRACKS') {
+    return action.tracks
   } else {
     return state
   }
 }
 
 export default combineReducers<S.State>({
-  // todo 动态的数据应该从后端获取
-  // allItems,
+  allItems,
   allTracks,
   floors: () => floors,
   floorConfig: () => floorConfig,
