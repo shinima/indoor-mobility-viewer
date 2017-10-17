@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { List, Map, OrderedMap } from 'immutable'
+import Checkbox from './Checkbox'
 import '../styles/AlgorithmChooser.styl'
 
 interface NumberArg {
@@ -124,7 +125,7 @@ export default class AlgorithmChooser extends React.Component<P, S> {
 
     return (
       <div className="algorithms-chooser">
-        <h1>FloorFixer Chooser</h1>
+        <h2 className="title">FloorFixer Algorithm</h2>
         <section>
           <span className="label">Type</span>
           <select value={fixerType} onChange={this.onChangeFixerType}>
@@ -139,7 +140,7 @@ export default class AlgorithmChooser extends React.Component<P, S> {
           />
         </section>
 
-        <h1>Cluster Chooser</h1>
+        <h2 className="title">Cluster Algorithm</h2>
         <section className="cluster-chooser">
           <div className="label">Type</div>
           <select value={clusterType} onChange={this.onChangeClusterType}>
@@ -154,7 +155,7 @@ export default class AlgorithmChooser extends React.Component<P, S> {
           />
         </section>
 
-        <button onClick={this.onSubmit}>提交</button>
+        <button className="submit-button" onClick={this.onSubmit}>提交</button>
       </div>
     )
   }
@@ -168,19 +169,21 @@ function Args({ args, values, onChange }: {
       {args.map((arg, i) => {
         if (arg.type === 'enum') {
           return (
-            <div key={arg.name} className="arg-row" title={arg.desc}>
-              <span className="label">{arg.name}</span>
-              {arg.values.map(v =>
-                <label key={v}>
-                  <input
-                    key={v}
-                    type="radio"
-                    checked={v === values.get(i)}
-                    onChange={e => onChange(i, v)}
-                  />
-                  {v}
-                </label>
-              )}
+            <div key={arg.name} className="arg-row flex-align-start" title={arg.desc}>
+              <div className="label no-shrink">{arg.name}</div>
+              <div className="button-list" style={{ marginLeft: -5 }}>
+                {arg.values.map(v =>
+                  <label key={v}>
+                    <input
+                      key={v}
+                      type="radio"
+                      checked={v === values.get(i)}
+                      onChange={e => onChange(i, v)}
+                    />
+                    {v}
+                  </label>
+                )}
+              </div>
             </div>
           )
         } else if (arg.type === 'double' || arg.type === 'int' || arg.type === 'oddInt') {
@@ -199,10 +202,9 @@ function Args({ args, values, onChange }: {
           return (
             <div key={arg.name} className="arg-row" title={arg.desc}>
               <span className="label">{arg.name}</span>
-              <input
-                type="checkbox"
+              <Checkbox
                 checked={values.get(i)}
-                onChange={e => onChange(i, e.target.checked)}
+                onChange={v => onChange(i, v)}
               />
             </div>
           )

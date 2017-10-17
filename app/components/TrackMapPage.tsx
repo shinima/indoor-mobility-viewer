@@ -9,7 +9,6 @@ import TrackMap from '../components/Map/TrackMap'
 import TrackDetailPanel from '../components/TrackDetailPanel'
 import FloorList from '../components/FloorList'
 import ButtonGroup from '../components/ButtonGroup'
-import Legend from '../components/Legend'
 import bindSearchParameters, { SearchParamBinding } from '../utils/bindSearchParameters'
 import { IComponent } from '../utils/utils'
 import MacList from '../components/MacList'
@@ -311,9 +310,7 @@ class TrackMapPage extends IComponent<P, S> {
 
     return (
       <div>
-        <Legend />
         <div className="widgets">
-          <AlgorithmChooser macEntryMap={macEntryMap} />
           <ButtonGroup
             onResetTransform={() => this.setState({ transformReset: true })}
             showPath={showPath}
@@ -335,6 +332,7 @@ class TrackMapPage extends IComponent<P, S> {
             onCentralizeFirstTrack={this.onCentralizeFirstTrack}
             translate={this.translate}
           />
+          <AlgorithmChooser macEntryMap={macEntryMap} />
           <FloorList
             selectedFloorId={floor.floorId}
             floorEntryList={floorEntryList}
