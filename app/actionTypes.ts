@@ -8,8 +8,6 @@ declare global {
 
   namespace Action {
     export type Action =
-      UpdateMacItemsAction
-      | FetchMacItemsAction
       | EditMacItemAction
       | AddMacItemAction
       | DeleteMacItemAction
@@ -18,15 +16,6 @@ declare global {
       | FetchRealTimeLocationItemsAction
 
     export type ActionType = Action['type']
-
-    export type FetchMacItemsAction = {
-      type: 'FETCH_MAC_ITEMS',
-    }
-
-    export type UpdateMacItemsAction = {
-      type: 'UPDATE_MAC_ITEMS',
-      staticMacItems: S.StaticMacItems,
-    }
 
     export type EditMacItemAction = {
       type: 'EDIT_MAC_ITEM',

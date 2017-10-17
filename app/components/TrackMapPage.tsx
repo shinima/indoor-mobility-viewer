@@ -26,13 +26,12 @@ type Def = {
   t: number
 }
 
-function mapStateToProps({ allTracks, floors, settings }: S.State, ownProps: Def) {
-  const { floorConfig, staticMacItems } = settings
+function mapStateToProps({ allTracks, floors, floorConfig }: S.State, ownProps: Def) {
   // calculate floor from floors and floorId
   const { floorId } = ownProps
   const floor = floors.find(flr => flr.floorId === floorId) || floors[0]
 
-  return Object.assign({ allTracks, floors, floorConfig, floor, staticMacItems }, ownProps)
+  return Object.assign({ allTracks, floors, floorConfig, floor }, ownProps)
 }
 
 function dateGetter(arg: string): string | Moment {
@@ -60,7 +59,6 @@ type P = SearchParamBinding<Def> & {
   floors: Floor[]
   floorConfig: S.FloorConfig
   floor: Floor
-  staticMacItems: S.StaticMacItems
   dispatch: Dispatch<S.State>
 }
 
@@ -103,8 +101,8 @@ class TrackMapPage extends IComponent<P, S> {
   }
 
   componentDidUpdate(prevProps: P) {
-    const { t, staticMacItems } = this.props
-    if (prevProps.t !== t || !is(prevProps.staticMacItems, staticMacItems)) {
+    const { t } = this.props
+    if (prevProps.t !== t) {
       if (moment(t).isSame(getNow(), 'day')) {
         clearInterval(this.handle)
         this.fetchRealTimeData(getNow())
@@ -121,70 +119,52 @@ class TrackMapPage extends IComponent<P, S> {
     clearInterval(this.handle)
   }
 
-  translate: TranslateFn = (macName) => {
-    const { staticMacItems } = this.props
-    const entry = staticMacItems.find(item => item.get('name') === macName)
-    // console.log(String(entry))
-    return entry ? entry.get('mac') : macName
-  }
-
-  humanize: HumanizeFn = (mac) => {
-    const { staticMacItems } = this.props
-    const entry = staticMacItems.find(item => item.get('mac') === mac)
-    return entry ? entry.get('name') : mac
-  }
-
   fetchData = (time: number) => {
-    const { staticMacItems } = this.props
-    if (staticMacItems.size !== 0) {
-      const macList = this.state.macEntryMap.keySeq().toArray().map(this.translate)
-      this.props.dispatch<Action>({
-        type: 'FETCH_LOCATION_ITEMS',
-        date: moment(time),
-        macList,
-      })
-    }
+    const macList = this.state.macEntryMap.filter(checked => checked).keySeq().toArray()
+    this.props.dispatch<Action>({
+      type: 'FETCH_LOCATION_ITEMS',
+      date: moment(time),
+      macList,
+    })
   }
 
   fetchRealTimeData = (time: number) => {
-    const { staticMacItems } = this.props
-    if (staticMacItems.size !== 0) {
-      const macList = this.state.macEntryMap.keySeq().toArray().map(this.translate)
-      this.props.dispatch<Action>({
-        type: 'FETCH_REALTIME_LOCATION_ITEMS',
-        date: moment(time),
-        macList,
-      })
-    }
+    const macList = this.state.macEntryMap.filter(checked => checked).keySeq().toArray()
+    this.props.dispatch<Action>({
+      type: 'FETCH_REALTIME_LOCATION_ITEMS',
+      date: moment(time),
+      macList,
+    })
   }
 
-  onDeleteMacEntry = (macName: string) => {
+  onDeleteMacEntry = (mac: string) => {
     const { allTracks, htid } = this.props
     const { macEntryMap } = this.state
-    const newMacEntryMap = macEntryMap.delete(macName)
+    const newMacEntryMap = macEntryMap.delete(mac)
     this.setState({ macEntryMap: newMacEntryMap })
     localStorage.setItem('mac-list', JSON.stringify(newMacEntryMap))
 
     // 如果当前高亮的轨迹正好要被删除, 那么将htid设置为null
-    if (htid != null && macEntryMap.get(macName)) {
+    if (htid != null && macEntryMap.get(mac)) {
       const highlightedTrack = allTracks.find(tr => tr.trackId === htid)
-      if (highlightedTrack.mac === this.translate(macName)) {
+      if (highlightedTrack.mac === mac) {
         this.props.updateSearch({ htid: null })
       }
     }
   }
 
-  onAddMacEntry = (macName: string) => {
+  onAddMacEntry = (mac: string) => {
     const { macEntryMap } = this.state
     const { t } = this.props
-    const newMacEntryMap = macEntryMap.set(macName, true)
+    const newMacEntryMap = macEntryMap.set(mac, true)
     this.setState({ macEntryMap: newMacEntryMap })
     localStorage.setItem('mac-list', JSON.stringify(newMacEntryMap))
-    const macList = this.state.macEntryMap.keySeq().toArray().map(this.translate)
+
+    const macList = macEntryMap.filter(checked => checked).keySeq().toArray()
     this.props.dispatch<Action>({
       type: 'FETCH_LOCATION_ITEMS',
       date: moment(t),
-      macList: macList.concat([this.translate(macName)]),
+      macList: macList.concat([mac]),
     })
   }
 
@@ -196,39 +176,37 @@ class TrackMapPage extends IComponent<P, S> {
     this.setState({ ctid: trackId, showPath: true })
   }
 
-  onToggleMacEntry = (macName: string) => {
+  onToggleMacEntry = (mac: string) => {
     const { allTracks } = this.props
     const { htid, macEntryMap } = this.state
     const not = (x: any) => !x
-    const newMacEntryMap = macEntryMap.update(macName, not)
+    const newMacEntryMap = macEntryMap.update(mac, not)
     this.setState({ macEntryMap: newMacEntryMap })
     localStorage.setItem('mac-list', JSON.stringify(newMacEntryMap))
     // 如果当前高亮的轨迹正好要设置为不可见, 那么将htid设置为null
-    if (htid != null && macEntryMap.get(macName)) {
+    if (htid != null && macEntryMap.get(mac)) {
       const highlightedTrack = allTracks.find(tr => tr.trackId === htid)
-      if (highlightedTrack.mac === this.translate(macName)) {
+      if (highlightedTrack.mac === mac) {
         this.setState({ htid: null })
       }
     }
   }
 
   // 高亮一个macName在当前楼层的第一条轨迹
-  onHighlightFirstTrack = (macName: string) => {
+  onHighlightFirstTrack = (mac: string) => {
     const { allTracks, floor } = this.props
-    const mac = this.translate(macName)
     const { macEntryMap } = this.state
     const highlightedTrack = allTracks.find(tr => (tr.floorId === floor.floorId && tr.mac === mac))
     if (highlightedTrack) {
-      this.setState({ macEntryMap: macEntryMap.set(macName, true) })
+      this.setState({ macEntryMap: macEntryMap.set(mac, true) })
       this.props.updateSearch({ htid: highlightedTrack.trackId })
     }
     // todo else 没有找到轨迹的话, 需要使用toast来提示用户
   }
 
   // 居中显示一个macName在当前楼层的第一个轨迹
-  onCentralizeFirstTrack = (macName: string) => {
+  onCentralizeFirstTrack = (mac: string) => {
     const { allTracks, floor } = this.props
-    const mac = this.translate(macName)
     const centralizedTrack = allTracks.find(tr => (tr.floorId === floor.floorId && tr.mac === mac))
     if (centralizedTrack) {
       this.setState({ ctid: centralizedTrack.trackId })
@@ -271,7 +249,7 @@ class TrackMapPage extends IComponent<P, S> {
           htpid={htpid}
           onChangeHtpid={this.onChangeHtpid}
           onCentralizeTrack={this.onCentralizeTrack}
-          humanize={this.humanize}
+          humanize={_.identity}
         />
       )
     } else {
@@ -280,10 +258,7 @@ class TrackMapPage extends IComponent<P, S> {
   }
 
   render() {
-    const { staticMacItems, allTracks, floorConfig, floor, htid, history, t } = this.props
-    if (staticMacItems == null) {
-      return null
-    }
+    const { allTracks, floorConfig, floor, htid, history, t } = this.props
     const {
       ctid,
       htpid,
@@ -295,7 +270,6 @@ class TrackMapPage extends IComponent<P, S> {
 
     const activeMacSet = macEntryMap.filter(Boolean)
       .keySeq()
-      .map(this.translate)
       .toSet()
     const visibleTracks = allTracks
       .filter(track => track.floorId === floor.floorId)
@@ -330,7 +304,7 @@ class TrackMapPage extends IComponent<P, S> {
             onToggleMacEntry={this.onToggleMacEntry}
             onHighlightFirstTrack={this.onHighlightFirstTrack}
             onCentralizeFirstTrack={this.onCentralizeFirstTrack}
-            translate={this.translate}
+            translate={_.identity}
           />
           <AlgorithmChooser macEntryMap={macEntryMap} />
           <FloorList
@@ -350,7 +324,7 @@ class TrackMapPage extends IComponent<P, S> {
           htpid={htpid}
           onChangeHtid={this.onChangeHtid}
           onChangeHtpid={this.onChangeHtpid}
-          humanize={this.humanize}
+          humanize={_.identity}
           onZoom={() => this.setState({ ctid: null, transformReset: false })}
         />
         {this.renderTrackDetailPanel()}

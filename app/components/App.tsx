@@ -4,26 +4,16 @@ import { Component } from 'react'
 import { Switch, HashRouter, BrowserRouter, Route, Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import TrackMapPage from './TrackMapPage'
-import SettingsPage from './SettingsPage'
 import HeatMapPage from './HeatMapPage'
 
 const Router = process.env.NODE_ENV === 'production' ? BrowserRouter : HashRouter
 
 type AppProp = {
   dispatch: Dispatch<S.State>
-  staticMacItems: S.StaticMacItems
 }
 
-class App extends Component<AppProp> {
-  componentDidMount() {
-    this.props.dispatch({ type: 'FETCH_MAC_ITEMS' })
-  }
-
+export default class App extends Component<AppProp> {
   render() {
-    const { staticMacItems } = this.props
-    if (staticMacItems == null) {
-      return null
-    }
     return (
       <Router>
         <Switch>
@@ -31,7 +21,6 @@ class App extends Component<AppProp> {
           <Route path="/track-map" component={TrackMapPage} />
           <Route path="/heat-map" component={HeatMapPage} />
           <Route path="/comparison" component={ComparisonPage} />
-          <Route path="/settings" component={SettingsPage} />
         </Switch>
       </Router>
     )
@@ -58,6 +47,3 @@ const Home = () => (
     <p><a target="_blank" href="/static/doc-for-development.html">开发者文档</a></p>
   </div>
 )
-
-
-export default connect(({ settings: { staticMacItems } }) => ({ staticMacItems }))(App)

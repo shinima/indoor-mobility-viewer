@@ -32,8 +32,7 @@ type Def = {
   t: number
 }
 
-const mapStateToProps = ({ floors, settings }: S.State, ownProps: Def) => {
-  const { floorConfig } = settings
+const mapStateToProps = ({ floors, floorConfig }: S.State, ownProps: Def) => {
   // calculate floor from floors and floorId
   const { floorId } = ownProps
   const floor = floors.find(flr => flr.floorId === floorId) || floors[0]

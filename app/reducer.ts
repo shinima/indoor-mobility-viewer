@@ -21,35 +21,13 @@ declare global {
       // allItems: LocationItem[]
       allTracks: Track[]
       floors: Floor[]
-      settings: Settings
-    }
-
-    interface Settings {
       floorConfig: FloorConfig
-      staticMacItems: StaticMacItems
     }
-
-    type StaticMacItems = OrderedMap<number, MacItemRecord>
 
     type FloorConfig = {
       floorId: number
       floorName: string
     }[]
-  }
-}
-
-function staticMacItems(state: S.StaticMacItems = null, action: Action) {
-  if (action.type === 'EDIT_MAC_ITEM') {
-    return state.mergeIn([action.id], action.macItem)
-  } else if (action.type === 'DELETE_MAC_ITEM') {
-    return state.delete(action.id)
-  } else if (action.type === 'ADD_MAC_ITEM') {
-    const { name, mac, id } = action
-    return state.set(id, MacItemRecord({ name, mac, id }))
-  } else if (action.type === 'UPDATE_MAC_ITEMS') {
-    return action.staticMacItems
-  } else {
-    return state
   }
 }
 
@@ -74,9 +52,5 @@ export default combineReducers<S.State>({
   // allItems,
   allTracks,
   floors: () => floors,
-  settings: combineReducers<S.Settings>({
-    floorConfig: () => floorConfig,
-    // staticMacMapping: () => staticMacMapping,
-    staticMacItems,
-  }),
+  floorConfig: () => floorConfig,
 })

@@ -6,7 +6,6 @@ import { MacItemRecord } from './reducer'
 export default function* rootSaga() {
   console.log('root saga start')
   yield takeEvery('FETCH_LOCATION_ITEMS', fetchLocationItems)
-  yield takeEvery('FETCH_MAC_ITEMS', fetchMacItems)
   yield takeEvery('FETCH_REALTIME_LOCATION_ITEMS', fetchRealTimeLocationItems)
 }
 
@@ -22,21 +21,6 @@ function* fetchLocationItems({ date, macList }: Action.FetchLocationItemsAction)
         type: 'UPDATE_LOCATION_ITEMS',
         data: data.sort(compare),
       })
-    }
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-function* fetchMacItems() {
-  try {
-    const { ok, data } = yield rpc.getStaticMacMappings()
-    if (ok) {
-      const staticMacItems = List(data)
-        .map(MacItemRecord)
-        .toOrderedMap()
-        .mapKeys((__, entry) => entry.get('id'))
-      yield put<Action>({ type: 'UPDATE_MAC_ITEMS', staticMacItems })
     }
   } catch (error) {
     console.log(error)
