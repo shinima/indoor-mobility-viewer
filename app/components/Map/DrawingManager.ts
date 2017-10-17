@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow,no-param-reassign */
 import * as d3 from 'd3'
 import * as moment from 'moment'
 import * as _ from 'lodash'
@@ -24,6 +23,7 @@ function showTooltip(tooltipWrapper: d3.Selection<HTMLDivElement>,
   }
   const x = transform.applyX(trackPoint.x) - transform.x
   const y = transform.applyY(trackPoint.y) - transform.y
+  // language=TEXT
   tooltipWrapper.html(`
     <div style="left: ${x}px; top: ${y}px;">
       <p style="margin: 0">${humanize(trackPoint.mac)}</p>
