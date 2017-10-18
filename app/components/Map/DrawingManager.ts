@@ -242,13 +242,13 @@ export default class DrawingManager {
   centralizeTrack(track: Track) {
     const pathElement = this.svgElement.querySelector(`.track-path-layer path[data-track-id="${track.trackId}"]`) as SVGPathElement
     const contentBox = pathElement.getBBox()
-    this.centralize(contentBox, true, { top: 50, bottom: 50, left: 300, right: 450 })
+    this.centralize(contentBox, true, { top: 200, bottom: 200, left: 600, right: 600 })
   }
 
   resetTransform(useTransition = true) {
     const regionsLayerWrapper = this.svg.select('.regions-layer-wrapper').node() as SVGGElement
     const contentBox = regionsLayerWrapper.getBBox()
-    this.centralize(contentBox, useTransition, { top: 50, bottom: 50, left: 300, right: 300 })
+    this.centralize(contentBox, useTransition, { top: 50, bottom: 50, left: 450, right: 300 })
   }
 
   centralize(contentBox: SVGRect, useTransition: boolean, padding: Padding) {

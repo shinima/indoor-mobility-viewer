@@ -89,31 +89,6 @@ class TrackMapPage extends IComponent<P, S> {
     transformReset: false,
   }
 
-  componentDidMount() {
-    const { t } = this.props
-    let time = t
-    if (moment(t).isSame(getNow(), 'day')) {
-      time = getNow()
-    }
-    this.fetchData(time)
-  }
-
-  componentDidUpdate(prevProps: P) {
-    const { t } = this.props
-    if (prevProps.t !== t) {
-      this.fetchData(t)
-    }
-  }
-
-  fetchData = (time: number) => {
-    // const macList = this.state.macEntryMap.filter(checked => checked).keySeq().toArray()
-    // this.props.dispatch<Action>({
-    //   type: 'FETCH_LOCATION_ITEMS',
-    //   date: moment(time),
-    //   macList,
-    // })
-  }
-
   onDeleteMacEntry = (mac: string) => {
     const { allTracks, htid } = this.props
     const { macEntryMap } = this.state
