@@ -1,49 +1,3 @@
-cluster:
-  - clusterType: DBSCAN
-    args:
-      - name: distThreshold
-        type: double
-        defaultValue: 5
-        unit: 米
-        desc: 最大距离
-      - name: timeThreshold
-        type: int
-        defaultValue: 300
-        unit: 秒
-        desc: 最大时间
-      - name: minPts
-        type: int
-        defaultValue: 2
-        unit: 个
-        desc: 最少点个数
-      - name: adaptive
-        type: boolean
-        defaultValue: false
-        desc: 自适应调整时间
-      - name: distanceType
-        type: enum
-        defaultValue: Euclidean
-        values: [Euclidean, MIWD]
-        desc: 距离尺度
-
-  - clusterType: Heuristic
-    args:
-      - name: personSpeed
-        type: double
-        defaultValue: 1.8
-        unit: 米/秒
-        desc: 最大移动速度
-      - name: distThreshold
-        type: double
-        defaultValue: 10
-        unit: 米
-        desc: 最大距离
-      - name: timeThreshold
-        type: int
-        defaultValue: 300
-        unit: 秒
-        desc: 最大时间
-
 floorFixer:
   - fixerType: ByRule
     args:
@@ -64,3 +18,80 @@ floorFixer:
         defaultValue: 1200
         unit: 秒
         desc: 区间分割时间
+
+cluster:
+  - clusterType: DBSCAN
+    args:
+      - name: distThreshold
+        type: double
+        defaultValue: 3
+        unit: 米
+        desc: 最大距离
+      - name: timeThreshold
+        type: int
+        defaultValue: 30
+        unit: 秒
+        desc: 最大时间
+      - name: minPts
+        type: int
+        defaultValue: 4
+        unit: 个
+        desc: 最少点个数
+      - name: adaptive
+        type: boolean
+        defaultValue: false
+        desc: 自适应调整时间
+      - name: distanceType
+        type: enum
+        defaultValue: MIWD
+        values: [Euclidean, MIWD]
+        desc: 距离尺度
+
+  - clusterType: TimeBased
+    args:
+      - name: personSpeed
+        type: double
+        defaultValue: 1.8
+        unit: 米/秒
+        desc: 最大移动速度
+      - name: distThreshold
+        type: double
+        defaultValue: 10
+        unit: 米
+        desc: 最大距离
+      - name: timeThreshold
+        type: int
+        defaultValue: 300
+        unit: 秒
+        desc: 最大时间
+
+  - clusterType: TimeDensity
+    args:
+      - name: distThreshold
+        type: double
+        defaultValue: 3
+        unit: 米
+        desc: 最大距离
+      - name: timeThreshold
+        type: int
+        defaultValue: 10
+        unit: 秒
+        desc: 最大时间
+      - name: distanceType
+        type: enum
+        defaultValue: MIWD
+        values: [Euclidean, MIWD]
+        desc: 距离尺度
+
+  - clusterType: CBSMoT
+    args:
+      - name: distThreshold
+        type: double
+        defaultValue: 3
+        unit: 米
+        desc: 最大距离
+      - name: timeThreshold
+        type: int
+        defaultValue: 10
+        unit: 秒
+        desc: 最大时间

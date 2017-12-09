@@ -6,18 +6,25 @@ export enum PointType {
   MISS = 4,
 }
 
-export interface TrackPoint {
+export interface CXTrackPointMember {
+  id: number
+  x: number
+  y: number
+}
+
+export interface CXTrackPoint {
   floorId: number
   x: number
   y: number
   enterTime: number
   leaveTime: number
   pointType: PointType
+  members: CXTrackPointMember[]
 }
 
 export interface CXTracking {
   mac: string
-  trackPoints: TrackPoint[]
+  trackPoints: CXTrackPoint[]
 }
 
 export interface CXLocation {

@@ -33,6 +33,7 @@ export default function convertTrackings(cxTrackings: CXTracking[]): Track[] {
         floorId: p.floorId,
         x: p.x,
         y: p.y,
+        members: p.members,
       })
     }
     if (track) {

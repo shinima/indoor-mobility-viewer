@@ -26,12 +26,12 @@ type Def = {
   t: number
 }
 
-function mapStateToProps({ allTracks, floors, floorConfig }: S.State, ownProps: Def) {
+function mapStateToProps({ allTracks, allItems, floors, floorConfig }: S.State, ownProps: Def) {
   // calculate floor from floors and floorId
   const { floorId } = ownProps
   const floor = floors.find(flr => flr.floorId === floorId) || floors[0]
 
-  return Object.assign({ allTracks, floors, floorConfig, floor }, ownProps)
+  return Object.assign({ allTracks, allItems, floors, floorConfig, floor }, ownProps)
 }
 
 function dateGetter(arg: string): string | Moment {
@@ -56,6 +56,7 @@ const searchBindingDefinitions = [
 
 type P = SearchParamBinding<Def> & {
   allTracks: Track[]
+  allItems: LocationItem[]
   floors: Floor[]
   floorConfig: S.FloorConfig
   floor: Floor
@@ -69,6 +70,8 @@ type S = {
   htid: number
   showPath: boolean
   showPoints: boolean
+  showNoise: boolean
+  showMembers: boolean
   transformReset: boolean
 }
 
@@ -85,6 +88,8 @@ class TrackMapPage extends IComponent<P, S> {
     htid: null as number,
     showPath: true,
     showPoints: true,
+    showNoise: true,
+    showMembers: true,
     // transform是否重置(大概等于当前楼层是否居中显示)
     transformReset: false,
   }
@@ -211,7 +216,7 @@ class TrackMapPage extends IComponent<P, S> {
   }
 
   render() {
-    const { allTracks, floorConfig, floor, htid, history, t } = this.props
+    const { allTracks, allItems, floorConfig, floor, htid, history, t } = this.props
     const {
       ctid,
       htpid,
@@ -219,6 +224,8 @@ class TrackMapPage extends IComponent<P, S> {
       transformReset,
       showPath,
       showPoints,
+      showNoise,
+      showMembers,
     } = this.state
 
     const activeMacSet = macEntryMap.filter(Boolean)
@@ -227,6 +234,10 @@ class TrackMapPage extends IComponent<P, S> {
     const visibleTracks = allTracks
       .filter(track => track.floorId === floor.floorId)
       .filter(track => activeMacSet.has(track.mac))
+
+    const visibleItems = allItems
+      .filter(item => item.floorId === floor.floorId)
+      .filter(item => activeMacSet.has(item.mac))
 
     const activeTracks = allTracks.filter(track => activeMacSet.has(track.mac))
     const activeTrackPoints = _.flatten(activeTracks.map(track => track.points))
@@ -242,8 +253,12 @@ class TrackMapPage extends IComponent<P, S> {
             onResetTransform={() => this.setState({ transformReset: true })}
             showPath={showPath}
             showPoints={showPoints}
+            showNoise={showNoise}
+            showMembers={showMembers}
             onToggleShowPath={() => this.setState({ showPath: !showPath })}
             onToggleShowPoints={() => this.setState({ showPoints: !showPoints })}
+            onToggleShowNoise={() => this.setState({ showNoise: !showNoise })}
+            onToggleShowMembers={() => this.setState({ showMembers: !showMembers })}
             history={history}
           />
           <DateChooser
@@ -269,8 +284,11 @@ class TrackMapPage extends IComponent<P, S> {
         <TrackMap
           floor={floor}
           tracks={visibleTracks}
+          items={visibleItems}
           showPath={showPath}
           showPoints={showPoints}
+          showNoise={showNoise}
+          showMembers={showMembers}
           htid={htid}
           ctid={ctid}
           transformReset={transformReset}

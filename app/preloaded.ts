@@ -31,6 +31,7 @@ declare global {
     x: number
     y: number
     // todo
+    members: Point[]
   }
 
   interface Track {

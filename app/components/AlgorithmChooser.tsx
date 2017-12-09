@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { List, Map, OrderedMap } from 'immutable'
+import { List, Map, OrderedMap, Set } from 'immutable'
 import { connect } from 'react-redux'
 import Checkbox from './Checkbox'
 import fetchCXServer from '../utils/fetchCXServer'
@@ -84,9 +84,17 @@ class AlgorithmChooser extends React.Component<P, S> {
     const macs = macEntryMap.keySeq().toArray()
     const data = await fetchCXServer(macs, clusterType, clusterValues, fixerType, fixerValues)
 
+    const allLocationIdSet = Set(data.locations.map(loc => loc.id))
+    const usedLocationIdList = List(data.trackings.map(t => List(t.trackPoints.map(p =>
+      List(p.members.map(m => m.id)))))).flatten(false)
+
+    const unusedLocationIdSet = allLocationIdSet.subtract(usedLocationIdList)
+
+    const locationItems = data.locations.filter(loc => unusedLocationIdSet.has(loc.id))
+
     dispatch<Action>({
       type: 'UPDATE_LOCATION_ITEMS',
-      locationItems: data.locations,
+      locationItems,
     })
 
     dispatch<Action>({

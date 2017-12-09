@@ -9,10 +9,16 @@ export type TrackMapProp = {
   floor: Floor
   // 需要显示的track数组
   tracks: Track[]
+  // 需要绘制的定位点的数组
+  items: LocationItem[]
   // 是否要显示path
   showPath: boolean
   // 是否要显示points
   showPoints: boolean
+  // 是否需要显示噪声点
+  showNoise: boolean
+  // 是否需要显示成员点
+  showMembers: boolean
   // 高亮的track id, null表示没有高亮track
   htid: number
   htpid: number
@@ -35,22 +41,27 @@ export default class TrackMap extends Component<TrackMapProp> {
 
   componentDidMount() {
     const {
-      floor, tracks, showPath, showPoints, htid, htpid,
+      floor, tracks, items, showPath, showPoints, showNoise, showMembers, htid, htpid,
       // onZoom, humanize, onChangeHtid, onChangeHtpid,
     } = this.props
     const getProps = () => this.props
     this.drawingManager = new DrawingManager(this.svg, this.tooltipWrapper, getProps)
     this.drawingManager.updateFloor(floor)
+    this.drawingManager.updateLocationItems(items, { showNoise })
     this.drawingManager.updateTracks(tracks, {
       showPath,
       showPoints,
+      showMembers,
       htid,
       htpid,
     })
   }
 
   componentWillReceiveProps(nextProps: TrackMapProp) {
-    const { floor, tracks, showPath, showPoints, htid, ctid, htpid, transformReset } = this.props
+    const {
+      floor, tracks, showPath, showPoints, showNoise, showMembers,
+      htid, ctid, htpid, transformReset,
+    } = this.props
     // 用floorId来判断是否为同一个楼层
     if (floor.floorId !== nextProps.floor.floorId) {
       // console.log('update-floor')
@@ -59,15 +70,19 @@ export default class TrackMap extends Component<TrackMapProp> {
     if (!isSameTracks(tracks, nextProps.tracks)
       || showPath !== nextProps.showPath
       || showPoints !== nextProps.showPoints
+      || showNoise !== nextProps.showNoise
+      || showMembers !== nextProps.showMembers
       || htid !== nextProps.htid
       || htpid !== nextProps.htpid) {
       // console.log('update-tracks')
       this.drawingManager.updateTracks(nextProps.tracks, {
         showPath: nextProps.showPath,
         showPoints: nextProps.showPoints,
+        showMembers: nextProps.showMembers,
         htid: nextProps.htid,
         htpid: nextProps.htpid,
       })
+      this.drawingManager.updateLocationItems(nextProps.items, { showNoise: nextProps.showNoise })
     }
     if (ctid !== nextProps.ctid && nextProps.ctid != null) {
       const track = nextProps.tracks.find(t => t.trackId === nextProps.ctid)
@@ -104,6 +119,7 @@ export default class TrackMap extends Component<TrackMapProp> {
             <g className="texts-layer-wrapper" />
             <g className="track-path-layer" />
             <g className="track-points-layer" />
+            <g style={{ pointerEvents: 'none', opacity: 0.2, fill: 'black' }} className="items-layer" />
           </g>
         </svg>
       </div>

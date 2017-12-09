@@ -13,10 +13,12 @@ type Padding = {
   right: number
 }
 
-function showTooltip(tooltipWrapper: d3.Selection<HTMLDivElement>,
+function showTooltip(
+  tooltipWrapper: d3.Selection<HTMLDivElement>,
   trackPoint: TrackPoint,
   transform: d3.ZoomTransform,
-  humanize: HumanizeFn) {
+  humanize: HumanizeFn
+) {
   let durationText = '<p style="margin:0">经过</p>'
   if (trackPoint.duration > 0) {
     durationText = `<p style="margin:0">停留${(trackPoint.duration / 60e3).toFixed(1)}分钟</p>`
@@ -98,7 +100,7 @@ export default class DrawingManager {
     }
   }
 
-  updateTrackPoints(tracks: Track[], { htid, htpid }: Partial<TrackMapProp>) {
+  updateTrackPoints(tracks: Track[], { htid, htpid, showMembers }: Partial<TrackMapProp>) {
     const self = this
     const board = this.svg.select('.board')
     const trackPointsLayer = board.select('.track-points-layer')
@@ -137,7 +139,7 @@ export default class DrawingManager {
       return `translate(${x}, ${y}) scale(${scale})`
     }
 
-    // 每个track-point一个symbol
+    // 每个track-point一个symbol 和一个member-group
     const symbolsJoin = trackPoints.selectAll('.symbol')
       .data(track => track.points, (trackPoint: TrackPoint) => String(trackPoint.trackPointId))
     const symbols = symbolsJoin.enter()
@@ -158,6 +160,31 @@ export default class DrawingManager {
         const { htid } = self.getProps()
         self.onChangeHtid(trackId === htid ? null : trackId)
       })
+
+    if (showMembers) {
+      const memberGroupsJoin = trackPoints.selectAll('.member-group')
+        .data(track => track.points, (trackPoint: TrackPoint) => String(trackPoint.trackPointId))
+      const memberGroups = memberGroupsJoin.enter()
+        .append('g')
+        .classed('member-group', true)
+        .attr('data-track-point-id', trackPoint => trackPoint.trackPointId)
+        .merge(memberGroupsJoin)
+        .attr('opacity', ({ trackPointId }) => (trackPointId === htpid ? 1 : 0.6))
+      memberGroupsJoin.exit().remove()
+
+      const membersJoin = memberGroups.selectAll('circle')
+        .data(point => point.members)
+      const members = membersJoin.enter()
+        .append('circle')
+        .attr('cx', m => m.x)
+        .attr('cy', m => m.y)
+        .attr('fill', '#ff5722')
+        .style('pointer-events', 'none')
+        .attr('r', 8)
+      members.exit().remove()
+    } else {
+      trackPoints.selectAll('.member-group').remove()
+    }
 
     // update tooltip
     // htp: highlighted track point
@@ -226,9 +253,27 @@ export default class DrawingManager {
       .remove()
   }
 
-  updateTracks(tracks: Track[], { showPath, showPoints, htid, htpid }: Partial<TrackMapProp>) {
+  updateLocationItems(locationItems: LocationItem[], { showNoise }: Partial<TrackMapProp>) {
+    const board = this.svg.select('.board')
+    const itemsLayer = board.select('.items-layer')
+    if (showNoise) {
+      const itemsJoin = itemsLayer.selectAll('circle')
+        .data(locationItems, (item: LocationItem) => String(item.id))
+      const items = itemsJoin.enter()
+        .append('circle')
+        .attr('cx', item => item.x)
+        .attr('cy', item => item.y)
+        .attr('r', 8)
+        .merge(itemsJoin)
+      itemsJoin.exit().remove()
+    } else {
+      itemsLayer.selectAll('circle').remove()
+    }
+  }
+
+  updateTracks(tracks: Track[], { showPath, showPoints, showMembers, htid, htpid }: Partial<TrackMapProp>) {
     if (showPoints) {
-      this.updateTrackPoints(tracks, { htid, htpid })
+      this.updateTrackPoints(tracks, { htid, htpid, showMembers })
     } else {
       this.clearTrackPoints()
     }
