@@ -1,14 +1,12 @@
 {
-  "name": "cx-location-viewer",
+  "name": "lh-location-viewer",
   "private": true,
   "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server",
-    "build": "set NODE_ENV=production&& webpack",
-    "eslint": "eslint  --ext .js,.jsx .",
-    "eslint-fix": "eslint  --ext .js,.jsx --fix ."
+    "build": "set NODE_ENV=production&& webpack"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.0",

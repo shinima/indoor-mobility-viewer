@@ -77,7 +77,7 @@ export default class DrawingManager {
     this.onChangeHtpid = onChangeHtpid
 
     const board = this.svg.select('.board')
-    this.zoom.scaleExtent([0.2, 2])
+    this.zoom.scaleExtent([0.2, 10])
       .on('zoom', () => {
         const { transform } = d3.event
         board.attr('transform', transform)

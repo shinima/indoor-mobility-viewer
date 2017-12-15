@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import * as moment from 'moment'
 import { Moment } from 'moment'
 import { connect } from 'react-redux'
-import { fromJS, OrderedMap, Map, is } from 'immutable'
+import { fromJS, Map, OrderedMap } from 'immutable'
 import { Dispatch } from 'redux'
 import TrackMap from '../components/Map/TrackMap'
 import TrackDetailPanel from '../components/TrackDetailPanel'
@@ -12,9 +12,6 @@ import ButtonGroup from '../components/ButtonGroup'
 import bindSearchParameters, { SearchParamBinding } from '../utils/bindSearchParameters'
 import { IComponent } from '../utils/utils'
 import MacList from '../components/MacList'
-import DateChooser from './DateChooser'
-import getNow from '../utils/getNow'
-import AlgorithmChooser from './AlgorithmChooser'
 import '../styles/TrackMapPage.styl'
 
 const defaultDate = '2017-06-20'
@@ -261,10 +258,6 @@ class TrackMapPage extends IComponent<P, S> {
             onToggleShowMembers={() => this.setState({ showMembers: !showMembers })}
             history={history}
           />
-          <DateChooser
-            time={moment(t)}
-            onChangeTime={this.onChangeTime}
-          />
           <MacList
             macEntryMap={macEntryMap}
             onDeleteMacEntry={this.onDeleteMacEntry}
@@ -274,7 +267,6 @@ class TrackMapPage extends IComponent<P, S> {
             onCentralizeFirstTrack={this.onCentralizeFirstTrack}
             translate={_.identity}
           />
-          <AlgorithmChooser macEntryMap={macEntryMap} />
           <FloorList
             selectedFloorId={floor.floorId}
             floorEntryList={floorEntryList}

@@ -31,7 +31,7 @@ export default function drawFloor(floor: Floor, svgElement: SVGSVGElement) {
     .attr('fill', d => floor.config.colors[d.color])
     .attr('points', d => d.points.map(p => `${p.x},${p.y}`).join(' '))
     .attr('stroke', '#cccccc')
-    .attr('stroke-width', '1')
+    .attr('stroke-width', 0.5)
   regionsJoin.exit().remove()
 
   // 绘制文本

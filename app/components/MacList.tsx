@@ -1,11 +1,11 @@
 import * as React from 'react'
-import { Map } from 'immutable'
 import { Component } from 'react'
-import { getColor, isValidMac } from '../utils/utils'
+import { Map } from 'immutable'
+import { getColor } from '../utils/utils'
 import Checkbox from './Checkbox'
 import '../styles/MacList.styl'
 
-type P = {
+interface P {
   macEntryMap: Map<string, boolean>
   onDeleteMacEntry: (name: string) => void
   onAddMacEntry: (name: string) => void
@@ -40,8 +40,8 @@ export default class MacList extends Component<P, S> {
     const mac = translate(macName)
     if (existedMacs.has(mac)) {
       alert('该mac地址已经存在')
-    } else if (!isValidMac(mac)) {
-      alert('请输入正确的mac地址')
+      // } else if (!isValidMac(mac)) {
+      //   alert('请输入正确的mac地址')
     } else {
       this.props.onAddMacEntry(macName)
     }

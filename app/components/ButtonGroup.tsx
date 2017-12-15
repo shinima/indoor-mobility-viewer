@@ -1,12 +1,10 @@
 import * as React from 'react'
-import * as moment from 'moment'
 import { History } from 'history'
 import { Component } from 'react'
 import Checkbox from './Checkbox'
-import getNow from '../utils/getNow'
 import '../styles/ButtonGroup.styl'
 
-type P = {
+interface P {
   showPath: boolean
   showPoints: boolean
   showNoise: boolean
@@ -20,16 +18,11 @@ type P = {
 }
 
 export default class ButtonGroup extends Component<P> {
-  state = {
-    now: getNow(),
-  }
-
   handle = -1
 
   componentDidMount() {
     this.handle = setInterval(() => {
       this.setState({
-        now: getNow(),
       })
     }, 1000) as any
   }
@@ -50,9 +43,6 @@ export default class ButtonGroup extends Component<P> {
 
     return (
       <div className="button-group-widget">
-        <div className="real-time">
-          当前时间: {moment(this.state.now).format('MM-DD HH:mm:ss')}
-        </div>
         <div className="reset-transform-button-wrapper">
           <button
             className="reset-transform-button"
