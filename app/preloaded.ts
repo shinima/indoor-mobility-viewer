@@ -12,7 +12,7 @@ declare global {
   type TrackPointType = 'track-start' | 'normal' | 'track-end' | 'raw'
   type Mac = string
 
-  export type LocationItem = {
+  export interface LocationItem {
     id: number
     mac: string
     floorId: number

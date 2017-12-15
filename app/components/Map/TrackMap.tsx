@@ -15,10 +15,6 @@ export type TrackMapProp = {
   showPath: boolean
   // 是否要显示points
   showPoints: boolean
-  // 是否需要显示噪声点
-  showNoise: boolean
-  // 是否需要显示成员点
-  showMembers: boolean
   // 高亮的track id, null表示没有高亮track
   htid: number
   htpid: number
@@ -41,17 +37,16 @@ export default class TrackMap extends Component<TrackMapProp> {
 
   componentDidMount() {
     const {
-      floor, tracks, items, showPath, showPoints, showNoise, showMembers, htid, htpid,
+      floor, tracks, items, showPath, showPoints, htid, htpid,
       // onZoom, humanize, onChangeHtid, onChangeHtpid,
     } = this.props
     const getProps = () => this.props
     this.drawingManager = new DrawingManager(this.svg, this.tooltipWrapper, getProps)
     this.drawingManager.updateFloor(floor)
-    this.drawingManager.updateLocationItems(items, { showNoise })
+    // this.drawingManager.updateLocationItems(items, {})
     this.drawingManager.updateTracks(tracks, {
       showPath,
       showPoints,
-      showMembers,
       htid,
       htpid,
     })
@@ -59,7 +54,7 @@ export default class TrackMap extends Component<TrackMapProp> {
 
   componentWillReceiveProps(nextProps: TrackMapProp) {
     const {
-      floor, tracks, showPath, showPoints, showNoise, showMembers,
+      floor, tracks, showPath, showPoints,
       htid, ctid, htpid, transformReset,
     } = this.props
     // 用floorId来判断是否为同一个楼层
@@ -70,19 +65,16 @@ export default class TrackMap extends Component<TrackMapProp> {
     if (!isSameTracks(tracks, nextProps.tracks)
       || showPath !== nextProps.showPath
       || showPoints !== nextProps.showPoints
-      || showNoise !== nextProps.showNoise
-      || showMembers !== nextProps.showMembers
       || htid !== nextProps.htid
       || htpid !== nextProps.htpid) {
       // console.log('update-tracks')
       this.drawingManager.updateTracks(nextProps.tracks, {
         showPath: nextProps.showPath,
         showPoints: nextProps.showPoints,
-        showMembers: nextProps.showMembers,
         htid: nextProps.htid,
         htpid: nextProps.htpid,
       })
-      this.drawingManager.updateLocationItems(nextProps.items, { showNoise: nextProps.showNoise })
+      // this.drawingManager.updateLocationItems(nextProps.items, {})
     }
     if (ctid !== nextProps.ctid && nextProps.ctid != null) {
       const track = nextProps.tracks.find(t => t.trackId === nextProps.ctid)

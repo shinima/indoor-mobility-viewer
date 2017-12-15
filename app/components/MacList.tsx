@@ -53,7 +53,10 @@ export default class MacList extends Component<P, S> {
 
     return (
       <div className="mac-list-widget">
-        <div className="title">MAC地址管理</div>
+        <div className="title">
+          轨迹
+          <button style={{ marginLeft: 8 }}>打开其他轨迹</button>
+        </div>
         {macEntryMap.isEmpty() ? (
           <div className="empty-mac-item-list">列表暂时为空</div>
         ) : (

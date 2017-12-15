@@ -35,8 +35,3 @@ export interface CXLocation {
   x: number
   y: number
 }
-
-export interface CXData {
-  trackings: CXTracking[]
-  locations: CXLocation[]
-}

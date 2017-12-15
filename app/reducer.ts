@@ -1,7 +1,6 @@
-import * as _ from 'lodash'
 import { combineReducers } from 'redux'
-import { OrderedMap, Record } from 'immutable'
 import floors, { floorConfig } from './resources/floors'
+import { getTracks, LHData } from './utils/lh'
 
 declare global {
   namespace S {
@@ -27,7 +26,9 @@ function allItems(state: LocationItem[] = [], action: Action) {
   }
 }
 
-function allTracks(state: Track[] = [], action: Action) {
+const defaultTracks = getTracks(require('./resources/test.json'))
+
+function allTracks(state: Track[] = defaultTracks, action: Action) {
   if (action.type === 'UPDATE_TRACKS') {
     return action.tracks
   } else {

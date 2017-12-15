@@ -7,14 +7,10 @@ import '../styles/ButtonGroup.styl'
 interface P {
   showPath: boolean
   showPoints: boolean
-  showNoise: boolean
-  showMembers: boolean
   history: History
   onResetTransform: () => void
   onToggleShowPath: () => void
   onToggleShowPoints: () => void
-  onToggleShowNoise: () => void
-  onToggleShowMembers: () => void
 }
 
 export default class ButtonGroup extends Component<P> {
@@ -32,13 +28,11 @@ export default class ButtonGroup extends Component<P> {
   }
 
   render() {
-    const { showPath, showPoints, showNoise, showMembers } = this.props
+    const { showPath, showPoints } = this.props
     const {
       onResetTransform,
       onToggleShowPath,
       onToggleShowPoints,
-      onToggleShowNoise,
-      onToggleShowMembers,
     } = this.props
 
     return (
@@ -62,16 +56,6 @@ export default class ButtonGroup extends Component<P> {
             <div className="checkbox-wrapper" onClick={onToggleShowPath}>
               <Checkbox checked={showPath} />
               <p>显示轨迹</p>
-            </div>
-          </div>
-          <div className="checkboxes-row">
-            <div className="checkbox-wrapper" onClick={onToggleShowNoise}>
-              <Checkbox checked={showNoise} />
-              <p>显示噪声</p>
-            </div>
-            <div className="checkbox-wrapper" onClick={onToggleShowMembers}>
-              <Checkbox checked={showMembers} />
-              <p>显示成员</p>
             </div>
           </div>
         </div>

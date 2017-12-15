@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { Dispatch } from 'redux'
 import { Component } from 'react'
-import { Switch, HashRouter, BrowserRouter, Route, Link } from 'react-router-dom'
+import { Dispatch } from 'redux'
+import { BrowserRouter, HashRouter, Route, Switch } from 'react-router-dom'
 import TrackMapPage from './TrackMapPage'
 
 const Router = process.env.NODE_ENV === 'production' ? BrowserRouter : HashRouter

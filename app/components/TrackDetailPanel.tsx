@@ -61,7 +61,7 @@ function TrackInfo({ track, floorId, htid, onChangeHtid, onCentralizeTrack }: Tr
     <div className="track-info">
       <p className="first-line">
         轨迹
-        <span style={{ paddingRight: 8, fontWeight: 'bold' }}>
+        <span style={{ paddingLeft: 2, paddingRight: 8, fontWeight: 'bold' }}>
           {track.trackId}
         </span>
         <span style={{ fontWeight: 'bold', color: 'steelblue' }}>
@@ -71,7 +71,7 @@ function TrackInfo({ track, floorId, htid, onChangeHtid, onCentralizeTrack }: Tr
       </p>
       <p>
         {moment(track.startTime).format('HH:mm')}
-        ~
+        <span style={{ paddingLeft: 2, paddingRight: 2 }}>~</span>
         {moment(track.endTime).format('HH:mm')}
       </p>
     </div>

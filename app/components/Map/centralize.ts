@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
 import * as d3 from 'd3'
 import * as _ from 'lodash'
+import { MAX_SCALE, MIN_SCALE } from '../../utils/constants'
 
 type Padding = {
   left: number
@@ -34,7 +35,7 @@ export default function centralize(contentBox: SVGRect, viewport: Partial<SVGRec
     }
     const scaleX = viewBox.width / mb.width
     const scaleY = viewBox.height / mb.height
-    const scale = _.clamp(Math.min(scaleX, scaleY), 0.2, 1.2)
+    const scale = _.clamp(Math.min(scaleX, scaleY), MIN_SCALE, MAX_SCALE)
     const dx = (viewBox.x + viewBox.width / 2) - (mb.x + mb.width / 2) * scale
     const dy = (viewBox.y + viewBox.height / 2) - (mb.y + mb.height / 2) * scale
     return d3.zoomIdentity.translate(dx, dy).scale(scale)

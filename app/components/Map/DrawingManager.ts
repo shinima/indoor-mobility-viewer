@@ -5,6 +5,7 @@ import drawFloor from './drawFloor'
 import centralize from './centralize'
 import { getColor } from '../../utils/utils'
 import { TrackMapProp } from './TrackMap'
+import { MAX_SCALE, MIN_SCALE } from '../../utils/constants'
 
 type Padding = {
   top: number
@@ -77,7 +78,7 @@ export default class DrawingManager {
     this.onChangeHtpid = onChangeHtpid
 
     const board = this.svg.select('.board')
-    this.zoom.scaleExtent([0.2, 10])
+    this.zoom.scaleExtent([MIN_SCALE, MAX_SCALE])
       .on('zoom', () => {
         const { transform } = d3.event
         board.attr('transform', transform)
@@ -100,7 +101,7 @@ export default class DrawingManager {
     }
   }
 
-  updateTrackPoints(tracks: Track[], { htid, htpid, showMembers }: Partial<TrackMapProp>) {
+  updateTrackPoints(tracks: Track[], { htid, htpid }: Partial<TrackMapProp>) {
     const self = this
     const board = this.svg.select('.board')
     const trackPointsLayer = board.select('.track-points-layer')
@@ -128,14 +129,14 @@ export default class DrawingManager {
     trackPointsJoin.exit().remove()
 
     const symbolMap = {
-      'track-start': d3.symbol().type(d3.symbolSquare).size(800),
-      normal: d3.symbol().type(d3.symbolCircle).size(500),
-      raw: d3.symbol().type(d3.symbolCircle).size(125),
-      'track-end': d3.symbol().type(d3.symbolTriangle).size(800),
+      'track-start': d3.symbol().type(d3.symbolSquare).size(800 / 16),
+      normal: d3.symbol().type(d3.symbolCircle).size(500 / 16),
+      raw: d3.symbol().type(d3.symbolCircle).size(2),
+      'track-end': d3.symbol().type(d3.symbolTriangle).size(800 / 16),
     }
     const symbolGenerator = (trackPoint: TrackPoint) => symbolMap[trackPoint.pointType]()
     const trackPointTransform = ({ x, y, trackPointId }: TrackPoint) => {
-      const scale = trackPointId === htpid ? 3 : 1
+      const scale = trackPointId === htpid ? 2 : 1
       return `translate(${x}, ${y}) scale(${scale})`
     }
 
@@ -160,31 +161,6 @@ export default class DrawingManager {
         const { htid } = self.getProps()
         self.onChangeHtid(trackId === htid ? null : trackId)
       })
-
-    if (showMembers) {
-      const memberGroupsJoin = trackPoints.selectAll('.member-group')
-        .data(track => track.points, (trackPoint: TrackPoint) => String(trackPoint.trackPointId))
-      const memberGroups = memberGroupsJoin.enter()
-        .append('g')
-        .classed('member-group', true)
-        .attr('data-track-point-id', trackPoint => trackPoint.trackPointId)
-        .merge(memberGroupsJoin)
-        .attr('opacity', ({ trackPointId }) => (trackPointId === htpid ? 1 : 0.6))
-      memberGroupsJoin.exit().remove()
-
-      const membersJoin = memberGroups.selectAll('circle')
-        .data(point => point.members)
-      const members = membersJoin.enter()
-        .append('circle')
-        .attr('cx', m => m.x)
-        .attr('cy', m => m.y)
-        .attr('fill', '#ff5722')
-        .style('pointer-events', 'none')
-        .attr('r', 8)
-      members.exit().remove()
-    } else {
-      trackPoints.selectAll('.member-group').remove()
-    }
 
     // update tooltip
     // htp: highlighted track point
@@ -229,7 +205,7 @@ export default class DrawingManager {
       .style('cursor', 'pointer')
       .attr('data-track-id', track => track.trackId)
       .attr('stroke', track => getColor(track.mac))
-      .attr('stroke-width', 8)
+      .attr('stroke-width', 0.5)
       .merge(trackPathJoin)
       .attr('opacity', opacity)
       .attr('d', track => lineGenerator(track.points))
@@ -253,27 +229,14 @@ export default class DrawingManager {
       .remove()
   }
 
-  updateLocationItems(locationItems: LocationItem[], { showNoise }: Partial<TrackMapProp>) {
+  updateLocationItems(locationItems: LocationItem[], {}: Partial<TrackMapProp>) {
     const board = this.svg.select('.board')
     const itemsLayer = board.select('.items-layer')
-    if (showNoise) {
-      const itemsJoin = itemsLayer.selectAll('circle')
-        .data(locationItems, (item: LocationItem) => String(item.id))
-      const items = itemsJoin.enter()
-        .append('circle')
-        .attr('cx', item => item.x)
-        .attr('cy', item => item.y)
-        .attr('r', 8)
-        .merge(itemsJoin)
-      itemsJoin.exit().remove()
-    } else {
-      itemsLayer.selectAll('circle').remove()
-    }
   }
 
-  updateTracks(tracks: Track[], { showPath, showPoints, showMembers, htid, htpid }: Partial<TrackMapProp>) {
+  updateTracks(tracks: Track[], { showPath, showPoints, htid, htpid }: Partial<TrackMapProp>) {
     if (showPoints) {
-      this.updateTrackPoints(tracks, { htid, htpid, showMembers })
+      this.updateTrackPoints(tracks, { htid, htpid })
     } else {
       this.clearTrackPoints()
     }

@@ -67,8 +67,6 @@ type S = {
   htid: number
   showPath: boolean
   showPoints: boolean
-  showNoise: boolean
-  showMembers: boolean
   transformReset: boolean
 }
 
@@ -85,8 +83,6 @@ class TrackMapPage extends IComponent<P, S> {
     htid: null as number,
     showPath: true,
     showPoints: true,
-    showNoise: true,
-    showMembers: true,
     // transform是否重置(大概等于当前楼层是否居中显示)
     transformReset: false,
   }
@@ -221,8 +217,6 @@ class TrackMapPage extends IComponent<P, S> {
       transformReset,
       showPath,
       showPoints,
-      showNoise,
-      showMembers,
     } = this.state
 
     const activeMacSet = macEntryMap.filter(Boolean)
@@ -250,12 +244,8 @@ class TrackMapPage extends IComponent<P, S> {
             onResetTransform={() => this.setState({ transformReset: true })}
             showPath={showPath}
             showPoints={showPoints}
-            showNoise={showNoise}
-            showMembers={showMembers}
             onToggleShowPath={() => this.setState({ showPath: !showPath })}
             onToggleShowPoints={() => this.setState({ showPoints: !showPoints })}
-            onToggleShowNoise={() => this.setState({ showNoise: !showNoise })}
-            onToggleShowMembers={() => this.setState({ showMembers: !showMembers })}
             history={history}
           />
           <MacList
@@ -279,8 +269,6 @@ class TrackMapPage extends IComponent<P, S> {
           items={visibleItems}
           showPath={showPath}
           showPoints={showPoints}
-          showNoise={showNoise}
-          showMembers={showMembers}
           htid={htid}
           ctid={ctid}
           transformReset={transformReset}
