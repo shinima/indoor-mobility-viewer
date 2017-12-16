@@ -10,7 +10,6 @@ interface P {
   onDeleteMacEntry: (name: string) => void
   onAddMacEntry: (name: string) => void
   onToggleMacEntry: (name: string) => void
-  onHighlightFirstTrack: (name: string) => void
   onCentralizeFirstTrack: (name: string) => void
   // translate用来将mac-name翻译为具体的mac
   translate: (name: string) => string
@@ -48,7 +47,7 @@ export default class MacList extends Component<P, S> {
   }
 
   render() {
-    const { macEntryMap, translate, onHighlightFirstTrack, onCentralizeFirstTrack } = this.props
+    const { macEntryMap, translate, onCentralizeFirstTrack } = this.props
     const { macName } = this.state
 
     return (
@@ -64,8 +63,7 @@ export default class MacList extends Component<P, S> {
             {macEntryMap.map((active, name) => (
               <div className="mac-item" key={name}>
                 <button
-                  onClick={() => onHighlightFirstTrack(name)}
-                  onDoubleClick={() => onCentralizeFirstTrack(name)}
+                  onClick={() => onCentralizeFirstTrack(name)}
                   className="mac-color"
                   style={{ background: `${getColor(translate(name))}` }}
                 />

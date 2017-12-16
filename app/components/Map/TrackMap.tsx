@@ -5,6 +5,7 @@ import { isSameTracks } from './utils'
 import '../../styles/Map.styl'
 
 export type TrackMapProp = {
+  time: number
   // 要绘制的楼层地图
   floor: Floor
   // 需要显示的track数组
@@ -15,17 +16,13 @@ export type TrackMapProp = {
   showPath: boolean
   // 是否要显示points
   showPoints: boolean
-  // 高亮的track id, null表示没有高亮track
-  htid: number
-  htpid: number
   // 居中显示的track id. 初次渲染的时候忽略该prop, 该prop仅在发生变化的时候有效
   //   并且需要保证ctid对应的path元素目前是渲染在地图上面的
   ctid: number
   // transform是否重置(大概等于当前楼层是否居中显示)
   transformReset: boolean
 
-  onChangeHtid: (trackId: number) => void
-  onChangeHtpid: (trackPointId: number) => void
+  onChangeTime: (time: number) => void
   onZoom: () => void
   humanize: (mac: string) => string
 }
@@ -36,27 +33,16 @@ export default class TrackMap extends Component<TrackMapProp> {
   tooltipWrapper: HTMLDivElement = null
 
   componentDidMount() {
-    const {
-      floor, tracks, items, showPath, showPoints, htid, htpid,
-      // onZoom, humanize, onChangeHtid, onChangeHtpid,
-    } = this.props
+    const { floor, tracks, items, showPath, showPoints, time } = this.props
     const getProps = () => this.props
     this.drawingManager = new DrawingManager(this.svg, this.tooltipWrapper, getProps)
     this.drawingManager.updateFloor(floor)
     // this.drawingManager.updateLocationItems(items, {})
-    this.drawingManager.updateTracks(tracks, {
-      showPath,
-      showPoints,
-      htid,
-      htpid,
-    })
+    this.drawingManager.updateTracks(tracks, { time, showPath, showPoints })
   }
 
   componentWillReceiveProps(nextProps: TrackMapProp) {
-    const {
-      floor, tracks, showPath, showPoints,
-      htid, ctid, htpid, transformReset,
-    } = this.props
+    const { floor, time, tracks, showPath, showPoints, ctid, transformReset } = this.props
     // 用floorId来判断是否为同一个楼层
     if (floor.floorId !== nextProps.floor.floorId) {
       // console.log('update-floor')
@@ -65,14 +51,13 @@ export default class TrackMap extends Component<TrackMapProp> {
     if (!isSameTracks(tracks, nextProps.tracks)
       || showPath !== nextProps.showPath
       || showPoints !== nextProps.showPoints
-      || htid !== nextProps.htid
-      || htpid !== nextProps.htpid) {
+      || time !== nextProps.time
+    ) {
       // console.log('update-tracks')
       this.drawingManager.updateTracks(nextProps.tracks, {
         showPath: nextProps.showPath,
         showPoints: nextProps.showPoints,
-        htid: nextProps.htid,
-        htpid: nextProps.htpid,
+        time: nextProps.time,
       })
       // this.drawingManager.updateLocationItems(nextProps.items, {})
     }

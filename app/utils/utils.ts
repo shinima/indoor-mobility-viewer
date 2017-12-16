@@ -41,3 +41,11 @@ export function makeHumanizeFn(staticMacMapping: StaticMacMapping) {
     return entry ? entry.name : mac
   }
 }
+
+export function avg(ns: number[]) {
+  let sum = 0
+  for (const n of ns) {
+    sum += n
+  }
+  return sum / ns.length
+}

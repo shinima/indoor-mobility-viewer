@@ -59,8 +59,27 @@ export default class DrawingManager {
   private tooltipWrapper: d3.Selection<HTMLDivElement, null, null, null>
   private getProps: () => TrackMapProp
   private humanize: (mac: string) => string
-  private onChangeHtid: (trackId: number) => void
-  private onChangeHtpid: (trackPointId: number) => void
+
+  highlightTrack(trackId: number) {
+    const { onChangeTime, tracks } = this.getProps()
+    if (trackId == null) {
+      onChangeTime(0)
+    } else {
+      const track = tracks.find(tr => (tr.trackId === trackId))
+      onChangeTime(track.startTime)
+    }
+  }
+
+  highlightTrackPoint(trackPointId: number) {
+    const { onChangeTime, tracks } = this.getProps()
+    if (trackPointId == null) {
+      onChangeTime(0)
+    } else {
+      const trackPoints = tracks.reduce<TrackPoint[]>((result, tr) => result.concat(tr.points), [])
+      const point = trackPoints.find(p => (p.trackPointId === trackPointId))
+      onChangeTime(point.time)
+    }
+  }
 
   // 第一次绘制地图的时候自动缩放, 后续绘制地图就不需要自动缩放了
   needAutoResetTransform = true
@@ -72,10 +91,8 @@ export default class DrawingManager {
     this.zoom = d3.zoom()
 
     this.getProps = getProps
-    const { humanize, onChangeHtid, onChangeHtpid, onZoom } = getProps()
+    const { humanize, onZoom } = getProps()
     this.humanize = humanize
-    this.onChangeHtid = onChangeHtid
-    this.onChangeHtpid = onChangeHtpid
 
     const board = this.svg.select('.board')
     this.zoom.scaleExtent([MIN_SCALE, MAX_SCALE])
@@ -101,17 +118,17 @@ export default class DrawingManager {
     }
   }
 
-  updateTrackPoints(tracks: Track[], { htid, htpid }: Partial<TrackMapProp>) {
+  updateTrackPoints(tracks: Track[], { time }: Partial<TrackMapProp>) {
+    const allTrackPoints = tracks.reduce<TrackPoint[]>((result, tr) => result.concat(tr.points), [])
+    const closestPointId = _.minBy(allTrackPoints, p => Math.abs(p.time - time)).trackPointId
+
     const self = this
     const board = this.svg.select('.board')
     const trackPointsLayer = board.select('.track-points-layer')
 
     const trackPointsOpacity = (track: Track) => {
-      if (htid === null || track.trackId === htid) {
-        return 0.8
-      } else {
-        return 0.2
-      }
+      const inThisTrack = track.startTime <= time && time <= track.endTime
+      return (time === 0 || inThisTrack) ? 1 : 0.1
     }
 
     // 每条track 一个g.track
@@ -123,21 +140,19 @@ export default class DrawingManager {
       .attr('data-track-id', track => String(track.trackId))
       .merge(trackPointsJoin)
       .attr('opacity', trackPointsOpacity)
-    trackPoints
-      .filter(({ trackId }) => trackId === htid)
-      .raise()
     trackPointsJoin.exit().remove()
 
     const symbolMap = {
       'track-start': d3.symbol().type(d3.symbolSquare).size(800 / 16),
       normal: d3.symbol().type(d3.symbolCircle).size(500 / 16),
-      raw: d3.symbol().type(d3.symbolCircle).size(2),
+      raw: d3.symbol().type(d3.symbolCircle).size(3),
       'track-end': d3.symbol().type(d3.symbolTriangle).size(800 / 16),
     }
     const symbolGenerator = (trackPoint: TrackPoint) => symbolMap[trackPoint.pointType]()
-    const trackPointTransform = ({ x, y, trackPointId }: TrackPoint) => {
-      const scale = trackPointId === htpid ? 2 : 1
-      return `translate(${x}, ${y}) scale(${scale})`
+    const trackPointTransform = ({ x, y }: TrackPoint) => `translate(${x}, ${y})`
+
+    const trackPointOpacity = ({ trackPointId }: TrackPoint) => {
+      return trackPointId === closestPointId ? 1 : 0
     }
 
     // 每个track-point一个symbol 和一个member-group
@@ -147,30 +162,28 @@ export default class DrawingManager {
       .append('path')
       .classed('symbol', true)
       .style('cursor', 'pointer')
+      .style('transition', 'opacity 100ms')
       .attr('data-track-point-id', trackPoint => trackPoint.trackPointId)
       .attr('fill', ({ mac }) => getColor(mac))
       .merge(symbolsJoin)
     symbolsJoin.exit().remove()
     symbols
       .attr('transform', trackPointTransform)
+      .attr('opacity', trackPointOpacity)
       .attr('d', symbolGenerator)
-      .on('mouseenter', ({ trackPointId }) => this.onChangeHtpid(trackPointId))
-      .on('mouseleave', () => this.onChangeHtpid(null))
-      .on('click', function onClickSymbol(this: SVGPathElement) {
-        const { trackId } = d3.select(this.parentElement).datum() as Track
-        const { htid } = self.getProps()
-        self.onChangeHtid(trackId === htid ? null : trackId)
+      .on('click', function (this: SVGPathElement, trackPoint: TrackPoint) {
+        self.highlightTrackPoint(trackPoint.trackPointId)
       })
 
     // update tooltip
     // htp: highlighted track point
-    const htp = _.flatMap(tracks, track => track.points)
-      .find(({ trackPointId }) => trackPointId === htpid)
-    if (htp) {
-      this.tooltipWrapper.call(showTooltip, htp, d3.zoomTransform(this.svgElement), this.humanize)
-    } else {
-      this.tooltipWrapper.call(hideTooltip)
-    }
+    // const htp = _.flatMap(tracks, track => track.points)
+    //   .find(({ trackPointId }) => trackPointId === htpid)
+    // if (htp) {
+    //   this.tooltipWrapper.call(showTooltip, htp, d3.zoomTransform(this.svgElement), this.humanize)
+    // } else {
+    //   this.tooltipWrapper.call(hideTooltip)
+    // }
   }
 
   clearTrackPoints() {
@@ -179,17 +192,15 @@ export default class DrawingManager {
       .remove()
   }
 
-  updateTrackPath(tracks: Track[], { htid }: Partial<TrackMapProp>) {
+  updateTrackPath(tracks: Track[], { time }: Partial<TrackMapProp>) {
     const board = this.svg.select('.board')
     const trackPathLayer = board.select('.track-path-layer')
 
     const opacity = (track: Track) => {
-      if (htid === null || track.trackId === htid) {
-        return 0.8
-      } else {
-        return 0.2
-      }
+      const inThisTrack = track.startTime <= time && time <= track.endTime
+      return (time === 0 || inThisTrack) ? 0.8 : 0.1
     }
+
     const lineGenerator = d3.line<TrackPoint>()
       .x(item => item.x)
       .y(item => item.y)
@@ -206,21 +217,12 @@ export default class DrawingManager {
       .attr('data-track-id', track => track.trackId)
       .attr('stroke', track => getColor(track.mac))
       .attr('stroke-width', 0.5)
+      .on('click', ({ trackId }) => this.highlightTrack(trackId))
+      .attr('d', track => lineGenerator(track.points))
       .merge(trackPathJoin)
       .attr('opacity', opacity)
-      .attr('d', track => lineGenerator(track.points))
-    trackPath.filter(({ trackId }) => trackId === htid)
-      .raise()
-    trackPathJoin.exit().remove()
 
-    trackPath.on('click', ({ trackId }) => {
-      const { htid } = this.getProps()
-      if (htid === trackId) {
-        this.onChangeHtid(null)
-      } else {
-        this.onChangeHtid(trackId)
-      }
-    })
+    trackPathJoin.exit().remove()
   }
 
   clearTrackPath() {
@@ -234,14 +236,14 @@ export default class DrawingManager {
     const itemsLayer = board.select('.items-layer')
   }
 
-  updateTracks(tracks: Track[], { showPath, showPoints, htid, htpid }: Partial<TrackMapProp>) {
+  updateTracks(tracks: Track[], { showPath, showPoints, time }: Partial<TrackMapProp>) {
     if (showPoints) {
-      this.updateTrackPoints(tracks, { htid, htpid })
+      this.updateTrackPoints(tracks, { time })
     } else {
       this.clearTrackPoints()
     }
     if (showPath) {
-      this.updateTrackPath(tracks, { htid })
+      this.updateTrackPath(tracks, { time })
     } else {
       this.clearTrackPath()
     }

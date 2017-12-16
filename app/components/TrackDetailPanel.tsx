@@ -4,9 +4,9 @@ import * as moment from 'moment'
 import * as classNames from 'classnames'
 import { getColor } from '../utils/utils'
 import '../styles/TrackDetailPanel.styl'
-import Button from '../components/Button'
 import { floorConfig } from '../resources/floors'
 import TrackPointSymbol from '../components/TrackPointSymbol'
+import Timeline from './Timeline'
 
 function getFloorNameByFloorId(floorId: number) {
   return floorConfig.find(flr => flr.floorId === floorId).floorName
@@ -105,90 +105,49 @@ function TrackDetail({ track, floorId, htid, htpid, onChangeHtpid }: TrackDetail
   }
 }
 
-type TrackDetailPanelProp = {
+interface TrackDetailPanelProp {
+  time: number
+  onChangeTime: (time: number) => void
   tracks: Track[]
-  floorId: number
-  ht: Track
-  htid: number
-  htpid: number
-  humanize: (mac: Mac) => string
-  onChangeHtid: (trackId: number) => void
-  onChangeHtpid: (trackPointId: number) => void
   onCentralizeTrack: (trackId: number) => void
 }
 
 export default class TrackDetailPanel extends Component<TrackDetailPanelProp> {
   render() {
-    const {
-      tracks, floorId, ht, htid, htpid, humanize,
-      onChangeHtid, onChangeHtpid, onCentralizeTrack,
-    } = this.props
-    if (ht == null) {
-      return null
-    }
-    const tracksIdArray = tracks.map(track => track.trackId)
-    const index = tracksIdArray.indexOf(ht.trackId)
-    const previousDisabled = index === 0
-    const nextDisabled = index === tracksIdArray.length - 1
-    const previous = previousDisabled ? 'previous-disabled' : 'previous'
-    const next = nextDisabled ? 'next-disabled' : 'next'
+    const { time, onChangeTime,tracks, onCentralizeTrack } = this.props
+
     return (
       <div className="track-detail-panel">
-        <h1 className="title">
-          <img
-            className="close"
-            onClick={() => onChangeHtid(null)}
-            style={{ width: 20, height: '100%' }}
-            src="/static/img/close.svg"
-            alt="close"
-          />
-          {humanize(ht.mac)} 轨迹详情
-        </h1>
-        <div className="prev-or-next">
-          <Button
-            icon={`/static/img/buttonGroup/${previous}.svg`}
-            text="上一条轨迹"
-            altText="previous"
-            style={{
-              color: previousDisabled ? '#888888' : 'black',
-              cursor: previousDisabled ? 'default' : 'pointer',
-            }}
-            onClick={!previousDisabled ? () => onChangeHtid(tracksIdArray[index - 1]) : null}
-          />
-          <Button
-            icon={`/static/img/buttonGroup/${next}.svg`}
-            text="下一条轨迹"
-            altText="next"
-            style={{
-              color: nextDisabled ? '#888888' : 'black',
-              cursor: nextDisabled ? 'default' : 'pointer',
-            }}
-            onClick={!nextDisabled ? () => onChangeHtid(tracksIdArray[index + 1]) : null}
-          />
-        </div>
-        <div className="track-list">
-          {tracks.map(track => (
-            <div
-              key={track.trackId}
-              className={classNames('track', { highlighted: track.trackId === htid })}
-            >
-              <TrackInfo
-                track={track}
-                floorId={floorId}
-                htid={htid}
-                onChangeHtid={onChangeHtid}
-                onCentralizeTrack={onCentralizeTrack}
-              />
-              <TrackDetail
-                track={track}
-                floorId={floorId}
-                htid={htid}
-                htpid={htpid}
-                onChangeHtpid={onChangeHtpid}
-              />
-            </div>
-          ))}
-        </div>
+        <h1 className="title">Timeline</h1>
+        <Timeline
+          tracks={tracks}
+          time={time}
+          onChangeTime={onChangeTime}
+        />
+
+        {/*<div className="track-list">*/}
+        {/*{tracks.map(track => (*/}
+        {/*<div*/}
+        {/*key={track.trackId}*/}
+        {/*className={classNames('track', { highlighted: track.trackId === htid })}*/}
+        {/*>*/}
+        {/*<TrackInfo*/}
+        {/*track={track}*/}
+        {/*floorId={floorId}*/}
+        {/*htid={htid}*/}
+        {/*onChangeHtid={onChangeHtid}*/}
+        {/*onCentralizeTrack={onCentralizeTrack}*/}
+        {/*/>*/}
+        {/*<TrackDetail*/}
+        {/*track={track}*/}
+        {/*floorId={floorId}*/}
+        {/*htid={htid}*/}
+        {/*htpid={htpid}*/}
+        {/*onChangeHtpid={onChangeHtpid}*/}
+        {/*/>*/}
+        {/*</div>*/}
+        {/*))}*/}
+        {/*</div>*/}
       </div>
     )
   }
