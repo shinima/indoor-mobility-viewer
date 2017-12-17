@@ -4,6 +4,7 @@ import * as React from 'react'
 import { clamp } from 'lodash'
 import { Track } from '../interfaces'
 import '../styles/TimelinePanel.styl'
+import { getColor } from '../utils/utils'
 
 export interface Props {
   time: number
@@ -18,7 +19,7 @@ export interface State {
 
 export const CONFIG = {
   dx: 20,
-  dy: 20,
+  dy: 24,
 }
 
 export default class TimelinePanel extends React.Component<Props, State> {
@@ -55,7 +56,7 @@ export default class TimelinePanel extends React.Component<Props, State> {
   }
 
   render() {
-    const { rawTracks, time } = this.props
+    const { rawTracks, semanticTracks, time } = this.props
     const startTime = rawTracks[0].startTime
     const endTime = rawTracks[rawTracks.length - 1].endTime
 
@@ -65,13 +66,13 @@ export default class TimelinePanel extends React.Component<Props, State> {
     const y = this.getYScale()
 
     return (
-      <div className="track-detail-panel">
+      <div className="timeline-panel">
         <h1 className="title">Timeline</h1>
         <svg
           ref={this.refSvg}
           style={{ width: 360, height: 550, flex: '0 0 auto' }}
         >
-          <g transform="translate(20,20)" fill="#1f77b4">
+          <g transform={`translate(20,${CONFIG.dy})`} fill={getColor('raw')}>
             {rawTracks.map(t =>
               <rect
                 key={t.trackId}
@@ -80,24 +81,36 @@ export default class TimelinePanel extends React.Component<Props, State> {
                 height={y(t.endTime) - y(t.startTime)}
               />
             )}
+          </g>
 
-            {time !== 0 ? (
+          <g transform={`translate(60,${CONFIG.dy})`} fill={getColor('semantic')}>
+            {semanticTracks.map(t =>
+              <rect
+                key={t.trackId}
+                transform={`translate(0, ${y(t.startTime)})`}
+                x="0"
+                y="0"
+                width="20"
+                height={y(t.endTime) - y(t.startTime)}
+              />
+            )}
+          </g>
+          {time !== 0 ? (
+            <g>
               <line
-                x1="0"
-                x2="200"
-                y1={y(clampedTime)}
-                y2={y(clampedTime)}
+                x1="20"
+                x2="220"
+                y1={y(clampedTime) + CONFIG.dy}
+                y2={y(clampedTime) + CONFIG.dy}
                 stroke="black"
                 strokeDasharray="6 6"
                 strokeWidth="2"
               />
-            ) : null}
-            {time !== 0 ? (
-              <text x="170" y={y(clampedTime) - 4} fill="black">
+              <text x="190" y={y(clampedTime) - 4 + CONFIG.dy} fill="black">
                 {moment(clampedTime).format('HH:mm:ss')}
               </text>
-            ) : null}
-          </g>
+            </g>
+          ) : null}
         </svg>
       </div>
     )
