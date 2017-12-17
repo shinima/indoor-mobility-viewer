@@ -1,11 +1,11 @@
 export interface LHData {
-  'm-semantics': LHSemanticTrack[]
-  rawTrace: LHRawTrace[]
+  semanticTraces: LHSemanticTrace[]
+  rawTraces: LHRawTrace[]
   startTime: number
   // objectID: number // 这个字段看起来没什么用
 }
 
-export interface LHSemanticTrack {
+export interface LHSemanticTrace {
   data: {
     startTime: number
     endTime: number
@@ -34,7 +34,7 @@ const MAC = {
 export function getRawTracks(lhData: LHData): Track[] {
   const result: Track[] = []
 
-  for (const { data, floor } of lhData.rawTrace) {
+  for (const { data, floor } of lhData.rawTraces) {
     const track: Track = {
       floorId: Number(floor),
       trackId: nextTrackId++,
@@ -70,7 +70,7 @@ export function getSemanticTracks(
 ): Track[] {
   const result: Track[] = []
 
-  for (const { data, floor } of lhData['m-semantics']) {
+  for (const { data, floor } of lhData.semanticTraces) {
     const floorId = Number(floor)
     const track: Track = {
       floorId,

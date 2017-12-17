@@ -1,5 +1,5 @@
 {
-  "m-semantics": [
+  "semanticTraces": [
     {
       "data": [
         {
@@ -289,7 +289,7 @@
       "floor": 2
     }
   ],
-  "rawTrace": [
+  "rawTraces": [
     {
       "data": [
         {

@@ -1,5 +1,6 @@
 import * as moment from 'moment'
 import * as Redux from 'redux'
+import { State } from './reducer'
 
 moment.locale('zh-cn')
 
@@ -66,6 +67,6 @@ declare global {
   type HumanizeFn = (mac: string) => string
   type TranslateFn = (macName: string) => Mac
 
-  type Dispatch = Redux.Dispatch<S.State>
-  type Store = Redux.Store<S.State>
+  type Dispatch = Redux.Dispatch<State>
+  type Store = Redux.Store<State>
 }
