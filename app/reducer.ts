@@ -3,6 +3,7 @@ import { Map } from 'immutable'
 import floors, { floorConfig } from './resources/floors'
 import { getRawTracks, getSemanticTracks } from './utils/lh'
 import { avg } from './utils/utils'
+import { Track } from './interfaces'
 
 // export type Action = UpdateTracks
 //

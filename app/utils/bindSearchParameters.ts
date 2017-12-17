@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { History, Location } from 'history'
 import { Component, ComponentClass } from 'react'
+import { History, Location } from 'history'
 import * as _ from 'lodash'
 import { wrapDisplayName } from 'recompose'
 import * as querystring from 'querystring'

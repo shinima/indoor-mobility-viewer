@@ -1,3 +1,5 @@
+import { Line, Point } from '../interfaces'
+
 declare global {
   interface NodeRequire {
     context: any

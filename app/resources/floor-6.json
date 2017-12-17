@@ -1,5624 +1,5910 @@
 {
-	"floorId": 6,
-	"doors": [{
-		"color": "门",
-		"line": {
-			"y1": 23,
-			"x1": 20,
-			"y2": 23,
-			"x2": 20
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1320
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 29,
-			"x1": 20,
-			"y2": 29,
-			"x2": 20
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1321
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 36,
-			"x1": 20,
-			"y2": 36,
-			"x2": 20
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1322
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 44,
-			"x1": 20,
-			"y2": 44,
-			"x2": 20
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1323
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 52,
-			"x1": 20,
-			"y2": 52,
-			"x2": 20
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1324
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 28,
-			"x1": 24,
-			"y2": 28,
-			"x2": 24
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1325
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 28,
-			"x1": 32,
-			"y2": 28,
-			"x2": 32
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1326
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 28,
-			"x1": 40,
-			"y2": 28,
-			"x2": 40
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1327
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 28,
-			"x1": 48,
-			"y2": 28,
-			"x2": 48
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1328
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 36,
-			"x1": 24,
-			"y2": 36,
-			"x2": 24
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1329
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 36,
-			"x1": 32,
-			"y2": 36,
-			"x2": 32
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1330
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 44,
-			"x1": 24,
-			"y2": 44,
-			"x2": 24
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1331
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 44,
-			"x1": 32,
-			"y2": 44,
-			"x2": 32
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1332
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 52,
-			"x1": 24,
-			"y2": 52,
-			"x2": 24
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1333
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 56,
-			"x1": 28,
-			"y2": 56,
-			"x2": 28
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1334
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 48,
-			"x1": 36,
-			"y2": 48,
-			"x2": 36
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1335
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 56,
-			"x1": 36,
-			"y2": 56,
-			"x2": 36
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1336
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 48,
-			"x1": 41,
-			"y2": 48,
-			"x2": 41
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1337
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 56,
-			"x1": 41,
-			"y2": 56,
-			"x2": 41
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1338
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 48,
-			"x1": 45,
-			"y2": 48,
-			"x2": 45
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1339
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 52,
-			"x1": 45,
-			"y2": 52,
-			"x2": 45
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1340
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 56,
-			"x1": 45,
-			"y2": 56,
-			"x2": 45
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1341
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 24,
-			"x1": 22,
-			"y2": 24,
-			"x2": 22
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1342
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 40,
-			"x1": 22,
-			"y2": 40,
-			"x2": 22
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1343
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 56,
-			"x1": 22,
-			"y2": 56,
-			"x2": 22
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1344
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 20,
-			"x1": 23,
-			"y2": 20,
-			"x2": 23
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1345
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 20,
-			"x1": 29,
-			"y2": 20,
-			"x2": 29
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1346
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 20,
-			"x1": 36,
-			"y2": 20,
-			"x2": 36
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1347
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 20,
-			"x1": 44,
-			"y2": 20,
-			"x2": 44
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1348
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 20,
-			"x1": 52,
-			"y2": 20,
-			"x2": 52
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1349
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 24,
-			"x1": 28,
-			"y2": 24,
-			"x2": 28
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1350
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 32,
-			"x1": 28,
-			"y2": 32,
-			"x2": 28
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1351
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 40,
-			"x1": 28,
-			"y2": 40,
-			"x2": 28
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1352
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 48,
-			"x1": 28,
-			"y2": 48,
-			"x2": 28
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1353
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 24,
-			"x1": 36,
-			"y2": 24,
-			"x2": 36
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1354
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 32,
-			"x1": 36,
-			"y2": 32,
-			"x2": 36
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1355
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 24,
-			"x1": 44,
-			"y2": 24,
-			"x2": 44
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1356
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 32,
-			"x1": 44,
-			"y2": 32,
-			"x2": 44
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1357
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 24,
-			"x1": 52,
-			"y2": 24,
-			"x2": 52
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1358
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 28,
-			"x1": 56,
-			"y2": 28,
-			"x2": 56
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1359
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 36,
-			"x1": 48,
-			"y2": 36,
-			"x2": 48
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1360
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 36,
-			"x1": 56,
-			"y2": 36,
-			"x2": 56
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1361
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 41,
-			"x1": 48,
-			"y2": 41,
-			"x2": 48
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1362
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 41,
-			"x1": 56,
-			"y2": 41,
-			"x2": 56
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1363
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 45,
-			"x1": 48,
-			"y2": 45,
-			"x2": 48
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1364
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 45,
-			"x1": 52,
-			"y2": 45,
-			"x2": 52
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1365
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 45,
-			"x1": 56,
-			"y2": 45,
-			"x2": 56
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1366
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 22,
-			"x1": 24,
-			"y2": 22,
-			"x2": 24
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1367
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 22,
-			"x1": 40,
-			"y2": 22,
-			"x2": 40
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1368
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 22,
-			"x1": 56,
-			"y2": 22,
-			"x2": 56
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1369
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 20,
-			"x1": 20,
-			"y2": 20,
-			"x2": 20
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1370
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 97,
-			"x1": 20,
-			"y2": 97,
-			"x2": 20
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1371
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 91,
-			"x1": 20,
-			"y2": 91,
-			"x2": 20
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1372
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 84,
-			"x1": 20,
-			"y2": 84,
-			"x2": 20
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1373
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 76,
-			"x1": 20,
-			"y2": 76,
-			"x2": 20
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1374
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 68,
-			"x1": 20,
-			"y2": 68,
-			"x2": 20
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1375
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 92,
-			"x1": 24,
-			"y2": 92,
-			"x2": 24
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1376
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 92,
-			"x1": 32,
-			"y2": 92,
-			"x2": 32
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1377
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 92,
-			"x1": 40,
-			"y2": 92,
-			"x2": 40
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1378
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 92,
-			"x1": 48,
-			"y2": 92,
-			"x2": 48
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1379
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 84,
-			"x1": 24,
-			"y2": 84,
-			"x2": 24
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1380
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 84,
-			"x1": 32,
-			"y2": 84,
-			"x2": 32
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1381
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 76,
-			"x1": 24,
-			"y2": 76,
-			"x2": 24
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1382
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 76,
-			"x1": 32,
-			"y2": 76,
-			"x2": 32
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1383
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 68,
-			"x1": 24,
-			"y2": 68,
-			"x2": 24
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1384
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 64,
-			"x1": 28,
-			"y2": 64,
-			"x2": 28
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1385
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 72,
-			"x1": 36,
-			"y2": 72,
-			"x2": 36
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1386
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 64,
-			"x1": 36,
-			"y2": 64,
-			"x2": 36
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1387
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 72,
-			"x1": 41,
-			"y2": 72,
-			"x2": 41
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1388
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 64,
-			"x1": 41,
-			"y2": 64,
-			"x2": 41
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1389
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 72,
-			"x1": 45,
-			"y2": 72,
-			"x2": 45
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1390
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 68,
-			"x1": 45,
-			"y2": 68,
-			"x2": 45
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1391
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 64,
-			"x1": 45,
-			"y2": 64,
-			"x2": 45
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1392
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 96,
-			"x1": 22,
-			"y2": 96,
-			"x2": 22
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1393
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 80,
-			"x1": 22,
-			"y2": 80,
-			"x2": 22
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1394
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 64,
-			"x1": 22,
-			"y2": 64,
-			"x2": 22
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1395
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 100,
-			"x1": 23,
-			"y2": 100,
-			"x2": 23
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1396
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 100,
-			"x1": 29,
-			"y2": 100,
-			"x2": 29
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1397
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 100,
-			"x1": 36,
-			"y2": 100,
-			"x2": 36
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1398
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 100,
-			"x1": 44,
-			"y2": 100,
-			"x2": 44
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1399
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 100,
-			"x1": 52,
-			"y2": 100,
-			"x2": 52
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1400
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 96,
-			"x1": 28,
-			"y2": 96,
-			"x2": 28
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1401
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 88,
-			"x1": 28,
-			"y2": 88,
-			"x2": 28
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1402
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 80,
-			"x1": 28,
-			"y2": 80,
-			"x2": 28
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1403
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 72,
-			"x1": 28,
-			"y2": 72,
-			"x2": 28
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1404
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 96,
-			"x1": 36,
-			"y2": 96,
-			"x2": 36
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1405
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 88,
-			"x1": 36,
-			"y2": 88,
-			"x2": 36
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1406
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 96,
-			"x1": 44,
-			"y2": 96,
-			"x2": 44
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1407
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 88,
-			"x1": 44,
-			"y2": 88,
-			"x2": 44
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1408
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 96,
-			"x1": 52,
-			"y2": 96,
-			"x2": 52
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1409
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 92,
-			"x1": 56,
-			"y2": 92,
-			"x2": 56
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1410
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 84,
-			"x1": 48,
-			"y2": 84,
-			"x2": 48
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1411
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 84,
-			"x1": 56,
-			"y2": 84,
-			"x2": 56
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1412
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 79,
-			"x1": 48,
-			"y2": 79,
-			"x2": 48
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1413
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 79,
-			"x1": 56,
-			"y2": 79,
-			"x2": 56
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1414
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 75,
-			"x1": 48,
-			"y2": 75,
-			"x2": 48
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1415
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 75,
-			"x1": 52,
-			"y2": 75,
-			"x2": 52
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1416
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 75,
-			"x1": 56,
-			"y2": 75,
-			"x2": 56
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1417
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 98,
-			"x1": 24,
-			"y2": 98,
-			"x2": 24
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1418
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 98,
-			"x1": 40,
-			"y2": 98,
-			"x2": 40
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1419
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 98,
-			"x1": 56,
-			"y2": 98,
-			"x2": 56
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1420
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 100,
-			"x1": 20,
-			"y2": 100,
-			"x2": 20
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1421
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 23,
-			"x1": 100,
-			"y2": 23,
-			"x2": 100
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1422
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 29,
-			"x1": 100,
-			"y2": 29,
-			"x2": 100
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1423
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 36,
-			"x1": 100,
-			"y2": 36,
-			"x2": 100
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1424
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 44,
-			"x1": 100,
-			"y2": 44,
-			"x2": 100
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1425
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 52,
-			"x1": 100,
-			"y2": 52,
-			"x2": 100
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1426
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 28,
-			"x1": 96,
-			"y2": 28,
-			"x2": 96
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1427
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 28,
-			"x1": 88,
-			"y2": 28,
-			"x2": 88
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1428
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 28,
-			"x1": 80,
-			"y2": 28,
-			"x2": 80
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1429
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 28,
-			"x1": 72,
-			"y2": 28,
-			"x2": 72
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1430
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 36,
-			"x1": 96,
-			"y2": 36,
-			"x2": 96
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1431
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 36,
-			"x1": 88,
-			"y2": 36,
-			"x2": 88
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1432
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 44,
-			"x1": 96,
-			"y2": 44,
-			"x2": 96
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1433
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 44,
-			"x1": 88,
-			"y2": 44,
-			"x2": 88
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1434
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 52,
-			"x1": 96,
-			"y2": 52,
-			"x2": 96
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1435
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 56,
-			"x1": 92,
-			"y2": 56,
-			"x2": 92
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1436
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 48,
-			"x1": 84,
-			"y2": 48,
-			"x2": 84
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1437
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 56,
-			"x1": 84,
-			"y2": 56,
-			"x2": 84
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1438
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 48,
-			"x1": 79,
-			"y2": 48,
-			"x2": 79
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1439
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 56,
-			"x1": 79,
-			"y2": 56,
-			"x2": 79
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1440
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 48,
-			"x1": 75,
-			"y2": 48,
-			"x2": 75
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1441
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 52,
-			"x1": 75,
-			"y2": 52,
-			"x2": 75
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1442
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 56,
-			"x1": 75,
-			"y2": 56,
-			"x2": 75
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1443
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 24,
-			"x1": 98,
-			"y2": 24,
-			"x2": 98
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1444
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 40,
-			"x1": 98,
-			"y2": 40,
-			"x2": 98
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1445
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 56,
-			"x1": 98,
-			"y2": 56,
-			"x2": 98
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1446
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 20,
-			"x1": 97,
-			"y2": 20,
-			"x2": 97
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1447
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 20,
-			"x1": 91,
-			"y2": 20,
-			"x2": 91
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1448
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 20,
-			"x1": 84,
-			"y2": 20,
-			"x2": 84
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1449
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 20,
-			"x1": 76,
-			"y2": 20,
-			"x2": 76
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1450
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 20,
-			"x1": 68,
-			"y2": 20,
-			"x2": 68
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1451
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 24,
-			"x1": 92,
-			"y2": 24,
-			"x2": 92
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1452
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 32,
-			"x1": 92,
-			"y2": 32,
-			"x2": 92
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1453
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 40,
-			"x1": 92,
-			"y2": 40,
-			"x2": 92
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1454
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 48,
-			"x1": 92,
-			"y2": 48,
-			"x2": 92
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1455
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 24,
-			"x1": 84,
-			"y2": 24,
-			"x2": 84
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1456
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 32,
-			"x1": 84,
-			"y2": 32,
-			"x2": 84
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1457
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 24,
-			"x1": 76,
-			"y2": 24,
-			"x2": 76
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1458
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 32,
-			"x1": 76,
-			"y2": 32,
-			"x2": 76
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1459
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 24,
-			"x1": 68,
-			"y2": 24,
-			"x2": 68
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1460
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 28,
-			"x1": 64,
-			"y2": 28,
-			"x2": 64
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1461
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 36,
-			"x1": 72,
-			"y2": 36,
-			"x2": 72
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1462
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 36,
-			"x1": 64,
-			"y2": 36,
-			"x2": 64
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1463
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 41,
-			"x1": 72,
-			"y2": 41,
-			"x2": 72
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1464
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 41,
-			"x1": 64,
-			"y2": 41,
-			"x2": 64
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1465
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 45,
-			"x1": 72,
-			"y2": 45,
-			"x2": 72
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1466
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 45,
-			"x1": 68,
-			"y2": 45,
-			"x2": 68
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1467
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 45,
-			"x1": 64,
-			"y2": 45,
-			"x2": 64
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1468
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 22,
-			"x1": 96,
-			"y2": 22,
-			"x2": 96
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1469
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 22,
-			"x1": 80,
-			"y2": 22,
-			"x2": 80
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1470
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 22,
-			"x1": 64,
-			"y2": 22,
-			"x2": 64
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1471
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 20,
-			"x1": 100,
-			"y2": 20,
-			"x2": 100
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1472
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 97,
-			"x1": 100,
-			"y2": 97,
-			"x2": 100
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1473
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 91,
-			"x1": 100,
-			"y2": 91,
-			"x2": 100
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1474
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 84,
-			"x1": 100,
-			"y2": 84,
-			"x2": 100
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1475
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 76,
-			"x1": 100,
-			"y2": 76,
-			"x2": 100
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1476
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 68,
-			"x1": 100,
-			"y2": 68,
-			"x2": 100
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1477
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 92,
-			"x1": 96,
-			"y2": 92,
-			"x2": 96
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1478
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 92,
-			"x1": 88,
-			"y2": 92,
-			"x2": 88
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1479
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 92,
-			"x1": 80,
-			"y2": 92,
-			"x2": 80
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1480
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 92,
-			"x1": 72,
-			"y2": 92,
-			"x2": 72
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1481
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 84,
-			"x1": 96,
-			"y2": 84,
-			"x2": 96
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1482
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 84,
-			"x1": 88,
-			"y2": 84,
-			"x2": 88
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1483
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 76,
-			"x1": 96,
-			"y2": 76,
-			"x2": 96
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1484
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 76,
-			"x1": 88,
-			"y2": 76,
-			"x2": 88
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1485
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 68,
-			"x1": 96,
-			"y2": 68,
-			"x2": 96
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1486
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 64,
-			"x1": 92,
-			"y2": 64,
-			"x2": 92
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1487
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 72,
-			"x1": 84,
-			"y2": 72,
-			"x2": 84
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1488
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 64,
-			"x1": 84,
-			"y2": 64,
-			"x2": 84
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1489
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 72,
-			"x1": 79,
-			"y2": 72,
-			"x2": 79
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1490
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 64,
-			"x1": 79,
-			"y2": 64,
-			"x2": 79
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1491
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 72,
-			"x1": 75,
-			"y2": 72,
-			"x2": 75
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1492
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 68,
-			"x1": 75,
-			"y2": 68,
-			"x2": 75
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1493
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 64,
-			"x1": 75,
-			"y2": 64,
-			"x2": 75
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1494
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 96,
-			"x1": 98,
-			"y2": 96,
-			"x2": 98
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1495
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 80,
-			"x1": 98,
-			"y2": 80,
-			"x2": 98
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1496
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 64,
-			"x1": 98,
-			"y2": 64,
-			"x2": 98
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1497
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 100,
-			"x1": 97,
-			"y2": 100,
-			"x2": 97
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1498
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 100,
-			"x1": 91,
-			"y2": 100,
-			"x2": 91
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1499
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 100,
-			"x1": 84,
-			"y2": 100,
-			"x2": 84
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1500
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 100,
-			"x1": 76,
-			"y2": 100,
-			"x2": 76
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1501
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 100,
-			"x1": 68,
-			"y2": 100,
-			"x2": 68
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1502
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 96,
-			"x1": 92,
-			"y2": 96,
-			"x2": 92
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1503
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 88,
-			"x1": 92,
-			"y2": 88,
-			"x2": 92
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1504
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 80,
-			"x1": 92,
-			"y2": 80,
-			"x2": 92
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1505
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 72,
-			"x1": 92,
-			"y2": 72,
-			"x2": 92
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1506
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 96,
-			"x1": 84,
-			"y2": 96,
-			"x2": 84
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1507
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 88,
-			"x1": 84,
-			"y2": 88,
-			"x2": 84
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1508
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 96,
-			"x1": 76,
-			"y2": 96,
-			"x2": 76
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1509
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 88,
-			"x1": 76,
-			"y2": 88,
-			"x2": 76
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1510
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 96,
-			"x1": 68,
-			"y2": 96,
-			"x2": 68
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1511
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 92,
-			"x1": 64,
-			"y2": 92,
-			"x2": 64
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1512
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 84,
-			"x1": 72,
-			"y2": 84,
-			"x2": 72
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1513
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 84,
-			"x1": 64,
-			"y2": 84,
-			"x2": 64
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1514
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 79,
-			"x1": 72,
-			"y2": 79,
-			"x2": 72
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1515
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 79,
-			"x1": 64,
-			"y2": 79,
-			"x2": 64
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1516
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 75,
-			"x1": 72,
-			"y2": 75,
-			"x2": 72
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1517
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 75,
-			"x1": 68,
-			"y2": 75,
-			"x2": 68
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1518
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 75,
-			"x1": 64,
-			"y2": 75,
-			"x2": 64
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1519
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 98,
-			"x1": 96,
-			"y2": 98,
-			"x2": 96
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1520
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 98,
-			"x1": 80,
-			"y2": 98,
-			"x2": 80
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1521
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 98,
-			"x1": 64,
-			"y2": 98,
-			"x2": 64
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1522
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 100,
-			"x1": 100,
-			"y2": 100,
-			"x2": 100
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1523
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 60,
-			"x1": 10,
-			"y2": 60,
-			"x2": 10
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1524
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 60,
-			"x1": 20,
-			"y2": 60,
-			"x2": 20
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1525
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 10,
-			"x1": 60,
-			"y2": 10,
-			"x2": 60
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1526
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 20,
-			"x1": 60,
-			"y2": 20,
-			"x2": 60
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1527
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 100,
-			"x1": 60,
-			"y2": 100,
-			"x2": 60
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1528
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 110,
-			"x1": 60,
-			"y2": 110,
-			"x2": 60
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1529
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 60,
-			"x1": 100,
-			"y2": 60,
-			"x2": 100
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1530
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 60,
-			"x1": 110,
-			"y2": 60,
-			"x2": 110
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1531
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 60,
-			"x1": 24,
-			"y2": 60,
-			"x2": 24
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1532
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 60,
-			"x1": 48,
-			"y2": 60,
-			"x2": 48
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1533
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 24,
-			"x1": 60,
-			"y2": 24,
-			"x2": 60
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1534
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 48,
-			"x1": 60,
-			"y2": 48,
-			"x2": 60
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1535
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 72,
-			"x1": 60,
-			"y2": 72,
-			"x2": 60
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1536
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 96,
-			"x1": 60,
-			"y2": 96,
-			"x2": 60
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1537
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 60,
-			"x1": 72,
-			"y2": 60,
-			"x2": 72
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1538
-	},
-	{
-		"color": "门",
-		"line": {
-			"y1": 60,
-			"x1": 96,
-			"y2": 60,
-			"x2": 96
-		},
-		"width": "NORMAL",
-		"doorType": "NORMAL",
-		"id": 1539
-	}],
-	"buildingName": "B",
-	"regions": [{
-		"color": "店铺",
-		"id": 846,
-		"nodeId": 846,
-		"points": [{
-			"x": 0,
-			"y": 0
-		},
-		{
-			"x": 20,
-			"y": 0
-		},
-		{
-			"x": 20,
-			"y": 20
-		},
-		{
-			"x": 0,
-			"y": 20
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 847,
-		"nodeId": 847,
-		"points": [{
-			"x": 10,
-			"y": 20
-		},
-		{
-			"x": 20,
-			"y": 20
-		},
-		{
-			"x": 20,
-			"y": 26
-		},
-		{
-			"x": 10,
-			"y": 26
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 848,
-		"nodeId": 848,
-		"points": [{
-			"x": 10,
-			"y": 26
-		},
-		{
-			"x": 20,
-			"y": 26
-		},
-		{
-			"x": 20,
-			"y": 32
-		},
-		{
-			"x": 10,
-			"y": 32
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 849,
-		"nodeId": 849,
-		"points": [{
-			"x": 10,
-			"y": 32
-		},
-		{
-			"x": 20,
-			"y": 32
-		},
-		{
-			"x": 20,
-			"y": 40
-		},
-		{
-			"x": 10,
-			"y": 40
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 850,
-		"nodeId": 850,
-		"points": [{
-			"x": 10,
-			"y": 40
-		},
-		{
-			"x": 20,
-			"y": 40
-		},
-		{
-			"x": 20,
-			"y": 48
-		},
-		{
-			"x": 10,
-			"y": 48
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 851,
-		"nodeId": 851,
-		"points": [{
-			"x": 10,
-			"y": 48
-		},
-		{
-			"x": 20,
-			"y": 48
-		},
-		{
-			"x": 20,
-			"y": 56
-		},
-		{
-			"x": 10,
-			"y": 56
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 852,
-		"nodeId": 852,
-		"points": [{
-			"x": 20,
-			"y": 10
-		},
-		{
-			"x": 26,
-			"y": 10
-		},
-		{
-			"x": 26,
-			"y": 20
-		},
-		{
-			"x": 20,
-			"y": 20
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 853,
-		"nodeId": 853,
-		"points": [{
-			"x": 26,
-			"y": 10
-		},
-		{
-			"x": 32,
-			"y": 10
-		},
-		{
-			"x": 32,
-			"y": 20
-		},
-		{
-			"x": 26,
-			"y": 20
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 854,
-		"nodeId": 854,
-		"points": [{
-			"x": 32,
-			"y": 10
-		},
-		{
-			"x": 40,
-			"y": 10
-		},
-		{
-			"x": 40,
-			"y": 20
-		},
-		{
-			"x": 32,
-			"y": 20
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 855,
-		"nodeId": 855,
-		"points": [{
-			"x": 40,
-			"y": 10
-		},
-		{
-			"x": 48,
-			"y": 10
-		},
-		{
-			"x": 48,
-			"y": 20
-		},
-		{
-			"x": 40,
-			"y": 20
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 856,
-		"nodeId": 856,
-		"points": [{
-			"x": 48,
-			"y": 10
-		},
-		{
-			"x": 56,
-			"y": 10
-		},
-		{
-			"x": 56,
-			"y": 20
-		},
-		{
-			"x": 48,
-			"y": 20
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 857,
-		"nodeId": 857,
-		"points": [{
-			"x": 24,
-			"y": 24
-		},
-		{
-			"x": 32,
-			"y": 24
-		},
-		{
-			"x": 32,
-			"y": 32
-		},
-		{
-			"x": 24,
-			"y": 32
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 858,
-		"nodeId": 858,
-		"points": [{
-			"x": 32,
-			"y": 24
-		},
-		{
-			"x": 40,
-			"y": 24
-		},
-		{
-			"x": 40,
-			"y": 32
-		},
-		{
-			"x": 32,
-			"y": 32
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 859,
-		"nodeId": 859,
-		"points": [{
-			"x": 40,
-			"y": 24
-		},
-		{
-			"x": 48,
-			"y": 24
-		},
-		{
-			"x": 48,
-			"y": 32
-		},
-		{
-			"x": 40,
-			"y": 32
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 860,
-		"nodeId": 860,
-		"points": [{
-			"x": 48,
-			"y": 24
-		},
-		{
-			"x": 56,
-			"y": 24
-		},
-		{
-			"x": 56,
-			"y": 32
-		},
-		{
-			"x": 48,
-			"y": 32
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 861,
-		"nodeId": 861,
-		"points": [{
-			"x": 24,
-			"y": 32
-		},
-		{
-			"x": 32,
-			"y": 32
-		},
-		{
-			"x": 32,
-			"y": 40
-		},
-		{
-			"x": 24,
-			"y": 40
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 862,
-		"nodeId": 862,
-		"points": [{
-			"x": 24,
-			"y": 40
-		},
-		{
-			"x": 32,
-			"y": 40
-		},
-		{
-			"x": 32,
-			"y": 48
-		},
-		{
-			"x": 24,
-			"y": 48
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 863,
-		"nodeId": 863,
-		"points": [{
-			"x": 24,
-			"y": 48
-		},
-		{
-			"x": 32,
-			"y": 48
-		},
-		{
-			"x": 32,
-			"y": 56
-		},
-		{
-			"x": 24,
-			"y": 56
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 864,
-		"nodeId": 864,
-		"points": [{
-			"x": 48,
-			"y": 32
-		},
-		{
-			"x": 56,
-			"y": 32
-		},
-		{
-			"x": 56,
-			"y": 40
-		},
-		{
-			"x": 48,
-			"y": 40
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 865,
-		"nodeId": 865,
-		"points": [{
-			"x": 48,
-			"y": 40
-		},
-		{
-			"x": 56,
-			"y": 40
-		},
-		{
-			"x": 56,
-			"y": 42
-		},
-		{
-			"x": 48,
-			"y": 42
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 866,
-		"nodeId": 866,
-		"points": [{
-			"x": 48,
-			"y": 42
-		},
-		{
-			"x": 52,
-			"y": 42
-		},
-		{
-			"x": 52,
-			"y": 48
-		},
-		{
-			"x": 48,
-			"y": 48
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 867,
-		"nodeId": 867,
-		"points": [{
-			"x": 52,
-			"y": 42
-		},
-		{
-			"x": 56,
-			"y": 42
-		},
-		{
-			"x": 56,
-			"y": 48
-		},
-		{
-			"x": 52,
-			"y": 48
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 868,
-		"nodeId": 868,
-		"points": [{
-			"x": 32,
-			"y": 48
-		},
-		{
-			"x": 40,
-			"y": 48
-		},
-		{
-			"x": 40,
-			"y": 56
-		},
-		{
-			"x": 32,
-			"y": 56
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 869,
-		"nodeId": 869,
-		"points": [{
-			"x": 40,
-			"y": 48
-		},
-		{
-			"x": 42,
-			"y": 48
-		},
-		{
-			"x": 42,
-			"y": 56
-		},
-		{
-			"x": 40,
-			"y": 56
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 870,
-		"nodeId": 870,
-		"points": [{
-			"x": 42,
-			"y": 48
-		},
-		{
-			"x": 48,
-			"y": 48
-		},
-		{
-			"x": 48,
-			"y": 52
-		},
-		{
-			"x": 42,
-			"y": 52
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 871,
-		"nodeId": 871,
-		"points": [{
-			"x": 42,
-			"y": 52
-		},
-		{
-			"x": 48,
-			"y": 52
-		},
-		{
-			"x": 48,
-			"y": 56
-		},
-		{
-			"x": 42,
-			"y": 56
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 872,
-		"nodeId": 872,
-		"points": [{
-			"x": 20,
-			"y": 20
-		},
-		{
-			"x": 24,
-			"y": 20
-		},
-		{
-			"x": 24,
-			"y": 24
-		},
-		{
-			"x": 20,
-			"y": 24
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 873,
-		"nodeId": 873,
-		"points": [{
-			"x": 20,
-			"y": 24
-		},
-		{
-			"x": 24,
-			"y": 24
-		},
-		{
-			"x": 24,
-			"y": 40
-		},
-		{
-			"x": 20,
-			"y": 40
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 874,
-		"nodeId": 874,
-		"points": [{
-			"x": 20,
-			"y": 40
-		},
-		{
-			"x": 24,
-			"y": 40
-		},
-		{
-			"x": 24,
-			"y": 56
-		},
-		{
-			"x": 20,
-			"y": 56
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 875,
-		"nodeId": 875,
-		"points": [{
-			"x": 24,
-			"y": 20
-		},
-		{
-			"x": 40,
-			"y": 20
-		},
-		{
-			"x": 40,
-			"y": 24
-		},
-		{
-			"x": 24,
-			"y": 24
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 876,
-		"nodeId": 876,
-		"points": [{
-			"x": 40,
-			"y": 20
-		},
-		{
-			"x": 56,
-			"y": 20
-		},
-		{
-			"x": 56,
-			"y": 24
-		},
-		{
-			"x": 40,
-			"y": 24
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 877,
-		"nodeId": 877,
-		"points": [{
-			"x": 32,
-			"y": 32
-		},
-		{
-			"x": 48,
-			"y": 32
-		},
-		{
-			"x": 48,
-			"y": 48
-		},
-		{
-			"x": 32,
-			"y": 48
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 878,
-		"nodeId": 878,
-		"points": [{
-			"x": 100,
-			"y": 0
-		},
-		{
-			"x": 120,
-			"y": 0
-		},
-		{
-			"x": 120,
-			"y": 20
-		},
-		{
-			"x": 100,
-			"y": 20
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 879,
-		"nodeId": 879,
-		"points": [{
-			"x": 0,
-			"y": 100
-		},
-		{
-			"x": 20,
-			"y": 100
-		},
-		{
-			"x": 20,
-			"y": 120
-		},
-		{
-			"x": 0,
-			"y": 120
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 880,
-		"nodeId": 880,
-		"points": [{
-			"x": 100,
-			"y": 100
-		},
-		{
-			"x": 120,
-			"y": 100
-		},
-		{
-			"x": 120,
-			"y": 120
-		},
-		{
-			"x": 100,
-			"y": 120
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 881,
-		"nodeId": 881,
-		"points": [{
-			"x": 100,
-			"y": 20
-		},
-		{
-			"x": 110,
-			"y": 20
-		},
-		{
-			"x": 110,
-			"y": 26
-		},
-		{
-			"x": 100,
-			"y": 26
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 882,
-		"nodeId": 882,
-		"points": [{
-			"x": 10,
-			"y": 94
-		},
-		{
-			"x": 20,
-			"y": 94
-		},
-		{
-			"x": 20,
-			"y": 100
-		},
-		{
-			"x": 10,
-			"y": 100
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 883,
-		"nodeId": 883,
-		"points": [{
-			"x": 100,
-			"y": 94
-		},
-		{
-			"x": 110,
-			"y": 94
-		},
-		{
-			"x": 110,
-			"y": 100
-		},
-		{
-			"x": 100,
-			"y": 100
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 884,
-		"nodeId": 884,
-		"points": [{
-			"x": 100,
-			"y": 26
-		},
-		{
-			"x": 110,
-			"y": 26
-		},
-		{
-			"x": 110,
-			"y": 32
-		},
-		{
-			"x": 100,
-			"y": 32
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 885,
-		"nodeId": 885,
-		"points": [{
-			"x": 10,
-			"y": 88
-		},
-		{
-			"x": 20,
-			"y": 88
-		},
-		{
-			"x": 20,
-			"y": 94
-		},
-		{
-			"x": 10,
-			"y": 94
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 886,
-		"nodeId": 886,
-		"points": [{
-			"x": 100,
-			"y": 88
-		},
-		{
-			"x": 110,
-			"y": 88
-		},
-		{
-			"x": 110,
-			"y": 94
-		},
-		{
-			"x": 100,
-			"y": 94
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 887,
-		"nodeId": 887,
-		"points": [{
-			"x": 100,
-			"y": 32
-		},
-		{
-			"x": 110,
-			"y": 32
-		},
-		{
-			"x": 110,
-			"y": 40
-		},
-		{
-			"x": 100,
-			"y": 40
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 888,
-		"nodeId": 888,
-		"points": [{
-			"x": 10,
-			"y": 80
-		},
-		{
-			"x": 20,
-			"y": 80
-		},
-		{
-			"x": 20,
-			"y": 88
-		},
-		{
-			"x": 10,
-			"y": 88
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 889,
-		"nodeId": 889,
-		"points": [{
-			"x": 100,
-			"y": 80
-		},
-		{
-			"x": 110,
-			"y": 80
-		},
-		{
-			"x": 110,
-			"y": 88
-		},
-		{
-			"x": 100,
-			"y": 88
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 890,
-		"nodeId": 890,
-		"points": [{
-			"x": 100,
-			"y": 40
-		},
-		{
-			"x": 110,
-			"y": 40
-		},
-		{
-			"x": 110,
-			"y": 48
-		},
-		{
-			"x": 100,
-			"y": 48
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 891,
-		"nodeId": 891,
-		"points": [{
-			"x": 10,
-			"y": 72
-		},
-		{
-			"x": 20,
-			"y": 72
-		},
-		{
-			"x": 20,
-			"y": 80
-		},
-		{
-			"x": 10,
-			"y": 80
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 892,
-		"nodeId": 892,
-		"points": [{
-			"x": 100,
-			"y": 72
-		},
-		{
-			"x": 110,
-			"y": 72
-		},
-		{
-			"x": 110,
-			"y": 80
-		},
-		{
-			"x": 100,
-			"y": 80
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 893,
-		"nodeId": 893,
-		"points": [{
-			"x": 100,
-			"y": 48
-		},
-		{
-			"x": 110,
-			"y": 48
-		},
-		{
-			"x": 110,
-			"y": 56
-		},
-		{
-			"x": 100,
-			"y": 56
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 894,
-		"nodeId": 894,
-		"points": [{
-			"x": 10,
-			"y": 64
-		},
-		{
-			"x": 20,
-			"y": 64
-		},
-		{
-			"x": 20,
-			"y": 72
-		},
-		{
-			"x": 10,
-			"y": 72
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 895,
-		"nodeId": 895,
-		"points": [{
-			"x": 100,
-			"y": 64
-		},
-		{
-			"x": 110,
-			"y": 64
-		},
-		{
-			"x": 110,
-			"y": 72
-		},
-		{
-			"x": 100,
-			"y": 72
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 896,
-		"nodeId": 896,
-		"points": [{
-			"x": 94,
-			"y": 10
-		},
-		{
-			"x": 100,
-			"y": 10
-		},
-		{
-			"x": 100,
-			"y": 20
-		},
-		{
-			"x": 94,
-			"y": 20
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 897,
-		"nodeId": 897,
-		"points": [{
-			"x": 20,
-			"y": 100
-		},
-		{
-			"x": 26,
-			"y": 100
-		},
-		{
-			"x": 26,
-			"y": 110
-		},
-		{
-			"x": 20,
-			"y": 110
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 898,
-		"nodeId": 898,
-		"points": [{
-			"x": 94,
-			"y": 100
-		},
-		{
-			"x": 100,
-			"y": 100
-		},
-		{
-			"x": 100,
-			"y": 110
-		},
-		{
-			"x": 94,
-			"y": 110
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 899,
-		"nodeId": 899,
-		"points": [{
-			"x": 88,
-			"y": 10
-		},
-		{
-			"x": 94,
-			"y": 10
-		},
-		{
-			"x": 94,
-			"y": 20
-		},
-		{
-			"x": 88,
-			"y": 20
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 900,
-		"nodeId": 900,
-		"points": [{
-			"x": 26,
-			"y": 100
-		},
-		{
-			"x": 32,
-			"y": 100
-		},
-		{
-			"x": 32,
-			"y": 110
-		},
-		{
-			"x": 26,
-			"y": 110
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 901,
-		"nodeId": 901,
-		"points": [{
-			"x": 88,
-			"y": 100
-		},
-		{
-			"x": 94,
-			"y": 100
-		},
-		{
-			"x": 94,
-			"y": 110
-		},
-		{
-			"x": 88,
-			"y": 110
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 902,
-		"nodeId": 902,
-		"points": [{
-			"x": 80,
-			"y": 10
-		},
-		{
-			"x": 88,
-			"y": 10
-		},
-		{
-			"x": 88,
-			"y": 20
-		},
-		{
-			"x": 80,
-			"y": 20
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 903,
-		"nodeId": 903,
-		"points": [{
-			"x": 32,
-			"y": 100
-		},
-		{
-			"x": 40,
-			"y": 100
-		},
-		{
-			"x": 40,
-			"y": 110
-		},
-		{
-			"x": 32,
-			"y": 110
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 904,
-		"nodeId": 904,
-		"points": [{
-			"x": 80,
-			"y": 100
-		},
-		{
-			"x": 88,
-			"y": 100
-		},
-		{
-			"x": 88,
-			"y": 110
-		},
-		{
-			"x": 80,
-			"y": 110
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 905,
-		"nodeId": 905,
-		"points": [{
-			"x": 72,
-			"y": 10
-		},
-		{
-			"x": 80,
-			"y": 10
-		},
-		{
-			"x": 80,
-			"y": 20
-		},
-		{
-			"x": 72,
-			"y": 20
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 906,
-		"nodeId": 906,
-		"points": [{
-			"x": 40,
-			"y": 100
-		},
-		{
-			"x": 48,
-			"y": 100
-		},
-		{
-			"x": 48,
-			"y": 110
-		},
-		{
-			"x": 40,
-			"y": 110
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 907,
-		"nodeId": 907,
-		"points": [{
-			"x": 72,
-			"y": 100
-		},
-		{
-			"x": 80,
-			"y": 100
-		},
-		{
-			"x": 80,
-			"y": 110
-		},
-		{
-			"x": 72,
-			"y": 110
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 908,
-		"nodeId": 908,
-		"points": [{
-			"x": 64,
-			"y": 10
-		},
-		{
-			"x": 72,
-			"y": 10
-		},
-		{
-			"x": 72,
-			"y": 20
-		},
-		{
-			"x": 64,
-			"y": 20
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 909,
-		"nodeId": 909,
-		"points": [{
-			"x": 48,
-			"y": 100
-		},
-		{
-			"x": 56,
-			"y": 100
-		},
-		{
-			"x": 56,
-			"y": 110
-		},
-		{
-			"x": 48,
-			"y": 110
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 910,
-		"nodeId": 910,
-		"points": [{
-			"x": 64,
-			"y": 100
-		},
-		{
-			"x": 72,
-			"y": 100
-		},
-		{
-			"x": 72,
-			"y": 110
-		},
-		{
-			"x": 64,
-			"y": 110
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 911,
-		"nodeId": 911,
-		"points": [{
-			"x": 88,
-			"y": 24
-		},
-		{
-			"x": 96,
-			"y": 24
-		},
-		{
-			"x": 96,
-			"y": 32
-		},
-		{
-			"x": 88,
-			"y": 32
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 912,
-		"nodeId": 912,
-		"points": [{
-			"x": 24,
-			"y": 88
-		},
-		{
-			"x": 32,
-			"y": 88
-		},
-		{
-			"x": 32,
-			"y": 96
-		},
-		{
-			"x": 24,
-			"y": 96
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 913,
-		"nodeId": 913,
-		"points": [{
-			"x": 88,
-			"y": 88
-		},
-		{
-			"x": 96,
-			"y": 88
-		},
-		{
-			"x": 96,
-			"y": 96
-		},
-		{
-			"x": 88,
-			"y": 96
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 914,
-		"nodeId": 914,
-		"points": [{
-			"x": 80,
-			"y": 24
-		},
-		{
-			"x": 88,
-			"y": 24
-		},
-		{
-			"x": 88,
-			"y": 32
-		},
-		{
-			"x": 80,
-			"y": 32
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 915,
-		"nodeId": 915,
-		"points": [{
-			"x": 32,
-			"y": 88
-		},
-		{
-			"x": 40,
-			"y": 88
-		},
-		{
-			"x": 40,
-			"y": 96
-		},
-		{
-			"x": 32,
-			"y": 96
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 916,
-		"nodeId": 916,
-		"points": [{
-			"x": 80,
-			"y": 88
-		},
-		{
-			"x": 88,
-			"y": 88
-		},
-		{
-			"x": 88,
-			"y": 96
-		},
-		{
-			"x": 80,
-			"y": 96
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 917,
-		"nodeId": 917,
-		"points": [{
-			"x": 72,
-			"y": 24
-		},
-		{
-			"x": 80,
-			"y": 24
-		},
-		{
-			"x": 80,
-			"y": 32
-		},
-		{
-			"x": 72,
-			"y": 32
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 918,
-		"nodeId": 918,
-		"points": [{
-			"x": 40,
-			"y": 88
-		},
-		{
-			"x": 48,
-			"y": 88
-		},
-		{
-			"x": 48,
-			"y": 96
-		},
-		{
-			"x": 40,
-			"y": 96
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 919,
-		"nodeId": 919,
-		"points": [{
-			"x": 72,
-			"y": 88
-		},
-		{
-			"x": 80,
-			"y": 88
-		},
-		{
-			"x": 80,
-			"y": 96
-		},
-		{
-			"x": 72,
-			"y": 96
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 920,
-		"nodeId": 920,
-		"points": [{
-			"x": 64,
-			"y": 24
-		},
-		{
-			"x": 72,
-			"y": 24
-		},
-		{
-			"x": 72,
-			"y": 32
-		},
-		{
-			"x": 64,
-			"y": 32
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 921,
-		"nodeId": 921,
-		"points": [{
-			"x": 48,
-			"y": 88
-		},
-		{
-			"x": 56,
-			"y": 88
-		},
-		{
-			"x": 56,
-			"y": 96
-		},
-		{
-			"x": 48,
-			"y": 96
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 922,
-		"nodeId": 922,
-		"points": [{
-			"x": 64,
-			"y": 88
-		},
-		{
-			"x": 72,
-			"y": 88
-		},
-		{
-			"x": 72,
-			"y": 96
-		},
-		{
-			"x": 64,
-			"y": 96
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 923,
-		"nodeId": 923,
-		"points": [{
-			"x": 88,
-			"y": 32
-		},
-		{
-			"x": 96,
-			"y": 32
-		},
-		{
-			"x": 96,
-			"y": 40
-		},
-		{
-			"x": 88,
-			"y": 40
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 924,
-		"nodeId": 924,
-		"points": [{
-			"x": 24,
-			"y": 80
-		},
-		{
-			"x": 32,
-			"y": 80
-		},
-		{
-			"x": 32,
-			"y": 88
-		},
-		{
-			"x": 24,
-			"y": 88
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 925,
-		"nodeId": 925,
-		"points": [{
-			"x": 88,
-			"y": 80
-		},
-		{
-			"x": 96,
-			"y": 80
-		},
-		{
-			"x": 96,
-			"y": 88
-		},
-		{
-			"x": 88,
-			"y": 88
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 926,
-		"nodeId": 926,
-		"points": [{
-			"x": 88,
-			"y": 40
-		},
-		{
-			"x": 96,
-			"y": 40
-		},
-		{
-			"x": 96,
-			"y": 48
-		},
-		{
-			"x": 88,
-			"y": 48
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 927,
-		"nodeId": 927,
-		"points": [{
-			"x": 24,
-			"y": 72
-		},
-		{
-			"x": 32,
-			"y": 72
-		},
-		{
-			"x": 32,
-			"y": 80
-		},
-		{
-			"x": 24,
-			"y": 80
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 928,
-		"nodeId": 928,
-		"points": [{
-			"x": 88,
-			"y": 72
-		},
-		{
-			"x": 96,
-			"y": 72
-		},
-		{
-			"x": 96,
-			"y": 80
-		},
-		{
-			"x": 88,
-			"y": 80
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 929,
-		"nodeId": 929,
-		"points": [{
-			"x": 88,
-			"y": 48
-		},
-		{
-			"x": 96,
-			"y": 48
-		},
-		{
-			"x": 96,
-			"y": 56
-		},
-		{
-			"x": 88,
-			"y": 56
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 930,
-		"nodeId": 930,
-		"points": [{
-			"x": 24,
-			"y": 64
-		},
-		{
-			"x": 32,
-			"y": 64
-		},
-		{
-			"x": 32,
-			"y": 72
-		},
-		{
-			"x": 24,
-			"y": 72
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 931,
-		"nodeId": 931,
-		"points": [{
-			"x": 88,
-			"y": 64
-		},
-		{
-			"x": 96,
-			"y": 64
-		},
-		{
-			"x": 96,
-			"y": 72
-		},
-		{
-			"x": 88,
-			"y": 72
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 932,
-		"nodeId": 932,
-		"points": [{
-			"x": 64,
-			"y": 32
-		},
-		{
-			"x": 72,
-			"y": 32
-		},
-		{
-			"x": 72,
-			"y": 40
-		},
-		{
-			"x": 64,
-			"y": 40
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 933,
-		"nodeId": 933,
-		"points": [{
-			"x": 48,
-			"y": 80
-		},
-		{
-			"x": 56,
-			"y": 80
-		},
-		{
-			"x": 56,
-			"y": 88
-		},
-		{
-			"x": 48,
-			"y": 88
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 934,
-		"nodeId": 934,
-		"points": [{
-			"x": 64,
-			"y": 80
-		},
-		{
-			"x": 72,
-			"y": 80
-		},
-		{
-			"x": 72,
-			"y": 88
-		},
-		{
-			"x": 64,
-			"y": 88
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 935,
-		"nodeId": 935,
-		"points": [{
-			"x": 64,
-			"y": 40
-		},
-		{
-			"x": 72,
-			"y": 40
-		},
-		{
-			"x": 72,
-			"y": 42
-		},
-		{
-			"x": 64,
-			"y": 42
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 936,
-		"nodeId": 936,
-		"points": [{
-			"x": 48,
-			"y": 78
-		},
-		{
-			"x": 56,
-			"y": 78
-		},
-		{
-			"x": 56,
-			"y": 80
-		},
-		{
-			"x": 48,
-			"y": 80
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 937,
-		"nodeId": 937,
-		"points": [{
-			"x": 64,
-			"y": 78
-		},
-		{
-			"x": 72,
-			"y": 78
-		},
-		{
-			"x": 72,
-			"y": 80
-		},
-		{
-			"x": 64,
-			"y": 80
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 938,
-		"nodeId": 938,
-		"points": [{
-			"x": 68,
-			"y": 42
-		},
-		{
-			"x": 72,
-			"y": 42
-		},
-		{
-			"x": 72,
-			"y": 48
-		},
-		{
-			"x": 68,
-			"y": 48
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 939,
-		"nodeId": 939,
-		"points": [{
-			"x": 48,
-			"y": 72
-		},
-		{
-			"x": 52,
-			"y": 72
-		},
-		{
-			"x": 52,
-			"y": 78
-		},
-		{
-			"x": 48,
-			"y": 78
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 940,
-		"nodeId": 940,
-		"points": [{
-			"x": 68,
-			"y": 72
-		},
-		{
-			"x": 72,
-			"y": 72
-		},
-		{
-			"x": 72,
-			"y": 78
-		},
-		{
-			"x": 68,
-			"y": 78
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 941,
-		"nodeId": 941,
-		"points": [{
-			"x": 64,
-			"y": 42
-		},
-		{
-			"x": 68,
-			"y": 42
-		},
-		{
-			"x": 68,
-			"y": 48
-		},
-		{
-			"x": 64,
-			"y": 48
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 942,
-		"nodeId": 942,
-		"points": [{
-			"x": 52,
-			"y": 72
-		},
-		{
-			"x": 56,
-			"y": 72
-		},
-		{
-			"x": 56,
-			"y": 78
-		},
-		{
-			"x": 52,
-			"y": 78
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 943,
-		"nodeId": 943,
-		"points": [{
-			"x": 64,
-			"y": 72
-		},
-		{
-			"x": 68,
-			"y": 72
-		},
-		{
-			"x": 68,
-			"y": 78
-		},
-		{
-			"x": 64,
-			"y": 78
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 944,
-		"nodeId": 944,
-		"points": [{
-			"x": 80,
-			"y": 48
-		},
-		{
-			"x": 88,
-			"y": 48
-		},
-		{
-			"x": 88,
-			"y": 56
-		},
-		{
-			"x": 80,
-			"y": 56
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 945,
-		"nodeId": 945,
-		"points": [{
-			"x": 32,
-			"y": 64
-		},
-		{
-			"x": 40,
-			"y": 64
-		},
-		{
-			"x": 40,
-			"y": 72
-		},
-		{
-			"x": 32,
-			"y": 72
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 946,
-		"nodeId": 946,
-		"points": [{
-			"x": 80,
-			"y": 64
-		},
-		{
-			"x": 88,
-			"y": 64
-		},
-		{
-			"x": 88,
-			"y": 72
-		},
-		{
-			"x": 80,
-			"y": 72
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 947,
-		"nodeId": 947,
-		"points": [{
-			"x": 78,
-			"y": 48
-		},
-		{
-			"x": 80,
-			"y": 48
-		},
-		{
-			"x": 80,
-			"y": 56
-		},
-		{
-			"x": 78,
-			"y": 56
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 948,
-		"nodeId": 948,
-		"points": [{
-			"x": 40,
-			"y": 64
-		},
-		{
-			"x": 42,
-			"y": 64
-		},
-		{
-			"x": 42,
-			"y": 72
-		},
-		{
-			"x": 40,
-			"y": 72
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 949,
-		"nodeId": 949,
-		"points": [{
-			"x": 78,
-			"y": 64
-		},
-		{
-			"x": 80,
-			"y": 64
-		},
-		{
-			"x": 80,
-			"y": 72
-		},
-		{
-			"x": 78,
-			"y": 72
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 950,
-		"nodeId": 950,
-		"points": [{
-			"x": 72,
-			"y": 48
-		},
-		{
-			"x": 78,
-			"y": 48
-		},
-		{
-			"x": 78,
-			"y": 52
-		},
-		{
-			"x": 72,
-			"y": 52
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 951,
-		"nodeId": 951,
-		"points": [{
-			"x": 42,
-			"y": 68
-		},
-		{
-			"x": 48,
-			"y": 68
-		},
-		{
-			"x": 48,
-			"y": 72
-		},
-		{
-			"x": 42,
-			"y": 72
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 952,
-		"nodeId": 952,
-		"points": [{
-			"x": 72,
-			"y": 68
-		},
-		{
-			"x": 78,
-			"y": 68
-		},
-		{
-			"x": 78,
-			"y": 72
-		},
-		{
-			"x": 72,
-			"y": 72
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 953,
-		"nodeId": 953,
-		"points": [{
-			"x": 72,
-			"y": 52
-		},
-		{
-			"x": 78,
-			"y": 52
-		},
-		{
-			"x": 78,
-			"y": 56
-		},
-		{
-			"x": 72,
-			"y": 56
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 954,
-		"nodeId": 954,
-		"points": [{
-			"x": 42,
-			"y": 64
-		},
-		{
-			"x": 48,
-			"y": 64
-		},
-		{
-			"x": 48,
-			"y": 68
-		},
-		{
-			"x": 42,
-			"y": 68
-		}]
-	},
-	{
-		"color": "店铺",
-		"id": 955,
-		"nodeId": 955,
-		"points": [{
-			"x": 72,
-			"y": 64
-		},
-		{
-			"x": 78,
-			"y": 64
-		},
-		{
-			"x": 78,
-			"y": 68
-		},
-		{
-			"x": 72,
-			"y": 68
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 956,
-		"nodeId": 956,
-		"points": [{
-			"x": 96,
-			"y": 20
-		},
-		{
-			"x": 100,
-			"y": 20
-		},
-		{
-			"x": 100,
-			"y": 24
-		},
-		{
-			"x": 96,
-			"y": 24
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 957,
-		"nodeId": 957,
-		"points": [{
-			"x": 20,
-			"y": 96
-		},
-		{
-			"x": 24,
-			"y": 96
-		},
-		{
-			"x": 24,
-			"y": 100
-		},
-		{
-			"x": 20,
-			"y": 100
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 958,
-		"nodeId": 958,
-		"points": [{
-			"x": 96,
-			"y": 96
-		},
-		{
-			"x": 100,
-			"y": 96
-		},
-		{
-			"x": 100,
-			"y": 100
-		},
-		{
-			"x": 96,
-			"y": 100
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 959,
-		"nodeId": 959,
-		"points": [{
-			"x": 96,
-			"y": 24
-		},
-		{
-			"x": 100,
-			"y": 24
-		},
-		{
-			"x": 100,
-			"y": 40
-		},
-		{
-			"x": 96,
-			"y": 40
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 960,
-		"nodeId": 960,
-		"points": [{
-			"x": 20,
-			"y": 80
-		},
-		{
-			"x": 24,
-			"y": 80
-		},
-		{
-			"x": 24,
-			"y": 96
-		},
-		{
-			"x": 20,
-			"y": 96
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 961,
-		"nodeId": 961,
-		"points": [{
-			"x": 96,
-			"y": 80
-		},
-		{
-			"x": 100,
-			"y": 80
-		},
-		{
-			"x": 100,
-			"y": 96
-		},
-		{
-			"x": 96,
-			"y": 96
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 962,
-		"nodeId": 962,
-		"points": [{
-			"x": 96,
-			"y": 40
-		},
-		{
-			"x": 100,
-			"y": 40
-		},
-		{
-			"x": 100,
-			"y": 56
-		},
-		{
-			"x": 96,
-			"y": 56
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 963,
-		"nodeId": 963,
-		"points": [{
-			"x": 20,
-			"y": 64
-		},
-		{
-			"x": 24,
-			"y": 64
-		},
-		{
-			"x": 24,
-			"y": 80
-		},
-		{
-			"x": 20,
-			"y": 80
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 964,
-		"nodeId": 964,
-		"points": [{
-			"x": 96,
-			"y": 64
-		},
-		{
-			"x": 100,
-			"y": 64
-		},
-		{
-			"x": 100,
-			"y": 80
-		},
-		{
-			"x": 96,
-			"y": 80
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 965,
-		"nodeId": 965,
-		"points": [{
-			"x": 80,
-			"y": 20
-		},
-		{
-			"x": 96,
-			"y": 20
-		},
-		{
-			"x": 96,
-			"y": 24
-		},
-		{
-			"x": 80,
-			"y": 24
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 966,
-		"nodeId": 966,
-		"points": [{
-			"x": 24,
-			"y": 96
-		},
-		{
-			"x": 40,
-			"y": 96
-		},
-		{
-			"x": 40,
-			"y": 100
-		},
-		{
-			"x": 24,
-			"y": 100
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 967,
-		"nodeId": 967,
-		"points": [{
-			"x": 80,
-			"y": 96
-		},
-		{
-			"x": 96,
-			"y": 96
-		},
-		{
-			"x": 96,
-			"y": 100
-		},
-		{
-			"x": 80,
-			"y": 100
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 968,
-		"nodeId": 968,
-		"points": [{
-			"x": 64,
-			"y": 20
-		},
-		{
-			"x": 80,
-			"y": 20
-		},
-		{
-			"x": 80,
-			"y": 24
-		},
-		{
-			"x": 64,
-			"y": 24
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 969,
-		"nodeId": 969,
-		"points": [{
-			"x": 40,
-			"y": 96
-		},
-		{
-			"x": 56,
-			"y": 96
-		},
-		{
-			"x": 56,
-			"y": 100
-		},
-		{
-			"x": 40,
-			"y": 100
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 970,
-		"nodeId": 970,
-		"points": [{
-			"x": 64,
-			"y": 96
-		},
-		{
-			"x": 80,
-			"y": 96
-		},
-		{
-			"x": 80,
-			"y": 100
-		},
-		{
-			"x": 64,
-			"y": 100
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 971,
-		"nodeId": 971,
-		"points": [{
-			"x": 72,
-			"y": 32
-		},
-		{
-			"x": 88,
-			"y": 32
-		},
-		{
-			"x": 88,
-			"y": 48
-		},
-		{
-			"x": 72,
-			"y": 48
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 972,
-		"nodeId": 972,
-		"points": [{
-			"x": 32,
-			"y": 72
-		},
-		{
-			"x": 48,
-			"y": 72
-		},
-		{
-			"x": 48,
-			"y": 88
-		},
-		{
-			"x": 32,
-			"y": 88
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 973,
-		"nodeId": 973,
-		"points": [{
-			"x": 72,
-			"y": 72
-		},
-		{
-			"x": 88,
-			"y": 72
-		},
-		{
-			"x": 88,
-			"y": 88
-		},
-		{
-			"x": 72,
-			"y": 88
-		}]
-	},
-	{
-		"color": "楼道",
-		"id": 974,
-		"nodeId": 974,
-		"points": [{
-			"x": 10,
-			"y": 56
-		},
-		{
-			"x": 20,
-			"y": 56
-		},
-		{
-			"x": 20,
-			"y": 64
-		},
-		{
-			"x": 10,
-			"y": 64
-		}]
-	},
-	{
-		"color": "楼道",
-		"id": 975,
-		"nodeId": 975,
-		"points": [{
-			"x": 56,
-			"y": 10
-		},
-		{
-			"x": 64,
-			"y": 10
-		},
-		{
-			"x": 64,
-			"y": 20
-		},
-		{
-			"x": 56,
-			"y": 20
-		}]
-	},
-	{
-		"color": "楼道",
-		"id": 976,
-		"nodeId": 976,
-		"points": [{
-			"x": 56,
-			"y": 100
-		},
-		{
-			"x": 64,
-			"y": 100
-		},
-		{
-			"x": 64,
-			"y": 110
-		},
-		{
-			"x": 56,
-			"y": 110
-		}]
-	},
-	{
-		"color": "楼道",
-		"id": 977,
-		"nodeId": 977,
-		"points": [{
-			"x": 100,
-			"y": 56
-		},
-		{
-			"x": 110,
-			"y": 56
-		},
-		{
-			"x": 110,
-			"y": 64
-		},
-		{
-			"x": 100,
-			"y": 64
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 978,
-		"nodeId": 978,
-		"points": [{
-			"x": 20,
-			"y": 56
-		},
-		{
-			"x": 24,
-			"y": 56
-		},
-		{
-			"x": 24,
-			"y": 64
-		},
-		{
-			"x": 20,
-			"y": 64
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 979,
-		"nodeId": 979,
-		"points": [{
-			"x": 24,
-			"y": 56
-		},
-		{
-			"x": 48,
-			"y": 56
-		},
-		{
-			"x": 48,
-			"y": 64
-		},
-		{
-			"x": 24,
-			"y": 64
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 980,
-		"nodeId": 980,
-		"points": [{
-			"x": 56,
-			"y": 20
-		},
-		{
-			"x": 64,
-			"y": 20
-		},
-		{
-			"x": 64,
-			"y": 24
-		},
-		{
-			"x": 56,
-			"y": 24
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 981,
-		"nodeId": 981,
-		"points": [{
-			"x": 56,
-			"y": 24
-		},
-		{
-			"x": 64,
-			"y": 24
-		},
-		{
-			"x": 64,
-			"y": 48
-		},
-		{
-			"x": 56,
-			"y": 48
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 982,
-		"nodeId": 982,
-		"points": [{
-			"x": 56,
-			"y": 72
-		},
-		{
-			"x": 64,
-			"y": 72
-		},
-		{
-			"x": 64,
-			"y": 96
-		},
-		{
-			"x": 56,
-			"y": 96
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 983,
-		"nodeId": 983,
-		"points": [{
-			"x": 56,
-			"y": 96
-		},
-		{
-			"x": 64,
-			"y": 96
-		},
-		{
-			"x": 64,
-			"y": 100
-		},
-		{
-			"x": 56,
-			"y": 100
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 984,
-		"nodeId": 984,
-		"points": [{
-			"x": 72,
-			"y": 56
-		},
-		{
-			"x": 96,
-			"y": 56
-		},
-		{
-			"x": 96,
-			"y": 64
-		},
-		{
-			"x": 72,
-			"y": 64
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 985,
-		"nodeId": 985,
-		"points": [{
-			"x": 96,
-			"y": 56
-		},
-		{
-			"x": 100,
-			"y": 56
-		},
-		{
-			"x": 100,
-			"y": 64
-		},
-		{
-			"x": 96,
-			"y": 64
-		}]
-	},
-	{
-		"color": "走廊",
-		"id": 986,
-		"nodeId": 986,
-		"points": [{
-			"x": 48,
-			"y": 48
-		},
-		{
-			"x": 72,
-			"y": 48
-		},
-		{
-			"x": 72,
-			"y": 72
-		},
-		{
-			"x": 48,
-			"y": 72
-		}]
-	}],
-	"walls": [],
-	"virtualDoors": [],
-	"nodes": [],
-	"floorNumber": 6,
-	"version": "0.5",
-	"config": {
-		"colors": {
-			"电梯": "#9bcdff",
-			"外墙": "#727272",
-			"门": "#505665",
-			"中庭": "#9493ca",
-			"楼道": "#d1ed83",
-			"走廊": "#ffffff",
-			"设施间": "#b0cfd3",
-			"内墙": "#b2b774",
-			"店铺": "#f4f4f4"
-		}
-	},
-	"createDate": "2017-05-25T17:55:16.506Z"
+  "floorId": 6,
+  "doors": [
+    {
+      "color": "门",
+      "line": {
+        "y1": 23,
+        "x1": 20,
+        "y2": 23,
+        "x2": 20
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1320
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 29,
+        "x1": 20,
+        "y2": 29,
+        "x2": 20
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1321
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 36,
+        "x1": 20,
+        "y2": 36,
+        "x2": 20
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1322
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 44,
+        "x1": 20,
+        "y2": 44,
+        "x2": 20
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1323
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 52,
+        "x1": 20,
+        "y2": 52,
+        "x2": 20
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1324
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 28,
+        "x1": 24,
+        "y2": 28,
+        "x2": 24
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1325
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 28,
+        "x1": 32,
+        "y2": 28,
+        "x2": 32
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1326
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 28,
+        "x1": 40,
+        "y2": 28,
+        "x2": 40
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1327
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 28,
+        "x1": 48,
+        "y2": 28,
+        "x2": 48
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1328
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 36,
+        "x1": 24,
+        "y2": 36,
+        "x2": 24
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1329
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 36,
+        "x1": 32,
+        "y2": 36,
+        "x2": 32
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1330
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 44,
+        "x1": 24,
+        "y2": 44,
+        "x2": 24
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1331
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 44,
+        "x1": 32,
+        "y2": 44,
+        "x2": 32
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1332
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 52,
+        "x1": 24,
+        "y2": 52,
+        "x2": 24
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1333
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 56,
+        "x1": 28,
+        "y2": 56,
+        "x2": 28
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1334
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 48,
+        "x1": 36,
+        "y2": 48,
+        "x2": 36
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1335
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 56,
+        "x1": 36,
+        "y2": 56,
+        "x2": 36
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1336
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 48,
+        "x1": 41,
+        "y2": 48,
+        "x2": 41
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1337
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 56,
+        "x1": 41,
+        "y2": 56,
+        "x2": 41
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1338
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 48,
+        "x1": 45,
+        "y2": 48,
+        "x2": 45
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1339
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 52,
+        "x1": 45,
+        "y2": 52,
+        "x2": 45
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1340
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 56,
+        "x1": 45,
+        "y2": 56,
+        "x2": 45
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1341
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 24,
+        "x1": 22,
+        "y2": 24,
+        "x2": 22
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1342
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 40,
+        "x1": 22,
+        "y2": 40,
+        "x2": 22
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1343
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 56,
+        "x1": 22,
+        "y2": 56,
+        "x2": 22
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1344
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 20,
+        "x1": 23,
+        "y2": 20,
+        "x2": 23
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1345
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 20,
+        "x1": 29,
+        "y2": 20,
+        "x2": 29
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1346
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 20,
+        "x1": 36,
+        "y2": 20,
+        "x2": 36
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1347
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 20,
+        "x1": 44,
+        "y2": 20,
+        "x2": 44
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1348
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 20,
+        "x1": 52,
+        "y2": 20,
+        "x2": 52
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1349
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 24,
+        "x1": 28,
+        "y2": 24,
+        "x2": 28
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1350
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 32,
+        "x1": 28,
+        "y2": 32,
+        "x2": 28
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1351
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 40,
+        "x1": 28,
+        "y2": 40,
+        "x2": 28
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1352
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 48,
+        "x1": 28,
+        "y2": 48,
+        "x2": 28
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1353
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 24,
+        "x1": 36,
+        "y2": 24,
+        "x2": 36
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1354
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 32,
+        "x1": 36,
+        "y2": 32,
+        "x2": 36
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1355
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 24,
+        "x1": 44,
+        "y2": 24,
+        "x2": 44
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1356
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 32,
+        "x1": 44,
+        "y2": 32,
+        "x2": 44
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1357
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 24,
+        "x1": 52,
+        "y2": 24,
+        "x2": 52
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1358
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 28,
+        "x1": 56,
+        "y2": 28,
+        "x2": 56
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1359
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 36,
+        "x1": 48,
+        "y2": 36,
+        "x2": 48
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1360
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 36,
+        "x1": 56,
+        "y2": 36,
+        "x2": 56
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1361
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 41,
+        "x1": 48,
+        "y2": 41,
+        "x2": 48
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1362
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 41,
+        "x1": 56,
+        "y2": 41,
+        "x2": 56
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1363
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 45,
+        "x1": 48,
+        "y2": 45,
+        "x2": 48
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1364
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 45,
+        "x1": 52,
+        "y2": 45,
+        "x2": 52
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1365
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 45,
+        "x1": 56,
+        "y2": 45,
+        "x2": 56
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1366
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 22,
+        "x1": 24,
+        "y2": 22,
+        "x2": 24
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1367
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 22,
+        "x1": 40,
+        "y2": 22,
+        "x2": 40
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1368
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 22,
+        "x1": 56,
+        "y2": 22,
+        "x2": 56
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1369
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 20,
+        "x1": 20,
+        "y2": 20,
+        "x2": 20
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1370
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 97,
+        "x1": 20,
+        "y2": 97,
+        "x2": 20
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1371
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 91,
+        "x1": 20,
+        "y2": 91,
+        "x2": 20
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1372
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 84,
+        "x1": 20,
+        "y2": 84,
+        "x2": 20
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1373
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 76,
+        "x1": 20,
+        "y2": 76,
+        "x2": 20
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1374
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 68,
+        "x1": 20,
+        "y2": 68,
+        "x2": 20
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1375
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 92,
+        "x1": 24,
+        "y2": 92,
+        "x2": 24
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1376
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 92,
+        "x1": 32,
+        "y2": 92,
+        "x2": 32
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1377
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 92,
+        "x1": 40,
+        "y2": 92,
+        "x2": 40
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1378
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 92,
+        "x1": 48,
+        "y2": 92,
+        "x2": 48
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1379
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 84,
+        "x1": 24,
+        "y2": 84,
+        "x2": 24
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1380
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 84,
+        "x1": 32,
+        "y2": 84,
+        "x2": 32
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1381
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 76,
+        "x1": 24,
+        "y2": 76,
+        "x2": 24
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1382
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 76,
+        "x1": 32,
+        "y2": 76,
+        "x2": 32
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1383
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 68,
+        "x1": 24,
+        "y2": 68,
+        "x2": 24
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1384
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 64,
+        "x1": 28,
+        "y2": 64,
+        "x2": 28
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1385
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 72,
+        "x1": 36,
+        "y2": 72,
+        "x2": 36
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1386
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 64,
+        "x1": 36,
+        "y2": 64,
+        "x2": 36
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1387
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 72,
+        "x1": 41,
+        "y2": 72,
+        "x2": 41
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1388
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 64,
+        "x1": 41,
+        "y2": 64,
+        "x2": 41
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1389
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 72,
+        "x1": 45,
+        "y2": 72,
+        "x2": 45
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1390
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 68,
+        "x1": 45,
+        "y2": 68,
+        "x2": 45
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1391
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 64,
+        "x1": 45,
+        "y2": 64,
+        "x2": 45
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1392
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 96,
+        "x1": 22,
+        "y2": 96,
+        "x2": 22
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1393
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 80,
+        "x1": 22,
+        "y2": 80,
+        "x2": 22
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1394
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 64,
+        "x1": 22,
+        "y2": 64,
+        "x2": 22
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1395
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 100,
+        "x1": 23,
+        "y2": 100,
+        "x2": 23
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1396
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 100,
+        "x1": 29,
+        "y2": 100,
+        "x2": 29
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1397
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 100,
+        "x1": 36,
+        "y2": 100,
+        "x2": 36
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1398
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 100,
+        "x1": 44,
+        "y2": 100,
+        "x2": 44
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1399
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 100,
+        "x1": 52,
+        "y2": 100,
+        "x2": 52
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1400
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 96,
+        "x1": 28,
+        "y2": 96,
+        "x2": 28
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1401
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 88,
+        "x1": 28,
+        "y2": 88,
+        "x2": 28
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1402
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 80,
+        "x1": 28,
+        "y2": 80,
+        "x2": 28
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1403
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 72,
+        "x1": 28,
+        "y2": 72,
+        "x2": 28
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1404
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 96,
+        "x1": 36,
+        "y2": 96,
+        "x2": 36
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1405
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 88,
+        "x1": 36,
+        "y2": 88,
+        "x2": 36
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1406
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 96,
+        "x1": 44,
+        "y2": 96,
+        "x2": 44
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1407
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 88,
+        "x1": 44,
+        "y2": 88,
+        "x2": 44
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1408
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 96,
+        "x1": 52,
+        "y2": 96,
+        "x2": 52
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1409
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 92,
+        "x1": 56,
+        "y2": 92,
+        "x2": 56
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1410
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 84,
+        "x1": 48,
+        "y2": 84,
+        "x2": 48
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1411
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 84,
+        "x1": 56,
+        "y2": 84,
+        "x2": 56
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1412
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 79,
+        "x1": 48,
+        "y2": 79,
+        "x2": 48
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1413
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 79,
+        "x1": 56,
+        "y2": 79,
+        "x2": 56
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1414
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 75,
+        "x1": 48,
+        "y2": 75,
+        "x2": 48
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1415
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 75,
+        "x1": 52,
+        "y2": 75,
+        "x2": 52
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1416
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 75,
+        "x1": 56,
+        "y2": 75,
+        "x2": 56
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1417
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 98,
+        "x1": 24,
+        "y2": 98,
+        "x2": 24
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1418
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 98,
+        "x1": 40,
+        "y2": 98,
+        "x2": 40
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1419
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 98,
+        "x1": 56,
+        "y2": 98,
+        "x2": 56
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1420
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 100,
+        "x1": 20,
+        "y2": 100,
+        "x2": 20
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1421
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 23,
+        "x1": 100,
+        "y2": 23,
+        "x2": 100
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1422
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 29,
+        "x1": 100,
+        "y2": 29,
+        "x2": 100
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1423
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 36,
+        "x1": 100,
+        "y2": 36,
+        "x2": 100
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1424
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 44,
+        "x1": 100,
+        "y2": 44,
+        "x2": 100
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1425
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 52,
+        "x1": 100,
+        "y2": 52,
+        "x2": 100
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1426
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 28,
+        "x1": 96,
+        "y2": 28,
+        "x2": 96
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1427
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 28,
+        "x1": 88,
+        "y2": 28,
+        "x2": 88
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1428
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 28,
+        "x1": 80,
+        "y2": 28,
+        "x2": 80
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1429
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 28,
+        "x1": 72,
+        "y2": 28,
+        "x2": 72
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1430
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 36,
+        "x1": 96,
+        "y2": 36,
+        "x2": 96
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1431
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 36,
+        "x1": 88,
+        "y2": 36,
+        "x2": 88
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1432
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 44,
+        "x1": 96,
+        "y2": 44,
+        "x2": 96
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1433
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 44,
+        "x1": 88,
+        "y2": 44,
+        "x2": 88
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1434
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 52,
+        "x1": 96,
+        "y2": 52,
+        "x2": 96
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1435
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 56,
+        "x1": 92,
+        "y2": 56,
+        "x2": 92
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1436
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 48,
+        "x1": 84,
+        "y2": 48,
+        "x2": 84
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1437
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 56,
+        "x1": 84,
+        "y2": 56,
+        "x2": 84
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1438
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 48,
+        "x1": 79,
+        "y2": 48,
+        "x2": 79
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1439
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 56,
+        "x1": 79,
+        "y2": 56,
+        "x2": 79
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1440
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 48,
+        "x1": 75,
+        "y2": 48,
+        "x2": 75
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1441
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 52,
+        "x1": 75,
+        "y2": 52,
+        "x2": 75
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1442
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 56,
+        "x1": 75,
+        "y2": 56,
+        "x2": 75
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1443
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 24,
+        "x1": 98,
+        "y2": 24,
+        "x2": 98
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1444
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 40,
+        "x1": 98,
+        "y2": 40,
+        "x2": 98
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1445
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 56,
+        "x1": 98,
+        "y2": 56,
+        "x2": 98
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1446
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 20,
+        "x1": 97,
+        "y2": 20,
+        "x2": 97
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1447
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 20,
+        "x1": 91,
+        "y2": 20,
+        "x2": 91
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1448
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 20,
+        "x1": 84,
+        "y2": 20,
+        "x2": 84
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1449
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 20,
+        "x1": 76,
+        "y2": 20,
+        "x2": 76
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1450
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 20,
+        "x1": 68,
+        "y2": 20,
+        "x2": 68
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1451
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 24,
+        "x1": 92,
+        "y2": 24,
+        "x2": 92
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1452
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 32,
+        "x1": 92,
+        "y2": 32,
+        "x2": 92
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1453
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 40,
+        "x1": 92,
+        "y2": 40,
+        "x2": 92
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1454
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 48,
+        "x1": 92,
+        "y2": 48,
+        "x2": 92
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1455
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 24,
+        "x1": 84,
+        "y2": 24,
+        "x2": 84
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1456
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 32,
+        "x1": 84,
+        "y2": 32,
+        "x2": 84
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1457
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 24,
+        "x1": 76,
+        "y2": 24,
+        "x2": 76
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1458
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 32,
+        "x1": 76,
+        "y2": 32,
+        "x2": 76
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1459
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 24,
+        "x1": 68,
+        "y2": 24,
+        "x2": 68
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1460
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 28,
+        "x1": 64,
+        "y2": 28,
+        "x2": 64
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1461
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 36,
+        "x1": 72,
+        "y2": 36,
+        "x2": 72
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1462
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 36,
+        "x1": 64,
+        "y2": 36,
+        "x2": 64
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1463
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 41,
+        "x1": 72,
+        "y2": 41,
+        "x2": 72
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1464
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 41,
+        "x1": 64,
+        "y2": 41,
+        "x2": 64
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1465
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 45,
+        "x1": 72,
+        "y2": 45,
+        "x2": 72
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1466
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 45,
+        "x1": 68,
+        "y2": 45,
+        "x2": 68
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1467
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 45,
+        "x1": 64,
+        "y2": 45,
+        "x2": 64
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1468
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 22,
+        "x1": 96,
+        "y2": 22,
+        "x2": 96
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1469
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 22,
+        "x1": 80,
+        "y2": 22,
+        "x2": 80
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1470
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 22,
+        "x1": 64,
+        "y2": 22,
+        "x2": 64
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1471
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 20,
+        "x1": 100,
+        "y2": 20,
+        "x2": 100
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1472
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 97,
+        "x1": 100,
+        "y2": 97,
+        "x2": 100
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1473
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 91,
+        "x1": 100,
+        "y2": 91,
+        "x2": 100
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1474
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 84,
+        "x1": 100,
+        "y2": 84,
+        "x2": 100
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1475
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 76,
+        "x1": 100,
+        "y2": 76,
+        "x2": 100
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1476
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 68,
+        "x1": 100,
+        "y2": 68,
+        "x2": 100
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1477
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 92,
+        "x1": 96,
+        "y2": 92,
+        "x2": 96
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1478
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 92,
+        "x1": 88,
+        "y2": 92,
+        "x2": 88
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1479
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 92,
+        "x1": 80,
+        "y2": 92,
+        "x2": 80
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1480
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 92,
+        "x1": 72,
+        "y2": 92,
+        "x2": 72
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1481
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 84,
+        "x1": 96,
+        "y2": 84,
+        "x2": 96
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1482
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 84,
+        "x1": 88,
+        "y2": 84,
+        "x2": 88
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1483
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 76,
+        "x1": 96,
+        "y2": 76,
+        "x2": 96
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1484
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 76,
+        "x1": 88,
+        "y2": 76,
+        "x2": 88
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1485
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 68,
+        "x1": 96,
+        "y2": 68,
+        "x2": 96
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1486
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 64,
+        "x1": 92,
+        "y2": 64,
+        "x2": 92
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1487
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 72,
+        "x1": 84,
+        "y2": 72,
+        "x2": 84
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1488
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 64,
+        "x1": 84,
+        "y2": 64,
+        "x2": 84
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1489
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 72,
+        "x1": 79,
+        "y2": 72,
+        "x2": 79
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1490
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 64,
+        "x1": 79,
+        "y2": 64,
+        "x2": 79
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1491
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 72,
+        "x1": 75,
+        "y2": 72,
+        "x2": 75
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1492
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 68,
+        "x1": 75,
+        "y2": 68,
+        "x2": 75
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1493
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 64,
+        "x1": 75,
+        "y2": 64,
+        "x2": 75
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1494
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 96,
+        "x1": 98,
+        "y2": 96,
+        "x2": 98
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1495
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 80,
+        "x1": 98,
+        "y2": 80,
+        "x2": 98
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1496
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 64,
+        "x1": 98,
+        "y2": 64,
+        "x2": 98
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1497
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 100,
+        "x1": 97,
+        "y2": 100,
+        "x2": 97
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1498
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 100,
+        "x1": 91,
+        "y2": 100,
+        "x2": 91
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1499
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 100,
+        "x1": 84,
+        "y2": 100,
+        "x2": 84
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1500
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 100,
+        "x1": 76,
+        "y2": 100,
+        "x2": 76
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1501
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 100,
+        "x1": 68,
+        "y2": 100,
+        "x2": 68
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1502
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 96,
+        "x1": 92,
+        "y2": 96,
+        "x2": 92
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1503
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 88,
+        "x1": 92,
+        "y2": 88,
+        "x2": 92
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1504
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 80,
+        "x1": 92,
+        "y2": 80,
+        "x2": 92
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1505
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 72,
+        "x1": 92,
+        "y2": 72,
+        "x2": 92
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1506
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 96,
+        "x1": 84,
+        "y2": 96,
+        "x2": 84
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1507
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 88,
+        "x1": 84,
+        "y2": 88,
+        "x2": 84
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1508
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 96,
+        "x1": 76,
+        "y2": 96,
+        "x2": 76
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1509
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 88,
+        "x1": 76,
+        "y2": 88,
+        "x2": 76
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1510
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 96,
+        "x1": 68,
+        "y2": 96,
+        "x2": 68
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1511
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 92,
+        "x1": 64,
+        "y2": 92,
+        "x2": 64
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1512
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 84,
+        "x1": 72,
+        "y2": 84,
+        "x2": 72
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1513
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 84,
+        "x1": 64,
+        "y2": 84,
+        "x2": 64
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1514
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 79,
+        "x1": 72,
+        "y2": 79,
+        "x2": 72
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1515
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 79,
+        "x1": 64,
+        "y2": 79,
+        "x2": 64
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1516
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 75,
+        "x1": 72,
+        "y2": 75,
+        "x2": 72
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1517
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 75,
+        "x1": 68,
+        "y2": 75,
+        "x2": 68
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1518
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 75,
+        "x1": 64,
+        "y2": 75,
+        "x2": 64
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1519
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 98,
+        "x1": 96,
+        "y2": 98,
+        "x2": 96
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1520
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 98,
+        "x1": 80,
+        "y2": 98,
+        "x2": 80
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1521
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 98,
+        "x1": 64,
+        "y2": 98,
+        "x2": 64
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1522
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 100,
+        "x1": 100,
+        "y2": 100,
+        "x2": 100
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1523
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 60,
+        "x1": 10,
+        "y2": 60,
+        "x2": 10
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1524
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 60,
+        "x1": 20,
+        "y2": 60,
+        "x2": 20
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1525
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 10,
+        "x1": 60,
+        "y2": 10,
+        "x2": 60
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1526
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 20,
+        "x1": 60,
+        "y2": 20,
+        "x2": 60
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1527
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 100,
+        "x1": 60,
+        "y2": 100,
+        "x2": 60
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1528
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 110,
+        "x1": 60,
+        "y2": 110,
+        "x2": 60
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1529
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 60,
+        "x1": 100,
+        "y2": 60,
+        "x2": 100
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1530
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 60,
+        "x1": 110,
+        "y2": 60,
+        "x2": 110
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1531
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 60,
+        "x1": 24,
+        "y2": 60,
+        "x2": 24
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1532
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 60,
+        "x1": 48,
+        "y2": 60,
+        "x2": 48
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1533
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 24,
+        "x1": 60,
+        "y2": 24,
+        "x2": 60
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1534
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 48,
+        "x1": 60,
+        "y2": 48,
+        "x2": 60
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1535
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 72,
+        "x1": 60,
+        "y2": 72,
+        "x2": 60
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1536
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 96,
+        "x1": 60,
+        "y2": 96,
+        "x2": 60
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1537
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 60,
+        "x1": 72,
+        "y2": 60,
+        "x2": 72
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1538
+    },
+    {
+      "color": "门",
+      "line": {
+        "y1": 60,
+        "x1": 96,
+        "y2": 60,
+        "x2": 96
+      },
+      "width": "NORMAL",
+      "doorType": "NORMAL",
+      "id": 1539
+    }
+  ],
+  "buildingName": "B",
+  "regions": [
+    {
+      "color": "店铺",
+      "id": 846,
+      "nodeId": 846,
+      "points": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": 20,
+          "y": 0
+        },
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 0,
+          "y": 20
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 847,
+      "nodeId": 847,
+      "points": [
+        {
+          "x": 10,
+          "y": 20
+        },
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 20,
+          "y": 26
+        },
+        {
+          "x": 10,
+          "y": 26
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 848,
+      "nodeId": 848,
+      "points": [
+        {
+          "x": 10,
+          "y": 26
+        },
+        {
+          "x": 20,
+          "y": 26
+        },
+        {
+          "x": 20,
+          "y": 32
+        },
+        {
+          "x": 10,
+          "y": 32
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 849,
+      "nodeId": 849,
+      "points": [
+        {
+          "x": 10,
+          "y": 32
+        },
+        {
+          "x": 20,
+          "y": 32
+        },
+        {
+          "x": 20,
+          "y": 40
+        },
+        {
+          "x": 10,
+          "y": 40
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 850,
+      "nodeId": 850,
+      "points": [
+        {
+          "x": 10,
+          "y": 40
+        },
+        {
+          "x": 20,
+          "y": 40
+        },
+        {
+          "x": 20,
+          "y": 48
+        },
+        {
+          "x": 10,
+          "y": 48
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 851,
+      "nodeId": 851,
+      "points": [
+        {
+          "x": 10,
+          "y": 48
+        },
+        {
+          "x": 20,
+          "y": 48
+        },
+        {
+          "x": 20,
+          "y": 56
+        },
+        {
+          "x": 10,
+          "y": 56
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 852,
+      "nodeId": 852,
+      "points": [
+        {
+          "x": 20,
+          "y": 10
+        },
+        {
+          "x": 26,
+          "y": 10
+        },
+        {
+          "x": 26,
+          "y": 20
+        },
+        {
+          "x": 20,
+          "y": 20
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 853,
+      "nodeId": 853,
+      "points": [
+        {
+          "x": 26,
+          "y": 10
+        },
+        {
+          "x": 32,
+          "y": 10
+        },
+        {
+          "x": 32,
+          "y": 20
+        },
+        {
+          "x": 26,
+          "y": 20
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 854,
+      "nodeId": 854,
+      "points": [
+        {
+          "x": 32,
+          "y": 10
+        },
+        {
+          "x": 40,
+          "y": 10
+        },
+        {
+          "x": 40,
+          "y": 20
+        },
+        {
+          "x": 32,
+          "y": 20
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 855,
+      "nodeId": 855,
+      "points": [
+        {
+          "x": 40,
+          "y": 10
+        },
+        {
+          "x": 48,
+          "y": 10
+        },
+        {
+          "x": 48,
+          "y": 20
+        },
+        {
+          "x": 40,
+          "y": 20
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 856,
+      "nodeId": 856,
+      "points": [
+        {
+          "x": 48,
+          "y": 10
+        },
+        {
+          "x": 56,
+          "y": 10
+        },
+        {
+          "x": 56,
+          "y": 20
+        },
+        {
+          "x": 48,
+          "y": 20
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 857,
+      "nodeId": 857,
+      "points": [
+        {
+          "x": 24,
+          "y": 24
+        },
+        {
+          "x": 32,
+          "y": 24
+        },
+        {
+          "x": 32,
+          "y": 32
+        },
+        {
+          "x": 24,
+          "y": 32
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 858,
+      "nodeId": 858,
+      "points": [
+        {
+          "x": 32,
+          "y": 24
+        },
+        {
+          "x": 40,
+          "y": 24
+        },
+        {
+          "x": 40,
+          "y": 32
+        },
+        {
+          "x": 32,
+          "y": 32
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 859,
+      "nodeId": 859,
+      "points": [
+        {
+          "x": 40,
+          "y": 24
+        },
+        {
+          "x": 48,
+          "y": 24
+        },
+        {
+          "x": 48,
+          "y": 32
+        },
+        {
+          "x": 40,
+          "y": 32
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 860,
+      "nodeId": 860,
+      "points": [
+        {
+          "x": 48,
+          "y": 24
+        },
+        {
+          "x": 56,
+          "y": 24
+        },
+        {
+          "x": 56,
+          "y": 32
+        },
+        {
+          "x": 48,
+          "y": 32
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 861,
+      "nodeId": 861,
+      "points": [
+        {
+          "x": 24,
+          "y": 32
+        },
+        {
+          "x": 32,
+          "y": 32
+        },
+        {
+          "x": 32,
+          "y": 40
+        },
+        {
+          "x": 24,
+          "y": 40
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 862,
+      "nodeId": 862,
+      "points": [
+        {
+          "x": 24,
+          "y": 40
+        },
+        {
+          "x": 32,
+          "y": 40
+        },
+        {
+          "x": 32,
+          "y": 48
+        },
+        {
+          "x": 24,
+          "y": 48
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 863,
+      "nodeId": 863,
+      "points": [
+        {
+          "x": 24,
+          "y": 48
+        },
+        {
+          "x": 32,
+          "y": 48
+        },
+        {
+          "x": 32,
+          "y": 56
+        },
+        {
+          "x": 24,
+          "y": 56
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 864,
+      "nodeId": 864,
+      "points": [
+        {
+          "x": 48,
+          "y": 32
+        },
+        {
+          "x": 56,
+          "y": 32
+        },
+        {
+          "x": 56,
+          "y": 40
+        },
+        {
+          "x": 48,
+          "y": 40
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 865,
+      "nodeId": 865,
+      "points": [
+        {
+          "x": 48,
+          "y": 40
+        },
+        {
+          "x": 56,
+          "y": 40
+        },
+        {
+          "x": 56,
+          "y": 42
+        },
+        {
+          "x": 48,
+          "y": 42
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 866,
+      "nodeId": 866,
+      "points": [
+        {
+          "x": 48,
+          "y": 42
+        },
+        {
+          "x": 52,
+          "y": 42
+        },
+        {
+          "x": 52,
+          "y": 48
+        },
+        {
+          "x": 48,
+          "y": 48
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 867,
+      "nodeId": 867,
+      "points": [
+        {
+          "x": 52,
+          "y": 42
+        },
+        {
+          "x": 56,
+          "y": 42
+        },
+        {
+          "x": 56,
+          "y": 48
+        },
+        {
+          "x": 52,
+          "y": 48
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 868,
+      "nodeId": 868,
+      "points": [
+        {
+          "x": 32,
+          "y": 48
+        },
+        {
+          "x": 40,
+          "y": 48
+        },
+        {
+          "x": 40,
+          "y": 56
+        },
+        {
+          "x": 32,
+          "y": 56
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 869,
+      "nodeId": 869,
+      "points": [
+        {
+          "x": 40,
+          "y": 48
+        },
+        {
+          "x": 42,
+          "y": 48
+        },
+        {
+          "x": 42,
+          "y": 56
+        },
+        {
+          "x": 40,
+          "y": 56
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 870,
+      "nodeId": 870,
+      "points": [
+        {
+          "x": 42,
+          "y": 48
+        },
+        {
+          "x": 48,
+          "y": 48
+        },
+        {
+          "x": 48,
+          "y": 52
+        },
+        {
+          "x": 42,
+          "y": 52
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 871,
+      "nodeId": 871,
+      "points": [
+        {
+          "x": 42,
+          "y": 52
+        },
+        {
+          "x": 48,
+          "y": 52
+        },
+        {
+          "x": 48,
+          "y": 56
+        },
+        {
+          "x": 42,
+          "y": 56
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 872,
+      "nodeId": 872,
+      "points": [
+        {
+          "x": 20,
+          "y": 20
+        },
+        {
+          "x": 24,
+          "y": 20
+        },
+        {
+          "x": 24,
+          "y": 24
+        },
+        {
+          "x": 20,
+          "y": 24
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 873,
+      "nodeId": 873,
+      "points": [
+        {
+          "x": 20,
+          "y": 24
+        },
+        {
+          "x": 24,
+          "y": 24
+        },
+        {
+          "x": 24,
+          "y": 40
+        },
+        {
+          "x": 20,
+          "y": 40
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 874,
+      "nodeId": 874,
+      "points": [
+        {
+          "x": 20,
+          "y": 40
+        },
+        {
+          "x": 24,
+          "y": 40
+        },
+        {
+          "x": 24,
+          "y": 56
+        },
+        {
+          "x": 20,
+          "y": 56
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 875,
+      "nodeId": 875,
+      "points": [
+        {
+          "x": 24,
+          "y": 20
+        },
+        {
+          "x": 40,
+          "y": 20
+        },
+        {
+          "x": 40,
+          "y": 24
+        },
+        {
+          "x": 24,
+          "y": 24
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 876,
+      "nodeId": 876,
+      "points": [
+        {
+          "x": 40,
+          "y": 20
+        },
+        {
+          "x": 56,
+          "y": 20
+        },
+        {
+          "x": 56,
+          "y": 24
+        },
+        {
+          "x": 40,
+          "y": 24
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 877,
+      "nodeId": 877,
+      "points": [
+        {
+          "x": 32,
+          "y": 32
+        },
+        {
+          "x": 48,
+          "y": 32
+        },
+        {
+          "x": 48,
+          "y": 48
+        },
+        {
+          "x": 32,
+          "y": 48
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 878,
+      "nodeId": 878,
+      "points": [
+        {
+          "x": 100,
+          "y": 0
+        },
+        {
+          "x": 120,
+          "y": 0
+        },
+        {
+          "x": 120,
+          "y": 20
+        },
+        {
+          "x": 100,
+          "y": 20
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 879,
+      "nodeId": 879,
+      "points": [
+        {
+          "x": 0,
+          "y": 100
+        },
+        {
+          "x": 20,
+          "y": 100
+        },
+        {
+          "x": 20,
+          "y": 120
+        },
+        {
+          "x": 0,
+          "y": 120
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 880,
+      "nodeId": 880,
+      "points": [
+        {
+          "x": 100,
+          "y": 100
+        },
+        {
+          "x": 120,
+          "y": 100
+        },
+        {
+          "x": 120,
+          "y": 120
+        },
+        {
+          "x": 100,
+          "y": 120
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 881,
+      "nodeId": 881,
+      "points": [
+        {
+          "x": 100,
+          "y": 20
+        },
+        {
+          "x": 110,
+          "y": 20
+        },
+        {
+          "x": 110,
+          "y": 26
+        },
+        {
+          "x": 100,
+          "y": 26
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 882,
+      "nodeId": 882,
+      "points": [
+        {
+          "x": 10,
+          "y": 94
+        },
+        {
+          "x": 20,
+          "y": 94
+        },
+        {
+          "x": 20,
+          "y": 100
+        },
+        {
+          "x": 10,
+          "y": 100
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 883,
+      "nodeId": 883,
+      "points": [
+        {
+          "x": 100,
+          "y": 94
+        },
+        {
+          "x": 110,
+          "y": 94
+        },
+        {
+          "x": 110,
+          "y": 100
+        },
+        {
+          "x": 100,
+          "y": 100
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 884,
+      "nodeId": 884,
+      "points": [
+        {
+          "x": 100,
+          "y": 26
+        },
+        {
+          "x": 110,
+          "y": 26
+        },
+        {
+          "x": 110,
+          "y": 32
+        },
+        {
+          "x": 100,
+          "y": 32
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 885,
+      "nodeId": 885,
+      "points": [
+        {
+          "x": 10,
+          "y": 88
+        },
+        {
+          "x": 20,
+          "y": 88
+        },
+        {
+          "x": 20,
+          "y": 94
+        },
+        {
+          "x": 10,
+          "y": 94
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 886,
+      "nodeId": 886,
+      "points": [
+        {
+          "x": 100,
+          "y": 88
+        },
+        {
+          "x": 110,
+          "y": 88
+        },
+        {
+          "x": 110,
+          "y": 94
+        },
+        {
+          "x": 100,
+          "y": 94
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 887,
+      "nodeId": 887,
+      "points": [
+        {
+          "x": 100,
+          "y": 32
+        },
+        {
+          "x": 110,
+          "y": 32
+        },
+        {
+          "x": 110,
+          "y": 40
+        },
+        {
+          "x": 100,
+          "y": 40
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 888,
+      "nodeId": 888,
+      "points": [
+        {
+          "x": 10,
+          "y": 80
+        },
+        {
+          "x": 20,
+          "y": 80
+        },
+        {
+          "x": 20,
+          "y": 88
+        },
+        {
+          "x": 10,
+          "y": 88
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 889,
+      "nodeId": 889,
+      "points": [
+        {
+          "x": 100,
+          "y": 80
+        },
+        {
+          "x": 110,
+          "y": 80
+        },
+        {
+          "x": 110,
+          "y": 88
+        },
+        {
+          "x": 100,
+          "y": 88
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 890,
+      "nodeId": 890,
+      "points": [
+        {
+          "x": 100,
+          "y": 40
+        },
+        {
+          "x": 110,
+          "y": 40
+        },
+        {
+          "x": 110,
+          "y": 48
+        },
+        {
+          "x": 100,
+          "y": 48
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 891,
+      "nodeId": 891,
+      "points": [
+        {
+          "x": 10,
+          "y": 72
+        },
+        {
+          "x": 20,
+          "y": 72
+        },
+        {
+          "x": 20,
+          "y": 80
+        },
+        {
+          "x": 10,
+          "y": 80
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 892,
+      "nodeId": 892,
+      "points": [
+        {
+          "x": 100,
+          "y": 72
+        },
+        {
+          "x": 110,
+          "y": 72
+        },
+        {
+          "x": 110,
+          "y": 80
+        },
+        {
+          "x": 100,
+          "y": 80
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 893,
+      "nodeId": 893,
+      "points": [
+        {
+          "x": 100,
+          "y": 48
+        },
+        {
+          "x": 110,
+          "y": 48
+        },
+        {
+          "x": 110,
+          "y": 56
+        },
+        {
+          "x": 100,
+          "y": 56
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 894,
+      "nodeId": 894,
+      "points": [
+        {
+          "x": 10,
+          "y": 64
+        },
+        {
+          "x": 20,
+          "y": 64
+        },
+        {
+          "x": 20,
+          "y": 72
+        },
+        {
+          "x": 10,
+          "y": 72
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 895,
+      "nodeId": 895,
+      "points": [
+        {
+          "x": 100,
+          "y": 64
+        },
+        {
+          "x": 110,
+          "y": 64
+        },
+        {
+          "x": 110,
+          "y": 72
+        },
+        {
+          "x": 100,
+          "y": 72
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 896,
+      "nodeId": 896,
+      "points": [
+        {
+          "x": 94,
+          "y": 10
+        },
+        {
+          "x": 100,
+          "y": 10
+        },
+        {
+          "x": 100,
+          "y": 20
+        },
+        {
+          "x": 94,
+          "y": 20
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 897,
+      "nodeId": 897,
+      "points": [
+        {
+          "x": 20,
+          "y": 100
+        },
+        {
+          "x": 26,
+          "y": 100
+        },
+        {
+          "x": 26,
+          "y": 110
+        },
+        {
+          "x": 20,
+          "y": 110
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 898,
+      "nodeId": 898,
+      "points": [
+        {
+          "x": 94,
+          "y": 100
+        },
+        {
+          "x": 100,
+          "y": 100
+        },
+        {
+          "x": 100,
+          "y": 110
+        },
+        {
+          "x": 94,
+          "y": 110
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 899,
+      "nodeId": 899,
+      "points": [
+        {
+          "x": 88,
+          "y": 10
+        },
+        {
+          "x": 94,
+          "y": 10
+        },
+        {
+          "x": 94,
+          "y": 20
+        },
+        {
+          "x": 88,
+          "y": 20
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 900,
+      "nodeId": 900,
+      "points": [
+        {
+          "x": 26,
+          "y": 100
+        },
+        {
+          "x": 32,
+          "y": 100
+        },
+        {
+          "x": 32,
+          "y": 110
+        },
+        {
+          "x": 26,
+          "y": 110
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 901,
+      "nodeId": 901,
+      "points": [
+        {
+          "x": 88,
+          "y": 100
+        },
+        {
+          "x": 94,
+          "y": 100
+        },
+        {
+          "x": 94,
+          "y": 110
+        },
+        {
+          "x": 88,
+          "y": 110
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 902,
+      "nodeId": 902,
+      "points": [
+        {
+          "x": 80,
+          "y": 10
+        },
+        {
+          "x": 88,
+          "y": 10
+        },
+        {
+          "x": 88,
+          "y": 20
+        },
+        {
+          "x": 80,
+          "y": 20
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 903,
+      "nodeId": 903,
+      "points": [
+        {
+          "x": 32,
+          "y": 100
+        },
+        {
+          "x": 40,
+          "y": 100
+        },
+        {
+          "x": 40,
+          "y": 110
+        },
+        {
+          "x": 32,
+          "y": 110
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 904,
+      "nodeId": 904,
+      "points": [
+        {
+          "x": 80,
+          "y": 100
+        },
+        {
+          "x": 88,
+          "y": 100
+        },
+        {
+          "x": 88,
+          "y": 110
+        },
+        {
+          "x": 80,
+          "y": 110
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 905,
+      "nodeId": 905,
+      "points": [
+        {
+          "x": 72,
+          "y": 10
+        },
+        {
+          "x": 80,
+          "y": 10
+        },
+        {
+          "x": 80,
+          "y": 20
+        },
+        {
+          "x": 72,
+          "y": 20
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 906,
+      "nodeId": 906,
+      "points": [
+        {
+          "x": 40,
+          "y": 100
+        },
+        {
+          "x": 48,
+          "y": 100
+        },
+        {
+          "x": 48,
+          "y": 110
+        },
+        {
+          "x": 40,
+          "y": 110
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 907,
+      "nodeId": 907,
+      "points": [
+        {
+          "x": 72,
+          "y": 100
+        },
+        {
+          "x": 80,
+          "y": 100
+        },
+        {
+          "x": 80,
+          "y": 110
+        },
+        {
+          "x": 72,
+          "y": 110
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 908,
+      "nodeId": 908,
+      "points": [
+        {
+          "x": 64,
+          "y": 10
+        },
+        {
+          "x": 72,
+          "y": 10
+        },
+        {
+          "x": 72,
+          "y": 20
+        },
+        {
+          "x": 64,
+          "y": 20
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 909,
+      "nodeId": 909,
+      "points": [
+        {
+          "x": 48,
+          "y": 100
+        },
+        {
+          "x": 56,
+          "y": 100
+        },
+        {
+          "x": 56,
+          "y": 110
+        },
+        {
+          "x": 48,
+          "y": 110
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 910,
+      "nodeId": 910,
+      "points": [
+        {
+          "x": 64,
+          "y": 100
+        },
+        {
+          "x": 72,
+          "y": 100
+        },
+        {
+          "x": 72,
+          "y": 110
+        },
+        {
+          "x": 64,
+          "y": 110
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 911,
+      "nodeId": 911,
+      "points": [
+        {
+          "x": 88,
+          "y": 24
+        },
+        {
+          "x": 96,
+          "y": 24
+        },
+        {
+          "x": 96,
+          "y": 32
+        },
+        {
+          "x": 88,
+          "y": 32
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 912,
+      "nodeId": 912,
+      "points": [
+        {
+          "x": 24,
+          "y": 88
+        },
+        {
+          "x": 32,
+          "y": 88
+        },
+        {
+          "x": 32,
+          "y": 96
+        },
+        {
+          "x": 24,
+          "y": 96
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 913,
+      "nodeId": 913,
+      "points": [
+        {
+          "x": 88,
+          "y": 88
+        },
+        {
+          "x": 96,
+          "y": 88
+        },
+        {
+          "x": 96,
+          "y": 96
+        },
+        {
+          "x": 88,
+          "y": 96
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 914,
+      "nodeId": 914,
+      "points": [
+        {
+          "x": 80,
+          "y": 24
+        },
+        {
+          "x": 88,
+          "y": 24
+        },
+        {
+          "x": 88,
+          "y": 32
+        },
+        {
+          "x": 80,
+          "y": 32
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 915,
+      "nodeId": 915,
+      "points": [
+        {
+          "x": 32,
+          "y": 88
+        },
+        {
+          "x": 40,
+          "y": 88
+        },
+        {
+          "x": 40,
+          "y": 96
+        },
+        {
+          "x": 32,
+          "y": 96
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 916,
+      "nodeId": 916,
+      "points": [
+        {
+          "x": 80,
+          "y": 88
+        },
+        {
+          "x": 88,
+          "y": 88
+        },
+        {
+          "x": 88,
+          "y": 96
+        },
+        {
+          "x": 80,
+          "y": 96
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 917,
+      "nodeId": 917,
+      "points": [
+        {
+          "x": 72,
+          "y": 24
+        },
+        {
+          "x": 80,
+          "y": 24
+        },
+        {
+          "x": 80,
+          "y": 32
+        },
+        {
+          "x": 72,
+          "y": 32
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 918,
+      "nodeId": 918,
+      "points": [
+        {
+          "x": 40,
+          "y": 88
+        },
+        {
+          "x": 48,
+          "y": 88
+        },
+        {
+          "x": 48,
+          "y": 96
+        },
+        {
+          "x": 40,
+          "y": 96
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 919,
+      "nodeId": 919,
+      "points": [
+        {
+          "x": 72,
+          "y": 88
+        },
+        {
+          "x": 80,
+          "y": 88
+        },
+        {
+          "x": 80,
+          "y": 96
+        },
+        {
+          "x": 72,
+          "y": 96
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 920,
+      "nodeId": 920,
+      "points": [
+        {
+          "x": 64,
+          "y": 24
+        },
+        {
+          "x": 72,
+          "y": 24
+        },
+        {
+          "x": 72,
+          "y": 32
+        },
+        {
+          "x": 64,
+          "y": 32
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 921,
+      "nodeId": 921,
+      "points": [
+        {
+          "x": 48,
+          "y": 88
+        },
+        {
+          "x": 56,
+          "y": 88
+        },
+        {
+          "x": 56,
+          "y": 96
+        },
+        {
+          "x": 48,
+          "y": 96
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 922,
+      "nodeId": 922,
+      "points": [
+        {
+          "x": 64,
+          "y": 88
+        },
+        {
+          "x": 72,
+          "y": 88
+        },
+        {
+          "x": 72,
+          "y": 96
+        },
+        {
+          "x": 64,
+          "y": 96
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 923,
+      "nodeId": 923,
+      "points": [
+        {
+          "x": 88,
+          "y": 32
+        },
+        {
+          "x": 96,
+          "y": 32
+        },
+        {
+          "x": 96,
+          "y": 40
+        },
+        {
+          "x": 88,
+          "y": 40
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 924,
+      "nodeId": 924,
+      "points": [
+        {
+          "x": 24,
+          "y": 80
+        },
+        {
+          "x": 32,
+          "y": 80
+        },
+        {
+          "x": 32,
+          "y": 88
+        },
+        {
+          "x": 24,
+          "y": 88
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 925,
+      "nodeId": 925,
+      "points": [
+        {
+          "x": 88,
+          "y": 80
+        },
+        {
+          "x": 96,
+          "y": 80
+        },
+        {
+          "x": 96,
+          "y": 88
+        },
+        {
+          "x": 88,
+          "y": 88
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 926,
+      "nodeId": 926,
+      "points": [
+        {
+          "x": 88,
+          "y": 40
+        },
+        {
+          "x": 96,
+          "y": 40
+        },
+        {
+          "x": 96,
+          "y": 48
+        },
+        {
+          "x": 88,
+          "y": 48
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 927,
+      "nodeId": 927,
+      "points": [
+        {
+          "x": 24,
+          "y": 72
+        },
+        {
+          "x": 32,
+          "y": 72
+        },
+        {
+          "x": 32,
+          "y": 80
+        },
+        {
+          "x": 24,
+          "y": 80
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 928,
+      "nodeId": 928,
+      "points": [
+        {
+          "x": 88,
+          "y": 72
+        },
+        {
+          "x": 96,
+          "y": 72
+        },
+        {
+          "x": 96,
+          "y": 80
+        },
+        {
+          "x": 88,
+          "y": 80
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 929,
+      "nodeId": 929,
+      "points": [
+        {
+          "x": 88,
+          "y": 48
+        },
+        {
+          "x": 96,
+          "y": 48
+        },
+        {
+          "x": 96,
+          "y": 56
+        },
+        {
+          "x": 88,
+          "y": 56
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 930,
+      "nodeId": 930,
+      "points": [
+        {
+          "x": 24,
+          "y": 64
+        },
+        {
+          "x": 32,
+          "y": 64
+        },
+        {
+          "x": 32,
+          "y": 72
+        },
+        {
+          "x": 24,
+          "y": 72
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 931,
+      "nodeId": 931,
+      "points": [
+        {
+          "x": 88,
+          "y": 64
+        },
+        {
+          "x": 96,
+          "y": 64
+        },
+        {
+          "x": 96,
+          "y": 72
+        },
+        {
+          "x": 88,
+          "y": 72
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 932,
+      "nodeId": 932,
+      "points": [
+        {
+          "x": 64,
+          "y": 32
+        },
+        {
+          "x": 72,
+          "y": 32
+        },
+        {
+          "x": 72,
+          "y": 40
+        },
+        {
+          "x": 64,
+          "y": 40
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 933,
+      "nodeId": 933,
+      "points": [
+        {
+          "x": 48,
+          "y": 80
+        },
+        {
+          "x": 56,
+          "y": 80
+        },
+        {
+          "x": 56,
+          "y": 88
+        },
+        {
+          "x": 48,
+          "y": 88
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 934,
+      "nodeId": 934,
+      "points": [
+        {
+          "x": 64,
+          "y": 80
+        },
+        {
+          "x": 72,
+          "y": 80
+        },
+        {
+          "x": 72,
+          "y": 88
+        },
+        {
+          "x": 64,
+          "y": 88
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 935,
+      "nodeId": 935,
+      "points": [
+        {
+          "x": 64,
+          "y": 40
+        },
+        {
+          "x": 72,
+          "y": 40
+        },
+        {
+          "x": 72,
+          "y": 42
+        },
+        {
+          "x": 64,
+          "y": 42
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 936,
+      "nodeId": 936,
+      "points": [
+        {
+          "x": 48,
+          "y": 78
+        },
+        {
+          "x": 56,
+          "y": 78
+        },
+        {
+          "x": 56,
+          "y": 80
+        },
+        {
+          "x": 48,
+          "y": 80
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 937,
+      "nodeId": 937,
+      "points": [
+        {
+          "x": 64,
+          "y": 78
+        },
+        {
+          "x": 72,
+          "y": 78
+        },
+        {
+          "x": 72,
+          "y": 80
+        },
+        {
+          "x": 64,
+          "y": 80
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 938,
+      "nodeId": 938,
+      "points": [
+        {
+          "x": 68,
+          "y": 42
+        },
+        {
+          "x": 72,
+          "y": 42
+        },
+        {
+          "x": 72,
+          "y": 48
+        },
+        {
+          "x": 68,
+          "y": 48
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 939,
+      "nodeId": 939,
+      "points": [
+        {
+          "x": 48,
+          "y": 72
+        },
+        {
+          "x": 52,
+          "y": 72
+        },
+        {
+          "x": 52,
+          "y": 78
+        },
+        {
+          "x": 48,
+          "y": 78
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 940,
+      "nodeId": 940,
+      "points": [
+        {
+          "x": 68,
+          "y": 72
+        },
+        {
+          "x": 72,
+          "y": 72
+        },
+        {
+          "x": 72,
+          "y": 78
+        },
+        {
+          "x": 68,
+          "y": 78
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 941,
+      "nodeId": 941,
+      "points": [
+        {
+          "x": 64,
+          "y": 42
+        },
+        {
+          "x": 68,
+          "y": 42
+        },
+        {
+          "x": 68,
+          "y": 48
+        },
+        {
+          "x": 64,
+          "y": 48
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 942,
+      "nodeId": 942,
+      "points": [
+        {
+          "x": 52,
+          "y": 72
+        },
+        {
+          "x": 56,
+          "y": 72
+        },
+        {
+          "x": 56,
+          "y": 78
+        },
+        {
+          "x": 52,
+          "y": 78
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 943,
+      "nodeId": 943,
+      "points": [
+        {
+          "x": 64,
+          "y": 72
+        },
+        {
+          "x": 68,
+          "y": 72
+        },
+        {
+          "x": 68,
+          "y": 78
+        },
+        {
+          "x": 64,
+          "y": 78
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 944,
+      "nodeId": 944,
+      "points": [
+        {
+          "x": 80,
+          "y": 48
+        },
+        {
+          "x": 88,
+          "y": 48
+        },
+        {
+          "x": 88,
+          "y": 56
+        },
+        {
+          "x": 80,
+          "y": 56
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 945,
+      "nodeId": 945,
+      "points": [
+        {
+          "x": 32,
+          "y": 64
+        },
+        {
+          "x": 40,
+          "y": 64
+        },
+        {
+          "x": 40,
+          "y": 72
+        },
+        {
+          "x": 32,
+          "y": 72
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 946,
+      "nodeId": 946,
+      "points": [
+        {
+          "x": 80,
+          "y": 64
+        },
+        {
+          "x": 88,
+          "y": 64
+        },
+        {
+          "x": 88,
+          "y": 72
+        },
+        {
+          "x": 80,
+          "y": 72
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 947,
+      "nodeId": 947,
+      "points": [
+        {
+          "x": 78,
+          "y": 48
+        },
+        {
+          "x": 80,
+          "y": 48
+        },
+        {
+          "x": 80,
+          "y": 56
+        },
+        {
+          "x": 78,
+          "y": 56
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 948,
+      "nodeId": 948,
+      "points": [
+        {
+          "x": 40,
+          "y": 64
+        },
+        {
+          "x": 42,
+          "y": 64
+        },
+        {
+          "x": 42,
+          "y": 72
+        },
+        {
+          "x": 40,
+          "y": 72
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 949,
+      "nodeId": 949,
+      "points": [
+        {
+          "x": 78,
+          "y": 64
+        },
+        {
+          "x": 80,
+          "y": 64
+        },
+        {
+          "x": 80,
+          "y": 72
+        },
+        {
+          "x": 78,
+          "y": 72
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 950,
+      "nodeId": 950,
+      "points": [
+        {
+          "x": 72,
+          "y": 48
+        },
+        {
+          "x": 78,
+          "y": 48
+        },
+        {
+          "x": 78,
+          "y": 52
+        },
+        {
+          "x": 72,
+          "y": 52
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 951,
+      "nodeId": 951,
+      "points": [
+        {
+          "x": 42,
+          "y": 68
+        },
+        {
+          "x": 48,
+          "y": 68
+        },
+        {
+          "x": 48,
+          "y": 72
+        },
+        {
+          "x": 42,
+          "y": 72
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 952,
+      "nodeId": 952,
+      "points": [
+        {
+          "x": 72,
+          "y": 68
+        },
+        {
+          "x": 78,
+          "y": 68
+        },
+        {
+          "x": 78,
+          "y": 72
+        },
+        {
+          "x": 72,
+          "y": 72
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 953,
+      "nodeId": 953,
+      "points": [
+        {
+          "x": 72,
+          "y": 52
+        },
+        {
+          "x": 78,
+          "y": 52
+        },
+        {
+          "x": 78,
+          "y": 56
+        },
+        {
+          "x": 72,
+          "y": 56
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 954,
+      "nodeId": 954,
+      "points": [
+        {
+          "x": 42,
+          "y": 64
+        },
+        {
+          "x": 48,
+          "y": 64
+        },
+        {
+          "x": 48,
+          "y": 68
+        },
+        {
+          "x": 42,
+          "y": 68
+        }
+      ]
+    },
+    {
+      "color": "店铺",
+      "id": 955,
+      "nodeId": 955,
+      "points": [
+        {
+          "x": 72,
+          "y": 64
+        },
+        {
+          "x": 78,
+          "y": 64
+        },
+        {
+          "x": 78,
+          "y": 68
+        },
+        {
+          "x": 72,
+          "y": 68
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 956,
+      "nodeId": 956,
+      "points": [
+        {
+          "x": 96,
+          "y": 20
+        },
+        {
+          "x": 100,
+          "y": 20
+        },
+        {
+          "x": 100,
+          "y": 24
+        },
+        {
+          "x": 96,
+          "y": 24
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 957,
+      "nodeId": 957,
+      "points": [
+        {
+          "x": 20,
+          "y": 96
+        },
+        {
+          "x": 24,
+          "y": 96
+        },
+        {
+          "x": 24,
+          "y": 100
+        },
+        {
+          "x": 20,
+          "y": 100
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 958,
+      "nodeId": 958,
+      "points": [
+        {
+          "x": 96,
+          "y": 96
+        },
+        {
+          "x": 100,
+          "y": 96
+        },
+        {
+          "x": 100,
+          "y": 100
+        },
+        {
+          "x": 96,
+          "y": 100
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 959,
+      "nodeId": 959,
+      "points": [
+        {
+          "x": 96,
+          "y": 24
+        },
+        {
+          "x": 100,
+          "y": 24
+        },
+        {
+          "x": 100,
+          "y": 40
+        },
+        {
+          "x": 96,
+          "y": 40
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 960,
+      "nodeId": 960,
+      "points": [
+        {
+          "x": 20,
+          "y": 80
+        },
+        {
+          "x": 24,
+          "y": 80
+        },
+        {
+          "x": 24,
+          "y": 96
+        },
+        {
+          "x": 20,
+          "y": 96
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 961,
+      "nodeId": 961,
+      "points": [
+        {
+          "x": 96,
+          "y": 80
+        },
+        {
+          "x": 100,
+          "y": 80
+        },
+        {
+          "x": 100,
+          "y": 96
+        },
+        {
+          "x": 96,
+          "y": 96
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 962,
+      "nodeId": 962,
+      "points": [
+        {
+          "x": 96,
+          "y": 40
+        },
+        {
+          "x": 100,
+          "y": 40
+        },
+        {
+          "x": 100,
+          "y": 56
+        },
+        {
+          "x": 96,
+          "y": 56
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 963,
+      "nodeId": 963,
+      "points": [
+        {
+          "x": 20,
+          "y": 64
+        },
+        {
+          "x": 24,
+          "y": 64
+        },
+        {
+          "x": 24,
+          "y": 80
+        },
+        {
+          "x": 20,
+          "y": 80
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 964,
+      "nodeId": 964,
+      "points": [
+        {
+          "x": 96,
+          "y": 64
+        },
+        {
+          "x": 100,
+          "y": 64
+        },
+        {
+          "x": 100,
+          "y": 80
+        },
+        {
+          "x": 96,
+          "y": 80
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 965,
+      "nodeId": 965,
+      "points": [
+        {
+          "x": 80,
+          "y": 20
+        },
+        {
+          "x": 96,
+          "y": 20
+        },
+        {
+          "x": 96,
+          "y": 24
+        },
+        {
+          "x": 80,
+          "y": 24
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 966,
+      "nodeId": 966,
+      "points": [
+        {
+          "x": 24,
+          "y": 96
+        },
+        {
+          "x": 40,
+          "y": 96
+        },
+        {
+          "x": 40,
+          "y": 100
+        },
+        {
+          "x": 24,
+          "y": 100
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 967,
+      "nodeId": 967,
+      "points": [
+        {
+          "x": 80,
+          "y": 96
+        },
+        {
+          "x": 96,
+          "y": 96
+        },
+        {
+          "x": 96,
+          "y": 100
+        },
+        {
+          "x": 80,
+          "y": 100
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 968,
+      "nodeId": 968,
+      "points": [
+        {
+          "x": 64,
+          "y": 20
+        },
+        {
+          "x": 80,
+          "y": 20
+        },
+        {
+          "x": 80,
+          "y": 24
+        },
+        {
+          "x": 64,
+          "y": 24
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 969,
+      "nodeId": 969,
+      "points": [
+        {
+          "x": 40,
+          "y": 96
+        },
+        {
+          "x": 56,
+          "y": 96
+        },
+        {
+          "x": 56,
+          "y": 100
+        },
+        {
+          "x": 40,
+          "y": 100
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 970,
+      "nodeId": 970,
+      "points": [
+        {
+          "x": 64,
+          "y": 96
+        },
+        {
+          "x": 80,
+          "y": 96
+        },
+        {
+          "x": 80,
+          "y": 100
+        },
+        {
+          "x": 64,
+          "y": 100
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 971,
+      "nodeId": 971,
+      "points": [
+        {
+          "x": 72,
+          "y": 32
+        },
+        {
+          "x": 88,
+          "y": 32
+        },
+        {
+          "x": 88,
+          "y": 48
+        },
+        {
+          "x": 72,
+          "y": 48
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 972,
+      "nodeId": 972,
+      "points": [
+        {
+          "x": 32,
+          "y": 72
+        },
+        {
+          "x": 48,
+          "y": 72
+        },
+        {
+          "x": 48,
+          "y": 88
+        },
+        {
+          "x": 32,
+          "y": 88
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 973,
+      "nodeId": 973,
+      "points": [
+        {
+          "x": 72,
+          "y": 72
+        },
+        {
+          "x": 88,
+          "y": 72
+        },
+        {
+          "x": 88,
+          "y": 88
+        },
+        {
+          "x": 72,
+          "y": 88
+        }
+      ]
+    },
+    {
+      "color": "楼道",
+      "id": 974,
+      "nodeId": 974,
+      "points": [
+        {
+          "x": 10,
+          "y": 56
+        },
+        {
+          "x": 20,
+          "y": 56
+        },
+        {
+          "x": 20,
+          "y": 64
+        },
+        {
+          "x": 10,
+          "y": 64
+        }
+      ]
+    },
+    {
+      "color": "楼道",
+      "id": 975,
+      "nodeId": 975,
+      "points": [
+        {
+          "x": 56,
+          "y": 10
+        },
+        {
+          "x": 64,
+          "y": 10
+        },
+        {
+          "x": 64,
+          "y": 20
+        },
+        {
+          "x": 56,
+          "y": 20
+        }
+      ]
+    },
+    {
+      "color": "楼道",
+      "id": 976,
+      "nodeId": 976,
+      "points": [
+        {
+          "x": 56,
+          "y": 100
+        },
+        {
+          "x": 64,
+          "y": 100
+        },
+        {
+          "x": 64,
+          "y": 110
+        },
+        {
+          "x": 56,
+          "y": 110
+        }
+      ]
+    },
+    {
+      "color": "楼道",
+      "id": 977,
+      "nodeId": 977,
+      "points": [
+        {
+          "x": 100,
+          "y": 56
+        },
+        {
+          "x": 110,
+          "y": 56
+        },
+        {
+          "x": 110,
+          "y": 64
+        },
+        {
+          "x": 100,
+          "y": 64
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 978,
+      "nodeId": 978,
+      "points": [
+        {
+          "x": 20,
+          "y": 56
+        },
+        {
+          "x": 24,
+          "y": 56
+        },
+        {
+          "x": 24,
+          "y": 64
+        },
+        {
+          "x": 20,
+          "y": 64
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 979,
+      "nodeId": 979,
+      "points": [
+        {
+          "x": 24,
+          "y": 56
+        },
+        {
+          "x": 48,
+          "y": 56
+        },
+        {
+          "x": 48,
+          "y": 64
+        },
+        {
+          "x": 24,
+          "y": 64
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 980,
+      "nodeId": 980,
+      "points": [
+        {
+          "x": 56,
+          "y": 20
+        },
+        {
+          "x": 64,
+          "y": 20
+        },
+        {
+          "x": 64,
+          "y": 24
+        },
+        {
+          "x": 56,
+          "y": 24
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 981,
+      "nodeId": 981,
+      "points": [
+        {
+          "x": 56,
+          "y": 24
+        },
+        {
+          "x": 64,
+          "y": 24
+        },
+        {
+          "x": 64,
+          "y": 48
+        },
+        {
+          "x": 56,
+          "y": 48
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 982,
+      "nodeId": 982,
+      "points": [
+        {
+          "x": 56,
+          "y": 72
+        },
+        {
+          "x": 64,
+          "y": 72
+        },
+        {
+          "x": 64,
+          "y": 96
+        },
+        {
+          "x": 56,
+          "y": 96
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 983,
+      "nodeId": 983,
+      "points": [
+        {
+          "x": 56,
+          "y": 96
+        },
+        {
+          "x": 64,
+          "y": 96
+        },
+        {
+          "x": 64,
+          "y": 100
+        },
+        {
+          "x": 56,
+          "y": 100
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 984,
+      "nodeId": 984,
+      "points": [
+        {
+          "x": 72,
+          "y": 56
+        },
+        {
+          "x": 96,
+          "y": 56
+        },
+        {
+          "x": 96,
+          "y": 64
+        },
+        {
+          "x": 72,
+          "y": 64
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 985,
+      "nodeId": 985,
+      "points": [
+        {
+          "x": 96,
+          "y": 56
+        },
+        {
+          "x": 100,
+          "y": 56
+        },
+        {
+          "x": 100,
+          "y": 64
+        },
+        {
+          "x": 96,
+          "y": 64
+        }
+      ]
+    },
+    {
+      "color": "走廊",
+      "id": 986,
+      "nodeId": 986,
+      "points": [
+        {
+          "x": 48,
+          "y": 48
+        },
+        {
+          "x": 72,
+          "y": 48
+        },
+        {
+          "x": 72,
+          "y": 72
+        },
+        {
+          "x": 48,
+          "y": 72
+        }
+      ]
+    }
+  ],
+  "walls": [],
+  "virtualDoors": [],
+  "nodes": [],
+  "floorNumber": 6,
+  "version": "0.5",
+  "config": {
+    "colors": {
+      "电梯": "#9bcdff",
+      "外墙": "#727272",
+      "门": "#505665",
+      "中庭": "#9493ca",
+      "楼道": "#d1ed83",
+      "走廊": "#ffffff",
+      "设施间": "#b0cfd3",
+      "内墙": "#b2b774",
+      "店铺": "#f4f4f4"
+    }
+  },
+  "createDate": "2017-05-25T17:55:16.506Z"
 }

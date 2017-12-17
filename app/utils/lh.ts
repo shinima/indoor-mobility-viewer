@@ -1,6 +1,9 @@
+import { Point, Track } from '../interfaces'
+
 export interface LHData {
   semanticTraces: LHSemanticTrace[]
   rawTraces: LHRawTrace[]
+  groundTruthTraces: LHRawTrace[]
   startTime: number
   // objectID: number // 这个字段看起来没什么用
 }
@@ -26,10 +29,6 @@ export interface LHRawTrace {
 
 let nextTrackId = 1
 let nextTrackPointId = 1
-const MAC = {
-  raw: 'raw',
-  semantics: 'semantics',
-}
 
 export function getRawTracks(lhData: LHData): Track[] {
   const result: Track[] = []
@@ -38,7 +37,7 @@ export function getRawTracks(lhData: LHData): Track[] {
     const track: Track = {
       floorId: Number(floor),
       trackId: nextTrackId++,
-      mac: MAC.raw,
+      trackName: 'raw',
       startTime: (lhData.startTime + data[0].time) * 1000,
       endTime: (lhData.startTime + data[data.length - 1].time) * 1000,
       points: [],
@@ -47,7 +46,7 @@ export function getRawTracks(lhData: LHData): Track[] {
     for (const { x, y, time } of data) {
       track.points.push({
         trackPointId: nextTrackPointId++,
-        mac: MAC.raw,
+        trackName: 'raw',
         pointType: 'raw',
         time: (lhData.startTime + time) * 1000,
         duration: 0,
@@ -75,7 +74,7 @@ export function getSemanticTracks(
     const track: Track = {
       floorId,
       trackId: nextTrackId++,
-      mac: MAC.semantics,
+      trackName: 'semantic',
       startTime: (lhData.startTime + data[0].startTime) * 1000,
       endTime: (lhData.startTime + data[data.length - 1].endTime) * 1000,
       points: [],
@@ -84,7 +83,7 @@ export function getSemanticTracks(
     for (const { roomID, startTime, endTime } of data) {
       track.points.push({
         trackPointId: nextTrackPointId++,
-        mac: MAC.semantics,
+        trackName: 'semantic',
         pointType: 'normal',
         time: (lhData.startTime + startTime) * 1000,
         duration: (endTime - startTime) * 1000,

@@ -1,11 +1,12 @@
 import * as React from 'react'
-import * as d3 from 'd3'
 import { Component } from 'react'
+import * as d3 from 'd3'
 import TrackDrawingManager from './TrackDrawingManager'
 import FloorDrawingManager from './FloorDrawingManager'
 import { isSameTracks } from './utils'
 import '../../styles/Map.styl'
 import { MAX_SCALE, MIN_SCALE } from '../../utils/constants'
+import { Track } from '../../interfaces'
 
 export interface TrackMapProp {
   time: number
@@ -21,7 +22,6 @@ export interface TrackMapProp {
 
   onChangeTime: (time: number) => void
   onZoom: () => void
-  humanize: (mac: string) => string
 }
 
 export default class TrackMap extends Component<TrackMapProp> {
@@ -55,23 +55,29 @@ export default class TrackMap extends Component<TrackMapProp> {
   }
 
   componentWillReceiveProps(nextProps: TrackMapProp) {
-    const { floor, time, rawTracks, ctid, transformReset } = this.props
+    const { floor, time, rawTracks, semanticTracks, ctid, transformReset } = this.props
     // 用floorId来判断是否为同一个楼层
     if (floor.floorId !== nextProps.floor.floorId) {
       // console.log('update-floor')
       this.floorDrawingManager.updateFloor(nextProps.floor)
     }
-    if (!isSameTracks(rawTracks, nextProps.rawTracks)
-      || time !== nextProps.time
-    ) {
+
+    if (!isSameTracks(rawTracks, nextProps.rawTracks) || time !== nextProps.time) {
       // console.log('update-rawTracks')
       this.trackDrawingManager.updateRawTracks(nextProps.rawTracks, {
         time: nextProps.time,
       })
     }
+
+    if (!isSameTracks(semanticTracks, nextProps.semanticTracks) || time !== nextProps.time) {
+      this.trackDrawingManager.updateSemanticTracks(nextProps.semanticTracks, nextProps)
+    }
+
     if (ctid !== nextProps.ctid && nextProps.ctid != null) {
       const track = nextProps.rawTracks.find(t => t.trackId === nextProps.ctid)
-      this.trackDrawingManager.centralizeRawTrack(track)
+      if (track) {
+        this.trackDrawingManager.centralizeRawTrack(track)
+      }
     }
     if (!transformReset && nextProps.transformReset) {
       this.floorDrawingManager.resetTransform()
@@ -103,6 +109,7 @@ export default class TrackMap extends Component<TrackMapProp> {
               <g className="points-layer" />
             </g>
             <g className="semantic-tracks-wrapper">
+              <g className="path-layer" />
               <g className="points-layer" />
             </g>
           </g>

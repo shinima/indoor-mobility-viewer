@@ -2,6 +2,7 @@ import * as d3 from 'd3'
 import * as moment from 'moment'
 import * as React from 'react'
 import { clamp } from 'lodash'
+import { Track } from '../interfaces'
 import '../styles/TimelinePanel.styl'
 
 export interface Props {

@@ -29,8 +29,7 @@ export default class ButtonGroup extends Component<P> {
             className="reset-transform-button"
             onClick={onResetTransform}
           >
-            居中地图
-            <img src="/static/img/reset-transform-icon.svg" />
+            Centralize Map
           </button>
         </div>
       </div>

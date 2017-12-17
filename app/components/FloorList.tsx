@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as d3 from 'd3'
-import { List, Map } from 'immutable'
 import * as classNames from 'classnames'
+import { List, Record } from 'immutable'
 import '../styles/FloorList.styl'
 
 const statsBgColor = d3.scaleLinear<d3.HSLColor>()
@@ -11,40 +11,47 @@ const statsBgColor = d3.scaleLinear<d3.HSLColor>()
   .interpolate(d3.interpolateHsl)
 const statsBarWidth = d3.scaleLinear().range([0, 300]).clamp(true)
 
-type P = {
-  max?: number
-  floorEntryList: any // todo
+interface P {
+  floorEntryList: List<FloorEntryRecord>
   selectedFloorId: number
   changeSelectedFloorId: (floorId: number) => void
+  max?: number
+}
+
+export const FloorEntryRecord = Record({
+  floorId: 0,
+  floorName: '',
+  count: 0,
+})
+const floorEntryRecord = FloorEntryRecord()
+export type FloorEntryRecord = typeof floorEntryRecord
+
+export const add = (s: number, c: number) => s + c
+
+function getDefaultMax(floorEntryList: List<FloorEntryRecord>) {
+  const countList = floorEntryList.map(entry => entry.count)
+  const sum = countList.reduce(add, 0)
+  const avg = sum / countList.size
+  return Math.max(countList.max(), avg * 2)
 }
 
 export default class FloorList extends React.Component<P> {
-  // static propTypes = {
-  //   max: PropTypes.number,
-  //   floorEntryList: ImmutablePropTypes.iterableOf(ImmutablePropTypes.mapContains({
-  //     floorId: PropTypes.number.isRequired,
-  //     floorName: PropTypes.string.isRequired,
-  //     pointsCount: PropTypes.number.isRequired,
-  //   }).isRequired).isRequired,
-  //   changeSelectedFloorId: PropTypes.func.isRequired,
-  //   selectedFloorId: PropTypes.number.isRequired,
-  // }
-
   render() {
     const {
       floorEntryList,
       selectedFloorId,
       changeSelectedFloorId,
-      max = floorEntryList.map((entry: any) => entry.get('pointsCount')).max(),
+      max = getDefaultMax(floorEntryList),
     } = this.props
+
     statsBgColor.domain([1, max])
     statsBarWidth.domain([0, max])
 
     return (
       <div className="floor-list-widget">
-        <div className="title">楼层热度</div>
+        <div className="title">Floor Chooser</div>
         <div className="floor-list">
-          {floorEntryList.map((entry: any) => (
+          {floorEntryList.map(entry => (
             <div
               key={entry.get('floorId')}
               className={classNames('floor-item', { active: selectedFloorId === entry.get('floorId') })}
@@ -53,16 +60,14 @@ export default class FloorList extends React.Component<P> {
               <div
                 className="bar"
                 style={{
-                  width: statsBarWidth(entry.get('pointsCount')),
-                  background: statsBgColor(entry.get('pointsCount')),
+                  width: statsBarWidth(entry.count),
+                  background: statsBgColor(entry.count),
                 }}
               />
               <div className="floor-name">
                 {entry.get('floorName')}
               </div>
-              <div className="points-count">
-                {entry.get('pointsCount')}
-              </div>
+              <div className="count">{entry.count}</div>
             </div>
           )).toArray()}
         </div>

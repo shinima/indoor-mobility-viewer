@@ -1,7 +1,7 @@
 @require './base.styl'
 
 .floor-list-widget {
-  padding-left 70px
+  padding-left 40px
 
   .title {
     @extends $widget-title
@@ -10,12 +10,13 @@
   .floor-list {
     .floor-item {
       position relative
-      height 37px
+      line-height 30px
       display flex
       align-items center
       cursor pointer
-      margin-left -70px
-      padding-left 70px
+      margin-left -40px
+      padding-left 40px
+      font-size 14px
 
       &.active {
         background #eceef4
@@ -29,10 +30,10 @@
       }
 
       .floor-name {
-        width 60px
+        width 80px
       }
 
-      .points-count {
+      .count {
         width 100px
       }
     }

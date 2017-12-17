@@ -1,15 +1,17 @@
 import * as d3 from 'd3'
 import * as moment from 'moment'
 import * as _ from 'lodash'
+import { noop } from 'redux-saga/utils'
 import { getColor } from '../../utils/utils'
 import { TrackMapProp } from './TrackMap'
 import DrawingManager from './DrawingManager'
+import { Track, TrackPoint } from '../../interfaces'
 
 const trackPointsSymbolMap = {
-  'track-start': d3.symbol().type(d3.symbolSquare).size(800 / 16),
-  normal: d3.symbol().type(d3.symbolCircle).size(500 / 16),
+  'track-start': d3.symbol().type(d3.symbolSquare).size(10),
+  normal: d3.symbol().type(d3.symbolCircle).size(10),
   raw: d3.symbol().type(d3.symbolCircle).size(3),
-  'track-end': d3.symbol().type(d3.symbolTriangle).size(800 / 16),
+  'track-end': d3.symbol().type(d3.symbolTriangle).size(10),
 }
 
 
@@ -17,7 +19,6 @@ function showTooltip(
   tooltipWrapper: d3.Selection<HTMLDivElement>,
   trackPoint: TrackPoint,
   transform: d3.ZoomTransform,
-  humanize: HumanizeFn
 ) {
   let durationText = '<p style="margin:0">经过</p>'
   if (trackPoint.duration > 0) {
@@ -28,7 +29,7 @@ function showTooltip(
   // language=TEXT
   tooltipWrapper.html(`
     <div style="left: ${x}px; top: ${y}px;">
-      <p style="margin: 0">${humanize(trackPoint.mac)}</p>
+      <p style="margin: 0">${trackPoint.trackName}</p>
       <p style="margin: 0">${moment(trackPoint.time).format('HH:mm:ss')}</p>
       ${durationText}
     </div>
@@ -54,7 +55,6 @@ export default class TrackDrawingManager extends DrawingManager {
   private svg: d3.Selection<SVGElement>
   private tooltipWrapper: d3.Selection<HTMLDivElement>
   private getProps: () => TrackMapProp
-  private humanize: (mac: string) => string
 
   constructor(
     svgElement: SVGSVGElement,
@@ -65,10 +65,7 @@ export default class TrackDrawingManager extends DrawingManager {
     super(svgElement, zoom)
     this.svg = d3.select(svgElement)
     this.tooltipWrapper = d3.select(tooltipWrapperElement)
-
     this.getProps = getProps
-    const { humanize } = getProps()
-    this.humanize = humanize
 
     this.zoom.on('zoom.tooltip', () => {
       this.tooltipWrapper
@@ -92,17 +89,29 @@ export default class TrackDrawingManager extends DrawingManager {
     if (trackPointId == null) {
       onChangeTime(0)
     } else {
-      const rawTrackPoints = rawTracks.reduce<TrackPoint[]>((result, track) => result.concat(track.points), [])
+      const rawTrackPoints = rawTracks.reduce<TrackPoint[]>((
+        result,
+        track
+      ) => result.concat(track.points), [])
       const point = rawTrackPoints.find(p => (p.trackPointId === trackPointId))
       onChangeTime(point.time)
     }
   }
 
-  updateTrackPoints(tracks: Track[], pointsLayer: d3.Selection, { time }: Partial<TrackMapProp>) {
-    const allTrackPoints = tracks.reduce<TrackPoint[]>((result, tr) => result.concat(tr.points), [])
-    const closestPointId = _.minBy(allTrackPoints, p => Math.abs(p.time - time)).trackPointId
+  updateTrackPoints(
+    tracks: Track[],
+    pointsLayer: d3.Selection,
+    onClick: (trackPoint: TrackPoint) => void,
+    { time }: Partial<TrackMapProp>,
+  ) {
+    const allTrackPoints = tracks.reduce<TrackPoint[]>((
+      result,
+      track
+    ) => result.concat(track.points), [])
+    const closestPoint = _.minBy(allTrackPoints, p => Math.abs(p.time - time))
+    const closestPointId = closestPoint ? closestPoint.trackPointId : -1
 
-    const trackOpacity = (track: Track) => {
+    const pointsGroupOpacity = (track: Track) => {
       const inThisTrack = track.startTime <= time && time <= track.endTime
       return (time === 0 || inThisTrack) ? 1 : 0.1
     }
@@ -114,7 +123,7 @@ export default class TrackDrawingManager extends DrawingManager {
       .classed('track-points', true)
       .attr('data-track-id', track => String(track.trackId))
       .merge(pointGroupsJoin)
-      .attr('opacity', trackOpacity)
+      .attr('opacity', pointsGroupOpacity)
     pointGroupsJoin.exit().remove()
 
     const symbolGenerator = (trackPoint: TrackPoint) => trackPointsSymbolMap[trackPoint.pointType]()
@@ -133,14 +142,14 @@ export default class TrackDrawingManager extends DrawingManager {
       .style('cursor', 'pointer')
       .style('transition', 'opacity 100ms')
       .attr('data-track-point-id', trackPoint => trackPoint.trackPointId)
-      .attr('fill', ({ mac }) => getColor(mac))
+      .attr('fill', ({ trackName }) => getColor(trackName))
       .merge(symbolsJoin)
     symbolsJoin.exit().remove()
     symbols
       .attr('transform', trackPointTransform)
       .attr('opacity', trackPointOpacity)
       .attr('d', symbolGenerator)
-      .on('click', this.highlightRawTrackPoint)
+      .on('click', onClick || noop)
 
     // update tooltip
     // htp: highlighted track point
@@ -173,7 +182,7 @@ export default class TrackDrawingManager extends DrawingManager {
       .attr('fill', 'none')
       .style('cursor', 'pointer')
       .attr('data-track-id', track => track.trackId)
-      .attr('stroke', track => getColor(track.mac))
+      .attr('stroke', track => getColor(track.trackName))
       .attr('stroke-width', 0.5)
       .on('click', ({ trackId }) => this.highlightRawTrack(trackId))
       .attr('d', track => lineGenerator(track.points))
@@ -188,14 +197,17 @@ export default class TrackDrawingManager extends DrawingManager {
     const pointsLayer = board.select('.raw-tracks-wrapper .points-layer') as d3.Selection
     const pathLayer = board.select('.raw-tracks-wrapper .path-layer') as d3.Selection
 
-    this.updateTrackPoints(rawTracks, pointsLayer, { time })
+    this.updateTrackPoints(rawTracks, pointsLayer, this.highlightRawTrackPoint, { time })
     this.updateTrackPaths(rawTracks, pathLayer, { time })
   }
 
   updateSemanticTracks(semanticTracks: Track[], { time }: Partial<TrackMapProp>) {
     const board = this.svg.select('.board')
     const pointsLayer = board.select('.semantic-tracks-wrapper .points-layer') as d3.Selection
-    this.updateTrackPoints(semanticTracks, pointsLayer, { time })
+    const pathLayer = board.select('.semantic-tracks-wrapper .path-layer') as d3.Selection
+
+    this.updateTrackPoints(semanticTracks, pointsLayer, null, { time })
+    this.updateTrackPaths(semanticTracks, pathLayer, { time })
   }
 
   centralizeRawTrack(track: Track) {

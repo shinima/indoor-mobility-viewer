@@ -1,28 +1,24 @@
 import * as React from 'react'
-import * as _ from 'lodash'
-import * as moment from 'moment'
 import { connect } from 'react-redux'
-import { fromJS, Map, OrderedMap } from 'immutable'
+import { List } from 'immutable'
 import { Dispatch } from 'redux'
 import TrackMap from '../components/Map/TrackMap'
-import FloorList from '../components/FloorList'
+import FloorList, { FloorEntryRecord } from '../components/FloorList'
 import ButtonGroup from '../components/ButtonGroup'
 import bindSearchParameters, { SearchParamBinding } from '../utils/bindSearchParameters'
 import { IComponent } from '../utils/utils'
-import MacList from '../components/MacList'
-import '../styles/TrackMapPage.styl'
+import VisibilityChooser from './VisibilityChooser'
 import { FloorConfig, State } from '../reducer'
 import TimelinePanel from './TimelinePanel'
+import '../styles/TrackMapPage.styl'
+import { Track, TrackPoint } from '../interfaces'
 
-const defaultDate = '2017-06-20'
-
-type Def = {
+interface Def {
   floorId: number
   t: number
 }
 
 function mapStateToProps({ rawTracks, semanticTracks, floors, floorConfig }: State, ownProps: Def) {
-  // calculate floor from floors and floorId
   const { floorId } = ownProps
   const floor = floors.find(flr => flr.floorId === floorId) || floors[0]
 
@@ -30,9 +26,8 @@ function mapStateToProps({ rawTracks, semanticTracks, floors, floorConfig }: Sta
 }
 
 const searchBindingDefinitions = [
-  { key: 'floorId', getter: Number, default: null },
+  { key: 'floorId', getter: Number, default: null as number },
   { key: 'htid', getter: Number, default: null },
-  { key: 't', getter: Number, default: moment(defaultDate).valueOf() },
 ]
 
 type P = SearchParamBinding<Def> & {
@@ -45,18 +40,22 @@ type P = SearchParamBinding<Def> & {
 }
 
 interface S {
-  macEntryMap: OrderedMap<string, boolean>
   ctid: number
   time: number
   transformReset: boolean
+  showRawTrack: boolean
+  showSemanticTrack: boolean
+}
+
+function getFloorEntryCount(tracks: Track[], floorId: number) {
+  const allPoints = tracks.reduce<TrackPoint[]>((result, tr) => result.concat(tr.points), [])
+  return allPoints.filter(p => p.floorId === floorId).length
 }
 
 class TrackMapPage extends IComponent<P, S> {
   state = {
-    // mac地址过滤控件的状态
-    macEntryMap: (localStorage.getItem('mac-list') === null
-      ? OrderedMap()
-      : OrderedMap(JSON.parse(localStorage.getItem('mac-list')))) as OrderedMap<string, boolean>,
+    showRawTrack: true,
+    showSemanticTrack: true,
     // centralized-track-id
     ctid: null as number,
 
@@ -68,20 +67,6 @@ class TrackMapPage extends IComponent<P, S> {
   }
 
   onResetTransform = () => this.setState({ transformReset: true })
-
-  onDeleteMacEntry = (mac: string) => {
-    const { macEntryMap } = this.state
-    const newMacEntryMap = macEntryMap.delete(mac)
-    this.setState({ macEntryMap: newMacEntryMap })
-    localStorage.setItem('mac-list', JSON.stringify(newMacEntryMap))
-  }
-
-  onAddMacEntry = (mac: string) => {
-    const { macEntryMap } = this.state
-    const newMacEntryMap = macEntryMap.set(mac, true)
-    this.setState({ macEntryMap: newMacEntryMap })
-    localStorage.setItem('mac-list', JSON.stringify(newMacEntryMap))
-  }
 
   onChangeFloorId = (floorId: number) => {
     this.props.updateSearch({ floorId })
@@ -106,54 +91,34 @@ class TrackMapPage extends IComponent<P, S> {
 
   onCentralizeTrack = (trackId: number) => this.setState({ ctid: trackId })
 
-  onToggleMacEntry = (mac: string) => {
-    const { macEntryMap } = this.state
-    const not = (x: any) => !x
-    const newMacEntryMap = macEntryMap.update(mac, not)
-    this.setState({ macEntryMap: newMacEntryMap })
-    localStorage.setItem('mac-list', JSON.stringify(newMacEntryMap))
-  }
-
-  // 居中显示一个macName在当前楼层的第一个轨迹
-  onCentralizeFirstTrack = (mac: string) => {
-    // const { allTracks, floor } = this.props
-    // const centralizedTrack = allTracks.find(tr => (tr.floorId === floor.floorId && tr.mac === mac))
-    // if (centralizedTrack) {
-    //   this.setState({ ctid: centralizedTrack.trackId })
-    // }
-  }
-
   onTrackMapZoom = () => {
     this.setState({ ctid: null, transformReset: false })
   }
 
   render() {
     const { rawTracks, semanticTracks, floorConfig, floor } = this.props
-    const { time, ctid, macEntryMap, transformReset } = this.state
-
-    // TODO 改成 showRawTracks / showSemanticTracks
-    // const activeMacSet = macEntryMap.filter(Boolean).keySeq().toSet()
+    const { time, ctid, transformReset, showRawTrack, showSemanticTrack } = this.state
 
     const inThisFloor = (track: Track) => track.floorId === floor.floorId
 
-    const visibleRawTracks = rawTracks.filter(inThisFloor)
-    const visibleSemanticTracks = semanticTracks.filter(inThisFloor)
+    const visibleRawTracks = showRawTrack ? rawTracks.filter(inThisFloor) : []
+    const visibleSemanticTracks = showSemanticTrack ? semanticTracks.filter(inThisFloor) : []
 
-    const floorEntryList = fromJS(floorConfig).map((entry: Map<string, number | string>) => (
-      entry.set('pointsCount', 0)
-    )) as Map<string, number | string>
+    const floorEntryList = List(floorConfig).map(flr => FloorEntryRecord({
+      floorName: flr.floorName,
+      floorId: flr.floorId,
+      count: getFloorEntryCount(rawTracks, flr.floorId),
+    }))
 
     return (
       <div>
         <div className="widgets">
           <ButtonGroup onResetTransform={this.onResetTransform} />
-          <MacList
-            macEntryMap={macEntryMap}
-            onDeleteMacEntry={this.onDeleteMacEntry}
-            onAddMacEntry={this.onAddMacEntry}
-            onToggleMacEntry={this.onToggleMacEntry}
-            onCentralizeFirstTrack={this.onCentralizeFirstTrack}
-            translate={_.identity}
+          <VisibilityChooser
+            showRawTrack={showRawTrack}
+            showSemanticTrack={showSemanticTrack}
+            onToggleShowRawTrack={() => this.setState({ showRawTrack: !showRawTrack })}
+            onToggleShowSemanticTrack={() => this.setState({ showSemanticTrack: !showSemanticTrack })}
           />
           <FloorList
             selectedFloorId={floor.floorId}
@@ -169,7 +134,6 @@ class TrackMapPage extends IComponent<P, S> {
           ctid={ctid}
           transformReset={transformReset}
           onChangeTime={this.onChangeTime}
-          humanize={_.identity}
           onZoom={this.onTrackMapZoom}
         />
         <TimelinePanel
