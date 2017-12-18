@@ -2,7 +2,7 @@ import * as d3 from 'd3'
 import * as moment from 'moment'
 import * as React from 'react'
 import { clamp } from 'lodash'
-import { Track } from '../interfaces'
+import { Track, TrackName } from '../interfaces'
 import '../styles/TimelinePanel.styl'
 import { getColor } from '../utils/utils'
 
@@ -11,6 +11,7 @@ export interface Props {
   onChangeTime: (time: number) => void
   rawTracks: Track[]
   semanticTracks: Track[]
+  baseTrackName: TrackName
 }
 
 export interface State {

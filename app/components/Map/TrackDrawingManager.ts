@@ -74,28 +74,24 @@ export default class TrackDrawingManager extends DrawingManager {
     })
   }
 
-  highlightRawTrack(trackId: number) {
+  highlightRawTrack = ({ trackId }: Track) => {
     const { onChangeTime, rawTracks } = this.getProps()
-    if (trackId == null) {
-      onChangeTime(0)
-    } else {
-      const track = rawTracks.find(track => (track.trackId === trackId))
-      onChangeTime(track.startTime)
-    }
+    const track = rawTracks.find(track => (track.trackId === trackId))
+    onChangeTime(track.startTime, 'raw')
   }
 
-  highlightRawTrackPoint = ({ trackPointId }: TrackPoint) => {
-    const { onChangeTime, rawTracks } = this.getProps()
-    if (trackPointId == null) {
-      onChangeTime(0)
-    } else {
-      const rawTrackPoints = rawTracks.reduce<TrackPoint[]>((
-        result,
-        track
-      ) => result.concat(track.points), [])
-      const point = rawTrackPoints.find(p => (p.trackPointId === trackPointId))
-      onChangeTime(point.time)
-    }
+  highlightSemanticTrack = ({ trackId }: Track) => {
+    const { onChangeTime, semanticTracks } = this.getProps()
+    const track = semanticTracks.find(track => (track.trackId === trackId))
+    onChangeTime(track.startTime, 'semantic')
+  }
+
+  highlightRawTrackPoint = ({ time }: TrackPoint) => {
+    this.getProps().onChangeTime(time, 'raw')
+  }
+
+  highlightSemanticTrackPoint = ({ time }: TrackPoint) => {
+    this.getProps().onChangeTime(time, 'semantic')
   }
 
   updateTrackPoints(
@@ -162,7 +158,12 @@ export default class TrackDrawingManager extends DrawingManager {
     // }
   }
 
-  updateTrackPaths(tracks: Track[], pathLayer: d3.Selection, { time }: Partial<TrackMapProp>) {
+  updateTrackPaths(
+    tracks: Track[],
+    pathLayer: d3.Selection,
+    onClick: (track: Track) => void,
+    { time }: Partial<TrackMapProp>
+  ) {
     const opacity = (track: Track) => {
       const inThisTrack = track.startTime <= time && time <= track.endTime
       return (time === 0 || inThisTrack) ? 0.8 : 0.1
@@ -184,7 +185,7 @@ export default class TrackDrawingManager extends DrawingManager {
       .attr('data-track-id', track => track.trackId)
       .attr('stroke', track => getColor(track.trackName))
       .attr('stroke-width', 0.5)
-      .on('click', ({ trackId }) => this.highlightRawTrack(trackId))
+      .on('click', onClick)
       .attr('d', track => lineGenerator(track.points))
       .merge(trackPathJoin)
       .attr('opacity', opacity)
@@ -198,7 +199,7 @@ export default class TrackDrawingManager extends DrawingManager {
     const pathLayer = board.select('.raw-tracks-wrapper .path-layer') as d3.Selection
 
     this.updateTrackPoints(rawTracks, pointsLayer, this.highlightRawTrackPoint, { time })
-    this.updateTrackPaths(rawTracks, pathLayer, { time })
+    this.updateTrackPaths(rawTracks, pathLayer, this.highlightRawTrack, { time })
   }
 
   updateSemanticTracks(semanticTracks: Track[], { time }: Partial<TrackMapProp>) {
@@ -206,8 +207,8 @@ export default class TrackDrawingManager extends DrawingManager {
     const pointsLayer = board.select('.semantic-tracks-wrapper .points-layer') as d3.Selection
     const pathLayer = board.select('.semantic-tracks-wrapper .path-layer') as d3.Selection
 
-    this.updateTrackPoints(semanticTracks, pointsLayer, null, { time })
-    this.updateTrackPaths(semanticTracks, pathLayer, { time })
+    this.updateTrackPoints(semanticTracks, pointsLayer, this.highlightSemanticTrackPoint, { time })
+    this.updateTrackPaths(semanticTracks, pathLayer, this.highlightSemanticTrack, { time })
   }
 
   centralizeRawTrack(track: Track) {

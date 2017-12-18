@@ -11,7 +11,7 @@ import VisibilityChooser from './VisibilityChooser'
 import { FloorConfig, State } from '../reducer'
 import TimelinePanel from './TimelinePanel'
 import '../styles/TrackMapPage.styl'
-import { Track, TrackPoint } from '../interfaces'
+import { Track, TrackName, TrackPoint } from '../interfaces'
 
 interface Def {
   floorId: number
@@ -40,11 +40,12 @@ type P = SearchParamBinding<Def> & {
 }
 
 interface S {
+  baseTrackName: TrackName
+  showRawTrack: boolean
+  showSemanticTrack: boolean
   ctid: number
   time: number
   transformReset: boolean
-  showRawTrack: boolean
-  showSemanticTrack: boolean
 }
 
 function getFloorEntryCount(tracks: Track[], floorId: number) {
@@ -54,6 +55,7 @@ function getFloorEntryCount(tracks: Track[], floorId: number) {
 
 class TrackMapPage extends IComponent<P, S> {
   state = {
+    baseTrackName: 'raw' as TrackName,
     showRawTrack: true,
     showSemanticTrack: true,
     // centralized-track-id
@@ -72,24 +74,22 @@ class TrackMapPage extends IComponent<P, S> {
     this.props.updateSearch({ floorId })
   }
 
-  onChangeTime = (time: number) => {
+  onChangeTime = (time: number, nextBaseTrackName?: TrackName) => {
     if (time === 0) {
       this.setState({ time })
     } else {
-      // TODO 这里目前以rawTrack为准
-      const { floorId, rawTracks } = this.props
-      const nextTrack = rawTracks.find(track => (track.startTime <= time && time <= track.endTime))
+      const { floorId, rawTracks, semanticTracks } = this.props
+      const baseTrackName = nextBaseTrackName || this.state.baseTrackName
+      const baseTracks = baseTrackName === 'raw' ? rawTracks : semanticTracks
+      const nextTrack = baseTracks.find(track => (track.startTime <= time && time <= track.endTime))
       if (nextTrack && floorId !== nextTrack.floorId) {
         this.onChangeFloorId(nextTrack.floorId)
-        this.setState({ time })
-        this.onCentralizeTrack(nextTrack.trackId)
+        this.setState({ time, ctid: nextTrack.trackId, baseTrackName })
       } else {
-        this.setState({ time })
+        this.setState({ time, baseTrackName })
       }
     }
   }
-
-  onCentralizeTrack = (trackId: number) => this.setState({ ctid: trackId })
 
   onTrackMapZoom = () => {
     this.setState({ ctid: null, transformReset: false })
@@ -97,7 +97,7 @@ class TrackMapPage extends IComponent<P, S> {
 
   render() {
     const { rawTracks, semanticTracks, floorConfig, floor } = this.props
-    const { time, ctid, transformReset, showRawTrack, showSemanticTrack } = this.state
+    const { time, ctid, transformReset, showRawTrack, showSemanticTrack, baseTrackName } = this.state
 
     const inThisFloor = (track: Track) => track.floorId === floor.floorId
 
@@ -112,13 +112,16 @@ class TrackMapPage extends IComponent<P, S> {
 
     return (
       <div>
+        <div className="floor-display">Floor: {floor.floorNumber}</div>
         <div className="widgets">
           <ButtonGroup onResetTransform={this.onResetTransform} />
           <VisibilityChooser
+            baseTrackName={baseTrackName}
             showRawTrack={showRawTrack}
             showSemanticTrack={showSemanticTrack}
             onToggleShowRawTrack={() => this.setState({ showRawTrack: !showRawTrack })}
             onToggleShowSemanticTrack={() => this.setState({ showSemanticTrack: !showSemanticTrack })}
+            onChangeBaseTrackName={baseTrackName => this.setState({ baseTrackName })}
           />
           <FloorList
             selectedFloorId={floor.floorId}
@@ -141,6 +144,7 @@ class TrackMapPage extends IComponent<P, S> {
           onChangeTime={this.onChangeTime}
           rawTracks={rawTracks}
           semanticTracks={semanticTracks}
+          baseTrackName={baseTrackName}
           // onCentralizeTrack={this.onCentralizeTrack}
         />
       </div>

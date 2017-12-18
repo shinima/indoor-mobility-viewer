@@ -2,39 +2,47 @@ import * as React from 'react'
 import { Component } from 'react'
 import { getColor } from '../utils/utils'
 import Checkbox from './Checkbox'
+import { TrackName } from '../interfaces'
 import '../styles/VisibilityChooser.styl'
 
 interface P {
+  baseTrackName: TrackName
   showRawTrack: boolean
   showSemanticTrack: boolean
   onToggleShowRawTrack: () => void
   onToggleShowSemanticTrack: () => void
+  onChangeBaseTrackName: (nextBaseTrackName: TrackName) => void
 }
 
 interface RowProps {
   trackName: string
+  show: boolean
   checked: boolean
   onToggle: () => void
+  onChange: () => void
 }
 
-const VisibilityRow = ({ trackName, checked, onToggle }: RowProps) => (
+const VisibilityRow = ({ trackName, show, checked, onToggle, onChange }: RowProps) => (
   <div className="list-item">
     <button
       className="color"
       style={{ background: `${getColor(trackName)}` }}
     />
     <div className="text">{trackName}</div>
-    <Checkbox checked={checked} onChange={onToggle} />
+    <input type="radio" checked={checked} onChange={onChange} />
+    <Checkbox checked={show} onChange={onToggle} />
   </div>
 )
 
 export default class VisibilityChooser extends Component<P> {
   render() {
     const {
+      baseTrackName,
       showRawTrack,
       showSemanticTrack,
       onToggleShowRawTrack,
       onToggleShowSemanticTrack,
+      onChangeBaseTrackName,
     } = this.props
     return (
       <div className="visibility-chooser">
@@ -45,13 +53,17 @@ export default class VisibilityChooser extends Component<P> {
         <div className="list">
           <VisibilityRow
             trackName="raw"
-            checked={showRawTrack}
+            show={showRawTrack}
             onToggle={onToggleShowRawTrack}
+            checked={baseTrackName === 'raw'}
+            onChange={() => onChangeBaseTrackName('raw')}
           />
           <VisibilityRow
             trackName="semantic"
-            checked={showSemanticTrack}
+            show={showSemanticTrack}
             onToggle={onToggleShowSemanticTrack}
+            checked={baseTrackName === 'semantic'}
+            onChange={() => onChangeBaseTrackName('semantic')}
           />
         </div>
       </div>

@@ -20,7 +20,7 @@ export interface TrackMapProp {
   // transform是否重置(大概等于当前楼层是否居中显示)
   transformReset: boolean
 
-  onChangeTime: (time: number) => void
+  onChangeTime: (time: number, nextBaseTrackName?: string) => void
   onZoom: () => void
 }
 
