@@ -10,11 +10,34 @@
   flex-direction column
   width 400px
   background #f8f9fd
-  overflow-y auto
 
   .title {
     @extends $widget-title
     padding-left 20px
     font-size 20px
+  }
+
+  .content {
+    display flex
+    align-items flex-start
+    padding-top 16px
+    padding-left 16px
+    overflow-y auto
+
+    .list {
+      flex-grow 1
+      display flex
+      flex-direction column
+      border 1px solid blue
+
+      .item {
+        display flex
+        position relative
+
+        > p {
+          margin 0
+        }
+      }
+    }
   }
 }

@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-import { TrackPoint } from '../interfaces'
+import { Track, TrackPoint } from '../interfaces'
 
 const colors = d3.schemeCategory10
 
@@ -51,4 +51,8 @@ export function getClosestTrackPointId(trackPoints: TrackPoint[], time: number) 
   // } else {
   //   return -1
   // }
+}
+
+export function getTrackPoints(tracks: Track[]): TrackPoint[] {
+  return tracks.reduce<TrackPoint[]>((ps, track) => ps.concat(track.points), [])
 }

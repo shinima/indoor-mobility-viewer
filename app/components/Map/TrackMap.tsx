@@ -3,24 +3,20 @@ import { Component } from 'react'
 import * as d3 from 'd3'
 import TrackDrawingManager from './TrackDrawingManager'
 import FloorDrawingManager from './FloorDrawingManager'
-import { isSameTracks } from './utils'
+import { getTimeRange, isSameTracks } from './utils'
 import '../../styles/Map.styl'
 import { MAX_SCALE, MIN_SCALE } from '../../utils/constants'
 import { Track } from '../../interfaces'
+import { getTrackPoints } from '../../utils/utils'
 
 export interface TrackMapProp {
-  time: number
-  // 要绘制的楼层地图
   floor: Floor
+  sid: number
   rawTracks: Track[]
   semanticTracks: Track[]
-  // 居中显示的track id. 初次渲染的时候忽略该prop, 该prop仅在发生变化的时候有效
-  // 并且需要保证ctid对应的path元素目前是渲染在地图上面的
-  ctid: number
+  onChangeSid: (sid: number) => void
   // transform是否重置(大概等于当前楼层是否居中显示)
   transformReset: boolean
-
-  onChangeTime: (time: number, nextBaseTrackName?: string) => void
   onZoom: () => void
 }
 
@@ -31,7 +27,7 @@ export default class TrackMap extends Component<TrackMapProp> {
   tooltipWrapper: HTMLDivElement
 
   componentDidMount() {
-    const { floor, rawTracks, semanticTracks, time } = this.props
+    const { floor, sid, rawTracks, semanticTracks } = this.props
 
     const getProps = () => this.props
     const zoom = d3.zoom() as d3.ZoomBehavior<SVGSVGElement, null>
@@ -50,35 +46,29 @@ export default class TrackMap extends Component<TrackMapProp> {
     this.floorDrawingManager.updateFloor(floor)
 
     this.trackDrawingManager = new TrackDrawingManager(this.svgElement, this.tooltipWrapper, zoom, getProps)
-    this.trackDrawingManager.updateRawTracks(rawTracks, { time })
-    this.trackDrawingManager.updateSemanticTracks(semanticTracks, { time })
+    const range = getTimeRange(getTrackPoints(semanticTracks), sid)
+    this.trackDrawingManager.updateRawTracks(rawTracks, range)
+    this.trackDrawingManager.updateSemanticTracks(semanticTracks, range)
   }
 
   componentWillReceiveProps(nextProps: TrackMapProp) {
-    const { floor, time, rawTracks, semanticTracks, ctid, transformReset } = this.props
+    const { floor, sid, rawTracks, semanticTracks, transformReset } = this.props
     // 用floorId来判断是否为同一个楼层
     if (floor.floorId !== nextProps.floor.floorId) {
       // console.log('update-floor')
       this.floorDrawingManager.updateFloor(nextProps.floor)
     }
 
-    if (!isSameTracks(rawTracks, nextProps.rawTracks) || time !== nextProps.time) {
+    const range = getTimeRange(getTrackPoints(nextProps.semanticTracks), nextProps.sid)
+    if (!isSameTracks(rawTracks, nextProps.rawTracks) || sid !== nextProps.sid) {
       // console.log('update-rawTracks')
-      this.trackDrawingManager.updateRawTracks(nextProps.rawTracks, {
-        time: nextProps.time,
-      })
+      this.trackDrawingManager.updateRawTracks(nextProps.rawTracks, range)
     }
 
-    if (!isSameTracks(semanticTracks, nextProps.semanticTracks) || time !== nextProps.time) {
-      this.trackDrawingManager.updateSemanticTracks(nextProps.semanticTracks, nextProps)
+    if (!isSameTracks(semanticTracks, nextProps.semanticTracks) || sid !== nextProps.sid) {
+      this.trackDrawingManager.updateSemanticTracks(nextProps.semanticTracks, range)
     }
 
-    if (ctid !== nextProps.ctid && nextProps.ctid != null) {
-      const track = nextProps.rawTracks.find(t => t.trackId === nextProps.ctid)
-      if (track) {
-        this.trackDrawingManager.centralizeRawTrack(track)
-      }
-    }
     if (!transformReset && nextProps.transformReset) {
       this.floorDrawingManager.resetTransform()
     }

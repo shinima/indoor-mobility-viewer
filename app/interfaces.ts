@@ -15,8 +15,8 @@ export interface TrackPoint {
   floorId: number
   x: number
   y: number
-  // todo
-  members: Point[]
+  roomID: number
+  event: 'stay' | 'pass-by' | 'plain'
 }
 
 export interface Track {
@@ -38,4 +38,9 @@ export interface Line {
   y1: number
   x2: number
   y2: number
+}
+
+export interface Range {
+  start: number
+  end: number
 }

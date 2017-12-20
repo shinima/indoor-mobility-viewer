@@ -53,7 +53,8 @@ export function getRawTracks(lhData: LHData): Track[] {
         floorId: Number(floor),
         x,
         y,
-        members: [],
+        event: 'plain',
+        roomID: 0,
       })
     }
 
@@ -80,7 +81,7 @@ export function getSemanticTracks(
       points: [],
     }
 
-    for (const { roomID, startTime, endTime } of data) {
+    for (const { roomID, startTime, endTime, event } of data) {
       track.points.push({
         trackPointId: nextTrackPointId++,
         trackName: 'semantic',
@@ -89,7 +90,8 @@ export function getSemanticTracks(
         duration: (endTime - startTime) * 1000,
         floorId,
         ...getXY(floorId, roomID),
-        members: [],
+        roomID,
+        event,
       })
     }
     track.points[0].pointType = 'track-start'

@@ -2,34 +2,28 @@ import * as React from 'react'
 import { Component } from 'react'
 import { getColor } from '../utils/utils'
 import Checkbox from './Checkbox'
-import { TrackName } from '../interfaces'
 import '../styles/VisibilityChooser.styl'
 
 interface P {
-  baseTrackName: TrackName
   showRawTrack: boolean
   showSemanticTrack: boolean
   onToggleShowRawTrack: () => void
   onToggleShowSemanticTrack: () => void
-  onChangeBaseTrackName: (nextBaseTrackName: TrackName) => void
 }
 
 interface RowProps {
   trackName: string
   show: boolean
-  checked: boolean
   onToggle: () => void
-  onChange: () => void
 }
 
-const VisibilityRow = ({ trackName, show, checked, onToggle, onChange }: RowProps) => (
+const VisibilityRow = ({ trackName, show, onToggle }: RowProps) => (
   <div className="list-item">
     <button
       className="color"
       style={{ background: `${getColor(trackName)}` }}
     />
     <div className="text">{trackName}</div>
-    <input type="radio" checked={checked} onChange={onChange} />
     <Checkbox checked={show} onChange={onToggle} />
   </div>
 )
@@ -37,12 +31,10 @@ const VisibilityRow = ({ trackName, show, checked, onToggle, onChange }: RowProp
 export default class VisibilityChooser extends Component<P> {
   render() {
     const {
-      baseTrackName,
       showRawTrack,
       showSemanticTrack,
       onToggleShowRawTrack,
       onToggleShowSemanticTrack,
-      onChangeBaseTrackName,
     } = this.props
     return (
       <div className="visibility-chooser">
@@ -55,15 +47,11 @@ export default class VisibilityChooser extends Component<P> {
             trackName="raw"
             show={showRawTrack}
             onToggle={onToggleShowRawTrack}
-            checked={baseTrackName === 'raw'}
-            onChange={() => onChangeBaseTrackName('raw')}
           />
           <VisibilityRow
             trackName="semantic"
             show={showSemanticTrack}
             onToggle={onToggleShowSemanticTrack}
-            checked={baseTrackName === 'semantic'}
-            onChange={() => onChangeBaseTrackName('semantic')}
           />
         </div>
       </div>

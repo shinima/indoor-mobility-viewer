@@ -1,11 +1,10 @@
 import * as d3 from 'd3'
 import * as moment from 'moment'
-import * as _ from 'lodash'
 import { noop } from 'redux-saga/utils'
-import { getClosestTrackPointId, getColor } from '../../utils/utils'
+import { getColor, getTrackPoints } from '../../utils/utils'
 import { TrackMapProp } from './TrackMap'
 import DrawingManager from './DrawingManager'
-import { Track, TrackPoint } from '../../interfaces'
+import { Range, Track, TrackPoint } from '../../interfaces'
 
 const trackPointsSymbolMap = {
   'track-start': d3.symbol().type(d3.symbolSquare).size(10),
@@ -14,7 +13,7 @@ const trackPointsSymbolMap = {
   'track-end': d3.symbol().type(d3.symbolTriangle).size(10),
 }
 
-
+//#region tooltip
 function showTooltip(
   tooltipWrapper: d3.Selection<HTMLDivElement>,
   trackPoint: TrackPoint,
@@ -51,6 +50,8 @@ function hideTooltip(tooltipWrapper: d3.Selection<HTMLDivElement>) {
   tooltipWrapper.style('display', 'none')
 }
 
+//#endregion
+
 export default class TrackDrawingManager extends DrawingManager {
   private svg: d3.Selection<SVGElement>
   private tooltipWrapper: d3.Selection<HTMLDivElement>
@@ -74,43 +75,24 @@ export default class TrackDrawingManager extends DrawingManager {
     })
   }
 
-  highlightRawTrack = ({ trackId }: Track) => {
-    const { onChangeTime, rawTracks } = this.getProps()
-    const track = rawTracks.find(track => (track.trackId === trackId))
-    onChangeTime(track.startTime, 'raw')
+  private highlightSemanticTrackPoint = ({ trackPointId }: TrackPoint) => {
+    this.getProps().onChangeSid(trackPointId)
   }
 
-  highlightSemanticTrack = ({ trackId }: Track) => {
-    const { onChangeTime, semanticTracks } = this.getProps()
-    const track = semanticTracks.find(track => (track.trackId === trackId))
-    onChangeTime(track.startTime, 'semantic')
-  }
-
-  highlightRawTrackPoint = ({ time }: TrackPoint) => {
-    this.getProps().onChangeTime(time, 'raw')
-  }
-
-  highlightSemanticTrackPoint = ({ time }: TrackPoint) => {
-    this.getProps().onChangeTime(time, 'semantic')
-  }
-
-  updateTrackPoints(
+  drawTrackPoints(
     tracks: Track[],
     pointsLayer: d3.Selection,
     onClick: (trackPoint: TrackPoint) => void,
-    { time }: Partial<TrackMapProp>,
+    range: Range,
   ) {
-    const allTrackPoints = tracks.reduce<TrackPoint[]>(
-      (result, track) => result.concat(track.points),
-      [],
-    )
-
-    const closestPointId = getClosestTrackPointId(allTrackPoints, time)
-
-    const pointsGroupOpacity = (track: Track) => {
-      const inThisTrack = track.startTime <= time && time <= track.endTime
-      return (time === 0 || inThisTrack) ? 1 : 0.1
+    const allTrackPoints = getTrackPoints(tracks)
+    const intersection = (point: TrackPoint) => {
+      const { start: s1, end: e1 } = range
+      const s2 = point.time
+      const e2 = point.time + point.duration
+      return !(s1 > e2 || e1 < s2)
     }
+    const highlightedTrackPoints = new Set(allTrackPoints.filter(intersection).map(p => p.trackPointId))
 
     const pointGroupsJoin = pointsLayer.selectAll('.track-points')
       .data(tracks, (track: Track) => String(track.trackId))
@@ -119,13 +101,13 @@ export default class TrackDrawingManager extends DrawingManager {
       .classed('track-points', true)
       .attr('data-track-id', track => String(track.trackId))
       .merge(pointGroupsJoin)
-      .attr('opacity', pointsGroupOpacity)
+    // .attr('opacity', pointsGroupOpacity)
     pointGroupsJoin.exit().remove()
 
     const symbolGenerator = (trackPoint: TrackPoint) => trackPointsSymbolMap[trackPoint.pointType]()
     const trackPointTransform = ({ x, y }: TrackPoint) => `translate(${x}, ${y})`
 
-    const trackPointOpacity = ({ trackPointId }: TrackPoint) => (trackPointId === closestPointId ? 1 : 0.2)
+    const trackPointOpacity = ({ trackPointId }: TrackPoint) => (highlightedTrackPoints.has(trackPointId) ? 1 : 0.2)
 
     // 每个track-point一个symbol
     const symbolsJoin = pointGroups.selectAll('.symbol')
@@ -133,39 +115,30 @@ export default class TrackDrawingManager extends DrawingManager {
     const symbols = symbolsJoin.enter()
       .append('path')
       .classed('symbol', true)
-      .style('cursor', 'pointer')
       .style('transition', 'opacity 100ms')
       .attr('data-track-point-id', trackPoint => trackPoint.trackPointId)
       .attr('fill', ({ trackName }) => getColor(trackName))
       .merge(symbolsJoin)
-    symbolsJoin.exit().remove()
     symbols
       .attr('transform', trackPointTransform)
       .attr('opacity', trackPointOpacity)
       .attr('d', symbolGenerator)
-      .on('click', onClick || noop)
-
-    // update tooltip
-    // htp: highlighted track point
-    // const htp = _.flatMap(tracks, track => track.points)
-    //   .find(({ trackPointId }) => trackPointId === htpid)
-    // if (htp) {
-    //   this.tooltipWrapper.call(showTooltip, htp, d3.zoomTransform(this.svgElement), this.humanize)
-    // } else {
-    //   this.tooltipWrapper.call(hideTooltip)
-    // }
+    if (onClick) {
+      symbols.on('click', onClick || noop)
+        .style('cursor', 'pointer')
+    }
+    symbolsJoin.exit().remove()
   }
 
-  updateTrackPaths(
+  private drawTrackPaths(
     tracks: Track[],
     pathLayer: d3.Selection,
-    onClick: (track: Track) => void,
-    { time }: Partial<TrackMapProp>
+    range: Range,
   ) {
-    const opacity = (track: Track) => {
-      const inThisTrack = track.startTime <= time && time <= track.endTime
-      return (time === 0 || inThisTrack) ? 0.8 : 0.1
-    }
+    // const opacity = (track: Track) => {
+    //   const inThisTrack = track.startTime <= time && time <= track.endTime
+    //   return (time === 0 || inThisTrack) ? 0.8 : 0.1
+    // }
 
     const lineGenerator = d3.line<TrackPoint>()
       .x(item => item.x)
@@ -183,36 +156,28 @@ export default class TrackDrawingManager extends DrawingManager {
       .attr('data-track-id', track => track.trackId)
       .attr('stroke', track => getColor(track.trackName))
       .attr('stroke-width', 0.5)
-      .on('click', onClick)
       .attr('d', track => lineGenerator(track.points))
       .merge(trackPathJoin)
-      .attr('opacity', opacity)
+      // .attr('opacity', opacity)
 
     trackPathJoin.exit().remove()
   }
 
-  updateRawTracks(rawTracks: Track[], { time }: Partial<TrackMapProp>) {
+  updateRawTracks(rawTracks: Track[], range: Range) {
     const board = this.svg.select('.board')
     const pointsLayer = board.select('.raw-tracks-wrapper .points-layer') as d3.Selection
     const pathLayer = board.select('.raw-tracks-wrapper .path-layer') as d3.Selection
 
-    this.updateTrackPoints(rawTracks, pointsLayer, this.highlightRawTrackPoint, { time })
-    this.updateTrackPaths(rawTracks, pathLayer, this.highlightRawTrack, { time })
+    this.drawTrackPoints(rawTracks, pointsLayer, null, range)
+    this.drawTrackPaths(rawTracks, pathLayer, range)
   }
 
-  updateSemanticTracks(semanticTracks: Track[], { time }: Partial<TrackMapProp>) {
+  updateSemanticTracks(semanticTracks: Track[], range: Range) {
     const board = this.svg.select('.board')
     const pointsLayer = board.select('.semantic-tracks-wrapper .points-layer') as d3.Selection
     const pathLayer = board.select('.semantic-tracks-wrapper .path-layer') as d3.Selection
 
-    this.updateTrackPoints(semanticTracks, pointsLayer, this.highlightSemanticTrackPoint, { time })
-    this.updateTrackPaths(semanticTracks, pathLayer, this.highlightSemanticTrack, { time })
-  }
-
-  centralizeRawTrack(track: Track) {
-    // const cssSelector = `.raw-tracks-wrapper .path-layer path[data-track-id="${track.trackId}"]`
-    // const pathElement = this.svgElement.querySelector(cssSelector) as SVGPathElement
-    // const contentBox = pathElement.getBBox()
-    // this.centralize(contentBox, true, { top: 200, bottom: 200, left: 600, right: 600 })
+    this.drawTrackPoints(semanticTracks, pointsLayer, this.highlightSemanticTrackPoint, range)
+    this.drawTrackPaths(semanticTracks, pathLayer, range)
   }
 }

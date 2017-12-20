@@ -1,4 +1,4 @@
-import { Track } from '../../interfaces'
+import { Track, Range, TrackPoint } from '../../interfaces'
 
 export function isSameTracks(ts1: Track[], ts2: Track[]) {
   if (ts1.length !== ts2.length) {
@@ -17,4 +17,13 @@ export function isSameTracks(ts1: Track[], ts2: Track[]) {
     }
   }
   return true
+}
+
+export function getTimeRange(trackPoints: TrackPoint[], sid: number): Range {
+  const point = trackPoints.find(p => p.trackPointId === sid)
+  if (point) {
+    return { start: point.time, end: point.time + point.duration }
+  } else {
+    return { start: -1, end: -1 }
+  }
 }
