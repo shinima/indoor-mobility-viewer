@@ -93,6 +93,6 @@ export default class FloorDrawingManager extends DrawingManager {
   resetTransform(useTransition = true) {
     const regionsLayerWrapper = this.board.select('.regions-layer-wrapper').node() as SVGGElement
     const contentBox = regionsLayerWrapper.getBBox()
-    this.centralize(contentBox, useTransition, { top: 50, bottom: 50, left: 450, right: 300 })
+    this.centralize(contentBox, useTransition, { top: 50, bottom: 50, left: 450, right: 360 })
   }
 }

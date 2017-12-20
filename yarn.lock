@@ -229,6 +229,10 @@
   version "4.14.71"
   resolved "http://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.71.tgz#0dc383f78981216ac76e2f2c3afd998e0450e4c1"
 
+"@types/mousetrap@^1.5.34":
+  version "1.5.34"
+  resolved "http://registry.npm.taobao.org/@types/mousetrap/download/@types/mousetrap-1.5.34.tgz#22b338d9c4bcdfd8f81c30684aefeb04a4727168"
+
 "@types/node@*":
   version "8.0.16"
   resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-8.0.16.tgz#5aa51abd72621a0ce53fb86bccd76825ee1b4ca9"
@@ -3694,6 +3698,10 @@ mkdirp@0.5.x, "mkdirp@>=0.5 0", mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@~0.5.1:
 moment@^2.18.1:
   version "2.18.1"
   resolved "http://registry.npm.taobao.org/moment/download/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
+
+mousetrap@^1.6.1:
+  version "1.6.1"
+  resolved "http://registry.npm.taobao.org/mousetrap/download/mousetrap-1.6.1.tgz#2a085f5c751294c75e7e81f6ec2545b29cbf42d9"
 
 ms@0.7.1:
   version "0.7.1"

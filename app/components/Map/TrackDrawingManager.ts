@@ -2,7 +2,7 @@ import * as d3 from 'd3'
 import * as moment from 'moment'
 import * as _ from 'lodash'
 import { noop } from 'redux-saga/utils'
-import { getColor } from '../../utils/utils'
+import { getClosestTrackPointId, getColor } from '../../utils/utils'
 import { TrackMapProp } from './TrackMap'
 import DrawingManager from './DrawingManager'
 import { Track, TrackPoint } from '../../interfaces'
@@ -100,12 +100,12 @@ export default class TrackDrawingManager extends DrawingManager {
     onClick: (trackPoint: TrackPoint) => void,
     { time }: Partial<TrackMapProp>,
   ) {
-    const allTrackPoints = tracks.reduce<TrackPoint[]>((
-      result,
-      track
-    ) => result.concat(track.points), [])
-    const closestPoint = _.minBy(allTrackPoints, p => Math.abs(p.time - time))
-    const closestPointId = closestPoint ? closestPoint.trackPointId : -1
+    const allTrackPoints = tracks.reduce<TrackPoint[]>(
+      (result, track) => result.concat(track.points),
+      [],
+    )
+
+    const closestPointId = getClosestTrackPointId(allTrackPoints, time)
 
     const pointsGroupOpacity = (track: Track) => {
       const inThisTrack = track.startTime <= time && time <= track.endTime
@@ -125,9 +125,7 @@ export default class TrackDrawingManager extends DrawingManager {
     const symbolGenerator = (trackPoint: TrackPoint) => trackPointsSymbolMap[trackPoint.pointType]()
     const trackPointTransform = ({ x, y }: TrackPoint) => `translate(${x}, ${y})`
 
-    const trackPointOpacity = ({ trackPointId }: TrackPoint) => {
-      return trackPointId === closestPointId ? 1 : 0.2
-    }
+    const trackPointOpacity = ({ trackPointId }: TrackPoint) => (trackPointId === closestPointId ? 1 : 0.2)
 
     // 每个track-point一个symbol
     const symbolsJoin = pointGroups.selectAll('.symbol')
@@ -212,9 +210,9 @@ export default class TrackDrawingManager extends DrawingManager {
   }
 
   centralizeRawTrack(track: Track) {
-    const cssSelector = `.raw-tracks-wrapper .path-layer path[data-track-id="${track.trackId}"]`
-    const pathElement = this.svgElement.querySelector(cssSelector) as SVGPathElement
-    const contentBox = pathElement.getBBox()
-    this.centralize(contentBox, true, { top: 200, bottom: 200, left: 600, right: 600 })
+    // const cssSelector = `.raw-tracks-wrapper .path-layer path[data-track-id="${track.trackId}"]`
+    // const pathElement = this.svgElement.querySelector(cssSelector) as SVGPathElement
+    // const contentBox = pathElement.getBBox()
+    // this.centralize(contentBox, true, { top: 200, bottom: 200, left: 600, right: 600 })
   }
 }

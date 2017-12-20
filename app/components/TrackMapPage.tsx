@@ -6,7 +6,6 @@ import TrackMap from '../components/Map/TrackMap'
 import FloorList, { FloorEntryRecord } from '../components/FloorList'
 import ButtonGroup from '../components/ButtonGroup'
 import bindSearchParameters, { SearchParamBinding } from '../utils/bindSearchParameters'
-import { IComponent } from '../utils/utils'
 import VisibilityChooser from './VisibilityChooser'
 import { FloorConfig, State } from '../reducer'
 import TimelinePanel from './TimelinePanel'
@@ -53,7 +52,7 @@ function getFloorEntryCount(tracks: Track[], floorId: number) {
   return allPoints.filter(p => p.floorId === floorId).length
 }
 
-class TrackMapPage extends IComponent<P, S> {
+class TrackMapPage extends React.Component<P, S> {
   state = {
     baseTrackName: 'raw' as TrackName,
     showRawTrack: true,

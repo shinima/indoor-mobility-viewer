@@ -2,8 +2,8 @@ import { Point, Track } from '../interfaces'
 
 export interface LHData {
   semanticTraces: LHSemanticTrace[]
-  rawTraces: LHRawTrace[]
-  groundTruthTraces: LHRawTrace[]
+  rawTrace: LHRawTrace[]
+  groundTruthTrace: LHRawTrace[]
   startTime: number
   // objectID: number // 这个字段看起来没什么用
 }
@@ -33,7 +33,7 @@ let nextTrackPointId = 1
 export function getRawTracks(lhData: LHData): Track[] {
   const result: Track[] = []
 
-  for (const { data, floor } of lhData.rawTraces) {
+  for (const { data, floor } of lhData.groundTruthTrace) {
     const track: Track = {
       floorId: Number(floor),
       trackId: nextTrackId++,
