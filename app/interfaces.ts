@@ -4,7 +4,7 @@ declare module 'd3-selection' {
 }
 
 export type TrackName = 'raw' | 'semantic' | 'groundTruth'
-export type TrackPointType = 'track-start' | 'normal' | 'track-end' | 'raw'
+export type TrackPointType = 'pass-by' | 'stay' | 'raw'
 
 export interface TrackPoint {
   trackPointId: number

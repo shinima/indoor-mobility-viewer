@@ -1,16 +1,20 @@
-import * as d3 from 'd3'
 import { Track, TrackPoint } from '../interfaces'
-
-const colors = d3.schemeCategory10
-
-const map = new Map()
 
 /** 获取 key 对应的颜色 */
 export function getColor(key: string) {
-  if (!map.has(key)) {
-    map.set(key, map.size)
+  if (key === 'ground-truth') {
+    return '#444444'
+  } else if (key === 'raw') {
+    return '#3078b3'
+  } else if (key === 'cleaned-raw') {
+    return '#7fc378'
+  } else if (key === 'semantic') {
+    return '#ffa726'
+  } else if (key === 'semantic-stay') {
+    return '#fb8c00'
+  } else {
+    throw new Error(`Invalid key ${key}`)
   }
-  return colors[map.get(key) % colors.length]
 }
 
 /** 计算数组平均值 */

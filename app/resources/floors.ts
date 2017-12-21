@@ -17,6 +17,7 @@ declare global {
       regions: Region[]
       walls: Line[]
       nodes: Node[]
+      doors: Door[]
       config: {
         colors: { [colorName: string]: string }
         doorwidth: number
@@ -24,7 +25,7 @@ declare global {
       }
     }
 
-    type Node = {
+    interface Node {
       id: number
       name: string
       type: string
@@ -36,18 +37,24 @@ declare global {
       }
     }
 
-    type Region = {
+    interface Region {
       id: number
       color: ColorName
       nodeId: number
       points: Point[]
     }
 
-    type Wall = {
+    interface Wall {
       id: number
       color: ColorName
       width: string
       line: Line
+    }
+
+    interface Door {
+      color: ColorName
+      line: Line
+      id: number
     }
   }
 }

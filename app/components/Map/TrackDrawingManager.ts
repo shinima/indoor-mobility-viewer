@@ -7,10 +7,9 @@ import DrawingManager from './DrawingManager'
 import { Range, Track, TrackPoint } from '../../interfaces'
 
 const trackPointsSymbolMap = {
-  'track-start': d3.symbol().type(d3.symbolSquare).size(10),
-  normal: d3.symbol().type(d3.symbolCircle).size(10),
-  raw: d3.symbol().type(d3.symbolCircle).size(3),
-  'track-end': d3.symbol().type(d3.symbolTriangle).size(10),
+  raw: d3.symbol().type(d3.symbolCircle).size(1.5),
+  'pass-by': d3.symbol().type(d3.symbolCircle).size(4),
+  stay: d3.symbol().type(d3.symbolCircle).size(10),
 }
 
 //#region tooltip
@@ -54,38 +53,49 @@ function hideTooltip(tooltipWrapper: d3.Selection<HTMLDivElement>) {
 
 export default class TrackDrawingManager extends DrawingManager {
   private svg: d3.Selection<SVGElement>
-  private tooltipWrapper: d3.Selection<HTMLDivElement>
   private getProps: () => TrackMapProp
 
   constructor(
     svgElement: SVGSVGElement,
-    tooltipWrapperElement: HTMLDivElement,
     zoom: d3.ZoomBehavior<SVGSVGElement, null>,
     getProps: () => TrackMapProp,
   ) {
     super(svgElement, zoom)
     this.svg = d3.select(svgElement)
-    this.tooltipWrapper = d3.select(tooltipWrapperElement)
     this.getProps = getProps
-
-    this.zoom.on('zoom.tooltip', () => {
-      this.tooltipWrapper
-        .style('left', `${d3.event.transform.x}px`)
-        .style('top', `${d3.event.transform.y}px`)
-    })
   }
 
   private highlightSemanticTrackPoint = ({ trackPointId }: TrackPoint) => {
     this.getProps().onChangeSid(trackPointId)
   }
 
-  drawTrackPoints(
-    tracks: Track[],
+  drawRawTrackPoints(
+    rawTracks: Track[],
     pointsLayer: d3.Selection,
-    onClick: (trackPoint: TrackPoint) => void,
     range: Range,
   ) {
-    const allTrackPoints = getTrackPoints(tracks)
+    const allPoints = getTrackPoints(rawTracks)
+    const inRange = ({ time }: TrackPoint) => (range.start <= time && time <= range.end)
+    const visiblePoints = allPoints.filter(inRange)
+
+    const pointsJoin = pointsLayer.selectAll('path')
+      .data(visiblePoints, (p: TrackPoint) => String(p.trackPointId))
+    pointsJoin.enter()
+      .append('path')
+      .attr('data-trackpointid', p => p.trackPointId)
+      .attr('fill', getColor('raw'))
+      .attr('transform', ({ x, y }) => `translate(${x},${y})`)
+      .attr('d', ({ pointType }: TrackPoint) => trackPointsSymbolMap[pointType]())
+      .merge(pointsJoin)
+    pointsJoin.exit().remove()
+  }
+
+  drawSemanticTrackPoints(
+    semanticTracks: Track[],
+    pointsLayer: d3.Selection,
+    range: Range,
+  ) {
+    const allTrackPoints = getTrackPoints(semanticTracks)
     const intersection = (point: TrackPoint) => {
       const { start: s1, end: e1 } = range
       const s2 = point.time
@@ -95,7 +105,7 @@ export default class TrackDrawingManager extends DrawingManager {
     const highlightedTrackPoints = new Set(allTrackPoints.filter(intersection).map(p => p.trackPointId))
 
     const pointGroupsJoin = pointsLayer.selectAll('.track-points')
-      .data(tracks, (track: Track) => String(track.trackId))
+      .data(semanticTracks, (track: Track) => String(track.trackId))
     const pointGroups = pointGroupsJoin.enter()
       .append('g')
       .classed('track-points', true)
@@ -117,29 +127,23 @@ export default class TrackDrawingManager extends DrawingManager {
       .classed('symbol', true)
       .style('transition', 'opacity 100ms')
       .attr('data-track-point-id', trackPoint => trackPoint.trackPointId)
-      .attr('fill', ({ trackName }) => getColor(trackName))
+      .attr('fill', ({ event }) => getColor(event === 'stay' ? 'semantic-stay' : 'semantic'))
+      .on('click', this.highlightSemanticTrackPoint)
+      .style('cursor', 'pointer')
       .merge(symbolsJoin)
     symbols
       .attr('transform', trackPointTransform)
       .attr('opacity', trackPointOpacity)
       .attr('d', symbolGenerator)
-    if (onClick) {
-      symbols.on('click', onClick || noop)
-        .style('cursor', 'pointer')
-    }
     symbolsJoin.exit().remove()
   }
 
   private drawTrackPaths(
     tracks: Track[],
     pathLayer: d3.Selection,
-    range: Range,
+    strokeWidth: number,
+    strokeDasharray?: string
   ) {
-    // const opacity = (track: Track) => {
-    //   const inThisTrack = track.startTime <= time && time <= track.endTime
-    //   return (time === 0 || inThisTrack) ? 0.8 : 0.1
-    // }
-
     const lineGenerator = d3.line<TrackPoint>()
       .x(item => item.x)
       .y(item => item.y)
@@ -155,10 +159,12 @@ export default class TrackDrawingManager extends DrawingManager {
       .style('cursor', 'pointer')
       .attr('data-track-id', track => track.trackId)
       .attr('stroke', track => getColor(track.trackName))
-      .attr('stroke-width', 0.5)
+      .attr('stroke-width', strokeWidth)
       .attr('d', track => lineGenerator(track.points))
       .merge(trackPathJoin)
-      // .attr('opacity', opacity)
+    if (strokeDasharray) {
+      trackPath.attr('stroke-dasharray', strokeDasharray)
+    }
 
     trackPathJoin.exit().remove()
   }
@@ -168,8 +174,8 @@ export default class TrackDrawingManager extends DrawingManager {
     const pointsLayer = board.select('.raw-tracks-wrapper .points-layer') as d3.Selection
     const pathLayer = board.select('.raw-tracks-wrapper .path-layer') as d3.Selection
 
-    this.drawTrackPoints(rawTracks, pointsLayer, null, range)
-    this.drawTrackPaths(rawTracks, pathLayer, range)
+    this.drawRawTrackPoints(rawTracks, pointsLayer, range)
+    this.drawTrackPaths(rawTracks, pathLayer, 0.3)
   }
 
   updateSemanticTracks(semanticTracks: Track[], range: Range) {
@@ -177,7 +183,7 @@ export default class TrackDrawingManager extends DrawingManager {
     const pointsLayer = board.select('.semantic-tracks-wrapper .points-layer') as d3.Selection
     const pathLayer = board.select('.semantic-tracks-wrapper .path-layer') as d3.Selection
 
-    this.drawTrackPoints(semanticTracks, pointsLayer, this.highlightSemanticTrackPoint, range)
-    this.drawTrackPaths(semanticTracks, pathLayer, range)
+    this.drawSemanticTrackPoints(semanticTracks, pointsLayer, range)
+    this.drawTrackPaths(semanticTracks, pathLayer, 0.4, '1')
   }
 }

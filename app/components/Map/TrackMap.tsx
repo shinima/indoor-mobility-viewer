@@ -4,10 +4,11 @@ import * as d3 from 'd3'
 import TrackDrawingManager from './TrackDrawingManager'
 import FloorDrawingManager from './FloorDrawingManager'
 import { getTimeRange, isSameTracks } from './utils'
-import '../../styles/Map.styl'
 import { MAX_SCALE, MIN_SCALE } from '../../utils/constants'
 import { Track } from '../../interfaces'
 import { getTrackPoints } from '../../utils/utils'
+import '../../styles/Map.styl'
+import TooltipManager from './TooltipManager'
 
 export interface TrackMapProp {
   floor: Floor
@@ -23,6 +24,7 @@ export interface TrackMapProp {
 export default class TrackMap extends Component<TrackMapProp> {
   trackDrawingManager: TrackDrawingManager
   floorDrawingManager: FloorDrawingManager
+  tooltipManager: TooltipManager
   svgElement: SVGSVGElement
   tooltipWrapper: HTMLDivElement
 
@@ -42,24 +44,40 @@ export default class TrackMap extends Component<TrackMapProp> {
       })
     svg.call(zoom)
 
-    this.floorDrawingManager = new FloorDrawingManager(this.svgElement, zoom, board)
-    this.floorDrawingManager.updateFloor(floor)
+    const semanticTrackPoints = getTrackPoints(semanticTracks)
+    const selectedSemanticTrackPoint = semanticTrackPoints.find(p => p.trackPointId === sid)
+    const highlightedRegionId = selectedSemanticTrackPoint ? selectedSemanticTrackPoint.roomID : -1
 
-    this.trackDrawingManager = new TrackDrawingManager(this.svgElement, this.tooltipWrapper, zoom, getProps)
-    const range = getTimeRange(getTrackPoints(semanticTracks), sid)
+    this.floorDrawingManager = new FloorDrawingManager(this.svgElement, zoom, board)
+    this.floorDrawingManager.updateFloor(floor, highlightedRegionId)
+    this.tooltipManager = new TooltipManager(d3.select(this.tooltipWrapper), zoom, this.svgElement)
+
+    this.trackDrawingManager = new TrackDrawingManager(this.svgElement, zoom, getProps)
+    const range = getTimeRange(semanticTrackPoints, sid)
     this.trackDrawingManager.updateRawTracks(rawTracks, range)
     this.trackDrawingManager.updateSemanticTracks(semanticTracks, range)
+
   }
 
   componentWillReceiveProps(nextProps: TrackMapProp) {
     const { floor, sid, rawTracks, semanticTracks, transformReset } = this.props
-    // 用floorId来判断是否为同一个楼层
-    if (floor.floorId !== nextProps.floor.floorId) {
-      // console.log('update-floor')
-      this.floorDrawingManager.updateFloor(nextProps.floor)
+
+    const semanticTrackPoints = getTrackPoints(nextProps.semanticTracks)
+    const selectedSemanticTrackPoint = semanticTrackPoints.find(p => p.trackPointId === nextProps.sid)
+    const highlightedRegionId = selectedSemanticTrackPoint ? selectedSemanticTrackPoint.roomID : -1
+
+    if (selectedSemanticTrackPoint) {
+      this.tooltipManager.setTarget(selectedSemanticTrackPoint)
+      this.tooltipManager.update()
     }
 
-    const range = getTimeRange(getTrackPoints(nextProps.semanticTracks), nextProps.sid)
+    // 用floorId来判断是否为同一个楼层
+    if (floor.floorId !== nextProps.floor.floorId || sid !== nextProps.sid) {
+      // console.log('update-floor')
+      this.floorDrawingManager.updateFloor(nextProps.floor, highlightedRegionId)
+    }
+
+    const range = getTimeRange(semanticTrackPoints, nextProps.sid)
     if (!isSameTracks(rawTracks, nextProps.rawTracks) || sid !== nextProps.sid) {
       // console.log('update-rawTracks')
       this.trackDrawingManager.updateRawTracks(nextProps.rawTracks, range)
@@ -93,6 +111,7 @@ export default class TrackMap extends Component<TrackMapProp> {
           {/* 下面的markup在did-mount函数被调用的时候就会存在于真实DOM中 */}
           <g className="board">
             <g className="regions-layer-wrapper" />
+            <g className="doors-layer-wrapper" />
             <g className="texts-layer-wrapper" />
             <g className="raw-tracks-wrapper">
               <g className="path-layer" />

@@ -44,7 +44,17 @@ export default class VisibilityChooser extends Component<P> {
         </div>
         <div className="list">
           <VisibilityRow
+            trackName="ground-truth"
+            show={showRawTrack}
+            onToggle={onToggleShowRawTrack}
+          />
+          <VisibilityRow
             trackName="raw"
+            show={showRawTrack}
+            onToggle={onToggleShowRawTrack}
+          />
+          <VisibilityRow
+            trackName="cleaned-raw"
             show={showRawTrack}
             onToggle={onToggleShowRawTrack}
           />
