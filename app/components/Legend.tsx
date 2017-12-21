@@ -7,8 +7,12 @@ import '../styles/VisibilityChooser.styl'
 interface P {
   showRawTrack: boolean
   showSemanticTrack: boolean
+  showCleanedRawTrack: boolean
+  showGroundTruthTrack: boolean
   onToggleShowRawTrack: () => void
   onToggleShowSemanticTrack: () => void
+  onToggleShowCleanedRawTrack: () => void
+  onToggleShowGroundTruthTrack: () => void
 }
 
 interface RowProps {
@@ -28,14 +32,19 @@ const VisibilityRow = ({ trackName, show, onToggle }: RowProps) => (
   </div>
 )
 
-export default class VisibilityChooser extends Component<P> {
+export default class Legend extends Component<P> {
   render() {
     const {
       showRawTrack,
       showSemanticTrack,
+      showCleanedRawTrack,
+      showGroundTruthTrack,
+      onToggleShowGroundTruthTrack,
       onToggleShowRawTrack,
+      onToggleShowCleanedRawTrack,
       onToggleShowSemanticTrack,
     } = this.props
+    /* TODO 需要支持打开不同的文件 */
     return (
       <div className="visibility-chooser">
         <div className="title">
@@ -45,8 +54,8 @@ export default class VisibilityChooser extends Component<P> {
         <div className="list">
           <VisibilityRow
             trackName="ground-truth"
-            show={showRawTrack}
-            onToggle={onToggleShowRawTrack}
+            show={showGroundTruthTrack}
+            onToggle={onToggleShowGroundTruthTrack}
           />
           <VisibilityRow
             trackName="raw"
@@ -55,8 +64,8 @@ export default class VisibilityChooser extends Component<P> {
           />
           <VisibilityRow
             trackName="cleaned-raw"
-            show={showRawTrack}
-            onToggle={onToggleShowRawTrack}
+            show={showCleanedRawTrack}
+            onToggle={onToggleShowCleanedRawTrack}
           />
           <VisibilityRow
             trackName="semantic"

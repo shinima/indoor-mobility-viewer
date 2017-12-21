@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux'
-import { Map } from 'immutable'
 import floors, { floorConfig } from './resources/floors'
-import { getRawTracks, getSemanticTracks } from './utils/lh'
-import { avg } from './utils/utils'
+import getTracks from './utils/data-source'
 import { Track } from './interfaces'
 
 // export type Action = UpdateTracks
@@ -12,8 +10,14 @@ import { Track } from './interfaces'
 //   tracks: Track[]
 // }
 
+export interface PlainTrackMap {
+  raw: Track[]
+  'cleaned-raw': Track[]
+  'ground-truth': Track[]
+}
+
 export interface State {
-  rawTracks: Track[]
+  plainTrackMap: PlainTrackMap
   semanticTracks: Track[]
   floors: Floor[]
   floorConfig: FloorConfig
@@ -24,24 +28,15 @@ export type FloorConfig = {
   floorName: string
 }[]
 
-// console.log(floors)
-const floorByFloorId = Map<number, Floor>(floors.map(flr => [flr.floorId, flr] as [number, Floor]))
-
-function getXY(floorId: number, roomId: number) {
-  const floor = floorByFloorId.get(floorId)
-  const { points } = floor.regions.find(r => (r.id === roomId))
-
-  return {
-    x: avg(points.map(p => p.x)),
-    y: avg(points.map(p => p.y)),
-  }
+const defaultSemanticTracks = getTracks('semantic')
+const defaultPlainTrackMap = {
+  raw: getTracks('raw'),
+  'cleaned-raw': getTracks('cleaned-raw'),
+  'ground-truth': getTracks('ground-truth'),
 }
 
-const defaultRawTracks = getRawTracks(require('./resources/test.json'))
-const defaultSemanticTracks = getSemanticTracks(require('./resources/test.json'), getXY)
-
 export default combineReducers<State>({
-  rawTracks: () => defaultRawTracks,
+  plainTrackMap: () => defaultPlainTrackMap,
   semanticTracks: () => defaultSemanticTracks,
   floors: () => floors,
   floorConfig: () => floorConfig,

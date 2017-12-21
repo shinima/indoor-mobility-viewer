@@ -9,7 +9,6 @@ import '../styles/TimelinePanel.styl'
 export interface Props {
   sid: number
   onChangeSid: (sid: number) => void
-  rawTracks: Track[]
   semanticTracks: Track[]
 }
 
@@ -22,7 +21,7 @@ function TrackPointText({ point: p }: { point: TrackPoint }) {
   const end = p.time + p.duration
   return (
     <p>
-      <b>{p.floorId}F Room-{p.roomID}</b>
+      <b>{p.regionName}</b>
       <br />
       {moment(start).format('HH:mm:ss')}
       {end > start ? `-- ${moment(end).format('HH:mm:ss')}` : ''}
@@ -30,8 +29,7 @@ function TrackPointText({ point: p }: { point: TrackPoint }) {
   )
 }
 
-export default class TimelinePanel extends React.Component
-  <Props, State> {
+export default class TimelinePanel extends React.Component<Props, State> {
   componentWillReceiveProps({ sid }: Props) {
     const itemNode = document.querySelector(`.item[data-trackpointid='${sid}']`) as any
     if (itemNode) {
@@ -102,26 +100,11 @@ export default class TimelinePanel extends React.Component
                     <path fill="#ff5447" d="M0,10 L20,20 L0,30 Z" />
                   </svg>
                 ) : null}
-                <div
-                  style={{
-                    marginLeft: 24,
-                    marginRight: 8,
-                    width: 40,
-                  }}
-                >
+                <div className="item-symbol-wrapper">
                   <div
+                    className={['item-symbol', p.event].join(' ')}
                     style={{
-                      fontSize: p.event === 'stay' ? '32px' : '18px',
-                      width: 40,
-                      height: 40,
-                      borderRadius: '50%',
-                      backgroundColor: p.event === 'stay' ? getColor('semantic-stay') : getColor('semantic'),
-                      transform: `scale(${p.event === 'pass-by' ? 0.75 : 1})`,
-                      lineHeight: p.event === 'stay' ? '37px' : '40px',
-                      textAlign: 'center',
-                      fontWeight: 'bold',
-                      color: 'white',
-                      userSelect: 'none',
+                      backgroundColor: getColor(p.event === 'stay' ? 'semantic-stay' : 'semantic'),
                     }}
                   >
                     {p.event === 'stay' ? '∥' : '▶'}

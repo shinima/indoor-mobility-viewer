@@ -5,6 +5,7 @@ import { getColor, getTrackPoints } from '../../utils/utils'
 import { TrackMapProp } from './TrackMap'
 import DrawingManager from './DrawingManager'
 import { Range, Track, TrackPoint } from '../../interfaces'
+import { PlainTrackMap } from '../../reducer'
 
 const trackPointsSymbolMap = {
   raw: d3.symbol().type(d3.symbolCircle).size(1.5),
@@ -70,11 +71,11 @@ export default class TrackDrawingManager extends DrawingManager {
   }
 
   drawRawTrackPoints(
-    rawTracks: Track[],
+    tracks: Track[],
     pointsLayer: d3.Selection,
     range: Range,
   ) {
-    const allPoints = getTrackPoints(rawTracks)
+    const allPoints = getTrackPoints(tracks)
     const inRange = ({ time }: TrackPoint) => (range.start <= time && time <= range.end)
     const visiblePoints = allPoints.filter(inRange)
 
@@ -83,7 +84,7 @@ export default class TrackDrawingManager extends DrawingManager {
     pointsJoin.enter()
       .append('path')
       .attr('data-trackpointid', p => p.trackPointId)
-      .attr('fill', getColor('raw'))
+      .attr('fill', p => getColor(p.trackName))
       .attr('transform', ({ x, y }) => `translate(${x},${y})`)
       .attr('d', ({ pointType }: TrackPoint) => trackPointsSymbolMap[pointType]())
       .merge(pointsJoin)
@@ -169,13 +170,16 @@ export default class TrackDrawingManager extends DrawingManager {
     trackPathJoin.exit().remove()
   }
 
-  updateRawTracks(rawTracks: Track[], range: Range) {
-    const board = this.svg.select('.board')
-    const pointsLayer = board.select('.raw-tracks-wrapper .points-layer') as d3.Selection
-    const pathLayer = board.select('.raw-tracks-wrapper .path-layer') as d3.Selection
+  updatePlainTrackMap(plainTrackMap: PlainTrackMap, range: Range) {
+    const wrapper = this.svg.select('.board .plain-track-map-wrapper')
 
-    this.drawRawTrackPoints(rawTracks, pointsLayer, range)
-    this.drawTrackPaths(rawTracks, pathLayer, 0.3)
+    for (const [trackName, tracks] of Object.entries(plainTrackMap)) {
+      const pointsLayer = wrapper.select(`.${trackName} .points-layer`) as d3.Selection
+      const pathLayer = wrapper.select(`.${trackName} .path-layer`) as d3.Selection
+
+      this.drawRawTrackPoints(tracks, pointsLayer, range)
+      this.drawTrackPaths(tracks, pathLayer, 0.3)
+    }
   }
 
   updateSemanticTracks(semanticTracks: Track[], range: Range) {

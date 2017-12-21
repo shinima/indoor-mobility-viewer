@@ -41,7 +41,7 @@ export default class TooltipManager {
       // language=TEXT
       this.tooltipWrapper.html(`
         <div style="left: ${x}px; top: ${y}px;">
-          ${verb} <i>${this.target.floorId}F Room-${this.target.roomID}</i>
+          ${verb} <i>${this.target.regionName}</i>
           <br />
           ${preposition}
           ${moment(start).format('HH:mm:ss')}

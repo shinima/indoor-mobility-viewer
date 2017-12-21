@@ -6,23 +6,24 @@ import TrackMap from '../components/Map/TrackMap'
 import FloorList, { FloorEntryRecord } from '../components/FloorList'
 import ButtonGroup from '../components/ButtonGroup'
 import bindSearchParameters, { SearchParamBinding } from '../utils/bindSearchParameters'
-import VisibilityChooser from './VisibilityChooser'
-import { FloorConfig, State } from '../reducer'
+import Legend from './Legend'
+import { FloorConfig, PlainTrackMap, State } from '../reducer'
 import TimelinePanel from './TimelinePanel'
-import '../styles/TrackMapPage.styl'
 import { Track, TrackPoint } from '../interfaces'
 import { getTrackPoints } from '../utils/utils'
+import { getTimeRange } from './Map/utils'
+import '../styles/TrackMapPage.styl'
 
 interface Def {
   floorId: number
   t: number
 }
 
-function mapStateToProps({ rawTracks, semanticTracks, floors, floorConfig }: State, ownProps: Def) {
+function mapStateToProps({ plainTrackMap, semanticTracks, floors, floorConfig }: State, ownProps: Def) {
   const { floorId } = ownProps
   const floor = floors.find(flr => flr.floorId === floorId) || floors[0]
 
-  return Object.assign({ rawTracks, semanticTracks, floors, floorConfig, floor }, ownProps)
+  return Object.assign({ plainTrackMap, semanticTracks, floors, floorConfig, floor }, ownProps)
 }
 
 const searchBindingDefinitions = [
@@ -31,7 +32,7 @@ const searchBindingDefinitions = [
 ]
 
 type P = SearchParamBinding<Def> & {
-  rawTracks: Track[]
+  plainTrackMap: PlainTrackMap
   semanticTracks: Track[]
   floors: Floor[]
   floorConfig: FloorConfig
@@ -40,7 +41,9 @@ type P = SearchParamBinding<Def> & {
 }
 
 interface S {
+  showGroundTruthTrack: boolean
   showRawTrack: boolean
+  showCleanedRawTrack: boolean
   showSemanticTrack: boolean
   sid: number
   transformReset: boolean
@@ -53,7 +56,9 @@ function getFloorEntryCount(tracks: Track[], floorId: number) {
 
 class TrackMapPage extends React.Component<P, S> {
   state = {
+    showGroundTruthTrack: true,
     showRawTrack: true,
+    showCleanedRawTrack: true,
     showSemanticTrack: true,
     // 轨迹图和Timeline共享的senmantic-track-id
     sid: -1 as number,
@@ -81,29 +86,47 @@ class TrackMapPage extends React.Component<P, S> {
   }
 
   render() {
-    const { rawTracks, semanticTracks, floorConfig, floor } = this.props
-    const { sid, transformReset, showRawTrack, showSemanticTrack } = this.state
+    const { plainTrackMap, semanticTracks, floorConfig, floor } = this.props
+    const { sid, transformReset, showRawTrack, showSemanticTrack, showCleanedRawTrack, showGroundTruthTrack } = this.state
 
     const inThisFloor = (track: Track) => track.floorId === floor.floorId
+    const notInThisFloor = (trackPoint: TrackPoint) => trackPoint.floorId !== floor.floorId
 
-    const visibleRawTracks = showRawTrack ? rawTracks.filter(inThisFloor) : []
     const visibleSemanticTracks = showSemanticTrack ? semanticTracks.filter(inThisFloor) : []
 
     const floorEntryList = List(floorConfig).map(flr => FloorEntryRecord({
       floorName: flr.floorName,
       floorId: flr.floorId,
-      count: getFloorEntryCount(rawTracks, flr.floorId),
+      count: getFloorEntryCount(plainTrackMap.raw, flr.floorId),
     }))
+
+    const semanticTrackPoints = getTrackPoints(semanticTracks)
+    const range = getTimeRange(semanticTrackPoints, sid)
+    const inThisTimeRange = (p: TrackPoint) => (range.start <= p.time && p.time <= range.end)
+
+    const visiblePlainTrackMap: PlainTrackMap = {
+      'ground-truth': showGroundTruthTrack ? plainTrackMap['ground-truth'].filter(inThisFloor) : [],
+      raw: showRawTrack ? plainTrackMap.raw.filter(inThisFloor) : [],
+      'cleaned-raw': showCleanedRawTrack ? plainTrackMap['cleaned-raw'].filter(inThisFloor) : [],
+    }
+
+    const extraTrackPoints = getTrackPoints(plainTrackMap.raw)
+      .filter(inThisTimeRange)
+      .filter(notInThisFloor)
 
     return (
       <div>
         <div className="floor-display">Floor: {floor.floorNumber}</div>
         <div className="widgets">
           <ButtonGroup onResetTransform={this.onResetTransform} />
-          <VisibilityChooser
+          <Legend
+            showGroundTruthTrack={showGroundTruthTrack}
             showRawTrack={showRawTrack}
+            showCleanedRawTrack={showCleanedRawTrack}
             showSemanticTrack={showSemanticTrack}
+            onToggleShowGroundTruthTrack={() => this.setState({ showGroundTruthTrack: !showGroundTruthTrack })}
             onToggleShowRawTrack={() => this.setState({ showRawTrack: !showRawTrack })}
+            onToggleShowCleanedRawTrack={() => this.setState({ showCleanedRawTrack: !showCleanedRawTrack })}
             onToggleShowSemanticTrack={() => this.setState({ showSemanticTrack: !showSemanticTrack })}
           />
           <FloorList
@@ -115,8 +138,10 @@ class TrackMapPage extends React.Component<P, S> {
         <TrackMap
           floor={floor}
           sid={sid}
-          rawTracks={visibleRawTracks}
+          range={range}
+          plainTrackMap={visiblePlainTrackMap}
           semanticTracks={visibleSemanticTracks}
+          extraTrackPoints={extraTrackPoints}
           transformReset={transformReset}
           onChangeSid={this.onChangeSid}
           onZoom={this.onTrackMapZoom}
@@ -124,7 +149,6 @@ class TrackMapPage extends React.Component<P, S> {
         <TimelinePanel
           sid={sid}
           onChangeSid={this.onChangeSid}
-          rawTracks={rawTracks}
           semanticTracks={semanticTracks}
         />
       </div>

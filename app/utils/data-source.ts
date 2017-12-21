@@ -1,9 +1,13 @@
-import { Point, Track } from '../interfaces'
+import { Point, Track, TrackName } from '../interfaces'
+import { Map } from 'immutable'
+import floors from '../resources/floors'
+import { avg } from './utils'
 
 export interface LHData {
-  semanticTraces: LHSemanticTrace[]
-  rawTraces: LHRawTrace[]
   groundTruthTraces: LHRawTrace[]
+  rawTraces: LHRawTrace[]
+  cleanedRawTraces: LHRawTrace[]
+  semanticTraces: LHSemanticTrace[]
   startTime: number
   // objectID: number // 这个字段看起来没什么用
 }
@@ -14,6 +18,7 @@ export interface LHSemanticTrace {
     endTime: number
     event: 'pass-by' | 'stay'
     roomID: number
+    regionName: string
   }[]
   floor: number
 }
@@ -27,17 +32,43 @@ export interface LHRawTrace {
   }[]
 }
 
+const floorByFloorId = Map<number, Floor>(floors.map(flr => [flr.floorId, flr] as [number, Floor]))
+
+function getXY(floorId: number, roomId: number) {
+  const floor = floorByFloorId.get(floorId)
+  const { points } = floor.regions.find(r => (r.id === roomId))
+
+  return {
+    x: avg(points.map(p => p.x)),
+    y: avg(points.map(p => p.y)),
+  }
+}
+
 let nextTrackId = 1
 let nextTrackPointId = 1
 
-export function getRawTracks(lhData: LHData): Track[] {
+const lhData: LHData = require('../resources/test.json')
+
+export default function getTracks(trackName: TrackName): Track[] {
+  if (trackName === 'ground-truth') {
+    return getRawTracks(lhData, lhData.groundTruthTraces, 'ground-truth')
+  } else if (trackName === 'raw') {
+    return getRawTracks(lhData, lhData.rawTraces, 'raw')
+  } else if (trackName === 'cleaned-raw') {
+    return getRawTracks(lhData, lhData.cleanedRawTraces, 'cleaned-raw')
+  } else {
+    return getSemanticTracks(lhData, lhData.semanticTraces, getXY)
+  }
+}
+
+function getRawTracks(lhData: LHData, source: LHRawTrace[], trackName: TrackName): Track[] {
   const result: Track[] = []
 
-  for (const { data, floor } of lhData.groundTruthTraces) {
+  for (const { data, floor } of source) {
     const track: Track = {
       floorId: Number(floor),
       trackId: nextTrackId++,
-      trackName: 'raw',
+      trackName,
       startTime: (lhData.startTime + data[0].time) * 1000,
       endTime: (lhData.startTime + data[data.length - 1].time) * 1000,
       points: [],
@@ -46,7 +77,7 @@ export function getRawTracks(lhData: LHData): Track[] {
     for (const { x, y, time } of data) {
       track.points.push({
         trackPointId: nextTrackPointId++,
-        trackName: 'raw',
+        trackName,
         pointType: 'raw',
         time: (lhData.startTime + time) * 1000,
         duration: 0,
@@ -64,13 +95,14 @@ export function getRawTracks(lhData: LHData): Track[] {
   return result
 }
 
-export function getSemanticTracks(
+function getSemanticTracks(
   lhData: LHData,
+  source: LHSemanticTrace[],
   getXY: (floorId: number, roomId: Number) => Point,
 ): Track[] {
   const result: Track[] = []
 
-  for (const { data, floor } of lhData.semanticTraces) {
+  for (const { data, floor } of source) {
     const floorId = Number(floor)
     const track: Track = {
       floorId,
@@ -81,7 +113,7 @@ export function getSemanticTracks(
       points: [],
     }
 
-    for (const { roomID, startTime, endTime, event } of data) {
+    for (const { roomID, startTime, endTime, event, regionName } of data) {
       track.points.push({
         trackPointId: nextTrackPointId++,
         trackName: 'semantic',
@@ -92,6 +124,7 @@ export function getSemanticTracks(
         ...getXY(floorId, roomID),
         roomID,
         event,
+        regionName,
       })
     }
     result.push(track)

@@ -3,7 +3,7 @@ declare module 'd3-selection' {
   }
 }
 
-export type TrackName = 'raw' | 'semantic' | 'groundTruth'
+export type TrackName = 'ground-truth' | 'cleaned-raw' | 'raw' | 'semantic'
 export type TrackPointType = 'pass-by' | 'stay' | 'raw'
 
 export interface TrackPoint {
@@ -17,6 +17,7 @@ export interface TrackPoint {
   y: number
   roomID: number
   event: 'stay' | 'pass-by' | 'plain'
+  regionName?: string
 }
 
 export interface Track {

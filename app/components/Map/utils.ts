@@ -1,4 +1,5 @@
 import { Track, Range, TrackPoint } from '../../interfaces'
+import { PlainTrackMap } from '../../reducer'
 
 export function isSameTracks(ts1: Track[], ts2: Track[]) {
   if (ts1.length !== ts2.length) {
@@ -26,4 +27,10 @@ export function getTimeRange(trackPoints: TrackPoint[], sid: number): Range {
   } else {
     return { start: -1, end: -1 }
   }
+}
+
+export function isSamePlainTrackMap(m1: PlainTrackMap, m2: PlainTrackMap) {
+  return isSameTracks(m1.raw, m2.raw)
+    && isSameTracks(m1['cleaned-raw'], m2['cleaned-raw'])
+    && isSameTracks(m1['ground-truth'], m2['ground-truth'])
 }

@@ -3,17 +3,20 @@ import { Component } from 'react'
 import * as d3 from 'd3'
 import TrackDrawingManager from './TrackDrawingManager'
 import FloorDrawingManager from './FloorDrawingManager'
-import { getTimeRange, isSameTracks } from './utils'
+import { getTimeRange, isSamePlainTrackMap, isSameTracks } from './utils'
 import { MAX_SCALE, MIN_SCALE } from '../../utils/constants'
-import { Track } from '../../interfaces'
+import { Track, Range, TrackPoint } from '../../interfaces'
 import { getTrackPoints } from '../../utils/utils'
 import '../../styles/Map.styl'
 import TooltipManager from './TooltipManager'
+import { PlainTrackMap } from '../../reducer'
 
 export interface TrackMapProp {
   floor: Floor
   sid: number
-  rawTracks: Track[]
+  range: Range
+  plainTrackMap: PlainTrackMap
+  extraTrackPoints: TrackPoint[]
   semanticTracks: Track[]
   onChangeSid: (sid: number) => void
   // transform是否重置(大概等于当前楼层是否居中显示)
@@ -29,7 +32,7 @@ export default class TrackMap extends Component<TrackMapProp> {
   tooltipWrapper: HTMLDivElement
 
   componentDidMount() {
-    const { floor, sid, rawTracks, semanticTracks } = this.props
+    const { floor, sid, plainTrackMap, semanticTracks, range } = this.props
 
     const getProps = () => this.props
     const zoom = d3.zoom() as d3.ZoomBehavior<SVGSVGElement, null>
@@ -53,23 +56,23 @@ export default class TrackMap extends Component<TrackMapProp> {
     this.tooltipManager = new TooltipManager(d3.select(this.tooltipWrapper), zoom, this.svgElement)
 
     this.trackDrawingManager = new TrackDrawingManager(this.svgElement, zoom, getProps)
-    const range = getTimeRange(semanticTrackPoints, sid)
-    this.trackDrawingManager.updateRawTracks(rawTracks, range)
+    this.trackDrawingManager.updatePlainTrackMap(plainTrackMap, range)
     this.trackDrawingManager.updateSemanticTracks(semanticTracks, range)
 
   }
 
   componentWillReceiveProps(nextProps: TrackMapProp) {
-    const { floor, sid, rawTracks, semanticTracks, transformReset } = this.props
+    const { floor, sid, plainTrackMap, semanticTracks, transformReset } = this.props
+
+    // TODO 绘制extraTrackPoints
+    console.log(nextProps.extraTrackPoints)
 
     const semanticTrackPoints = getTrackPoints(nextProps.semanticTracks)
     const selectedSemanticTrackPoint = semanticTrackPoints.find(p => p.trackPointId === nextProps.sid)
     const highlightedRegionId = selectedSemanticTrackPoint ? selectedSemanticTrackPoint.roomID : -1
 
-    if (selectedSemanticTrackPoint) {
-      this.tooltipManager.setTarget(selectedSemanticTrackPoint)
-      this.tooltipManager.update()
-    }
+    this.tooltipManager.setTarget(selectedSemanticTrackPoint)
+    this.tooltipManager.update()
 
     // 用floorId来判断是否为同一个楼层
     if (floor.floorId !== nextProps.floor.floorId || sid !== nextProps.sid) {
@@ -77,14 +80,13 @@ export default class TrackMap extends Component<TrackMapProp> {
       this.floorDrawingManager.updateFloor(nextProps.floor, highlightedRegionId)
     }
 
-    const range = getTimeRange(semanticTrackPoints, nextProps.sid)
-    if (!isSameTracks(rawTracks, nextProps.rawTracks) || sid !== nextProps.sid) {
+    if (!isSamePlainTrackMap(plainTrackMap, nextProps.plainTrackMap) || sid !== nextProps.sid) {
       // console.log('update-rawTracks')
-      this.trackDrawingManager.updateRawTracks(nextProps.rawTracks, range)
+      this.trackDrawingManager.updatePlainTrackMap(nextProps.plainTrackMap, nextProps.range)
     }
 
     if (!isSameTracks(semanticTracks, nextProps.semanticTracks) || sid !== nextProps.sid) {
-      this.trackDrawingManager.updateSemanticTracks(nextProps.semanticTracks, range)
+      this.trackDrawingManager.updateSemanticTracks(nextProps.semanticTracks, nextProps.range)
     }
 
     if (!transformReset && nextProps.transformReset) {
@@ -113,9 +115,19 @@ export default class TrackMap extends Component<TrackMapProp> {
             <g className="regions-layer-wrapper" />
             <g className="doors-layer-wrapper" />
             <g className="texts-layer-wrapper" />
-            <g className="raw-tracks-wrapper">
-              <g className="path-layer" />
-              <g className="points-layer" />
+            <g className="plain-track-map-wrapper">
+              <g className="ground-truth">
+                <g className="path-layer" />
+                <g className="points-layer" />
+              </g>
+              <g className="raw">
+                <g className="path-layer" />
+                <g className="points-layer" />
+              </g>
+              <g className="cleaned-raw">
+                <g className="path-layer" />
+                <g className="points-layer" />
+              </g>
             </g>
             <g className="semantic-tracks-wrapper">
               <g className="path-layer" />
