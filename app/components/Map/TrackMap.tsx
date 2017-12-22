@@ -3,7 +3,7 @@ import { Component } from 'react'
 import * as d3 from 'd3'
 import TrackDrawingManager from './TrackDrawingManager'
 import FloorDrawingManager from './FloorDrawingManager'
-import { getTimeRange, isSamePlainTrackMap, isSameTracks } from './utils'
+import { getTimeRange, isSamePlainTrackMap, isSameTrackPoints, isSameTracks } from './utils'
 import { MAX_SCALE, MIN_SCALE } from '../../utils/constants'
 import { Track, Range, TrackPoint } from '../../interfaces'
 import { getTrackPoints } from '../../utils/utils'
@@ -32,7 +32,7 @@ export default class TrackMap extends Component<TrackMapProp> {
   tooltipWrapper: HTMLDivElement
 
   componentDidMount() {
-    const { floor, sid, plainTrackMap, semanticTracks, range } = this.props
+    const { floor, sid, plainTrackMap, semanticTracks, range, extraTrackPoints } = this.props
 
     const getProps = () => this.props
     const zoom = d3.zoom() as d3.ZoomBehavior<SVGSVGElement, null>
@@ -43,7 +43,7 @@ export default class TrackMap extends Component<TrackMapProp> {
       .on('zoom.board', () => {
         const { transform } = d3.event
         board.attr('transform', transform)
-        getProps().onZoom()
+        this.props.onZoom()
       })
     svg.call(zoom)
 
@@ -58,14 +58,14 @@ export default class TrackMap extends Component<TrackMapProp> {
     this.trackDrawingManager = new TrackDrawingManager(this.svgElement, zoom, getProps)
     this.trackDrawingManager.updatePlainTrackMap(plainTrackMap, range)
     this.trackDrawingManager.updateSemanticTracks(semanticTracks, range)
-
+    this.trackDrawingManager.updateExtraTrackPoints(extraTrackPoints)
   }
 
   componentWillReceiveProps(nextProps: TrackMapProp) {
-    const { floor, sid, plainTrackMap, semanticTracks, transformReset } = this.props
+    const { floor, sid, plainTrackMap, semanticTracks, transformReset, extraTrackPoints } = this.props
 
-    // TODO 绘制extraTrackPoints
-    console.log(nextProps.extraTrackPoints)
+    // // TODO 绘制extraTrackPoints
+    // console.log(nextProps.extraTrackPoints)
 
     const semanticTrackPoints = getTrackPoints(nextProps.semanticTracks)
     const selectedSemanticTrackPoint = semanticTrackPoints.find(p => p.trackPointId === nextProps.sid)
@@ -87,6 +87,10 @@ export default class TrackMap extends Component<TrackMapProp> {
 
     if (!isSameTracks(semanticTracks, nextProps.semanticTracks) || sid !== nextProps.sid) {
       this.trackDrawingManager.updateSemanticTracks(nextProps.semanticTracks, nextProps.range)
+    }
+
+    if (!isSameTrackPoints(extraTrackPoints, nextProps.extraTrackPoints)) {
+      this.trackDrawingManager.updateExtraTrackPoints(nextProps.extraTrackPoints)
     }
 
     if (!transformReset && nextProps.transformReset) {
@@ -115,6 +119,7 @@ export default class TrackMap extends Component<TrackMapProp> {
             <g className="regions-layer-wrapper" />
             <g className="doors-layer-wrapper" />
             <g className="texts-layer-wrapper" />
+            <g className="extra-points-layer" style={{ opacity: 0.6 }} />
             <g className="plain-track-map-wrapper">
               <g className="ground-truth">
                 <g className="path-layer" />

@@ -34,3 +34,15 @@ export function isSamePlainTrackMap(m1: PlainTrackMap, m2: PlainTrackMap) {
     && isSameTracks(m1['cleaned-raw'], m2['cleaned-raw'])
     && isSameTracks(m1['ground-truth'], m2['ground-truth'])
 }
+
+export function isSameTrackPoints(arr1: TrackPoint[], arr2: TrackPoint[]) {
+  if (arr1.length !== arr2.length) {
+    return false
+  }
+  for (let index = 0; index < arr1.length; index += 1) {
+    if (arr1[index].trackPointId !== arr2[index].trackPointId) {
+      return false
+    }
+  }
+  return true
+}

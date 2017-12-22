@@ -1,17 +1,10 @@
 import * as d3 from 'd3'
 import * as moment from 'moment'
-import { noop } from 'redux-saga/utils'
 import { getColor, getTrackPoints } from '../../utils/utils'
 import { TrackMapProp } from './TrackMap'
 import DrawingManager from './DrawingManager'
 import { Range, Track, TrackPoint } from '../../interfaces'
 import { PlainTrackMap } from '../../reducer'
-
-const trackPointsSymbolMap = {
-  raw: d3.symbol().type(d3.symbolCircle).size(1.5),
-  'pass-by': d3.symbol().type(d3.symbolCircle).size(4),
-  stay: d3.symbol().type(d3.symbolCircle).size(10),
-}
 
 //#region tooltip
 function showTooltip(
@@ -52,6 +45,16 @@ function hideTooltip(tooltipWrapper: d3.Selection<HTMLDivElement>) {
 
 //#endregion
 
+function trackPointRadius({ pointType }: TrackPoint) {
+  if (pointType === 'raw') {
+    return 0.75
+  } else if (pointType === 'pass-by') {
+    return 1.25
+  } else if (pointType === 'stay') {
+    return 2
+  }
+}
+
 export default class TrackDrawingManager extends DrawingManager {
   private svg: d3.Selection<SVGElement>
   private getProps: () => TrackMapProp
@@ -79,14 +82,15 @@ export default class TrackDrawingManager extends DrawingManager {
     const inRange = ({ time }: TrackPoint) => (range.start <= time && time <= range.end)
     const visiblePoints = allPoints.filter(inRange)
 
-    const pointsJoin = pointsLayer.selectAll('path')
+    const pointsJoin = pointsLayer.selectAll('circle')
       .data(visiblePoints, (p: TrackPoint) => String(p.trackPointId))
     pointsJoin.enter()
-      .append('path')
+      .append('circle')
       .attr('data-trackpointid', p => p.trackPointId)
       .attr('fill', p => getColor(p.trackName))
-      .attr('transform', ({ x, y }) => `translate(${x},${y})`)
-      .attr('d', ({ pointType }: TrackPoint) => trackPointsSymbolMap[pointType]())
+      .attr('cx', p => p.x)
+      .attr('cy', p => p.y)
+      .attr('r', trackPointRadius)
       .merge(pointsJoin)
     pointsJoin.exit().remove()
   }
@@ -115,27 +119,24 @@ export default class TrackDrawingManager extends DrawingManager {
     // .attr('opacity', pointsGroupOpacity)
     pointGroupsJoin.exit().remove()
 
-    const symbolGenerator = (trackPoint: TrackPoint) => trackPointsSymbolMap[trackPoint.pointType]()
-    const trackPointTransform = ({ x, y }: TrackPoint) => `translate(${x}, ${y})`
-
     const trackPointOpacity = ({ trackPointId }: TrackPoint) => (highlightedTrackPoints.has(trackPointId) ? 1 : 0.2)
 
     // 每个track-point一个symbol
     const symbolsJoin = pointGroups.selectAll('.symbol')
       .data(track => track.points, (trackPoint: TrackPoint) => String(trackPoint.trackPointId))
     const symbols = symbolsJoin.enter()
-      .append('path')
+      .append('circle')
       .classed('symbol', true)
       .style('transition', 'opacity 100ms')
       .attr('data-track-point-id', trackPoint => trackPoint.trackPointId)
       .attr('fill', ({ event }) => getColor(event === 'stay' ? 'semantic-stay' : 'semantic'))
       .on('click', this.highlightSemanticTrackPoint)
       .style('cursor', 'pointer')
+      .attr('cx', p => p.x)
+      .attr('cy', p => p.y)
+      .attr('r', trackPointRadius)
       .merge(symbolsJoin)
-    symbols
-      .attr('transform', trackPointTransform)
       .attr('opacity', trackPointOpacity)
-      .attr('d', symbolGenerator)
     symbolsJoin.exit().remove()
   }
 
@@ -189,5 +190,18 @@ export default class TrackDrawingManager extends DrawingManager {
 
     this.drawSemanticTrackPoints(semanticTracks, pointsLayer, range)
     this.drawTrackPaths(semanticTracks, pathLayer, 0.4, '1')
+  }
+
+  updateExtraTrackPoints(trackPoints: TrackPoint[]) {
+    const layer = this.svg.select('.board .extra-points-layer')
+    const pointsJoin = layer.selectAll('circle')
+      .data(trackPoints, (p: TrackPoint) => String(p.trackPointId))
+    pointsJoin.enter()
+      .append('circle')
+      .attr('cx', p => p.x)
+      .attr('cy', p => p.y)
+      .attr('fill', p => getColor(p.trackName))
+      .attr('r', trackPointRadius)
+    pointsJoin.exit().remove()
   }
 }
