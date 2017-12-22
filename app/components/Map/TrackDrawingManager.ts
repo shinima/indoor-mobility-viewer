@@ -3,7 +3,7 @@ import * as moment from 'moment'
 import { getColor, getTrackPoints } from '../../utils/utils'
 import { TrackMapProp } from './TrackMap'
 import DrawingManager from './DrawingManager'
-import { Range, Track, TrackPoint } from '../../interfaces'
+import { Range, Track, TrackPoint, TrackPointType } from '../../interfaces'
 import { PlainTrackMap } from '../../reducer'
 
 //#region tooltip
@@ -45,7 +45,7 @@ function hideTooltip(tooltipWrapper: d3.Selection<HTMLDivElement>) {
 
 //#endregion
 
-function trackPointRadius({ pointType }: TrackPoint) {
+function pointRadius(pointType: TrackPointType) {
   if (pointType === 'raw') {
     return 0.75
   } else if (pointType === 'pass-by') {
@@ -53,6 +53,10 @@ function trackPointRadius({ pointType }: TrackPoint) {
   } else if (pointType === 'stay') {
     return 2
   }
+}
+
+function trackPointRadius({ pointType }: TrackPoint) {
+  return pointRadius(pointType)
 }
 
 export default class TrackDrawingManager extends DrawingManager {
@@ -87,12 +91,20 @@ export default class TrackDrawingManager extends DrawingManager {
     pointsJoin.enter()
       .append('circle')
       .attr('data-trackpointid', p => p.trackPointId)
+      .attr('opacity', 0.8)
       .attr('fill', p => getColor(p.trackName))
       .attr('cx', p => p.x)
       .attr('cy', p => p.y)
+      .attr('r', 0)
+      .transition()
+      .delay((_, i) => 50 * i)
       .attr('r', trackPointRadius)
+      .selection()
       .merge(pointsJoin)
-    pointsJoin.exit().remove()
+    pointsJoin.exit()
+      .transition()
+      .attr('r', 0)
+      .remove()
   }
 
   drawSemanticTrackPoints(
@@ -119,22 +131,23 @@ export default class TrackDrawingManager extends DrawingManager {
     // .attr('opacity', pointsGroupOpacity)
     pointGroupsJoin.exit().remove()
 
-    const trackPointOpacity = ({ trackPointId }: TrackPoint) => (highlightedTrackPoints.has(trackPointId) ? 1 : 0.2)
+    const trackPointOpacity = ({ trackPointId }: TrackPoint) => (highlightedTrackPoints.has(trackPointId) ? 0.8 : 0.2)
 
     // 每个track-point一个symbol
     const symbolsJoin = pointGroups.selectAll('.symbol')
       .data(track => track.points, (trackPoint: TrackPoint) => String(trackPoint.trackPointId))
     const symbols = symbolsJoin.enter()
-      .append('circle')
+      .append('rect')
       .classed('symbol', true)
-      .style('transition', 'opacity 100ms')
+      .style('transition', 'opacity 250ms')
       .attr('data-track-point-id', trackPoint => trackPoint.trackPointId)
       .attr('fill', ({ event }) => getColor(event === 'stay' ? 'semantic-stay' : 'semantic'))
       .on('click', this.highlightSemanticTrackPoint)
       .style('cursor', 'pointer')
-      .attr('cx', p => p.x)
-      .attr('cy', p => p.y)
-      .attr('r', trackPointRadius)
+      .attr('x', p => p.x - trackPointRadius(p))
+      .attr('y', p => p.y - trackPointRadius(p))
+      .attr('width', p => 2 * trackPointRadius(p))
+      .attr('height', p => 2 * trackPointRadius(p))
       .merge(symbolsJoin)
       .attr('opacity', trackPointOpacity)
     symbolsJoin.exit().remove()
@@ -144,6 +157,7 @@ export default class TrackDrawingManager extends DrawingManager {
     tracks: Track[],
     pathLayer: d3.Selection,
     strokeWidth: number,
+    opacity: number,
     strokeDasharray?: string
   ) {
     const lineGenerator = d3.line<TrackPoint>()
@@ -155,7 +169,7 @@ export default class TrackDrawingManager extends DrawingManager {
     // 每一条轨迹(track)对应一个path
     const trackPathJoin = pathLayer.selectAll('path')
       .data(tracks, (track: Track) => String(track.trackId))
-    const trackPath = trackPathJoin.enter()
+    const trackPathEnter = trackPathJoin.enter()
       .append('path')
       .attr('fill', 'none')
       .style('cursor', 'pointer')
@@ -163,9 +177,21 @@ export default class TrackDrawingManager extends DrawingManager {
       .attr('stroke', track => getColor(track.trackName))
       .attr('stroke-width', strokeWidth)
       .attr('d', track => lineGenerator(track.points))
-      .merge(trackPathJoin)
+      .attr('opacity', opacity)
     if (strokeDasharray) {
-      trackPath.attr('stroke-dasharray', strokeDasharray)
+      trackPathEnter.attr('stroke-dasharray', strokeDasharray)
+    } else {
+      trackPathEnter
+        .attr('stroke-dasharray', (track, i, arr) => {
+          const element = arr[i] as SVGPathElement
+          return `0 ${element.getTotalLength()}`
+        })
+        .transition()
+        .duration(2000)
+        .attr('stroke-dasharray', (_, i, arr) => {
+          const element = arr[i] as SVGPathElement
+          return `${element.getTotalLength()} 0`
+        })
     }
 
     trackPathJoin.exit().remove()
@@ -179,7 +205,7 @@ export default class TrackDrawingManager extends DrawingManager {
       const pathLayer = wrapper.select(`.${trackName} .path-layer`) as d3.Selection
 
       this.drawRawTrackPoints(tracks, pointsLayer, range)
-      this.drawTrackPaths(tracks, pathLayer, 0.3)
+      this.drawTrackPaths(tracks, pathLayer, 0.3, 0.8)
     }
   }
 
@@ -189,19 +215,41 @@ export default class TrackDrawingManager extends DrawingManager {
     const pathLayer = board.select('.semantic-tracks-wrapper .path-layer') as d3.Selection
 
     this.drawSemanticTrackPoints(semanticTracks, pointsLayer, range)
-    this.drawTrackPaths(semanticTracks, pathLayer, 0.4, '1')
+    this.drawTrackPaths(semanticTracks, pathLayer, 0.4, 1, '1 1')
   }
 
   updateExtraTrackPoints(trackPoints: TrackPoint[]) {
+    const a = pointRadius('raw') / Math.sqrt(2) - 0.1
+
     const layer = this.svg.select('.board .extra-points-layer')
-    const pointsJoin = layer.selectAll('circle')
+    const pointsJoin = layer.selectAll('g')
       .data(trackPoints, (p: TrackPoint) => String(p.trackPointId))
-    pointsJoin.enter()
-      .append('circle')
-      .attr('cx', p => p.x)
-      .attr('cy', p => p.y)
+    const pointsEnter = pointsJoin.enter()
+      .append('g')
+      .attr('transform', ({ x, y }) => `translate(${x}, ${y})`)
+    pointsEnter.append('circle')
       .attr('fill', p => getColor(p.trackName))
+      .attr('r', 0)
+      .transition()
+      .delay((_, i) => 50 * i)
       .attr('r', trackPointRadius)
+    pointsEnter.append('line')
+      .attr('x1', -a)
+      .attr('y1', -a)
+      .attr('x2', +a)
+      .attr('y2', +a)
+      .attr('stroke', 'white')
+      .attr('stroke-width', 0.2)
+      .attr('stroke-linecap', 'round')
+    pointsEnter.append('line')
+      .attr('x1', -a)
+      .attr('y1', +a)
+      .attr('x2', +a)
+      .attr('y2', -a)
+      .attr('stroke', 'white')
+      .attr('stroke-width', 0.2)
+      .attr('stroke-linecap', 'round')
+
     pointsJoin.exit().remove()
   }
 }

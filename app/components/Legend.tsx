@@ -2,9 +2,9 @@ import * as React from 'react'
 import { Component } from 'react'
 import { getColor } from '../utils/utils'
 import Checkbox from './Checkbox'
-import '../styles/VisibilityChooser.styl'
+import '../styles/Legend.styl'
 
-interface P {
+interface LegendProps {
   showRawTrack: boolean
   showSemanticTrack: boolean
   showCleanedRawTrack: boolean
@@ -15,24 +15,32 @@ interface P {
   onToggleShowGroundTruthTrack: () => void
 }
 
-interface RowProps {
-  trackName: string
-  show: boolean
-  onToggle: () => void
+interface LegendItemProps {
+  color: string
+  displayName: string
+  useCheckbox?: boolean
+  checked?: boolean
+  onToggle?: () => void
+  shape?: 'circle' | 'rect'
+  borderColor?: string
 }
 
-const VisibilityRow = ({ trackName, show, onToggle }: RowProps) => (
+const LegendItem = ({ color, useCheckbox = true, checked, onToggle, displayName, shape = 'circle', borderColor }: LegendItemProps) => (
   <div className="list-item">
     <button
       className="color"
-      style={{ background: `${getColor(trackName)}` }}
+      style={{
+        background: color,
+        border: borderColor ? `1px solid ${borderColor}` : 'none',
+        borderRadius: shape === 'rect' ? 0 : '50%',
+      }}
     />
-    <div className="text">{trackName}</div>
-    <Checkbox checked={show} onChange={onToggle} />
+    <div className="text">{displayName}</div>
+    {useCheckbox ? <Checkbox checked={checked} onChange={onToggle} /> : null}
   </div>
 )
 
-export default class Legend extends Component<P> {
+export default class Legend extends Component<LegendProps> {
   render() {
     const {
       showRawTrack,
@@ -46,32 +54,65 @@ export default class Legend extends Component<P> {
     } = this.props
     /* TODO 需要支持打开不同的文件 */
     return (
-      <div className="visibility-chooser">
-        <div className="title">
-          Visibilities
-          <button style={{ marginLeft: 8 }}>Open Tracks</button>
-        </div>
+      <div className="legend">
+        <div className="title">Legend</div>
         <div className="list">
-          <VisibilityRow
-            trackName="ground-truth"
-            show={showGroundTruthTrack}
+          <LegendItem
+            displayName="Ground Truth"
+            color={getColor('ground-truth')}
+            checked={showGroundTruthTrack}
             onToggle={onToggleShowGroundTruthTrack}
           />
-          <VisibilityRow
-            trackName="raw"
-            show={showRawTrack}
+          <LegendItem
+            displayName="Raw Data"
+            color={getColor('raw')}
+            checked={showRawTrack}
             onToggle={onToggleShowRawTrack}
           />
-          <VisibilityRow
-            trackName="cleaned-raw"
-            show={showCleanedRawTrack}
+          <LegendItem
+            displayName="Cleaned Raw Data"
+            color={getColor('cleaned-raw')}
+            checked={showCleanedRawTrack}
             onToggle={onToggleShowCleanedRawTrack}
           />
-          <VisibilityRow
-            trackName="semantic"
-            show={showSemanticTrack}
+          <LegendItem
+            displayName="Mobility Semantics"
+            color={getColor('semantic')}
+            checked={showSemanticTrack}
             onToggle={onToggleShowSemanticTrack}
+            shape="rect"
           />
+          <LegendItem
+            displayName="Room"
+            useCheckbox={false}
+            color="#f4f4f4"
+            borderColor="#cccccc"
+            shape="rect"
+          />
+          <LegendItem
+            displayName="Hallway"
+            useCheckbox={false}
+            color="#ffffff"
+            borderColor="#cccccc"
+            shape="rect"
+          />
+          <LegendItem
+            displayName="Staircase"
+            useCheckbox={false}
+            color="#d4eb8b"
+            borderColor="#cccccc"
+            shape="rect"
+          />
+          <div className="list-item">
+            <button
+              className="color"
+              style={{
+                background: "#a2a1a1",
+                transform: 'scaleY(0.4)',
+              }}
+            />
+            <div className="text">Door</div>
+          </div>
         </div>
       </div>
     )

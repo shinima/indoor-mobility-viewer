@@ -53,9 +53,9 @@ export default class FloorList extends React.Component<P> {
         <div className="floor-list">
           {floorEntryList.map(entry => (
             <div
-              key={entry.get('floorId')}
-              className={classNames('floor-item', { active: selectedFloorId === entry.get('floorId') })}
-              onClick={() => changeSelectedFloorId(entry.get('floorId'))}
+              key={entry.floorId}
+              className={classNames('floor-item', { active: selectedFloorId === entry.floorId })}
+              onClick={() => changeSelectedFloorId(entry.floorId)}
             >
               <div
                 className="bar"
@@ -65,7 +65,7 @@ export default class FloorList extends React.Component<P> {
                 }}
               />
               <div className="floor-name">
-                {entry.get('floorName')}
+                {entry.floorName}
               </div>
               <div className="count">{entry.count}</div>
             </div>

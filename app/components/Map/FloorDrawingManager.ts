@@ -58,7 +58,7 @@ export default class FloorDrawingManager extends DrawingManager {
       .attr('fill-opacity', regionFillOpacity)
       .attr('points', d => d.points.map(p => `${p.x},${p.y}`).join(' '))
       .attr('stroke', '#cccccc')
-      .attr('stroke-width', 0.5)
+      .attr('stroke-width', 0.2)
     regionsJoin.exit().remove()
 
     const doorLayerJoin = this.board.select('.doors-layer-wrapper')
@@ -89,7 +89,7 @@ export default class FloorDrawingManager extends DrawingManager {
       .attr('y1', d => d.line.y1)
       .attr('x2', d => d.line.x2)
       .attr('y2', d => d.line.y2)
-      .attr('stroke-width', 0.6)
+      .attr('stroke-width', 0.3)
     doorsJoin.exit().remove()
 
     // 绘制文本

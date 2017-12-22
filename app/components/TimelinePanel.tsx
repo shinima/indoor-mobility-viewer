@@ -80,7 +80,7 @@ export default class TimelinePanel extends React.Component<Props, State> {
 
     return (
       <div className="timeline-panel">
-        <h1 className="title">Mobility Semantic Timeline</h1>
+        <h1 className="title">Mobility Semantics Timeline</h1>
         <div className="content">
           <div className="list">
             {points.map((p) =>

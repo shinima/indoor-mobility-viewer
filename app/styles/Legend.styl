@@ -1,28 +1,45 @@
 @require './base.styl'
 
 .legend {
-  position absolute
-  z-index 1
-  top 110px
-  left 500px
-  display flex
-  pointer-events none
-  cursor default
+  padding-left 40px
+  padding-bottom 18px
+  border-bottom 1px solid #ccc
 
-  .box {
+  .title {
+    @extends $widget-title
+  }
+
+  .list {
     display flex
-    align-items center
-    margin-left 40px
-    &:first-child {
-      margin-left 0
-    }
+    flex-flow column
 
-    .text {
-      font-size 16px
-      color #4d4b4e
-      margin-right 10px
-      //margin-left 8px
-      //width 48px
+    .list-item {
+      display flex
+      align-items center
+      width 240px
+      height 32px
+
+      .color {
+        padding 0
+        width 16px
+        height @width
+        margin-left 4px
+        margin-right 16px
+        cursor pointer
+        border none
+        outline none
+        &:hover {
+          box-shadow 0 0 12px 0 rgba(255, 0, 0, 0.4)
+        }
+      }
+
+      .text {
+        margin 0
+        margin-right auto
+        line-height @height
+        font-size 16px
+        font-family Consolas, 'microsoft yahei', monospace
+      }
     }
   }
 }

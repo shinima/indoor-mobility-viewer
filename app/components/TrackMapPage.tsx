@@ -57,8 +57,8 @@ function getFloorEntryCount(tracks: Track[], floorId: number) {
 class TrackMapPage extends React.Component<P, S> {
   state = {
     showGroundTruthTrack: true,
-    showRawTrack: true,
-    showCleanedRawTrack: true,
+    showRawTrack: false,
+    showCleanedRawTrack: false,
     showSemanticTrack: true,
     // 轨迹图和Timeline共享的senmantic-track-id
     sid: -1 as number,
@@ -110,9 +110,9 @@ class TrackMapPage extends React.Component<P, S> {
       'cleaned-raw': showCleanedRawTrack ? plainTrackMap['cleaned-raw'].filter(inThisFloor) : [],
     }
 
-    const extraTrackPoints = getTrackPoints(plainTrackMap.raw)
-      .filter(inThisTimeRange)
-      .filter(notInThisFloor)
+    const extraTrackPoints = showRawTrack
+      ? getTrackPoints(plainTrackMap.raw).filter(inThisTimeRange).filter(notInThisFloor)
+      : []
 
     return (
       <div>
