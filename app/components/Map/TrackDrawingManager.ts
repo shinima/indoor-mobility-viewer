@@ -204,15 +204,17 @@ export default class TrackDrawingManager extends DrawingManager {
   centralizeTrack(track: Track) {
     const cssSelector = `path[data-track-id="${track.trackId}"]`
     const pathElement = this.svgElement.querySelector(cssSelector) as SVGPathElement
-    const contentBox = pathElement.getBBox()
-    if (contentBox.width === 0) {
-      contentBox.width = 20
-      contentBox.x -= 10
+    if (pathElement) {
+      const contentBox = pathElement.getBBox()
+      if (contentBox.width === 0) {
+        contentBox.width = 20
+        contentBox.x -= 10
+      }
+      if (contentBox.height === 0) {
+        contentBox.height = 20
+        contentBox.y -= 10
+      }
+      this.centralize(contentBox, true, { top: 40, bottom: 40, left: 400, right: 440 })
     }
-    if (contentBox.height === 0) {
-      contentBox.height = 20
-      contentBox.y -= 10
-    }
-    this.centralize(contentBox, true, { top: 40, bottom: 40, left: 400, right: 440 })
   }
 }
