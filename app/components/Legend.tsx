@@ -113,6 +113,30 @@ export default class Legend extends Component<LegendProps> {
             />
             <div className="text">Door</div>
           </div>
+          <div className="list-item">
+            <svg width="16" height="16" className="color">
+              <circle fill="#3078b3" cx="8" cy="8" r="8" />
+              <line
+                x1="3.34314"
+                y1="3.34314"
+                x2="12.65686"
+                y2="12.65686"
+                stroke="#f8f9fd"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+              <line
+                x1="3.34314"
+                y1="12.65686"
+                x2="12.65686"
+                y2="3.34314"
+                stroke="#f8f9fd"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+            <div className="text">False Floor Values</div>
+          </div>
         </div>
       </div>
     )

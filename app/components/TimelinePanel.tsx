@@ -81,6 +81,20 @@ export default class TimelinePanel extends React.Component<Props, State> {
     return (
       <div className="timeline-panel">
         <h1 className="title">Mobility Semantics Timeline</h1>
+        <div className="timeline-legend">
+          <span
+            className="cell"
+            style={{ background: '#f18a2a', transform: 'scale(0.65)', fontSize: 32, lineHeight: '37px' }}
+          >
+            ∥</span>
+          <span className="text">stay</span>
+          <span
+            className="cell"
+            style={{ background: '#f7a53d', transform: 'scale(0.65)', fontSize: 18, lineHeight: '40px' }}
+          >
+            ▶</span>
+          <span className="text">pass-by</span>
+        </div>
         <div className="content">
           <div className="list">
             {points.map((p) =>

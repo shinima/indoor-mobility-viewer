@@ -180,18 +180,6 @@ export default class TrackDrawingManager extends DrawingManager {
       .attr('opacity', opacity)
     if (strokeDasharray) {
       trackPathEnter.attr('stroke-dasharray', strokeDasharray)
-    } else {
-      trackPathEnter
-        .attr('stroke-dasharray', (track, i, arr) => {
-          const element = arr[i] as SVGPathElement
-          return `0 ${element.getTotalLength()}`
-        })
-        .transition()
-        .duration(2000)
-        .attr('stroke-dasharray', (_, i, arr) => {
-          const element = arr[i] as SVGPathElement
-          return `${element.getTotalLength()} 0`
-        })
     }
 
     trackPathJoin.exit().remove()
