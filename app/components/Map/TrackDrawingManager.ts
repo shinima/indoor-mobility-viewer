@@ -1,49 +1,9 @@
 import * as d3 from 'd3'
-import * as moment from 'moment'
 import { getColor, getTrackPoints } from '../../utils/utils'
 import { TrackMapProp } from './TrackMap'
 import DrawingManager from './DrawingManager'
 import { Range, Track, TrackPoint, TrackPointType } from '../../interfaces'
 import { PlainTrackMap } from '../../reducer'
-
-//#region tooltip
-function showTooltip(
-  tooltipWrapper: d3.Selection<HTMLDivElement>,
-  trackPoint: TrackPoint,
-  transform: d3.ZoomTransform,
-) {
-  let durationText = '<p style="margin:0">经过</p>'
-  if (trackPoint.duration > 0) {
-    durationText = `<p style="margin:0">停留${(trackPoint.duration / 60e3).toFixed(1)}分钟</p>`
-  }
-  const x = transform.applyX(trackPoint.x) - transform.x
-  const y = transform.applyY(trackPoint.y) - transform.y
-  // language=TEXT
-  tooltipWrapper.html(`
-    <div style="left: ${x}px; top: ${y}px;">
-      <p style="margin: 0">${trackPoint.trackName}</p>
-      <p style="margin: 0">${moment(trackPoint.time).format('HH:mm:ss')}</p>
-      ${durationText}
-    </div>
-  `).style('display', 'block')
-  // .style('opacity', 0.3)
-  // .interrupt('hide-tooltip')
-  // .transition()
-  // .style('opacity', 1)
-}
-
-function hideTooltip(tooltipWrapper: d3.Selection<HTMLDivElement>) {
-  // tooltipWrapper.transition('hide-tooltip')
-  //   .style('opacity', 0)
-  //   .on('end', function end() {
-  //     d3.select(this)
-  //       .style('opacity', null)
-  //       .style('display', 'none')
-  //   })
-  tooltipWrapper.style('display', 'none')
-}
-
-//#endregion
 
 function pointRadius(pointType: TrackPointType) {
   if (pointType === 'raw') {
@@ -239,5 +199,20 @@ export default class TrackDrawingManager extends DrawingManager {
       .attr('stroke-linecap', 'round')
 
     pointsJoin.exit().remove()
+  }
+
+  centralizeTrack(track: Track) {
+    const cssSelector = `path[data-track-id="${track.trackId}"]`
+    const pathElement = this.svgElement.querySelector(cssSelector) as SVGPathElement
+    const contentBox = pathElement.getBBox()
+    if (contentBox.width === 0) {
+      contentBox.width = 20
+      contentBox.x -= 10
+    }
+    if (contentBox.height === 0) {
+      contentBox.height = 20
+      contentBox.y -= 10
+    }
+    this.centralize(contentBox, true, { top: 40, bottom: 40, left: 400, right: 440 })
   }
 }

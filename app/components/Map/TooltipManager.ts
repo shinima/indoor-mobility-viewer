@@ -1,5 +1,5 @@
 import * as d3 from 'd3'
-import { Point, TrackPoint } from '../../interfaces'
+import { TrackPoint } from '../../interfaces'
 import * as moment from 'moment'
 
 export default class TooltipManager {

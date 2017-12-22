@@ -14,6 +14,7 @@ import { PlainTrackMap } from '../../reducer'
 export interface TrackMapProp {
   floor: Floor
   sid: number
+  ctid: number
   range: Range
   plainTrackMap: PlainTrackMap
   extraTrackPoints: TrackPoint[]
@@ -62,10 +63,7 @@ export default class TrackMap extends Component<TrackMapProp> {
   }
 
   componentWillReceiveProps(nextProps: TrackMapProp) {
-    const { floor, sid, plainTrackMap, semanticTracks, transformReset, extraTrackPoints } = this.props
-
-    // // TODO 绘制extraTrackPoints
-    // console.log(nextProps.extraTrackPoints)
+    const { floor, sid, ctid, plainTrackMap, semanticTracks, transformReset, extraTrackPoints } = this.props
 
     const semanticTrackPoints = getTrackPoints(nextProps.semanticTracks)
     const selectedSemanticTrackPoint = semanticTrackPoints.find(p => p.trackPointId === nextProps.sid)
@@ -87,6 +85,11 @@ export default class TrackMap extends Component<TrackMapProp> {
 
     if (!isSameTracks(semanticTracks, nextProps.semanticTracks) || sid !== nextProps.sid) {
       this.trackDrawingManager.updateSemanticTracks(nextProps.semanticTracks, nextProps.range)
+    }
+
+    if (ctid !== nextProps.ctid) {
+      const track = nextProps.semanticTracks.find(t => t.trackId === nextProps.ctid)
+      this.trackDrawingManager.centralizeTrack(track)
     }
 
     if (!isSameTrackPoints(extraTrackPoints, nextProps.extraTrackPoints)) {

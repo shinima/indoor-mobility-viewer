@@ -46,6 +46,7 @@ interface S {
   showCleanedRawTrack: boolean
   showSemanticTrack: boolean
   sid: number
+  ctid: number
   transformReset: boolean
 }
 
@@ -61,7 +62,9 @@ class TrackMapPage extends React.Component<P, S> {
     showCleanedRawTrack: false,
     showSemanticTrack: true,
     // 轨迹图和Timeline共享的senmantic-track-id
-    sid: -1 as number,
+    sid: -1,
+    // centralized-track-id
+    ctid: -1,
     // transform是否重置(大概等于当前楼层是否居中显示)
     transformReset: false,
   }
@@ -75,9 +78,12 @@ class TrackMapPage extends React.Component<P, S> {
   onChangeSid = (sid: number) => {
     const { floorId, semanticTracks } = this.props
     const point = getTrackPoints(semanticTracks).find(p => p.trackPointId === sid)
-    this.setState({ sid })
     if (floorId !== point.floorId) {
       this.onChangeFloorId(point.floorId)
+      const track = semanticTracks.find(t => t.points.some(p => p.trackPointId === sid))
+      this.setState({ sid, ctid: track.trackId })
+    } else {
+      this.setState({ sid })
     }
   }
 
@@ -87,7 +93,7 @@ class TrackMapPage extends React.Component<P, S> {
 
   render() {
     const { plainTrackMap, semanticTracks, floorConfig, floor } = this.props
-    const { sid, transformReset, showRawTrack, showSemanticTrack, showCleanedRawTrack, showGroundTruthTrack } = this.state
+    const { sid, ctid, transformReset, showRawTrack, showSemanticTrack, showCleanedRawTrack, showGroundTruthTrack } = this.state
 
     const inThisFloor = (track: Track) => track.floorId === floor.floorId
     const notInThisFloor = (trackPoint: TrackPoint) => trackPoint.floorId !== floor.floorId
@@ -138,6 +144,7 @@ class TrackMapPage extends React.Component<P, S> {
         <TrackMap
           floor={floor}
           sid={sid}
+          ctid={ctid}
           range={range}
           plainTrackMap={visiblePlainTrackMap}
           semanticTracks={visibleSemanticTracks}

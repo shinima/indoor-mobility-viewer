@@ -50,6 +50,10 @@ export default class FloorList extends React.Component<P> {
     return (
       <div className="floor-list-widget">
         <div className="title">Floor Chooser</div>
+        <div className="subtitle">
+          <p>Floor Name</p>
+          <p>Number of Raw Records</p>
+        </div>
         <div className="floor-list">
           {floorEntryList.map(entry => (
             <div
