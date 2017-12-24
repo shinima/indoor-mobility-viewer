@@ -1,0 +1,44 @@
+{
+  "name": "indoor-mobility-viewer",
+  "private": true,
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack --env.prod"
+  },
+  "devDependencies": {
+    "@types/webpack": "^3.0.5",
+    "awesome-typescript-loader": "^3.2.1",
+    "babel-minify-webpack-plugin": "^0.2.0",
+    "css-loader": "^0.28.4",
+    "html-webpack-plugin": "^2.28.0",
+    "json-loader": "^0.5.7",
+    "source-map-loader": "^0.2.1",
+    "style-loader": "^0.18.2",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "typescript": "^2.6.2",
+    "webpack": "^3.0.0",
+    "webpack-dev-server": "^2.5.1",
+    "yaml-loader": "^0.5.0"
+  },
+  "dependencies": {
+    "@types/d3": "^4.10.0",
+    "@types/lodash": "^4.14.71",
+    "@types/react": "^15.0.39",
+    "@types/react-dom": "^15.5.1",
+    "@types/react-hot-loader": "^3.0.3",
+    "@types/react-redux": "^4.4.47",
+    "@types/mousetrap": "^1.5.34",
+    "d3": "^4.9.1",
+    "immutable": "4.0.0-rc.9",
+    "lodash": "^4.17.4",
+    "mousetrap": "^1.6.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-hot-loader": "next",
+    "react-redux": "^5.0.5",
+    "redux": "^3.7.2"
+  }
+}
