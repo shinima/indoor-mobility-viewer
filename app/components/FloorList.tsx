@@ -1,6 +1,5 @@
 import * as React from 'react'
 import * as d3 from 'd3'
-import * as classNames from 'classnames'
 import { List, Record } from 'immutable'
 import '../styles/FloorList.styl'
 
@@ -58,7 +57,7 @@ export default class FloorList extends React.Component<P> {
           {floorEntryList.map(entry => (
             <div
               key={entry.floorId}
-              className={classNames('floor-item', { active: selectedFloorId === entry.floorId })}
+              className={`floor-item${selectedFloorId === entry.floorId ? ' active' : ''}`}
               onClick={() => changeSelectedFloorId(entry.floorId)}
             >
               <div

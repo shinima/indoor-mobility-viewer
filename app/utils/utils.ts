@@ -60,3 +60,18 @@ export function getClosestTrackPointId(trackPoints: TrackPoint[], time: number) 
 export function getTrackPoints(tracks: Track[]): TrackPoint[] {
   return tracks.reduce<TrackPoint[]>((ps, track) => ps.concat(track.points), [])
 }
+
+export function identity<T>(x: T): T {
+  return x
+}
+
+export function formatTime(t:number){
+  const date = new Date(t)
+  const hour = date.getHours()
+  const hourStr = hour >= 10 ? String(hour) : `0${hour}`
+  const minute = date.getMinutes()
+  const minuteStr = minute >= 10 ? String(minute) : `0${minute}`
+  const second = date.getSeconds()
+  const secondStr = second >= 10 ? String(second) : `0${second}`
+  return `${hourStr}:${minuteStr}:${secondStr}`
+}

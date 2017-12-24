@@ -1,26 +1,13 @@
 {
-  "name": "lh-location-viewer",
+  "name": "indoor-mobility-viewer",
   "private": true,
-  "version": "0.0.1",
-  "main": "index.js",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server",
     "build": "webpack --env.prod"
   },
   "devDependencies": {
-    "@types/classnames": "^2.2.0",
-    "@types/d3": "^4.10.0",
-    "@types/jest": "^20.0.5",
-    "@types/lodash": "^4.14.71",
-    "@types/prop-types": "^15.5.1",
-    "@types/react": "^15.0.39",
-    "@types/react-dom": "^15.5.1",
-    "@types/react-hot-loader": "^3.0.3",
-    "@types/react-redux": "^4.4.47",
-    "@types/react-router": "^4.0.14",
-    "@types/react-router-dom": "^4.0.7",
-    "@types/recompose": "^0.23.2",
     "@types/webpack": "^3.0.5",
     "awesome-typescript-loader": "^3.2.1",
     "babel-minify-webpack-plugin": "^0.2.0",
@@ -37,23 +24,21 @@
     "yaml-loader": "^0.5.0"
   },
   "dependencies": {
+    "@types/d3": "^4.10.0",
+    "@types/lodash": "^4.14.71",
+    "@types/react": "^15.0.39",
+    "@types/react-dom": "^15.5.1",
+    "@types/react-hot-loader": "^3.0.3",
+    "@types/react-redux": "^4.4.47",
     "@types/mousetrap": "^1.5.34",
-    "classnames": "^2.2.5",
     "d3": "^4.9.1",
-    "hoist-non-react-statics": "^2.1.0",
     "immutable": "4.0.0-rc.9",
     "lodash": "^4.17.4",
-    "moment": "^2.18.1",
     "mousetrap": "^1.6.1",
-    "querystring": "^0.2.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-hot-loader": "next",
     "react-redux": "^5.0.5",
-    "react-router": "^4.1.1",
-    "react-router-dom": "^4.1.1",
-    "react-router-redux": "^4.0.8",
-    "recompose": "^0.24.0",
     "redux": "^3.7.2"
   }
 }

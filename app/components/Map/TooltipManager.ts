@@ -1,6 +1,6 @@
 import * as d3 from 'd3'
 import { TrackPoint } from '../../interfaces'
-import * as moment from 'moment'
+import { formatTime } from '../../utils/utils'
 
 export default class TooltipManager {
   tooltipWrapper: d3.Selection<HTMLDivElement>
@@ -44,8 +44,8 @@ export default class TooltipManager {
           ${verb} <i>${this.target.regionName}</i>
           <br />
           ${preposition}
-          ${moment(start).format('HH:mm:ss')}
-          ${end > start ? `-- ${moment(end).format('HH:mm:ss')}` : ''}
+          ${formatTime(start)}
+          ${end > start ? `-- ${formatTime(end)}` : ''}
         </div>
       `).style('display', 'block')
     } else {

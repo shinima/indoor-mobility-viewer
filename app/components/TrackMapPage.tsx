@@ -5,38 +5,19 @@ import { Dispatch } from 'redux'
 import TrackMap from '../components/Map/TrackMap'
 import FloorList, { FloorEntryRecord } from '../components/FloorList'
 import ButtonGroup from '../components/ButtonGroup'
-import bindSearchParameters, { SearchParamBinding } from '../utils/bindSearchParameters'
 import Legend from './Legend'
 import { FloorConfig, PlainTrackMap, State } from '../reducer'
 import TimelinePanel from './TimelinePanel'
 import { Track, TrackPoint } from '../interfaces'
-import { getTrackPoints } from '../utils/utils'
+import { getTrackPoints, identity } from '../utils/utils'
 import { getTimeRange } from './Map/utils'
 import '../styles/TrackMapPage.styl'
 
-interface Def {
-  floorId: number
-  t: number
-}
-
-function mapStateToProps({ plainTrackMap, semanticTracks, floors, floorConfig }: State, ownProps: Def) {
-  const { floorId } = ownProps
-  const floor = floors.find(flr => flr.floorId === floorId) || floors[0]
-
-  return Object.assign({ plainTrackMap, semanticTracks, floors, floorConfig, floor }, ownProps)
-}
-
-const searchBindingDefinitions = [
-  { key: 'floorId', getter: Number, default: null as number },
-  { key: 'htid', getter: Number, default: null },
-]
-
-type P = SearchParamBinding<Def> & {
+interface P {
   plainTrackMap: PlainTrackMap
   semanticTracks: Track[]
   floors: Floor[]
   floorConfig: FloorConfig
-  floor: Floor
   dispatch: Dispatch<State>
 }
 
@@ -47,6 +28,7 @@ interface S {
   showSemanticTrack: boolean
   sid: number
   ctid: number
+  floorId: number
   transformReset: boolean
 }
 
@@ -61,6 +43,7 @@ class TrackMapPage extends React.Component<P, S> {
     showRawTrack: false,
     showCleanedRawTrack: false,
     showSemanticTrack: true,
+    floorId: -1,
     // 轨迹图和Timeline共享的senmantic-track-id
     sid: -1,
     // centralized-track-id
@@ -72,11 +55,12 @@ class TrackMapPage extends React.Component<P, S> {
   onResetTransform = () => this.setState({ transformReset: true })
 
   onChangeFloorId = (floorId: number) => {
-    this.props.updateSearch({ floorId })
+    this.setState({ floorId })
   }
 
   onChangeSid = (sid: number) => {
-    const { floorId, semanticTracks } = this.props
+    const { semanticTracks } = this.props
+    const { floorId } = this.state
     const point = getTrackPoints(semanticTracks).find(p => p.trackPointId === sid)
     if (floorId !== point.floorId) {
       this.onChangeFloorId(point.floorId)
@@ -91,9 +75,16 @@ class TrackMapPage extends React.Component<P, S> {
     this.setState({ transformReset: false })
   }
 
+  getFloor() {
+    const { floors } = this.props
+    const { floorId } = this.state
+    return floors.find(flr => flr.floorId === floorId) || floors[0]
+  }
+
   render() {
-    const { plainTrackMap, semanticTracks, floorConfig, floor } = this.props
+    const { plainTrackMap, semanticTracks, floorConfig } = this.props
     const { sid, ctid, transformReset, showRawTrack, showSemanticTrack, showCleanedRawTrack, showGroundTruthTrack } = this.state
+    const floor = this.getFloor()
 
     const inThisFloor = (track: Track) => track.floorId === floor.floorId
     const notInThisFloor = (trackPoint: TrackPoint) => trackPoint.floorId !== floor.floorId
@@ -163,4 +154,4 @@ class TrackMapPage extends React.Component<P, S> {
   }
 }
 
-export default bindSearchParameters(searchBindingDefinitions)(connect(mapStateToProps)(TrackMapPage))
+export default connect(identity)(TrackMapPage)

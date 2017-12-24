@@ -1,9 +1,8 @@
 import * as d3 from 'd3'
 import * as Mousetrap from 'mousetrap'
-import * as moment from 'moment'
 import * as React from 'react'
 import { Track, TrackPoint } from '../interfaces'
-import { getColor, getTrackPoints } from '../utils/utils'
+import { formatTime, getColor, getTrackPoints } from '../utils/utils'
 import '../styles/TimelinePanel.styl'
 
 export interface Props {
@@ -23,8 +22,8 @@ function TrackPointText({ point: p }: { point: TrackPoint }) {
     <p>
       <b>{p.regionName}</b>
       <br />
-      {moment(start).format('HH:mm:ss')}
-      {end > start ? `-- ${moment(end).format('HH:mm:ss')}` : ''}
+      {formatTime(start)}
+      {end > start ? `-- ${formatTime(end)}` : ''}
     </p>
   )
 }
