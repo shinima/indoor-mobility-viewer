@@ -55,7 +55,6 @@ module.exports = env => {
         'process.env.NODE_ENV': JSON.stringify(isProduction ? 'production' : 'development'),
       }),
       new HtmlWebpackPlugin({
-        filename: isProduction ? 'indoor-mobility-viewer.html' : 'index.html',
         template: 'app/template.html',
       }),
     ].concat(isProduction ? [

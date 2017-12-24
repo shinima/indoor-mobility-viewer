@@ -1,4 +1,6 @@
-# Location Viewer
+# Indoor mobility viewer
+
+# Readme is outdated!.
 
 本文档列举了一些安装/开发/部署过程中需要了解注意的地方。
 
