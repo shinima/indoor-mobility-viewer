@@ -19,6 +19,7 @@ interface P {
   floors: Floor[]
   floorConfig: FloorConfig
   dispatch: Dispatch<State>
+  filename: string
 }
 
 interface S {
@@ -82,7 +83,7 @@ class TrackMapPage extends React.Component<P, S> {
   }
 
   render() {
-    const { plainTrackMap, semanticTracks, floorConfig } = this.props
+    const { plainTrackMap, semanticTracks, floorConfig, filename } = this.props
     const { sid, ctid, transformReset, showRawTrack, showSemanticTrack, showCleanedRawTrack, showGroundTruthTrack } = this.state
     const floor = this.getFloor()
 
@@ -115,7 +116,7 @@ class TrackMapPage extends React.Component<P, S> {
       <div>
         <div className="floor-display">Floor: {floor.floorNumber}</div>
         <div className="widgets">
-          <ButtonGroup onResetTransform={this.onResetTransform} />
+          <ButtonGroup onResetTransform={this.onResetTransform} filename={filename} />
           <Legend
             showGroundTruthTrack={showGroundTruthTrack}
             showRawTrack={showRawTrack}

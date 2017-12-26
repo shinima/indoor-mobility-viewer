@@ -7,6 +7,7 @@ import { Dispatch } from 'redux'
 
 interface ButtonGroupProps {
   onResetTransform: () => void
+  filename: string
 }
 
 class ButtonGroup extends Component<ButtonGroupProps & { dispatch: Dispatch<State> }> {
@@ -28,6 +29,7 @@ class ButtonGroup extends Component<ButtonGroupProps & { dispatch: Dispatch<Stat
           const data = JSON.parse(reader.result)
           this.props.dispatch<Action>({
             type: 'CHANGE_DATA_SOURCE',
+            filename: file.name,
             data,
           })
         } catch (e) {
@@ -39,19 +41,19 @@ class ButtonGroup extends Component<ButtonGroupProps & { dispatch: Dispatch<Stat
   }
 
   render() {
-    const { onResetTransform } = this.props
+    const { onResetTransform, filename } = this.props
 
     return (
       <div className="button-group-widget">
-        <div className="reset-transform-button-wrapper">
-          <button className="reset-transform-button" onClick={onResetTransform}>Centralize Map</button>
-          <button className="open-file-button" onClick={this.onOpenFile}>Open Tracks</button>
-          <input
-            ref={this.refFileInput}
-            type="file"
-            style={{ display: 'none' }}
-            onChange={this.onChangeFile}
-          />
+        <p className="filename">Current Filename: <b>{filename}</b></p>
+        <div className="buttons-wrapper">
+          <button className="reset-transform-button" onClick={onResetTransform}>
+            Centralize Map
+          </button>
+          <button className="open-file-button" onClick={this.onOpenFile}>
+            Open Tracks
+          </button>
+          <input ref={this.refFileInput} type="file" style={{ display: 'none' }} onChange={this.onChangeFile} />
         </div>
       </div>
     )

@@ -7,6 +7,7 @@ export type Action = ChangeDataSourceAction
 export interface ChangeDataSourceAction {
   type: 'CHANGE_DATA_SOURCE'
   data: LHData
+  filename: string
 }
 
 export interface PlainTrackMap {
@@ -20,6 +21,7 @@ export interface State {
   semanticTracks: Track[]
   floors: Floor[]
   floorConfig: FloorConfig
+  filename: string
 }
 
 export type FloorConfig = {
@@ -38,9 +40,10 @@ const defaultState = {
   semanticTracks: getTracks(defaultData, 'semantic'),
   floors,
   floorConfig,
+  filename: 'default',
 }
 
-export default function reducer(state: State = defaultState, action: Action) {
+export default function reducer(state: State = defaultState, action: Action): State {
   if (action.type === 'CHANGE_DATA_SOURCE') {
     const data = action.data
     return {
@@ -51,6 +54,7 @@ export default function reducer(state: State = defaultState, action: Action) {
         'ground-truth': getTracks(data, 'ground-truth'),
       },
       semanticTracks: getTracks(data, 'semantic'),
+      filename: action.filename,
     }
   } else {
     return state

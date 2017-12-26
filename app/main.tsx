@@ -13,8 +13,8 @@ function render(Component: ComponentClass) {
       <Provider store={store}>
         <Component />
       </Provider>
-    </AppContainer>
-    , document.getElementById('container'),
+    </AppContainer>,
+    document.getElementById('container'),
   )
 }
 
