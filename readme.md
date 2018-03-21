@@ -1,4 +1,6 @@
-# Indoor Mobility Viewer
+# Indoor Mobility Viewer (deprecated)
+
+## This repo is deprecated. See [this repo](https://github.com/shinima/viewer) instead.
 
 Indoor mobility viewer is an single-page html5 application that allows you to compare different kinds of tracks during different stages of location data processing. The viewer renders an indoor map in the middle of the webpage, and renders lines (represent tracks) and points (represent locations) on the map. As the legend part on the left shows, lines/points with different colors/shapes represents differents kinds of tracks or locations.
 
